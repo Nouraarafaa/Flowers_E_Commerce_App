@@ -1,34 +1,29 @@
 {
-  "name": "Flowers_e_commerce_app",
+  "name": "flowers-e-commerce",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/Flowers_e_commerce_app/src",
+  "sourceRoot": "apps/flowers-e-commerce/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/Flowers_e_commerce_app",
-        "index": "apps/Flowers_e_commerce_app/src/index.html",
-        "browser": "apps/Flowers_e_commerce_app/src/main.ts",
+        "outputPath": "dist/apps/flowers-e-commerce",
+        "index": "apps/flowers-e-commerce/src/index.html",
+        "browser": "apps/flowers-e-commerce/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/Flowers_e_commerce_app/tsconfig.app.json",
+        "tsConfig": "apps/flowers-e-commerce/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/Flowers_e_commerce_app/public"
+            "input": "apps/flowers-e-commerce/public"
           }
         ],
-        "styles": ["apps/Flowers_e_commerce_app/src/styles.scss"],
-        "scripts": [],
-        "server": "apps/Flowers_e_commerce_app/src/main.server.ts",
-        "ssr": {
-          "entry": "apps/Flowers_e_commerce_app/src/server.ts"
-        },
-        "outputMode": "server"
+        "styles": ["apps/flowers-e-commerce/src/styles.scss"],
+        "scripts": []
       },
       "configurations": {
         "production": {
@@ -58,10 +53,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "Flowers_e_commerce_app:build:production"
+          "buildTarget": "flowers-e-commerce:build:production"
         },
         "development": {
-          "buildTarget": "Flowers_e_commerce_app:build:development"
+          "buildTarget": "flowers-e-commerce:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -69,7 +64,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "Flowers_e_commerce_app:build"
+        "buildTarget": "flowers-e-commerce:build"
       }
     },
     "lint": {
@@ -79,15 +74,15 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/Flowers_e_commerce_app/jest.config.ts"
+        "jestConfig": "apps/flowers-e-commerce/jest.config.ts"
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "Flowers_e_commerce_app:build",
+        "buildTarget": "flowers-e-commerce:build",
         "port": 4200,
-        "staticFilePath": "dist/apps/Flowers_e_commerce_app/browser",
+        "staticFilePath": "dist/apps/flowers-e-commerce/browser",
         "spa": true
       }
     }

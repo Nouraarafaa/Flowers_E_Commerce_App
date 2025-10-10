@@ -1,9 +1,0 @@
-{
-  "name": "Flowers_e_commerce_app-e2e",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "sourceRoot": "apps/Flowers_e_commerce_app-e2e/src",
-  "implicitDependencies": ["Flowers_e_commerce_app"],
-  "// targets": "to see all targets run: nx show project Flowers_e_commerce_app-e2e --web",
-  "targets": {}
-}

@@ -15,13 +15,13 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome Flowers_e_commerce_app'
+      'Welcome flowers-e-commerce'
     );
   });
 
-  it(`should have as title 'Flowers_e_commerce_app'`, () => {
+  it(`should have as title 'flowers-e-commerce'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Flowers_e_commerce_app');
+    expect(app.title).toEqual('flowers-e-commerce');
   });
 });

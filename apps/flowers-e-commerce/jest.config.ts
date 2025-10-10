@@ -1,8 +1,8 @@
 export default {
-  displayName: 'Flowers_e_commerce_app',
+  displayName: 'flowers-e-commerce',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/Flowers_e_commerce_app',
+  coverageDirectory: '../../coverage/apps/flowers-e-commerce',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

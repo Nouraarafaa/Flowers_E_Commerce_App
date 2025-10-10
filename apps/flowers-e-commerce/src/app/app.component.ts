@@ -9,5 +9,5 @@ import { NxWelcomeComponent } from './nx-welcome.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'Flowers_e_commerce_app';
+  title = 'flowers-e-commerce';
 }
