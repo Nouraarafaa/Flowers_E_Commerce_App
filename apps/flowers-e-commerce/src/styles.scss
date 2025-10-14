@@ -1,1 +1,42 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+@import 'tailwindcss';
+@font-face {
+  font-family: 'Edwardian Script';
+  src: url(../public/fonts/edwardianscriptitc.ttf);
+}
+@theme {
+  --color-maroon-800: #501419;
+  --color-maroon-700: #741c21;
+  --color-maroon-600: #a6252a;
+  --color-maroon-500: #cd2e33;
+  --color-maroon-50: #fbeaea;
+  --color-zinc-800: #27272a;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-600: #52525b;
+  --color-zinc-500: #71717a;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-50: #fafafa;
+  --color-soft-pink-300: #ffa3b9;
+  --color-soft-pink-200: #ffc2d0;
+  --color-soft-pink-50: #fff1f5;
+  --color-red-600: #dc2626;
+  --color-red-500: #ef4444;
+  --color-blue-600: #155dfc;
+  --color-blue-500: #2b7fff;
+  --color-blue-400: #50a2ff;
+  --color-yellow-star: #fba707;
+  --color-yellow-600: #ca8a04;
+  --color-emerald-500: #00bc7d;
+
+  --font-inter: 'Inter', sans-serif;
+  --font-zain: 'Zain', sans-serif;
+  --font-mulish: 'Mulish', sans-serif;
+  --font-open-sans: 'Open Sans', sans-serif;
+  --font-Edwardian: 'Edwardian Script';
+
+  --text-13px: 13px;
+}
