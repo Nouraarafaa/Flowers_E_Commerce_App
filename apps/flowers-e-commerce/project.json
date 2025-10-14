@@ -22,7 +22,10 @@
             "input": "apps/flowers-e-commerce/public"
           }
         ],
-        "styles": ["apps/flowers-e-commerce/src/styles.scss"],
+        "styles": [
+          "apps/flowers-e-commerce/src/styles.scss",
+          "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+        ],
         "scripts": []
       },
       "configurations": {
