@@ -1,0 +1,76 @@
+src/
+ ├── app/
+ │   ├── core/
+ │   │   ├── guards/
+ │   │   ├── interceptors/
+ │   │   ├── services/
+ │   │   ├── models/
+ │   │   ├── helpers/
+ │   │   └── core.module.ts
+ │   │
+ │   ├── shared/
+ │   │   ├── components/
+ │   │   │   ├── navbar/
+ │   │   │   ├── footer/
+ │   │   │   ├── product-card/
+ │   │   │   └── ...
+ │   │   ├── directives/
+ │   │   ├── pipes/
+ │   │   └── shared.module.ts
+ │   │
+ │   ├── features/
+ │   │   ├── auth/
+ │   │   │   ├── login/
+ │   │   │   ├── register/
+ │   │   │   ├── profile/
+ │   │   │   └── auth.module.ts
+ │   │   │
+ │   │   ├── products/
+ │   │   │   ├── product-list/
+ │   │   │   ├── product-detail/
+ │   │   │   ├── filter/
+ │   │   │   └── products.module.ts
+ │   │   │
+ │   │   ├── cart/
+ │   │   │   ├── cart-list/
+ │   │   │   └── cart.module.ts
+ │   │   │
+ │   │   ├── wishlist/
+ │   │   │   ├── wishlist-list/
+ │   │   │   └── wishlist.module.ts
+ │   │   │
+ │   │   ├── orders/
+ │   │   │   ├── order-history/
+ │   │   │   ├── order-detail/
+ │   │   │   └── orders.module.ts
+ │   │   │
+ │   │   └── admin/
+ │   │       ├── dashboard/
+ │   │       ├── manage-products/
+ │   │       ├── manage-orders/
+ │   │       └── admin.module.ts
+ │   │
+ │   ├── pages/
+ │   │   ├── home/
+ │   │   ├── about/
+ │   │   ├── contact/
+ │   │   └── pages.module.ts
+ │   │
+ │   ├── app-routing.module.ts
+ │   ├── app.component.ts
+ │   └── app.module.ts
+ │
+ ├── assets/
+ │   ├── images/
+ │   ├── icons/
+ │   ├── styles/
+ │   │   ├── _variables.scss
+ │   │   ├── _mixins.scss
+ │   │   └── main.scss
+ │   └── data/ (mock data)
+ │
+ ├── environments/
+ │   ├── environment.ts
+ │   └── environment.prod.ts
+ │
+ └── index.html
