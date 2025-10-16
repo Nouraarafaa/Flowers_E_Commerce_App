@@ -2,7 +2,9 @@
   "name": "@elevate-workspace/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "roseApp":"nx s flowers-e-commerce --o"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.2.15",
