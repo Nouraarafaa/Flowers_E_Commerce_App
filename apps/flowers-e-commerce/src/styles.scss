@@ -1,3 +1,11 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+
+@font-face {
+  font-family: 'Edwardian Script';
+  src: url(../public/fonts/edwardianscriptitc.ttf);
+}
+
 :root{
   --maroon-800: #501419;
   --maroon-700: #741c21;
@@ -24,7 +32,6 @@
   --yellow-star: #fba707;
   --yellow-600: #ca8a04;
   --emerald-500: #00bc7d;
-
   --inter: 'Inter', sans-serif;
   --zain: 'Zain', sans-serif;
   --mulish: 'Mulish', sans-serif;
@@ -33,12 +40,7 @@
 
   --13px: 13px;
 }
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
-@import 'tailwindcss';
-@font-face {
-  font-family: 'Edwardian Script';
-  src: url(../public/fonts/edwardianscriptitc.ttf);
-}
+
 @theme {
   --color-maroon-800: var(--maroon-800);
   --color-maroon-700: var(--maroon-700);
