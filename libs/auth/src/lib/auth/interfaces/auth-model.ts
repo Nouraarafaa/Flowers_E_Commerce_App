@@ -6,4 +6,5 @@ export interface AuthModel {
     email: string;
     id: string;
     role: string;
+    photo:string;
 }

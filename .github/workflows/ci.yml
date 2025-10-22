@@ -30,31 +30,14 @@ jobs:
       - run: npm ci --legacy-peer-deps
       - uses: nrwl/nx-set-shas@v4
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
       # Run lint, test, and build on affected projects
       - run: npx nx affected -t lint test build
-=======
-=======
-      # Run lint, test, and build on affected projects
-      - run: npx nx affected -t lint test build
->>>>>>> 088c426fbd5693d908ede3596393981f2e5a7a8e
-=======
-      # Run lint, test, and build on affected projects
-      - run: npx nx affected -t lint test build
->>>>>>> 088c426fbd5693d908ede3596393981f2e5a7a8e
+
+     
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: npx nx-cloud record -- echo Hello World
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
       # When you enable task distribution, run the e2e-ci task instead of e2e
       - run: npx nx affected -t lint test build e2e --no-cloud
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 2f9cc942837cb797373fde0ee342287c31828184
-=======
 
->>>>>>> 088c426fbd5693d908ede3596393981f2e5a7a8e
-=======
-
->>>>>>> 088c426fbd5693d908ede3596393981f2e5a7a8e

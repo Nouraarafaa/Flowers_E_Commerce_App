@@ -14,10 +14,7 @@ export abstract class AuthAPI {
     abstract forgotPassword(data: ForgotPasswordPayload): Observable<ForgotPasswordResponse>;
     abstract verifyCode(data: VerifyCodePayload): Observable<VerifyCodeResponse>;
     abstract resetPassword(data: ResetPasswordPayload): Observable<ResetOrChangePasswordResponse>
-    abstract deleteMyAccount(): Observable<MessageResponse>
-    abstract editProflie(data: EditProfliePayload): Observable<LoggedUserDataResponse>
-    abstract saveUserData(): void;
-    abstract isLoggedInUser(): boolean;
-    abstract clearSession(): void;
+
+   
 
 }

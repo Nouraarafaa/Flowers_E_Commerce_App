@@ -19,6 +19,7 @@ export class AuthAPIAdaptorService implements Adaptor {
       email: data.user.email,
       id: data.user._id,
       role: data.user.role,
+      photo:data.user.photo
     };
   }
 
