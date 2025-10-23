@@ -1,30 +1,23 @@
-@if(control.errors && control.touched && !control.getError('mismatch')) {
-@if(control.getError('required')) {
+@if (control.errors && control.touched && !control.getError('mismatch')) {
 <div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    @switch (firstErrorKey) {
+    @case ('required') {
     This input is required.
-</div>
-}
-@if(control.getError('minlength')) {
-<div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    }
+    @case ('minlength') {
     @if(inputName === 'username') {
     Username must be at least 5 characters.
     }
-</div>
-}
-@if(control.getError('maxlength')) {
-<div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    }
+    @case ('maxlength') {
     @if(inputName === 'username') {
     Username must not exceed 20 characters.
     }
-</div>
-}
-@if(control.getError('email')) {
-<div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    }
+    @case ('email') {
     Please enter a valid email address.
-</div>
-}
-@if(control.getError('pattern')) {
-<div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    }
+    @case ('pattern') {
     @if(inputName === 'password' || inputName === 'newPassword') {
     Invalid password.
     <ul class="list-decimal ps-10">
@@ -41,9 +34,12 @@
     } @else if(inputName === 'lastName') {
     Last name must contain only letters.
     } @else if(inputName === 'resetCode') {
-        
     The input must be exactly 6 digits.
     }
+    }
+    @default {
+    Input is invalid.
+    }
+    }
 </div>
-}
 }

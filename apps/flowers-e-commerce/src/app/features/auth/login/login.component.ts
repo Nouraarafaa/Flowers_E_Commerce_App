@@ -18,7 +18,6 @@ export class LoginComponent {
     this.form = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
-      phone: ['', [Validators.required]]
     });
   }
 
