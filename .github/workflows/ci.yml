@@ -13,29 +13,30 @@ permissions:
 jobs:
   main:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # Must be 0 so Nx can compare base/head
+          filter: tree:0
+          fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      # Enable Nx Cloud task distribution (optional)
+      # - run: npx nx start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+      - run: npm ci --legacy-peer-deps
+      - uses: nrwl/nx-set-shas@v4
 
-      # Sets NX_BASE and NX_HEAD automatically using the GitHub PR context
-      - name: Set SHAs for Nx Affected Commands
-        uses: nrwl/nx-set-shas@v4
 
-      #  Run Nx affected with explicit base and head
-      - name: Run Nx affected commands
-        env:
-          NX_BASE: origin/main    # <--- base branch for comparisons
-          NX_HEAD: HEAD
-        run: npx nx affected -t lint test build --verbose
+      # Run lint, test, and build on affected projects
+      - run: npx nx affected -t lint test build
+
+     
+      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
+      # - run: npx nx-cloud record -- echo Hello World
+      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
+      # When you enable task distribution, run the e2e-ci task instead of e2e
+      - run: npx nx affected -t lint test build e2e --no-cloud
