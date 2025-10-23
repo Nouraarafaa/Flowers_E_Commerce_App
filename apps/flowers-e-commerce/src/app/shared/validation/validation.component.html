@@ -1,0 +1,49 @@
+@if(control.errors && control.touched && !control.getError('mismatch')) {
+@if(control.getError('required')) {
+<div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    This input is required.
+</div>
+}
+@if(control.getError('minlength')) {
+<div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    @if(inputName === 'username') {
+    Username must be at least 5 characters.
+    }
+</div>
+}
+@if(control.getError('maxlength')) {
+<div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    @if(inputName === 'username') {
+    Username must not exceed 20 characters.
+    }
+</div>
+}
+@if(control.getError('email')) {
+<div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    Please enter a valid email address.
+</div>
+}
+@if(control.getError('pattern')) {
+<div class="bg-red-100 text-red-700 px-4 py-2 mt-1 mb-0 text-sm rounded">
+    @if(inputName === 'password' || inputName === 'newPassword') {
+    Invalid password.
+    <ul class="list-decimal ps-10">
+        <li>At least one uppercase English letter</li>
+        <li>At least one lowercase English letter</li>
+        <li>At least one digit</li>
+        <li>At least one special character</li>
+        <li>Minimum length of eight characters</li>
+    </ul>
+    } @else if(inputName === 'phone') {
+    The number must start with 01(0,1,2,5) and be exactly 11 characters long.
+    } @else if(inputName === 'firstName') {
+    First name must contain only letters.
+    } @else if(inputName === 'lastName') {
+    Last name must contain only letters.
+    } @else if(inputName === 'resetCode') {
+        
+    The input must be exactly 6 digits.
+    }
+</div>
+}
+}

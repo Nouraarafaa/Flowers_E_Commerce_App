@@ -1,5 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { ValidationComponent } from "../validation/validation.component";
 
 @Component({
   selector: 'app-inputs',
@@ -11,27 +12,27 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       useExisting: forwardRef(() => InputsComponent),
       multi: true
     }
-  ]
+  ],
+  imports: [ValidationComponent]
 })
 export class InputsComponent implements ControlValueAccessor {
   @Input() label!: string;
-  @Input() type = 'text';
+  @Input() type: 'text' | 'password' | 'number' | 'email' = 'text';
   @Input() placeholder = '';
+  @Input() control!: FormControl; 
 
   value = '';
   disabled = false;
 
-  public onChange = (value: any) => { /* empty */ };
-  public onTouched = () => { /* empty */ };
+  public onChange = (value: any) => {/* */};
+  public onTouched = () => {/* */};
 
-  // Triggered when input value changes
   onInput(event: Event) {
     const input = event.target as HTMLInputElement;
     this.value = input.value;
     this.onChange(this.value);
   }
 
-  // ControlValueAccessor interface methods:
   writeValue(value: any): void {
     this.value = value || '';
   }
