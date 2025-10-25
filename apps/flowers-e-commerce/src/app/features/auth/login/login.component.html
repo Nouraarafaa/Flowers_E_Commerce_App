@@ -1,0 +1,24 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <app-inputs
+    label="Username"
+    formControlName="username"
+    placeholder="Enter your username"
+  ></app-inputs>
+
+  <app-inputs
+    label="Password"
+    formControlName="password"
+    [type]="InputType.Password"
+    placeholder="Enter your password"
+  ></app-inputs>
+
+  <app-inputs
+    label="Phone Number"
+    formControlName="phone"
+    [type]="InputType.Number"
+    placeholder="Enter your phone number"
+  ></app-inputs>
+
+  <button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
