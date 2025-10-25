@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthAPIAdaptorService } from './adaptor/auth-api.adapter';
 import { BASE_URL } from './base-url';
 import { map, Observable } from 'rxjs';
-import { ChangePasswordPayload, ForgotPasswordPayload, LoginPayload, RegisterPayload, ResetPasswordPayload, VerifyCodePayload } from './interfaces/payload';
+import { ChangePasswordPayload, EditProfliePayload, ForgotPasswordPayload, LoginPayload, RegisterPayload, ResetPasswordPayload, VerifyCodePayload } from './interfaces/payload';
 import { AuthAPI } from './base/AuthAPI';
 import { AuthModel } from './interfaces/auth-model';
 import { AuthResponse, ForgotPasswordResponse, LoggedUserDataResponse, MessageResponse, ResetOrChangePasswordResponse, VerifyCodeResponse } from './interfaces/response';
@@ -66,7 +66,15 @@ export class AuthService implements AuthAPI {
   }
   // Forgot Password end
 
+deleteMyAccount(): Observable<MessageResponse> {
+    return this._httpClient.delete<MessageResponse>(this._BASEURL + AuthEndPoint.DeleteAccount);
 
+  }
+
+  editProflie(data: EditProfliePayload): Observable<LoggedUserDataResponse> {
+    return this._httpClient.put<LoggedUserDataResponse>(this._BASEURL + AuthEndPoint.EditProfile, data);
+
+  }
 
 
 }

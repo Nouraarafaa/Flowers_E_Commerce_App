@@ -28,9 +28,7 @@ export interface ResetPasswordPayload {
 export interface EditProfliePayload {
   lastName: string;
 }
-export interface ChangeUserRolePayload {
-  role: string;
-}
+
 export interface JwtPayload {
     id: string
     role: string
