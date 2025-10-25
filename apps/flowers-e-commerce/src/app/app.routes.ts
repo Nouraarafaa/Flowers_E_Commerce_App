@@ -1,4 +1,6 @@
 import { Route } from '@angular/router';
+import { AuthLayoutComponent } from './core/layouts/auth_layout/auth_layout.component';
+import { MainLayoutComponent } from './core/layouts/main_layout/main_layout.component';
 
 export const appRoutes: Route[] = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },

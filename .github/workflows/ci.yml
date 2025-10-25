@@ -41,6 +41,9 @@ jobs:
       # When you enable task distribution, run the e2e-ci task instead of e2e
       - run: npx nx affected -t lint test build e2e --no-cloud
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> f86a1878e2d37841b2ef435215d5975f9f76b757
+=======
+>>>>>>> addcccf08fa01a784fe656ad0bf572540b2fd890
