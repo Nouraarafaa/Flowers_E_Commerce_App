@@ -15,6 +15,4 @@ export abstract class AuthAPI {
     abstract verifyCode(data: VerifyCodePayload): Observable<VerifyCodeResponse>;
     abstract resetPassword(data: ResetPasswordPayload): Observable<ResetOrChangePasswordResponse>
 
-   
-
 }

@@ -1,1 +1,8 @@
-<p>auth-layout works!</p>
+<section class="flex justify-center items-center min-h-screen">
+    <div class="w-full lg:w-1/2">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="hidden lg:block lg:w-1/2">
+        <app-auth-intro></app-auth-intro>
+    </div>
+</section>

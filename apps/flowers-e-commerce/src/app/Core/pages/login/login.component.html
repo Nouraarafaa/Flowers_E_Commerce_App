@@ -1,0 +1,67 @@
+<section class="flex justify-center min-h-screen">
+
+    <div class="flex justify-center items-center flex-col gap-10 my-10">
+        
+        <div class="language w-full flex justify-end">
+            <h2 class="text-black text-[16px] font-zain">العربيه</h2>
+        </div>
+
+        <div class="decor">
+            <app-decor-top></app-decor-top>
+        </div>
+
+        <div>
+            <p class="text-3xl text-maroon-700  font-Edwardian">Welcome back!</p>
+        </div>
+
+        <div class="form w-[410px] h-auto border-y border-[#E4E4E7] py-8">
+            <form [formGroup]="loginForm" (ngSubmit)="submitForm()" class="flex flex-col gap-8">
+
+                <div class="email"> 
+                    @let emailControl = loginForm.get("email");
+                    <label for="email" class="text-black text-[14px] font-inter font-medium">Email</label>
+                    <app-form-input formControlName="email" [id]="'email'" [type]="'email'" [nameControl]="emailControl" [placeholder]="'Email...'"></app-form-input>
+                    <app-error-message [nameControl]="emailControl"></app-error-message>
+                </div>
+                <div class="password relative"> 
+                    @let passwordControl = loginForm.get("password");
+                    <label for="password" class="text-black text-[14px] font-inter font-medium">Password</label>
+                    <app-form-input formControlName="password" [id]="'password'" [type]="togglePassword() ? 'text' : 'password'" [nameControl]="passwordControl" [placeholder]="'Password...'" ></app-form-input>                
+                    @if (togglePassword()) {
+                        <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye"></i> </span>
+                    }@else {    
+                        <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye-slash"></i> </span>
+                    }
+                    <app-error-message [nameControl]="passwordControl"></app-error-message>
+                </div>
+
+                <div class="flex justify-end w-full">
+                    <a routerLink="/forgot-password" class="text-maroon-700 hover:text-maroon-500 transition-colors duration-300">Forgot your password?</a>
+                </div>
+                
+                <p-button [loading]="isCallingAPI()" [disabled]="isCallingAPI()" type="submit" label="Login" aria-labelledby="auth-continue" styleClass="w-full !bg-maroon-600 hover:!bg-maroon-700 !transition-colors !duration-300 !shadow-[0px_18px_30px_0px_#2F1C1C1A] h-[41px] !px-4 py-3.5 !gap-2 !rounded-[10px] text-[#FFFFFF] text-[16px] !font-normal !border-none !outline-none" />
+                
+                @if (success()) {
+                    <div class="p-2 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                        <span class="font-inter font-medium"> {{success()}} </span>
+                    </div>
+                }
+                @else if (errorMsg()) { 
+                    <div class="p-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-inter font-medium"> {{errorMsg()}} </span>
+                    </div>
+                }
+            </form>
+        </div>
+        
+        <div class="logIn flex justify-center text-[16px] font-inter font-medium">
+            <p class="text-[#313131]">Don’t have an account yet?</p> <a routerLink="/register" class="text-maroon-700 hover:text-maroon-500 transition-colors duration-300 pl-1">Create one now!</a>
+        </div>
+
+        <div class="decor">
+            <app-decor-bottom></app-decor-bottom>
+        </div>
+
+    </div>
+
+</section>

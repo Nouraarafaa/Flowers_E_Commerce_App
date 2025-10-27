@@ -1,45 +1,19 @@
 import { Route } from '@angular/router';
-import { AuthLayoutComponent } from './core/layouts/auth_layout/auth_layout.component';
-import { MainLayoutComponent } from './core/layouts/main_layout/main_layout.component';
+import { loggedGuard } from './Core/guards/logged/logged.guard';
+import { authGuard } from './Core/guards/auth/auth.guard';
+
 
 export const appRoutes: Route[] = [
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
 
-  {
-    path: 'auth',
-    component: AuthLayoutComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full',
-      },
-      {
-        path: 'login',
-        loadComponent: () =>
-          import('./features/auth/login/login.component').then(
-            (m) => m.LoginComponent
-          ),
-      },
-      {
-        path: 'register',
-        loadComponent: () =>
-          import('./features/auth/register/register.component').then(
-            (m) => m.RegisterComponent
-          ),
-      },
-      {
-        path: 'forget-password',
-        loadComponent: () =>
-          import(
-            './features/auth/forget_password/forget_password.component'
-          ).then((m) => m.ForgetPasswordComponent),
-      },
-    ],
-  },
-  {
-    path: '',
-    component: MainLayoutComponent,
-    children: [],
-  },
+    { path:"", canActivate:[loggedGuard], loadComponent:()=> import('./Core/layouts/auth-layout/auth-layout.component').then( (c)=> c.AuthLayoutComponent ), children:[
+        { path:"", redirectTo:"login", pathMatch:"full"},
+        { path:"login", loadComponent:()=> import('./Core/pages/login/login.component').then( (c)=>c.LoginComponent), title:"Login" },
+        { path:"register", loadComponent:()=> import('./Core/pages/register/register.component').then( (c)=>c.RegisterComponent), title:"Register" },
+        { path:"forgot-password", loadComponent:()=> import('./Core/pages/forgot-password/forgot-password.component').then( (c)=>c.ForgotPasswordComponent), title:"Forgot Password" }
+    ]},
+    { path:"", canActivate:[authGuard], loadComponent:()=> import('./Core/layouts/main-layout/main-layout.component').then( (c)=> c.MainLayoutComponent ), children:[
+        {path:"", redirectTo:"home", pathMatch:"full"},
+        {path:"home", loadComponent:() => import('./Features/pages/home/home.component').then( (c)=> c.HomeComponent ), title:"Home"}
+    ] }
+
 ];

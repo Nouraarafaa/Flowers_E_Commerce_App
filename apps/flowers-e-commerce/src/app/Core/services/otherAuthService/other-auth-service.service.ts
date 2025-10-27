@@ -20,16 +20,12 @@ export class OtherAuthServiceService implements OtherAuthApis {
   userData: BehaviorSubject<JwtPayload | null> = new BehaviorSubject<JwtPayload | null>(null);
 
 
-
-
   deleteMyAccount(): Observable<MessageResponse> {
     return this._httpClient.delete<MessageResponse>(this._BASEURL + AuthEndPoint.DeleteAccount);
-
   }
 
   editProflie(data: EditProfliePayload): Observable<LoggedUserDataResponse> {
     return this._httpClient.put<LoggedUserDataResponse>(this._BASEURL + AuthEndPoint.EditProfile, data);
-
   }
 
   // Decode The Token
@@ -48,8 +44,6 @@ export class OtherAuthServiceService implements OtherAuthApis {
       return false;
     }
   }
-
-
 
 
   // Clear local data + navigate

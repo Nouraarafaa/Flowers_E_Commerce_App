@@ -8,7 +8,6 @@ import { Adaptor } from '../interfaces/adaptor';
   providedIn: 'root',
 })
 export class AuthAPIAdaptorService implements Adaptor {
-  constructor() {}
   
   adapt(data: AuthResponse):AuthModel {
     return {
@@ -22,6 +21,5 @@ export class AuthAPIAdaptorService implements Adaptor {
       photo:data.user.photo
     };
   }
-
 
 }

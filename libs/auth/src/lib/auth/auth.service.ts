@@ -9,7 +9,6 @@ import { AuthModel } from './interfaces/auth-model';
 import { AuthResponse, ForgotPasswordResponse, LoggedUserDataResponse, MessageResponse, ResetOrChangePasswordResponse, VerifyCodeResponse } from './interfaces/response';
 import { AuthEndPoint } from './enums/AuthEndPoint';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,8 +17,6 @@ export class AuthService implements AuthAPI {
   private readonly _httpClient = inject(HttpClient);
   private readonly _authAPIAdaptorService = inject(AuthAPIAdaptorService);
   private readonly _BASEURL = inject(BASE_URL);
-
-
 
 
   register(data: RegisterPayload): Observable<AuthModel> {
@@ -31,6 +28,24 @@ export class AuthService implements AuthAPI {
     return this._httpClient.post<AuthResponse>(this._BASEURL + AuthEndPoint.SignIn, data)
       .pipe(map((res) => this._authAPIAdaptorService.adapt(res)));
   }
+
+
+  // Forgot Password
+  forgotPassword(data: ForgotPasswordPayload): Observable<ForgotPasswordResponse> {
+    return this._httpClient.post<ForgotPasswordResponse>(this._BASEURL + AuthEndPoint.forgotPassword, data)
+
+  }
+
+  verifyCode(data: VerifyCodePayload): Observable<VerifyCodeResponse> {
+    return this._httpClient.post<VerifyCodeResponse>(this._BASEURL + AuthEndPoint.Verify, data)
+
+  }
+
+  resetPassword(data: ResetPasswordPayload): Observable<ResetOrChangePasswordResponse> {
+    return this._httpClient.put<ResetOrChangePasswordResponse>(this._BASEURL + AuthEndPoint.ResetPassword, data)
+
+  }
+
 
   changePassword(data: ChangePasswordPayload): Observable<ResetOrChangePasswordResponse> {
     return this._httpClient.patch<ResetOrChangePasswordResponse>(this._BASEURL + AuthEndPoint.ChangePassword, data);
@@ -49,25 +64,6 @@ export class AuthService implements AuthAPI {
   logout(): Observable<MessageResponse> {
     return this._httpClient.get<MessageResponse>(this._BASEURL + AuthEndPoint.Logout);
   }
-  // Forgot Password
-  forgotPassword(data: ForgotPasswordPayload): Observable<ForgotPasswordResponse> {
-    return this._httpClient.post<ForgotPasswordResponse>(this._BASEURL + AuthEndPoint.forgotPassword, data)
-
-  }
-
-  verifyCode(data: VerifyCodePayload): Observable<VerifyCodeResponse> {
-    return this._httpClient.post<VerifyCodeResponse>(this._BASEURL + AuthEndPoint.Verify, data)
-
-  }
-
-  resetPassword(data: ResetPasswordPayload): Observable<ResetOrChangePasswordResponse> {
-    return this._httpClient.put<ResetOrChangePasswordResponse>(this._BASEURL + AuthEndPoint.ResetPassword, data)
-
-  }
-  // Forgot Password end
-
-
 
 
 }
-

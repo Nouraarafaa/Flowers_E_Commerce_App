@@ -31,6 +31,7 @@
   --Edwardian: 'Edwardian Script';
 
   --13px: 13px;
+  --16px: 16px;
 }
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
 @import 'tailwindcss';
@@ -39,6 +40,8 @@
 }
 @theme {
   --color-maroon-500: var(--maroon-500);
+  --color-maroon-600: var(--maroon-600);
+  --color-maroon-700: var(--maroon-700);
   --color-maroon-50: var(--maroon-50);
   --color-zinc-800: var(--zinc-800);
   --color-zinc-700: var(--zinc-700);
@@ -68,4 +71,5 @@
   --font-Edwardian: var(--Edwardian);
 
   --text-13px: var(--13px);
+  --text-16px: var(--16px);
 }
