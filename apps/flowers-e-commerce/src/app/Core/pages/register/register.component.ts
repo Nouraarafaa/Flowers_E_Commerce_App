@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject,  OnDestroy,  OnInit,  signal, WritableSignal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
 import { finalize, Subject, takeUntil, timer } from 'rxjs';
 import { FormInputComponent } from "../../../Shared/components/ui/form-input/form-input.component";
 import { ErrorMessageComponent } from "../../../Shared/components/ui/error-message/error-message.component";
@@ -10,17 +9,20 @@ import { AuthService } from '@elevate-workspace/auth';
 import { DecorTopComponent } from "../../../Shared/components/ui/decor-top/decor-top.component";
 import { DecorBottomComponent } from "../../../Shared/components/ui/decor-bottom/decor-bottom.component";
 import { NgClass } from '@angular/common';
+import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
+import { DropdownModule } from 'primeng/dropdown';
+import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink, ButtonModule, FormInputComponent, ErrorMessageComponent, DecorTopComponent, DecorBottomComponent, NgClass],
+  imports: [ReactiveFormsModule, RouterLink, FormInputComponent, ErrorMessageComponent, DecorTopComponent, DecorBottomComponent, NgClass, AuthStatusComponent, DropdownModule, ButtonComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
   registerForm!:FormGroup;
-  private readonly _authService = inject(AuthService)
+  private readonly _authService = inject(AuthService);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _router = inject(Router);
   private destroy$ = new Subject<void>();
@@ -54,7 +56,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   submitForm(): void{
-    console.log(this.registerForm.value);
     if (this.registerForm.valid) {
       this.errorMsg.set("");
       if (!this.isCallingAPI()) {
@@ -63,7 +64,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this._authService.register(this.registerForm.value)
         .pipe(takeUntil(this.destroy$), finalize(()=> this.isCallingAPI.set(false))).subscribe({
           next:(res)=>{
-            console.log(res);
             if (res.message === "success") {
               timer(1000).pipe(takeUntil(this.destroy$)).subscribe(()=>{
                 this._router.navigate(['/login'])
@@ -72,14 +72,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
             }
           },
           error:(err: HttpErrorResponse)=>{
-            console.log(err);
             if (err.error.error) {
               this.errorMsg.set(err.error.error);
             }
           }
         })
       }
-
     }else{
       this.registerForm.markAllAsTouched();
     }
@@ -90,9 +88,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.togglePassword.update(prev => !prev);
   }
 
+  genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ];
+
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

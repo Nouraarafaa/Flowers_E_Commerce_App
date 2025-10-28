@@ -6,13 +6,16 @@ import { AuthService } from '@elevate-workspace/auth';
 import { finalize, Subject, takeUntil, timer } from 'rxjs';
 import { FormInputComponent } from "../../../Shared/components/ui/form-input/form-input.component";
 import { ErrorMessageComponent } from "../../../Shared/components/ui/error-message/error-message.component";
-import { Button } from "primeng/button";
 import { DecorTopComponent } from "../../../Shared/components/ui/decor-top/decor-top.component";
 import { DecorBottomComponent } from "../../../Shared/components/ui/decor-bottom/decor-bottom.component";
+import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
+import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
+import { InputOtp } from 'primeng/inputotp';
+// import { OtherAuthApis } from '../../base/otherAuthApis';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, Button, DecorTopComponent, DecorBottomComponent, RouterLink],
+  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, DecorTopComponent, DecorBottomComponent, RouterLink, AuthStatusComponent, ButtonComponent, InputOtp],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
@@ -24,6 +27,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   resetPassword!: FormGroup;
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authService = inject(AuthService);  
+  // private readonly _otherAuthApis = inject(OtherAuthApis);  
   private readonly _router = inject(Router);
   private destroy$ = new Subject<void>();
 
@@ -48,17 +52,23 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     email: [null, [Validators.required, Validators.email]],
     });
   }
+  
   initVerifyCode(): void {
     this.verifyCode = this._formBuilder.group({
     resetCode: [null, [Validators.required, Validators.pattern(/^\w{5,6}$/)]],
     });
   }
+  onOtpComplete(code: any) {
+    this.verifyCode.get('resetCode')?.setValue(code);
+  }
+
   initResetPassword(): void {
     this.resetPassword = this._formBuilder.group({
     email: [null, [Validators.required, Validators.email]],
     newPassword:[null, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/) ]]
     })
   }
+
 
   verifyEmailSubmit(): void {
     if (this.verifyEmail.valid) {
@@ -122,6 +132,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
           if (res.message === "success") {
             timer(1000).pipe(takeUntil(this.destroy$)).subscribe(()=>{
               localStorage.setItem("flowersEcommerceToken", res.token);
+              // this._otherAuthApis.saveUserData();
               this._router.navigate(['/home']);
             })
             this.successPassword.set(res.message)
@@ -141,6 +152,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   togglePasswordVisibility(): void {
     this.togglePassword.update(prev => !prev);
   }
+
+
 
   ngOnDestroy(): void {
     this.destroy$.next();

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AuthModel } from '../interfaces/auth-model';
-import { AuthResponse } from '../interfaces/response';
+import { AuthResponse } from '../interfaces/auth-response';
 import { Adaptor } from '../interfaces/adaptor';
 
 @Injectable({

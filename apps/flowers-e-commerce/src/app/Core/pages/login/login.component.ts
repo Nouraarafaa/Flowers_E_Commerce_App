@@ -6,20 +6,23 @@ import { AuthService } from '@elevate-workspace/auth';
 import { Router, RouterLink } from '@angular/router';
 import { finalize, Subject, takeUntil, timer } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Button } from "primeng/button";
 import { FormInputComponent } from "../../../Shared/components/ui/form-input/form-input.component";
 import { ErrorMessageComponent } from "../../../Shared/components/ui/error-message/error-message.component";
+import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
+import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
+// import { OtherAuthApis } from '../../base/otherAuthApis';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, DecorTopComponent, DecorBottomComponent, Button, FormInputComponent, ErrorMessageComponent, ɵInternalFormsSharedModule, RouterLink],
+  imports: [ReactiveFormsModule, DecorTopComponent, DecorBottomComponent, FormInputComponent, ErrorMessageComponent, ɵInternalFormsSharedModule, RouterLink, AuthStatusComponent, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm!:FormGroup;
-  private readonly _authService = inject(AuthService)
+  private readonly _authService = inject(AuthService);
+  // private readonly _otherAuthApis = inject(OtherAuthApis);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _router = inject(Router);
   private destroy$ = new Subject<void>();
@@ -41,7 +44,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   submitForm(): void{
-    console.log(this.loginForm.value);
     if (this.loginForm.valid) {
       this.errorMsg.set("");
       if (!this.isCallingAPI()) {
@@ -49,17 +51,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         this._authService.login(this.loginForm.value)
         .pipe(takeUntil(this.destroy$), finalize(()=> this.isCallingAPI.set(false))).subscribe({
           next:(res)=>{
-            console.log(res);
             if (res.message === "success") {
               timer(1000).pipe(takeUntil(this.destroy$)).subscribe(()=>{
                 localStorage.setItem("flowersEcommerceToken", res.token);
+                // this._otherAuthApis.saveUserData();
                 this._router.navigate(['/home']);
               })
               this.success.set(res.message);
             }
           },
           error:(err: HttpErrorResponse)=>{
-            console.log(err);
             if (err.error.error) {
               this.errorMsg.set(err.error.error);
             }

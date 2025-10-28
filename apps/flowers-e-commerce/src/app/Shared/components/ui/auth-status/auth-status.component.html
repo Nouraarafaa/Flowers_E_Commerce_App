@@ -1,0 +1,18 @@
+@if (message()) {
+    <div
+        class="flex items-center gap-2 p-3 rounded-lg border font-inter font-medium"
+        [ngClass]="{
+        'bg-green-50 border-green-200 text-green-700': type() === 'success',
+        'bg-red-50 border-red-200 text-red-700': type() === 'error'
+        }"
+    >
+        <i
+        [ngClass]="{
+            'fa-solid': true,
+            'fa-circle-check text-green-600': type() === 'success',
+            'fa-circle-xmark text-red-600': type() === 'error',
+        }"
+        ></i>
+        <span>{{ message() }}</span>
+    </div>
+}

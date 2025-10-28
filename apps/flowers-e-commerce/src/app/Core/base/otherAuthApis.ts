@@ -1,5 +1,5 @@
-import { EditProfliePayload} from "libs/auth/src/lib/auth/interfaces/payload";
-import { LoggedUserDataResponse, MessageResponse} from "libs/auth/src/lib/auth/interfaces/response";
+import { EditProfliePayload } from "libs/auth/src/lib/auth/interfaces/auth-payload";
+import { LoggedUserDataResponse, MessageResponse } from "libs/auth/src/lib/auth/interfaces/auth-response";
 import { Observable } from "rxjs";
 
 
