@@ -3,10 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BASE_URL } from '@elevate-workspace/auth';
 import { jwtDecode } from 'jwt-decode';
-import { AuthEndPoint } from 'libs/auth/src/lib/auth/enums/AuthEndPoint';
-import { EditProfliePayload, JwtPayload } from 'libs/auth/src/lib/auth/interfaces/auth-payload';
-import { LoggedUserDataResponse, MessageResponse } from 'libs/auth/src/lib/auth/interfaces/auth-response';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { JwtPayload } from 'libs/auth/src/lib/auth/interfaces/auth-payload';
+import { BehaviorSubject } from 'rxjs';
 import { OtherAuthApis } from '../../base/otherAuthApis';
 
 @Injectable({
@@ -34,19 +32,6 @@ export class OtherAuthServiceService implements OtherAuthApis {
     } else {
       return false;
     }
-  }
-
-  deleteMyAccount(): Observable<MessageResponse> {
-    return this._httpClient.delete<MessageResponse>(
-      this._BASEURL + AuthEndPoint.DeleteAccount
-    );
-  }
-
-  editProflie(data: EditProfliePayload): Observable<LoggedUserDataResponse> {
-    return this._httpClient.put<LoggedUserDataResponse>(
-      this._BASEURL + AuthEndPoint.EditProfile,
-      data
-    );
   }
 
   // Clear local data + navigate

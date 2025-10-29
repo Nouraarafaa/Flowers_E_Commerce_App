@@ -1,15 +1,7 @@
-<section class="flex justify-center min-h-screen">
+<section class="flex justify-center">
 
-    <div class="flex justify-center items-center flex-col gap-10 my-10">
+    <div class="flex flex-col justify-center items-center gap-10">
         
-        <div class="language w-full flex justify-end">
-            <h2 class="text-black text-[16px] font-zain">العربيه</h2>
-        </div>
-
-        <div class="decor">
-            <app-decor-top></app-decor-top>
-        </div>
-
         <div>
             <p class="text-5xl text-maroon-700  font-Edwardian">Welcome back!</p>
         </div>
@@ -28,7 +20,7 @@
                     <label for="password" class="text-black text-[14px] font-inter font-medium">Password</label>
                     <app-form-input formControlName="password" [id]="'password'" [type]="togglePassword() ? 'text' : 'password'" [nameControl]="passwordControl" [placeholder]="'Password...'" ></app-form-input>                
                     @if (togglePassword()) {
-                        <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye text-zinc-400"></i> </span>
+                        <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye"></i> </span>
                     }@else {    
                         <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye-slash text-zinc-400"></i> </span>
                     }
@@ -53,10 +45,6 @@
         
         <div class="logIn flex justify-center text-[16px] font-inter font-medium">
             <p class="text-[#313131]">Don’t have an account yet?</p> <a routerLink="/register" class="text-maroon-700 hover:text-maroon-500 transition-colors duration-300 pl-1">Create one now!</a>
-        </div>
-
-        <div class="decor">
-            <app-decor-bottom></app-decor-bottom>
         </div>
 
     </div>

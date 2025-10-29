@@ -6,8 +6,6 @@ import { finalize, Subject, takeUntil, timer } from 'rxjs';
 import { FormInputComponent } from "../../../Shared/components/ui/form-input/form-input.component";
 import { ErrorMessageComponent } from "../../../Shared/components/ui/error-message/error-message.component";
 import { AuthService } from '@elevate-workspace/auth';
-import { DecorTopComponent } from "../../../Shared/components/ui/decor-top/decor-top.component";
-import { DecorBottomComponent } from "../../../Shared/components/ui/decor-bottom/decor-bottom.component";
 import { NgClass } from '@angular/common';
 import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
 import { DropdownModule } from 'primeng/dropdown';
@@ -15,7 +13,7 @@ import { ButtonComponent } from "../../../Shared/components/ui/button/button.com
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink, FormInputComponent, ErrorMessageComponent, DecorTopComponent, DecorBottomComponent, NgClass, AuthStatusComponent, DropdownModule, ButtonComponent],
+  imports: [ReactiveFormsModule, RouterLink, FormInputComponent, ErrorMessageComponent, NgClass, AuthStatusComponent, DropdownModule, ButtonComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })

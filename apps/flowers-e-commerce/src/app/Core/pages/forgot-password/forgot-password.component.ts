@@ -6,8 +6,6 @@ import { AuthService } from '@elevate-workspace/auth';
 import { finalize, Subject, takeUntil, timer } from 'rxjs';
 import { FormInputComponent } from "../../../Shared/components/ui/form-input/form-input.component";
 import { ErrorMessageComponent } from "../../../Shared/components/ui/error-message/error-message.component";
-import { DecorTopComponent } from "../../../Shared/components/ui/decor-top/decor-top.component";
-import { DecorBottomComponent } from "../../../Shared/components/ui/decor-bottom/decor-bottom.component";
 import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
 import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
 import { InputOtp } from 'primeng/inputotp';
@@ -15,7 +13,7 @@ import { InputOtp } from 'primeng/inputotp';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, DecorTopComponent, DecorBottomComponent, RouterLink, AuthStatusComponent, ButtonComponent, InputOtp],
+  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, RouterLink, AuthStatusComponent, ButtonComponent, InputOtp],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })

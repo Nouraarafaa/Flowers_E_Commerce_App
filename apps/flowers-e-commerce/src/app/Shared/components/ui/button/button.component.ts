@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -13,4 +13,8 @@ export class ButtonComponent {
   loading = input<boolean>(false);
   type = input<'button' | 'submit' | 'reset'>('button');
   styleClass = input<string>('');
+  clicked = output<void>();
+  onClick(){
+    this.clicked.emit();
+  }
 }

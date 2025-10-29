@@ -1,6 +1,4 @@
 import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
-import { DecorTopComponent } from "../../../Shared/components/ui/decor-top/decor-top.component";
-import { DecorBottomComponent } from "../../../Shared/components/ui/decor-bottom/decor-bottom.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { AuthService } from '@elevate-workspace/auth';
 import { Router, RouterLink } from '@angular/router';
@@ -14,7 +12,7 @@ import { ButtonComponent } from "../../../Shared/components/ui/button/button.com
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, DecorTopComponent, DecorBottomComponent, FormInputComponent, ErrorMessageComponent, ɵInternalFormsSharedModule, RouterLink, AuthStatusComponent, ButtonComponent],
+  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, ɵInternalFormsSharedModule, RouterLink, AuthStatusComponent, ButtonComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
