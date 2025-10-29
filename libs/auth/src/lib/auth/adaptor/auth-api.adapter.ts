@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { AuthModel } from '../interfaces/auth-model';
-import { AuthResponse } from '../interfaces/response';
+import { AuthResponse } from '../interfaces/auth-response';
 import { Adaptor } from '../interfaces/adaptor';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthAPIAdaptorService implements Adaptor {
-  constructor() {}
   
   adapt(data: AuthResponse):AuthModel {
     return {
@@ -22,6 +21,5 @@ export class AuthAPIAdaptorService implements Adaptor {
       photo:data.user.photo
     };
   }
-
 
 }

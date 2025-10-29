@@ -1,0 +1,116 @@
+<section class="flex justify-center">
+
+    <div class="flex justify-center items-center flex-col gap-10">
+        
+        <div>
+            <p class="text-5xl text-maroon-700  font-Edwardian">Become part of our family!</p>
+        </div>
+        <div class="form w-[410px] h-auto border-y border-[#E4E4E7] py-8">
+            <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="flex flex-col gap-8">
+                <div class="userName flex gap-5">
+                    <div class="firstName"> 
+                        @let firstNameControl = registerForm.get("firstName");
+                        <label for="firstName" class="text-black text-[14px] font-inter font-medium">First Name</label>
+                        <app-form-input formControlName="firstName" [id]="'firstName'" [type]="'text'" [nameControl]="firstNameControl" [placeholder]="'First Name...'" ></app-form-input>
+                        <app-error-message [nameControl]="firstNameControl"></app-error-message>
+                    </div> 
+                    <div class="lastName"> 
+                        @let lastNameControl = registerForm.get("lastName");
+                        <label for="lastName" class="text-black text-[14px] font-inter font-medium">Last Name</label>
+                        <app-form-input formControlName="lastName" [id]="'lastName'" [type]="'text'" [nameControl]="lastNameControl" [placeholder]="'Last Name...'" ></app-form-input>
+                        <app-error-message [nameControl]="lastNameControl"></app-error-message>
+                    </div> 
+                </div>
+                <div class="email"> 
+                    @let emailControl = registerForm.get("email");
+                    <label for="email" class="text-black text-[14px] font-inter font-medium">Email</label>
+                    <app-form-input formControlName="email" [id]="'email'" [type]="'email'" [nameControl]="emailControl" [placeholder]="'Email...'"></app-form-input>
+                    <app-error-message [nameControl]="emailControl"></app-error-message>
+                </div>
+                <div class="phone"> 
+                    @let phoneControl = registerForm.get("phone");
+                    <label for="phone" class="text-black text-[14px] font-inter font-medium">Phone</label>
+                    <app-form-input formControlName="phone" [id]="'phone'" [type]="'tel'" [nameControl]="phoneControl" [placeholder]="'Phone...'" ></app-form-input>                
+                    <app-error-message [nameControl]="phoneControl"></app-error-message>
+                </div>
+                <div class="gender"> 
+                    @let genderControl = registerForm.get("gender");
+                    <label for="gender" class="text-black text-[14px] font-inter font-medium">gender</label>
+                    <p-dropdown id="gender" [options]="genderOptions"
+                    optionLabel="label"
+                    optionValue="value"
+                    formControlName="gender"
+                    placeholder="Select your gender"
+                    class="w-full h-[49px]"
+                    [ngClass]="{
+                        'ng-invalid ng-dirty': genderControl?.invalid && genderControl?.touched
+                    }"
+                    styleClass="w-full rounded-[10px] border border-[#D4D4D8] text-[#111] text-sm font-inter font-medium placeholder:text-[#A1A1AA] focus:border-[#7A1D1D] focus:ring-2 focus:ring-[#7A1D1D]/20"
+                    />
+                    <app-error-message [nameControl]="genderControl"></app-error-message>
+                </div>
+                <div class="password relative"> 
+                    @let passwordControl = registerForm.get("password");
+                    <label for="password" class="text-black text-[14px] font-inter font-medium">Password</label>
+                    <app-form-input formControlName="password" [id]="'password'" [type]="togglePassword() ? 'text' : 'password'" [nameControl]="passwordControl" [placeholder]="'Password...'" ></app-form-input>                
+                    @if (togglePassword()) {
+                        <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye"></i> </span>
+                    }@else {    
+                        <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye-slash text-zinc-400"></i> </span>
+                    }
+                    <app-error-message [nameControl]="passwordControl"></app-error-message>
+                </div> 
+                <div class="rePassword relative">  
+                    @let rePasswordControl = registerForm.get("rePassword");
+                    <label for="rePassword" class="text-black text-[14px] font-inter font-medium">Confirm Password</label>
+                    <app-form-input formControlName="rePassword" [id]="'rePassword'" [type]="togglePassword() ? 'text' : 'password'" [nameControl]="rePasswordControl" [placeholder]="'rePassword...'" ></app-form-input>                
+                    @if (togglePassword()) {
+                        <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye"></i> </span>
+                    }@else {    
+                        <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye-slash text-zinc-400"></i> </span>
+                    }
+                    @if ( (rePasswordControl?.errors || registerForm.getError("misMatch")) && rePasswordControl?.touched ) {
+                        <div class="flex items-start gap-2 mt-1 mb-3 p-2 rounded-xl border border-red-200 bg-red-50 text-red-700 shadow-sm transition-all duration-300" role="alert">
+                            <svg
+                                class="w-5 h-5 mt-[2px] flex-shrink-0 text-red-500"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                >
+                                <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 2a10 10 0 100 20 10 10 0 000-20z"
+                                />
+                            </svg>
+                            <ul class="space-y-1 text-sm font-inter font-medium list-disc list-inside">
+                                @if (rePasswordControl?.getError("required")) {
+                                    <li>Required</li>
+                                }
+                                @else if (registerForm.getError("misMatch")) {
+                                    <li>Password and rePassword should match</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+
+                <app-button label="Create Account" type="submit" [loading]="isCallingAPI()"></app-button>
+                
+                @if (success()) {
+                    <app-auth-status [type]="'success'" [message]="success()" ></app-auth-status>
+                }
+                @else if (errorMsg()) { 
+                    <app-auth-status [type]="'error'" [message]="errorMsg()" ></app-auth-status>
+                }
+            </form>
+        </div>
+        
+        <div class="logIn flex justify-center text-[16px] font-inter font-medium">
+            <p class="text-[#313131]">Already have an account?</p> <a routerLink="/login" class="text-maroon-700 hover:text-maroon-500 transition-colors duration-300 pl-1">Login</a>
+        </div>
+
+    </div>
+
+</section>

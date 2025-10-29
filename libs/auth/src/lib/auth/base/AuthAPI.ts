@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
-import { ChangePasswordPayload, ChangeUserRolePayload, EditProfliePayload, ForgotPasswordPayload, LoginPayload, RegisterPayload, ResetPasswordPayload, VerifyCodePayload } from "../interfaces/payload";
+import { ChangePasswordPayload, ForgotPasswordPayload, LoginPayload, RegisterPayload, ResetPasswordPayload, VerifyCodePayload } from "../interfaces/auth-payload";
 import { AuthModel } from "../interfaces/auth-model";
-import { ForgotPasswordResponse, LoggedUserDataResponse, MessageResponse, ResetOrChangePasswordResponse, VerifyCodeResponse } from "../interfaces/response";
+import { ForgotPasswordResponse, LoggedUserDataResponse, MessageResponse, ResetOrChangePasswordResponse, VerifyCodeResponse } from "../interfaces/auth-response";
 
 export abstract class AuthAPI {
 
@@ -14,7 +14,5 @@ export abstract class AuthAPI {
     abstract forgotPassword(data: ForgotPasswordPayload): Observable<ForgotPasswordResponse>;
     abstract verifyCode(data: VerifyCodePayload): Observable<VerifyCodeResponse>;
     abstract resetPassword(data: ResetPasswordPayload): Observable<ResetOrChangePasswordResponse>
-
-   
 
 }

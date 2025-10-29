@@ -1,1 +1,23 @@
-<p>auth-layout works!</p>
+<section class="flex justify-center items-center min-h-screen">
+    <div class="w-full lg:w-1/2 flex flex-col justify-center items-center gap-10 py-10">
+
+        <div class="language w-[406px] flex justify-end">
+            <h2 class="text-black text-[16px] font-zain">العربيه</h2>
+        </div>
+
+        <div class="decor">
+            <app-decor-top></app-decor-top>
+        </div>
+
+        <router-outlet></router-outlet>
+        <!-- Register , Login , Forgot Password -->
+    
+        <div class="decor">
+            <app-decor-bottom></app-decor-bottom>
+        </div>
+    
+    </div>
+    <div class="hidden lg:block lg:w-1/2">
+        <app-auth-intro></app-auth-intro>
+    </div>
+</section>

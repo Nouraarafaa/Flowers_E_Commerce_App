@@ -1,0 +1,31 @@
+@if (nameControl()?.errors && nameControl()?.touched) {
+    <div
+        class="flex items-start gap-2 mt-1 mb-3 p-2 rounded-xl border border-red-200 bg-red-50 text-red-700 shadow-sm transition-all duration-300"role="alert">
+        <svg
+            class="w-5 h-5 mt-[2px] flex-shrink-0 text-red-500"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+        >
+            <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 2a10 10 0 100 20 10 10 0 000-20z"
+            />
+        </svg>
+        <ul class="space-y-1 text-sm font-medium list-disc list-inside">
+            @if (nameControl()?.getError('required')) {
+                <li>This field is required.</li>
+            } @else if (nameControl()?.getError('minlength')) {
+                <li>Minimum 3 characters required.</li>
+            } @else if (nameControl()?.getError('maxlength')) {
+                <li>Maximum 20 characters allowed.</li>
+            } @else if (nameControl()?.getError('email')) {
+                <li>Please enter a valid email address.</li>
+            } @else if (nameControl()?.getError('pattern')) {
+                <li>Invalid input pattern.</li>
+            }
+        </ul>
+    </div>
+}

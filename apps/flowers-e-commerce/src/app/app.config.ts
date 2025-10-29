@@ -7,13 +7,13 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { BASE_URL } from '@elevate-workspace/auth';
 import { environment } from './Core/environments/environment.prod';
-import { headersInterceptor } from './Core/interceptors/headers.interceptor';
+import { headerInterceptor } from './Core/interceptors/header/header.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling( {scrollPositionRestoration: "top"} ), withViewTransitions()),
-    provideHttpClient(withFetch(),withInterceptors([headersInterceptor])),
+    provideHttpClient(withFetch(),withInterceptors([headerInterceptor])),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
