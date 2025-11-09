@@ -16,6 +16,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 @Component({
   selector: 'app-register',
   imports: [ReactiveFormsModule, RouterLink, FormInputComponent, ErrorMessageComponent, NgClass, AuthStatusComponent, DropdownModule, ButtonComponent, InputGroupModule, InputGroupAddonModule],
+
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -47,6 +48,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       rePassword: [null, [Validators.required]]
     },{ validators: [this.validateRePassword]})
   }
+
   // Confirm Password
   validateRePassword(group:AbstractControl): ValidationErrors | null {
     const password = group.get("password")?.value 
@@ -92,7 +94,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     { label: 'Male', value: 'male' },
     { label: 'Female', value: 'female' },
   ];
-
 
   ngOnDestroy(): void {
     this.destroy$.next();

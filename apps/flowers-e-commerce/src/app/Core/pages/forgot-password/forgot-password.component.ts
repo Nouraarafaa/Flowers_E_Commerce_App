@@ -17,9 +17,9 @@ import { OtherAuthService } from '../../services/otherAuthService/other-auth.ser
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
+
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
-  
-  
+
   verifyEmail!: FormGroup;
   verifyCode!: FormGroup;
   resetPassword!: FormGroup;
@@ -80,21 +80,18 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     if (this.verifyEmail.valid) {
       this.errorMsgEmail.set("");
       this.isCallingAPI.set(true);
-      
       this.getCode();
     }else{
       this.verifyEmail.markAllAsTouched();
     }
   }
+  
   getCode(){
-      
       const emailValue = this.verifyEmail.get("email")?.value;
       this.resetPassword.get("email")?.patchValue(emailValue);
-
       const payload = {
         email: emailValue
       }
-
       this._authService.forgotPassword(payload)
       .pipe(takeUntil(this.destroy$), finalize( ()=> this.isCallingAPI.set(false) )).subscribe({
         next:(res)=>{
@@ -111,7 +108,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         }
       })
   }
-  
+
   verifyCodeSubmit(): void {
     if (this.verifyCode.valid) {
       this.errorMsgCode.set("");
@@ -175,5 +172,4 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

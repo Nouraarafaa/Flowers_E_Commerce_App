@@ -12,6 +12,10 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface ChangePasswordPayload {
+  password: string;
+  newPassword: string;
+}
 export interface ForgotPasswordPayload {
   email: string;
 }
@@ -20,11 +24,6 @@ export interface VerifyCodePayload {
 }
 export interface ResetPasswordPayload {
   email: string;
-  newPassword: string;
-}
-
-export interface ChangePasswordPayload {
-  password: string;
   newPassword: string;
 }
 
