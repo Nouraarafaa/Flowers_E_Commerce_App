@@ -6,8 +6,11 @@
   [ngClass]="styleClass()"
 >
   @if (loading()) {
-    <i class="fa fa-spin fa-spinner"></i> {{ label() }}
+      <i class="fa fa-spin fa-spinner"></i> {{ label() }}
   } @else {
-  {{ label() }}
+      @if (icon()) {
+        <i [class]="icon()"></i>
+      }
+      {{ label() }}
   }
 </button>
