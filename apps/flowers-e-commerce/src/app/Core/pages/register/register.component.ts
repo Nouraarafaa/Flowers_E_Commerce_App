@@ -10,10 +10,13 @@ import { NgClass } from '@angular/common';
 import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink, FormInputComponent, ErrorMessageComponent, NgClass, AuthStatusComponent, DropdownModule, ButtonComponent],
+  imports: [ReactiveFormsModule, RouterLink, FormInputComponent, ErrorMessageComponent, NgClass, AuthStatusComponent, DropdownModule, ButtonComponent, InputGroupModule, InputGroupAddonModule],
+
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -46,7 +49,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     },{ validators: [this.validateRePassword]})
   }
 
-  // rePassword
+  // Confirm Password
   validateRePassword(group:AbstractControl): ValidationErrors | null {
     const password = group.get("password")?.value 
     const rePassword = group.get("rePassword")?.value
@@ -58,8 +61,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.errorMsg.set("");
       if (!this.isCallingAPI()) {
         this.isCallingAPI.set(true);
-        this.registerForm.value.phone = this.registerForm.value.phone.replace(/^0/, '+20');
-        this._authService.register(this.registerForm.value)
+        const phoneValue = this.registerForm.get('phone')?.value?.replace(/^0/, '+20');
+        const formData = { ...this.registerForm.value, phone: phoneValue };
+        this._authService.register(formData)
         .pipe(takeUntil(this.destroy$), finalize(()=> this.isCallingAPI.set(false))).subscribe({
           next:(res)=>{
             if (res.message === "success") {
@@ -90,7 +94,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     { label: 'Male', value: 'male' },
     { label: 'Female', value: 'female' },
   ];
-
 
   ngOnDestroy(): void {
     this.destroy$.next();
