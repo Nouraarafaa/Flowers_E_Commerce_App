@@ -11,6 +11,7 @@ export interface LoginPayload {
   email: string;
   password: string;
 }
+
 export interface ChangePasswordPayload {
   password: string;
   newPassword: string;
@@ -25,12 +26,15 @@ export interface ResetPasswordPayload {
   email: string;
   newPassword: string;
 }
+
 export interface EditProfliePayload {
   lastName: string;
 }
+
 export interface ChangeUserRolePayload {
   role: string;
 }
+
 export interface JwtPayload {
   id: string;
   role: string;

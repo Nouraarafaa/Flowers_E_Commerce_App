@@ -30,7 +30,19 @@
                 <div class="phone"> 
                     @let phoneControl = registerForm.get("phone");
                     <label for="phone" class="text-black text-[14px] font-inter font-medium">Phone</label>
-                    <app-form-input formControlName="phone" [id]="'phone'" [type]="'tel'" [nameControl]="phoneControl" [placeholder]="'Phone...'" ></app-form-input>                
+                    <div class="relative mt-3">
+                        <div class="absolute inset-y-0 left-0 flex items-center gap-2 pl-3 pointer-events-none">
+                            <img src="./Images/flag.png" alt="EG" class="rounded-[50%]"/>
+                            <span class="text-gray-700 font-medium">EG (+20)</span>
+                        </div>
+                        <input id="phone" type="tel" formControlName="phone" placeholder="Phone..."
+                            class="w-full h-[49px] px-4 py-[12px] pe-8 pl-30 rounded-[10px] border border-[#D4D4D8] bg-white text-[#111] placeholder:text-[#A1A1AA] text-sm outline-none transition-all duration-200 focus:border-[#7A1D1D] focus:ring-2 focus:ring-[#7A1D1D]/20"
+                            [ngClass]="{
+                            'border-[#7A1D1D]': !registerForm.get('phone')?.invalid || !registerForm.get('phone')?.touched,
+                            'border-[#F04438]': registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched
+                            }"
+                        />
+                    </div>
                     <app-error-message [nameControl]="phoneControl"></app-error-message>
                 </div>
                 <div class="gender"> 
@@ -63,7 +75,7 @@
                 <div class="rePassword relative">  
                     @let rePasswordControl = registerForm.get("rePassword");
                     <label for="rePassword" class="text-black text-[14px] font-inter font-medium">Confirm Password</label>
-                    <app-form-input formControlName="rePassword" [id]="'rePassword'" [type]="togglePassword() ? 'text' : 'password'" [nameControl]="rePasswordControl" [placeholder]="'rePassword...'" ></app-form-input>                
+                    <app-form-input formControlName="rePassword" [id]="'rePassword'" [type]="togglePassword() ? 'text' : 'password'" [nameControl]="rePasswordControl" [placeholder]="'confirm Password...'" ></app-form-input>                
                     @if (togglePassword()) {
                         <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye"></i> </span>
                     }@else {    
@@ -86,10 +98,10 @@
                             </svg>
                             <ul class="space-y-1 text-sm font-inter font-medium list-disc list-inside">
                                 @if (rePasswordControl?.getError("required")) {
-                                    <li>Required</li>
+                                    <li>This field is required.</li>
                                 }
                                 @else if (registerForm.getError("misMatch")) {
-                                    <li>Password and rePassword should match</li>
+                                    <li>Password and rePassword should match.</li>
                                 }
                             </ul>
                         </div>
