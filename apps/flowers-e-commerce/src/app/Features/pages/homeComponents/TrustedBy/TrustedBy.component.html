@@ -1,0 +1,14 @@
+<section>
+  <div class="trustedBy-section">
+  <div class="title">
+    <p>
+      Trusted by over <span class="num">4.5k+</span> companies
+    </p>
+  </div>
+  <div class="companies">
+    @for (image of images; track $index) {
+      <img [src]="image.img" alt="company img">
+    }
+  </div>
+</div>
+</section>

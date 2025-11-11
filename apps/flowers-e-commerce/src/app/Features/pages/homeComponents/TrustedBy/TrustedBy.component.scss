@@ -1,0 +1,44 @@
+.title {
+  color: var(--color-maroon-700);
+  font-weight: 700;
+  font-size: 36px;
+}
+
+.title .num {
+  color: #FF668B;
+}
+
+section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.trustedBy-section{
+  background-color: #FBEAEA;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+.companies {
+  padding-top: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap:50px;
+}
+@media (max-width: 768px) {
+  .title {
+    font-size: 24px;
+  }
+
+  .companies img {
+    width: 80px;
+  }
+}
