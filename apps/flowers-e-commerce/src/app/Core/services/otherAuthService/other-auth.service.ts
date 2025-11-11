@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BASE_URL } from '@elevate-workspace/auth';
+import { BASE_URL, JwtPayload } from '@elevate-workspace/auth';
 import { jwtDecode } from 'jwt-decode';
-import { JwtPayload } from 'libs/auth/src/lib/auth/interfaces/auth-payload';
 import { BehaviorSubject } from 'rxjs';
 import { OtherAuthApis } from '../../base/otherAuthApis';
+
 
 @Injectable({
   providedIn: 'root',

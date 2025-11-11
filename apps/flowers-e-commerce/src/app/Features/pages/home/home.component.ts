@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { TrustedByComponent } from "../homeComponents/TrustedBy/TrustedBy.component";
+import { GalleryComponent } from "../homeComponents/gallery/gallery.component";
+
+@Component({
+  selector: 'app-home',
+  imports: [TrustedByComponent, GalleryComponent],
 
 @Component({
   selector: 'app-home',
