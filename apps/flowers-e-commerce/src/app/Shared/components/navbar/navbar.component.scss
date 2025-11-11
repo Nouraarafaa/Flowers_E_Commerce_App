@@ -1,0 +1,64 @@
+:host ::ng-deep {
+  .p-toolbar {
+    gap: 5px !important;
+    border: 0;
+    flex-wrap: nowrap;
+  }
+
+  .p-toolbar-start {
+    justify-content: end;
+    flex-basis: 10%;
+  }
+
+  .p-toolbar-end {
+    flex-basis: 25%;
+    justify-content: space-between;
+    align-items: center;
+    height: 52px;
+    gap: 5px;
+  }
+
+  .p-toolbar-center {
+    gap: 10px;
+    flex-basis: 65%;
+   
+  }
+
+  .p-inputtext {
+    border-radius: 10px;
+    &::placeholder {
+      color: var(--color-zinc-400);
+    }
+  }
+
+  .p-inputtext:enabled:focus {
+    border-color: var(--color-maroon-700);
+  }
+  .p-menu-submenu-label {
+    padding: 0;
+  }
+  .p-menu {
+    border-radius: 12px;  
+}
+.p-menu-item-link {
+    padding: 6px 8px;
+    gap: 8px;
+}
+.p-menu-item-link:hover{
+  background-color: var(--color-red-50);
+}
+}
+.name-text::before {
+  content: 'Hello';
+  color: var(--color-zinc-500);
+  font-size: 12px;
+  position: absolute;
+  top: -7px;
+}
+.location-text::before {
+  content: 'Deliver to:';
+  color: var(--color-zinc-500);
+  font-size: 14px;
+  position: absolute;
+  top: -17px;
+}

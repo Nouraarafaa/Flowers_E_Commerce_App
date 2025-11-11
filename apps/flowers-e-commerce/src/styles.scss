@@ -4,7 +4,7 @@
   src: url(../public/fonts/edwardianscriptitc.ttf);
   font-family: 'Edwardian Script';
 }
-
+@import "primeicons/primeicons.css";
 :root{
   --maroon-800: #501419;
   --maroon-700: #741c21;
@@ -75,4 +75,7 @@
 
   --text-13px: var(--13px);
   --text-16px: var(--16px);
+}
+.nav-icon{
+  @apply absolute text-white text-[10px] text-center font-medium top-[-5px] end-[-5px]  w-3.5 h-3.5 rounded-full bg-red-600 ;
 }

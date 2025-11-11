@@ -1,0 +1,8 @@
+<a [routerLink]="pageName()" class="relative cursor-pointer">
+    <i class="pi" [class]="iconName()" style="font-size: 20px"></i>
+    @if (itemsCheck()!=0) {
+    <span class="nav-icon">
+        {{itemsCheck()}}
+    </span>
+    }
+</a>
