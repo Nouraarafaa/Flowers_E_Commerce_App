@@ -5,6 +5,10 @@ import { GalleryComponent } from "../homeComponents/gallery/gallery.component";
 @Component({
   selector: 'app-home',
   imports: [TrustedByComponent, GalleryComponent],
+
+@Component({
+  selector: 'app-home',
+  imports: [TrustedByComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
