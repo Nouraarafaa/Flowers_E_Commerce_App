@@ -1,0 +1,7 @@
+.search:focus {
+  outline: none;
+}
+input::placeholder {
+  color: var(--color-zinc-700);
+  font-weight: 600;
+}

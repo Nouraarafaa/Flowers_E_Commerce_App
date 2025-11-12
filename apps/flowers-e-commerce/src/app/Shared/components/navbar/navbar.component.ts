@@ -7,12 +7,14 @@ import { InputIcon } from 'primeng/inputicon';
 import { Router, RouterLink } from "@angular/router";
 import { NavIconComponent } from "../nav-icon/navIcon.component";
 import { AuthService } from '@elevate-workspace/auth';
-import { Subscription } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { Menu } from 'primeng/menu';
 import { NgIf } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { HttpClient } from '@angular/common/http';
+import { locationResponse } from '../../../Core/interfaces/location/location.response';
+import { LocationAdaptorService } from '../../../Core/adaptor/location-adaptor/location-adaptor.service';
 
 
 @Component({
@@ -32,9 +34,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   lastName: string = '';
   getLoggedUserDataSubs!: Subscription;
   logoutSubs!: Subscription;
-  userCity:string='';
+  userCity: string = '';
 
   private readonly _authService = inject(AuthService);
+  private readonly _locationAdaptorService = inject(LocationAdaptorService);
   private readonly _router = inject(Router);
   private readonly _httpClient = inject(HttpClient);
   items: MenuItem[] | undefined;
@@ -100,6 +103,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       next: (res) => {
         this.firstName = res.user.firstName;
         this.lastName = res.user.lastName;
+       
 
       }
     })
@@ -110,20 +114,27 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
       let latitude = position.coords.latitude;
       let longitude = position.coords.longitude;
-       let apiKey='8aba345824be4346b0596cdf6fce6d6f'; // I obtained this key after logging into the website "https://www.geoapify.com"
-      let type = 'city';
-      let url = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&type=${type}&format=json&apiKey=${apiKey}`
-      console.log(latitude,longitude);
 
-     
-      this._httpClient.get(url).subscribe({
-        next:(res)=>{
- this.userCity = ;
-        }
-      })
-     
-      console.log(this.userCity);
-      
+      //Convert Coordinates to City (Reverse Geocoding) using Geoapify
+
+      let apiKey = '8aba345824be4346b0596cdf6fce6d6f'; // I obtained this key after logging into the website "https://www.geoapify.com"
+      let type = 'city';
+
+      const url = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&type=${type}&format=json&apiKey=${apiKey}`; // this Api was obtained from this link https://apidocs.geoapify.com/docs/geocoding/reverse-geocoding/
+
+
+      this._httpClient.get<locationResponse>(url)
+        .pipe(map((res) => this._locationAdaptorService.adapt(res)))
+        .subscribe({
+          next: (res) => {
+          
+            this.userCity = res.city;
+            console.log(this.userCity);
+
+          }
+        })
+
+
     })
   }
 

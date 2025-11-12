@@ -4,8 +4,8 @@
   src: url(../public/fonts/edwardianscriptitc.ttf);
   font-family: 'Edwardian Script';
 }
-@import "primeicons/primeicons.css";
-:root{
+@import 'primeicons/primeicons.css';
+:root {
   --maroon-800: #501419;
   --maroon-700: #741c21;
   --maroon-600: #a6252a;
@@ -76,6 +76,22 @@
   --text-13px: var(--13px);
   --text-16px: var(--16px);
 }
-.nav-icon{
-  @apply absolute text-white text-[10px] text-center font-medium top-[-5px] end-[-5px]  w-3.5 h-3.5 rounded-full bg-red-600 ;
+.nav-icon {
+  @apply absolute text-white text-[10px] text-center font-medium top-[-5px] end-[-5px]  w-3.5 h-3.5 rounded-full bg-red-600;
+}
+.hover-side-bar {
+  @apply hover:bg-maroon-50 duration-300 hover:m-2.5 rounded-lg;
+}
+.side-bar-link {
+  @apply flex items-center cursor-pointer p-4 ;
+}
+.location-text::before {
+  content: 'Deliver to:';
+  color: var(--color-zinc-500);
+  font-size: 14px;
+  position: absolute;
+  top: -17px;
+}
+.p-dialog-mask {
+z-index: 10000 !important; 
 }

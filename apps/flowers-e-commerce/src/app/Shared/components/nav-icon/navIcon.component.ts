@@ -11,4 +11,5 @@ export class NavIconComponent {
   pageName =input.required<string>();
   iconName=input.required<string>();
   itemsCheck=input.required<number>();
+  userStatus=input.required<string>();
 }
