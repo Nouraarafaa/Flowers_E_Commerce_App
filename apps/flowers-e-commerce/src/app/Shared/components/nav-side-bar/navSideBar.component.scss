@@ -5,3 +5,11 @@ input::placeholder {
   color: var(--color-zinc-700);
   font-weight: 600;
 }
+:host ::ng-deep{
+  .p-inputtext:enabled:focus {
+    border-color: var(--p-inputtext-border-color);
+    box-shadow: none;
+    outline: none;
+    outline-offset: none;
+}
+}

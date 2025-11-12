@@ -3,13 +3,13 @@ import { Component, inject,  OnDestroy,  OnInit,  signal, WritableSignal } from 
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { finalize, Subject, takeUntil, timer } from 'rxjs';
-import { FormInputComponent } from "../../../Shared/components/ui/form-input/form-input.component";
-import { ErrorMessageComponent } from "../../../Shared/components/ui/error-message/error-message.component";
+import { FormInputComponent } from "../../../shared/components/ui/form-input/form-input.component";
+import { ErrorMessageComponent } from "../../../shared/components/ui/error-message/error-message.component";
 import { AuthService } from '@elevate-workspace/auth';
 import { NgClass } from '@angular/common';
-import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
+import { AuthStatusComponent } from "../../../shared/components/ui/auth-status/auth-status.component";
 import { DropdownModule } from 'primeng/dropdown';
-import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
+import { ButtonComponent } from "../../../shared/components/ui/button/button.component";
 
 @Component({
   selector: 'app-register',

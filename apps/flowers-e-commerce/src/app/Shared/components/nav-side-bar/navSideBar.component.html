@@ -27,8 +27,6 @@
                                         class="search w-full border border-zinc-200 ps-10 pe-4 py-2 rounded-lg cursor-pointer"
                                         readonly placeholder="Search...">
                                     <i class="pi pi-search absolute top-1 start-1 translate-1/2"></i>
-
-
                                 </li>
                                 @if (!userLogged) {
                                 <li class="hover-side-bar">
@@ -98,10 +96,24 @@
     </p-drawer>
 
 </div>
-<p-dialog header="Header" [(visible)]="visibleDialog" [modal]="true"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
-    [resizable]="false">
-    <p>
-        Lorem ipsum dolor sit amet...
-    </p>
+<p-dialog [(visible)]="visibleDialog" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <ng-template #header>
+        <div class="inline-flex items-center justify-center gap-2">
+            <img src="/Images/logo.png" class="w-[85px] border-maroon-700" alt="logo">
+        </div>
+    </ng-template>
+    <ng-template #closeicon>
+        <i class="pi pi-times" style="font-size: 1.5rem; color:maroon"></i>
+    </ng-template>
+    <div class="flex items-center justify-center gap-2">
+        <p-iconfield iconPosition="left" styleClass="w-3/4">
+            <p-inputicon styleClass="pi pi-search" />
+            <input class="w-full " type="text" pInputText placeholder="What awesome gift are you looking for?" />
+        </p-iconfield>
+        <div class="w-1/4">
+            <app-button (clicked)="giftSearch()" label="Search" type="submit"></app-button>
+        </div>
+    </div>
+
 </p-dialog>

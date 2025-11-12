@@ -14,11 +14,12 @@ import { IconField } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { NavLinkSideBarComponent } from "../nav-link-side-bar/navLinkSideBar.component";
 import { Dialog } from 'primeng/dialog';
+import { ButtonComponent } from "../ui/button/button.component";
 
 
 @Component({
   selector: 'app-nav-side-bar',
-  imports: [Dialog, DrawerModule, ButtonModule, Ripple, InputTextModule, IconField, InputIcon, NavLinkSideBarComponent],
+  imports: [Dialog, DrawerModule, ButtonModule, Ripple, InputTextModule, IconField, InputIcon, NavLinkSideBarComponent, ButtonComponent],
   templateUrl: './navSideBar.component.html',
   styleUrl: './navSideBar.component.scss',
 })
@@ -133,6 +134,9 @@ export class NavSideBarComponent implements OnInit, OnDestroy {
 
   showDialog() {
     this.visibleDialog = true;
+  }
+  giftSearch(){
+    // code write here
   }
 
   ngOnDestroy(): void {
