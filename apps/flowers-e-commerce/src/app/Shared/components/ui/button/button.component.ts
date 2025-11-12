@@ -10,11 +10,12 @@ import { ButtonModule } from 'primeng/button';
 })
 export class ButtonComponent {
   label = input<string>('');
+  icon = input<string | null>(null);
   loading = input<boolean>(false);
   type = input<'button' | 'submit' | 'reset'>('button');
   styleClass = input<string>('');
-  clicked = output<void>();
+  buttonClick = output<void>();
   onClick(){
-    this.clicked.emit();
+    this.buttonClick.emit();
   }
 }

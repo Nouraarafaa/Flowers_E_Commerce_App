@@ -39,8 +39,3 @@ export interface ResetOrChangePasswordResponse {
 export interface MessageResponse {
   message: string;
 }
-
-
-
-
-

@@ -25,9 +25,9 @@ export class FormInputComponent implements ControlValueAccessor {
   nameControl = input<AbstractControl | null>();
 
 
-  onChange: (value: string) => void = () => {};
+  onChange: (value: string) => void = () => {/* */};
 
-  onTouched: () => void = () => {};
+  onTouched: () => void = () => {/* */};
   
   writeValue(value: string | null): void {
     this.value.set(value ?? '');

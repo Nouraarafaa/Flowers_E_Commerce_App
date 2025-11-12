@@ -1,6 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@elevate-workspace/auth';
 import { finalize, Subject, takeUntil, timer } from 'rxjs';
@@ -9,7 +9,7 @@ import { ErrorMessageComponent } from "../../../shared/components/ui/error-messa
 import { AuthStatusComponent } from "../../../shared/components/ui/auth-status/auth-status.component";
 import { ButtonComponent } from "../../../shared/components/ui/button/button.component";
 import { InputOtp } from 'primeng/inputotp';
-// import { OtherAuthApis } from '../../base/otherAuthApis';
+import { OtherAuthService } from '../../services/otherAuthService/other-auth.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -17,15 +17,15 @@ import { InputOtp } from 'primeng/inputotp';
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
+
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
-    
   verifyEmail!: FormGroup;
   verifyCode!: FormGroup;
   resetPassword!: FormGroup;
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authService = inject(AuthService);  
-  // private readonly _otherAuthApis = inject(OtherAuthApis);  
+  private readonly _otherAuthService = inject(OtherAuthService);  
   private readonly _router = inject(Router);
   private destroy$ = new Subject<void>();
 
@@ -57,26 +57,42 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     });
   }
   onOtpComplete(code: any) {
-    this.verifyCode.get('resetCode')?.setValue(code);
+    const otp = code as string;
+    this.verifyCode.get('resetCode')?.setValue(otp);
   }
 
   initResetPassword(): void {
     this.resetPassword = this._formBuilder.group({
-    email: [null, [Validators.required, Validators.email]],
-    newPassword:[null, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/) ]]
-    })
+      email: [null],
+      newPassword: [null, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/) ]],
+      confirmPassword: [null, [Validators.required]],
+    },
+    {validators: this.passwordMatchValidator}
+    );
   }
-
+  passwordMatchValidator(formGroup: FormGroup): ValidationErrors | null {
+    const password = formGroup.get('newPassword')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { misMatch: true };
+  }
 
   verifyEmailSubmit(): void {
     if (this.verifyEmail.valid) {
-      
-      const emailValue = this.verifyEmail.get("email")?.value;
-      this.resetPassword.get("email")?.patchValue(emailValue);
-
       this.errorMsgEmail.set("");
       this.isCallingAPI.set(true);
-      this._authService.forgotPassword(this.verifyEmail.value)
+      this.getCode();
+    }else{
+      this.verifyEmail.markAllAsTouched();
+    }
+  }
+  
+  getCode(){
+      const emailValue = this.verifyEmail.get("email")?.value;
+      this.resetPassword.get("email")?.patchValue(emailValue);
+      const payload = {
+        email: emailValue
+      }
+      this._authService.forgotPassword(payload)
       .pipe(takeUntil(this.destroy$), finalize( ()=> this.isCallingAPI.set(false) )).subscribe({
         next:(res)=>{
           if (res.message === "success") {
@@ -91,11 +107,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
           }
         }
       })
-    }else{
-      this.verifyEmail.markAllAsTouched();
-    }
   }
-  
+
   verifyCodeSubmit(): void {
     if (this.verifyCode.valid) {
       this.errorMsgCode.set("");
@@ -124,13 +137,17 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     if (this.resetPassword.valid) {
       this.isCallingAPI.set(true);
       this.errorMsgPassword.set("");
-      this._authService.resetPassword(this.resetPassword.value)
+      const payload = {
+        email: this.resetPassword.get('email')?.value,
+        newPassword: this.resetPassword.get('newPassword')?.value
+      };
+      this._authService.resetPassword(payload)
       .pipe(takeUntil(this.destroy$), finalize( ()=> this.isCallingAPI.set(false) )).subscribe({
         next:(res)=>{
           if (res.message === "success") {
             timer(1000).pipe(takeUntil(this.destroy$)).subscribe(()=>{
               localStorage.setItem("flowersEcommerceToken", res.token);
-              // this._otherAuthApis.saveUserData();
+              this._otherAuthService.saveUserData();
               this._router.navigate(['/home']);
             })
             this.successPassword.set(res.message)
@@ -151,11 +168,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.togglePassword.update(prev => !prev);
   }
 
-
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

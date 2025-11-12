@@ -1,3 +1,4 @@
+import { OtherAuthService } from '../../services/otherAuthService/other-auth.service';
 import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
 import { AuthService } from '@elevate-workspace/auth';
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm!:FormGroup;
   private readonly _authService = inject(AuthService);
-  // private readonly _otherAuthApis = inject(OtherAuthApis);
+  private readonly _otherAuthService = inject(OtherAuthService);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _router = inject(Router);
   private destroy$ = new Subject<void>();
@@ -52,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             if (res.message === "success") {
               timer(1000).pipe(takeUntil(this.destroy$)).subscribe(()=>{
                 localStorage.setItem("flowersEcommerceToken", res.token);
-                // this._otherAuthApis.saveUserData();
+                this._otherAuthService.saveUserData();
                 this._router.navigate(['/home']);
               })
               this.success.set(res.message);
