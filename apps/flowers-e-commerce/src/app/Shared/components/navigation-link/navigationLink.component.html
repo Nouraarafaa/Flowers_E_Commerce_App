@@ -1,4 +1,4 @@
 <a [routerLink]="navigationPagePath()" routerLinkActive="!text-soft-pink-200 border-b-2 border-soft-pink-200"
-    class="p-3 ms-2  text-zinc-50 cursor-pointer">
+    class="py-3 text-zinc-50 cursor-pointer text-nowrap ">
     <i class="pi" [class]="navigationIcon()"></i>
-    {{navigationLinkName()}}</a>
+   <span class="hidden md:inline md:ms-3 ">{{navigationLinkName()}}</span></a>

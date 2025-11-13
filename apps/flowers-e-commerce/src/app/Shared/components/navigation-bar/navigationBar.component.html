@@ -1,6 +1,8 @@
-<section class="w-full bg-maroon-700 flex justify-center items-center capitalize py-3">
+<section class="w-full bg-maroon-700 flex justify-center items-center  capitalize py-3 gap-5">
     @for (nL of navigationLinks; track $index) {
     <app-navigation-link [navigationIcon]="nL.icon" [navigationPagePath]="nL.pagePath"
         [navigationLinkName]="nL.navLinkName"></app-navigation-link>
     }
+
+
 </section>
