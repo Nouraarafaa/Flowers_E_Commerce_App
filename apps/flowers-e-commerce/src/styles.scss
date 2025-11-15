@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
 @font-face {
   src: url(../public/fonts/edwardianscriptitc.ttf);
   font-family: 'Edwardian Script';
@@ -10,7 +10,7 @@
   --maroon-700: #741c21;
   --maroon-600: #a6252a;
   --maroon-500: #cd2e33;
-  --maroon-50:  #FBEAEA;
+  --maroon-50: #fbeaea;
   --zinc-800: #27272a;
   --zinc-700: #3f3f46;
   --zinc-600: #52525b;
@@ -20,7 +20,7 @@
   --zinc-200: #e4e4e7;
   --zinc-100: #f4f4f5;
   --zinc-50: #fafafa;
-  --soft-pink-500: #FF668B;
+  --soft-pink-500: #ff668b;
   --soft-pink-300: #ffa3b9;
   --soft-pink-200: #ffc2d0;
   --soft-pink-50: #fff1f5;
@@ -37,6 +37,7 @@
   --mulish: 'Mulish', sans-serif;
   --open-sans: 'Open Sans', sans-serif;
   --Edwardian: 'Edwardian Script';
+  --Sarabun: 'Sarabun', sans-serif;
 
   --13px: 13px;
   --16px: 16px;
@@ -75,6 +76,7 @@
   --font-mulish: var(--mulish);
   --font-open-sans: var(--open-sans);
   --font-Edwardian: var(--Edwardian);
+  --font-Sarabun: var(--Sarabun);
 
   --text-13px: var(--13px);
   --text-16px: var(--16px);
@@ -86,7 +88,7 @@
   @apply hover:bg-maroon-50 duration-300 hover:m-2.5 rounded-lg;
 }
 .side-bar-link {
-  @apply flex items-center cursor-pointer p-4 ;
+  @apply flex items-center cursor-pointer p-4;
 }
 .location-text::before {
   content: 'Deliver to:';
@@ -96,5 +98,5 @@
   top: -17px;
 }
 .p-dialog-mask {
-z-index: 10000 !important; 
+  z-index: 10000 !important;
 }
