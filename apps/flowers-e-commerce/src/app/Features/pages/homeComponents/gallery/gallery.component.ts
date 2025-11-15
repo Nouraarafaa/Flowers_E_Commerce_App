@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { SectionTitleComponent } from "apps/flowers-e-commerce/src/app/shared/components/section-title/sectionTitle.component";
 
 @Component({
   selector: 'app-gallery',
-  imports: [],
+  imports: [SectionTitleComponent],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss',
 })

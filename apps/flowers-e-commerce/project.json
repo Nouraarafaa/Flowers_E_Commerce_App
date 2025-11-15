@@ -10,6 +10,9 @@
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "define": {
+          "process.env": "{}"
+        },
         "outputPath": "dist/apps/flowers-e-commerce",
         "index": "apps/flowers-e-commerce/src/index.html",
         "browser": "apps/flowers-e-commerce/src/main.ts",
