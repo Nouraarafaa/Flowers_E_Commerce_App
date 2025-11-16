@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
-import { Router, RouterLink } from "@angular/router";
+import { RouterLink } from "@angular/router";
 import { NavIconComponent } from "../nav-icon/navIcon.component";
 import { AuthService } from '@elevate-workspace/auth';
 import { map, Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ import { RippleModule } from 'primeng/ripple';
 import { HttpClient } from '@angular/common/http';
 import { locationResponse } from '../../../Core/interfaces/location/location.response';
 import { LocationAdaptorService } from '../../../Core/adaptor/location-adaptor/location-adaptor.service';
+import { environment } from '../../../Core/environments/environment';
 
 
 @Component({
@@ -33,12 +34,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
   firstName: string = '';
   lastName: string = '';
   getLoggedUserDataSubs!: Subscription;
+  getUserCitySubs!: Subscription;
   logoutSubs!: Subscription;
   userCity: string = '';
 
   private readonly _authService = inject(AuthService);
   private readonly _locationAdaptorService = inject(LocationAdaptorService);
-  private readonly _router = inject(Router);
   private readonly _httpClient = inject(HttpClient);
   items: MenuItem[] | undefined;
 
@@ -117,13 +118,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
       //Convert Coordinates to City (Reverse Geocoding) using Geoapify
 
-      let apiKey = '8aba345824be4346b0596cdf6fce6d6f'; // I obtained this key after logging into the website "https://www.geoapify.com"
+      let apiKey = environment.geoapifyApiKey; // I obtained this key after logging into the website "https://www.geoapify.com"
       let type = 'city';
 
       const url = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&type=${type}&format=json&apiKey=${apiKey}`; // this Api was obtained from this link https://apidocs.geoapify.com/docs/geocoding/reverse-geocoding/
 
 
-      this._httpClient.get<locationResponse>(url)
+      this.getUserCitySubs=this._httpClient.get<locationResponse>(url)
         .pipe(map((res) => this._locationAdaptorService.adapt(res)))
         .subscribe({
           next: (res) => {
@@ -142,9 +143,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.logoutSubs = this._authService.logout().subscribe({
       next: (res) => {
         if (res.message == 'success') {
-          localStorage.removeItem('flowersEcommerceToken')
-          this._router.navigate(['/login']);
-
+          localStorage.removeItem('flowersEcommerceToken');
+          window.location.reload();
         }
 
       }
@@ -154,6 +154,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.getLoggedUserDataSubs?.unsubscribe();
     this.logoutSubs?.unsubscribe();
+    this.getUserCitySubs?.unsubscribe();
   }
 
 }

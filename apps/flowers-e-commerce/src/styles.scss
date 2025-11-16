@@ -77,9 +77,13 @@
   --font-open-sans: var(--open-sans);
   --font-Edwardian: var(--Edwardian);
   --font-Sarabun: var(--Sarabun);
+  --font-Primary: var(--Sarabun);
 
   --text-13px: var(--13px);
   --text-16px: var(--16px);
+}
+body{
+  font-family: var(--font-Sarabun);
 }
 .nav-icon {
   @apply absolute text-white text-[10px] text-center font-medium top-[-5px] end-[-5px]  w-3.5 h-3.5 rounded-full bg-red-600;
