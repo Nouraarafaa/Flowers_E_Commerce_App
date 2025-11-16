@@ -7,7 +7,8 @@
     [userCityNavBar]="userCity"
     [wihlistItemsNavBar]="wihlistItems"
     [cartItemsNavBar]="cartItems"
-    [notificationNumNavBar]="notificationNum"></app-navbar>
+    [notificationNumNavBar]="notificationNum"
+    (clicked)="logoutUser()"></app-navbar>
 </div>
 <div class="md:hidden">
 <app-nav-side-bar 
@@ -19,6 +20,7 @@
 [wihlistItemsSideBar]="wihlistItems"
 [cartItemsSideBar]="cartItems"
 [notificationNumSideBar]="notificationNum"
+(clicked)="logoutUser()"
 ></app-nav-side-bar>
 </div>
 <router-outlet></router-outlet>

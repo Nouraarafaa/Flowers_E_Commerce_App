@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject, input } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, input, output } from '@angular/core';
 import { Toolbar } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -23,7 +23,7 @@ import { LocationAdaptorService } from '../../../Core/adaptor/location-adaptor/l
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit {
 
 
   userLoggedNavBar = input.required<boolean>();
@@ -34,13 +34,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   cartItemsNavBar = input.required<number>();
   notificationNumNavBar = input.required<number>();
 
-  
-  logoutSubs!: Subscription;
-
-
-  private readonly _authService = inject(AuthService);
- 
-  private readonly _router = inject(Router);
+  clicked = output<void>();
 
   items: MenuItem[] | undefined;
 
@@ -78,7 +72,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             label: 'Log out',
             icon: 'pi pi-sign-out',
             command: () => {
-              this.logoutUser(); // Call your function here
+              this.onClick(); // Call your function here
             }
 
           }
@@ -88,24 +82,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   }
 
-  
 
-  logoutUser(): void {
-    this.logoutSubs = this._authService.logout().subscribe({
-      next: (res) => {
-        if (res.message == 'success') {
-          localStorage.removeItem('flowersEcommerceToken')
-          this._router.navigate(['/login']);
-
-        }
-
-      }
-    })
-  }
-
-  ngOnDestroy(): void {
-    
-    this.logoutSubs?.unsubscribe();
+  onClick() {
+    this.clicked.emit();
   }
 
 }

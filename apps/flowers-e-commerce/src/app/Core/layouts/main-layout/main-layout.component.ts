@@ -33,6 +33,8 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   private readonly _authService = inject(AuthService);
   private readonly _locationAdaptorService = inject(LocationAdaptorService);
   private readonly _httpClient = inject(HttpClient);
+  
+
 
 
   ngOnInit(): void {
@@ -82,6 +84,18 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
         })
 
 
+    })
+  }
+   logoutUser(): void {
+    this.logoutSubs = this._authService.logout().subscribe({
+      next: (res) => {
+        if (res.message == 'success') {
+          localStorage.removeItem('flowersEcommerceToken')
+          window.location.reload();
+
+        }
+
+      }
     })
   }
 
