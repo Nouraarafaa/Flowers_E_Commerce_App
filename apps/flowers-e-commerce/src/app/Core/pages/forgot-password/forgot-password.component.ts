@@ -4,10 +4,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validato
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@elevate-workspace/auth';
 import { finalize, Subject, takeUntil, timer } from 'rxjs';
-import { FormInputComponent } from "../../../Shared/components/ui/form-input/form-input.component";
-import { ErrorMessageComponent } from "../../../Shared/components/ui/error-message/error-message.component";
-import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
-import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
+import { FormInputComponent } from "../../../shared/components/ui/form-input/form-input.component";
+import { ErrorMessageComponent } from "../../../shared/components/ui/error-message/error-message.component";
+import { AuthStatusComponent } from "../../../shared/components/ui/auth-status/auth-status.component";
+import { ButtonComponent } from "../../../shared/components/ui/button/button.component";
 import { InputOtp } from 'primeng/inputotp';
 import { OtherAuthService } from '../../services/otherAuthService/other-auth.service';
 
