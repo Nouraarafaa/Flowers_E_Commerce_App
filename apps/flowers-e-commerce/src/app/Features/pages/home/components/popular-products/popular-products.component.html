@@ -1,5 +1,5 @@
 <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    @for (i of [].constructor(20); track $index){
-        <app-product-card [product]="i"></app-product-card>
+    @for (product of products(); track $index) {
+        <app-product-card [product]="product"></app-product-card>
     }
 </div>
