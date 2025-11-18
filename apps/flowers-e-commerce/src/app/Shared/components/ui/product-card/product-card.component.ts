@@ -17,5 +17,19 @@ export class ProductCardComponent {
     return { full, half, empty };
   }
 
+  isNew(date: string): boolean {
+    const created = new Date(date);
+    const now = new Date();
+    const diff = (now.getTime() - created.getTime()) / (1000 * 60 * 60 * 24);
+
+    return diff <= 90;
+  }
+  isHot(sold: number | undefined): boolean {
+    return (sold ?? 0) > 50;
+  }
+  isOutOfStock(quantity: number): boolean {
+    return quantity <= 0;
+  }
+
 
 }
