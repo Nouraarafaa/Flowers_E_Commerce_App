@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { TrustedByComponent } from "../homeComponents/TrustedBy/TrustedBy.component";
 import { GalleryComponent } from "../homeComponents/gallery/gallery.component";
-import { BenefitsComponent } from '../homeComponents/benefits/benefits.component';
+import { BenefitsComponent } from '../../../shared/components/benefits/benefits.component';
+
 
 @Component({
   selector: 'app-home',
