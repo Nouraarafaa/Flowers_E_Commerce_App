@@ -10,13 +10,15 @@ import {
   Product,
 } from '../../../Shared/interfaces/HomeResponse/home-response';
 import { Subject, takeUntil } from 'rxjs';
+import { BenefitsComponent } from '../../../Shared/components/benefits/benefits.component';
 
 @Component({
   selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent],
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
+
 export class HomeComponent implements OnInit, OnDestroy {
   private readonly _homeService = inject(HomeService);
   private destroy$ = new Subject<void>();
