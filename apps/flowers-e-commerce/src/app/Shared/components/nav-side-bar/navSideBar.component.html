@@ -1,0 +1,119 @@
+<div class="bg-maroon-50 flex justify-between items-center px-5">
+    <img src="/Images/logo.png" (click)="openDrawer()" class="w-[85px] cursor-pointer" alt="logo">
+    <a class="cursor-pointer" (click)="openDrawer()"><i class="pi pi-bars"
+            style="color: maroon; font-size: 25px;"></i></a>
+</div>
+<div class="card flex justify-center">
+    <p-drawer #drawerRef [(visible)]="visible">
+        <ng-template #headless>
+            <div class="flex flex-col h-full">
+                <div class="flex items-center justify-between px-6 pt-4 shrink-0">
+                    <span>
+                        <img src="/Images/logo.png" class="w-[85px] border-maroon-700" alt="logo">
+                    </span>
+                    <div>
+                        @if (userLogged) {
+                        <p class="mx-4 location-text text-maroon-700 font-medium text-base relative text-nowrap"><i
+                                class="pi pi-map-marker" style="width: 20px"></i>{{userCity}}</p>
+                        }
+                    </div>
+                </div>
+                <div class="overflow-y-auto">
+                    <ul class="list-none p-4 m-0">
+                        <li>
+                            <ul class="list-none p-0 m-0 overflow-auto">
+                                <li class="relative">
+                                    <input type="search" (click)="showDialog()"
+                                        class="search w-full border border-zinc-200 ps-10 pe-4 py-2 rounded-lg cursor-pointer"
+                                        readonly placeholder="Search...">
+                                    <i class="pi pi-search absolute top-1 start-1 translate-1/2"></i>
+                                </li>
+                                @if (!userLogged) {
+                                <li class="hover-side-bar">
+                                    <app-nav-link-side-bar type="normal" pageNameSideBar="/login"
+                                        iconNameSideBar="pi-user" navLinkName="Login"></app-nav-link-side-bar>
+                                </li>
+                                }
+                                @else {
+                                <li class="hover-side-bar">
+                                    <app-nav-link-side-bar type="normal" pageNameSideBar="/myprofile"
+                                        iconNameSideBar="pi-user" navLinkName="My Profile"></app-nav-link-side-bar>
+                                </li>
+                                <li class="hover-side-bar">
+                                    <app-nav-link-side-bar type="normal" pageNameSideBar="/myaddresses"
+                                        iconNameSideBar="pi-map-marker"
+                                        navLinkName="My Addresses"></app-nav-link-side-bar>
+                                </li>
+                                <li class="hover-side-bar">
+                                    <app-nav-link-side-bar type="svg" pageNameSideBar="/myorders"
+                                        navLinkName="My Orders"></app-nav-link-side-bar>
+                                </li>
+                                <li class="hover-side-bar">
+                                    <app-nav-link-side-bar type="normal" pageNameSideBar="/dashboard"
+                                        iconNameSideBar="pi-cog" navLinkName="Dashboard"></app-nav-link-side-bar>
+                                </li>
+                                }
+                                <li class="hover-side-bar">
+                                    <app-nav-link-side-bar [userStatusSidebar]="userLogged? 'logged':'' "
+                                        type="nav-icon" pageNameSideBar="/wishlist" [itemsCheckSideBar]="wihlistItems"
+                                        iconNameSideBar="pi-heart" navLinkName="Wishlist"></app-nav-link-side-bar>
+                                </li>
+                                <li class="hover-side-bar">
+                                    <app-nav-link-side-bar [userStatusSidebar]="userLogged? 'logged':'' "
+                                        type="nav-icon" pageNameSideBar="/cart" [itemsCheckSideBar]="cartItems"
+                                        iconNameSideBar="pi-shopping-cart" navLinkName="Cart"></app-nav-link-side-bar>
+                                </li>
+                                <li class="hover-side-bar">
+                                    <app-nav-link-side-bar [userStatusSidebar]="userLogged? 'logged':'' "
+                                        type="nav-icon" pageNameSideBar="/notification"
+                                        [itemsCheckSideBar]="notificationNum" iconNameSideBar="pi-bell"
+                                        navLinkName="Notification"></app-nav-link-side-bar>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-auto">
+                    <hr class="mb-4 mx-4 border-t border-0 border-surface" />
+                    @if (userLogged) {
+                    <div class="flex items-center justify-between m-2">
+                        <div pRipple
+                            class="flex items-center p-4 gap-2 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple">
+                            <img [src]="userPhoto" class="size-8 rounded-full" alt="user photo">
+                            <span class="font-bold text-maroon-700 font-inter px-2 py-1.5 text-nowrap">{{firstName}}
+                                {{lastName}}</span>
+                        </div>
+                        <div class="hover:bg-maroon-50 duration-300 rounded-lg">
+                            <app-nav-link-side-bar (clicked)="logoutUser()" type="normal" iconNameSideBar="pi-sign-out"
+                                navLinkName="Log out"></app-nav-link-side-bar>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+
+        </ng-template>
+    </p-drawer>
+
+</div>
+<p-dialog [(visible)]="visibleDialog" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+    <ng-template #header>
+        <div class="inline-flex items-center justify-center gap-2">
+            <img src="/Images/logo.png" class="w-[85px] border-maroon-700" alt="logo">
+        </div>
+    </ng-template>
+    <ng-template #closeicon>
+        <i class="pi pi-times" style="font-size: 1.5rem; color:maroon"></i>
+    </ng-template>
+    <div class="flex items-center justify-center gap-2">
+        <p-iconfield iconPosition="left" styleClass="w-3/4">
+            <p-inputicon styleClass="pi pi-search" />
+            <input class="w-full " type="text" pInputText placeholder="What awesome gift are you looking for?" />
+        </p-iconfield>
+        <div class="w-1/4">
+            <app-button (clicked)="giftSearch()" label="Search" type="submit"></app-button>
+        </div>
+    </div>
+
+</p-dialog>
