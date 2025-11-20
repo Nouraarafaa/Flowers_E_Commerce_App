@@ -4,10 +4,10 @@
     </ng-template>
 
     <ng-template #center>
-        @if (userLogged) {
+        @if (userLoggedNavBar()) {
 
         <p class="mx-4 location-text text-maroon-700 font-medium text-base relative text-nowrap"><i
-                class="pi pi-map-marker" style="width: 20px"></i>{{userCity}}</p>
+                class="pi pi-map-marker" style="width: 20px"></i>{{userCityNavBar()}}</p>
 
         }
         <p-iconfield iconPosition="left" styleClass="w-full">
@@ -20,15 +20,15 @@
     <ng-template #end>
 
         <div class="text-center w-1/3 ">
-            @if (userLogged) {
+            @if (userLoggedNavBar()) {
             <a (click)="menu.toggle($event)"
                 class=" name-text cursor-pointer text-maroon-700 font-medium text-base relative text-nowrap">
-                {{firstName}} <i class="pi pi-angle-down text-zinc-500" style="width: 18px"></i></a>
+                {{firstNameNavBar()}} <i class="pi pi-angle-down text-zinc-500" style="width: 18px"></i></a>
 
             <p-menu styleClass="text-start" #menu [model]="items" [popup]="true">
                 <ng-template #start>
 
-                    <p class="font-medium text-sm text-maroon-700 font-inter px-2 py-1.5">{{firstName}} {{lastName}}</p>
+                    <p class="font-medium text-sm text-maroon-700 font-inter px-2 py-1.5">{{firstNameNavBar()}} {{lastNameNavBar()}}</p>
 
                 </ng-template>
 
@@ -62,11 +62,11 @@
 
         <div class=" w-1/3 h-full flex items-center justify-center border-x border-x-zinc-200 gap-2.5 px-4">
 
-            <app-nav-icon [userStatus]="userLogged? 'logged':'' " pageName="/wishlist" iconName="pi-heart" [itemsCheck]="wihlistItems"></app-nav-icon>
+            <app-nav-icon [userStatus]="userLoggedNavBar()? 'logged':'' " pageName="/wishlist" iconName="pi-heart" [itemsCheck]="wihlistItemsNavBar()"></app-nav-icon>
 
-            <app-nav-icon [userStatus]="userLogged? 'logged':'' " pageName="/cart" iconName="pi-shopping-cart" [itemsCheck]="cartItems"></app-nav-icon>
+            <app-nav-icon [userStatus]="userLoggedNavBar()? 'logged':'' " pageName="/cart" iconName="pi-shopping-cart" [itemsCheck]="cartItemsNavBar()"></app-nav-icon>
 
-            <app-nav-icon [userStatus]="userLogged? 'logged':'' " pageName="/notification" iconName="pi-bell" [itemsCheck]="notificationNum"></app-nav-icon>
+            <app-nav-icon [userStatus]="userLoggedNavBar()? 'logged':'' " pageName="/notification" iconName="pi-bell" [itemsCheck]="notificationNumNavBar()"></app-nav-icon>
 
         </div>
 

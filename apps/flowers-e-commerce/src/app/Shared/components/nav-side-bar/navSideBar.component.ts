@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, inject, input, OnDestroy, OnInit, output, ViewChild } from '@angular/core';
 import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
@@ -32,12 +32,10 @@ export class NavSideBarComponent implements OnInit {
   cartItemsSideBar = input.required<number>();
   notificationNumSideBar = input.required<number>();
 
-
-  // logoutSubs!: Subscription;
-
   visibleDialog: boolean = false;
   private readonly HIDE_THRESHOLD = 768;
-  private readonly _authService = inject(AuthService);
+  
+  clicked = output<void>();
   
   ngOnInit() {
     this.checkScreenSize();
@@ -61,17 +59,8 @@ export class NavSideBarComponent implements OnInit {
     }
   }
 
-
-  logoutUser(): void {
-    this._authService.logout().subscribe({
-      next: (res) => {
-        if (res.message == 'success') {
-          localStorage.removeItem('flowersEcommerceToken');
-          window.location.reload();
-        }
-
-      }
-    })
+  onClick() {
+    this.clicked.emit();
   }
 
   showDialog() {

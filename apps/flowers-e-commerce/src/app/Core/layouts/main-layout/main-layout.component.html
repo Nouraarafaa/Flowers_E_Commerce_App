@@ -1,6 +1,14 @@
 <section>
 <div class="hidden md:block">
-    <app-navbar></app-navbar>
+    <app-navbar
+    [userLoggedNavBar]="userLogged"
+    [firstNameNavBar]="firstName"
+    [lastNameNavBar]="lastName"
+    [userCityNavBar]="userCity"
+    [wihlistItemsNavBar]="wihlistItems"
+    [cartItemsNavBar]="cartItems"
+    [notificationNumNavBar]="notificationNum"
+    (clicked)="logoutUser()"></app-navbar>
 </div>
 <div class="md:hidden">
 <app-nav-side-bar 
@@ -12,9 +20,9 @@
 [wihlistItemsSideBar]="wihlistItems"
 [cartItemsSideBar]="cartItems"
 [notificationNumSideBar]="notificationNum"
+(clicked)="logoutUser()"
 ></app-nav-side-bar>
 </div>
-<app-navigation-bar></app-navigation-bar>
 <router-outlet></router-outlet>
 </section>
 
