@@ -1,4 +1,5 @@
 export const environment = {
     production: true,
     BaseUrl: `https://flower.elevateegy.com/api/v1`,
+    geoapifyApiKey:'8aba345824be4346b0596cdf6fce6d6f'
 };
