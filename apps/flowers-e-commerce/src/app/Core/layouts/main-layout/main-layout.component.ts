@@ -8,11 +8,12 @@ import { LocationAdaptorService } from '../../adaptor/location-adaptor/location-
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { locationResponse } from '../../interfaces/location/location.response';
+import { NavigationBarComponent } from "../../../shared/components/navigation-bar/navigationBar.component";
 
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterModule, NavbarComponent, NavSideBarComponent],
+  imports: [RouterModule, NavbarComponent, NavSideBarComponent, NavigationBarComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
 })
