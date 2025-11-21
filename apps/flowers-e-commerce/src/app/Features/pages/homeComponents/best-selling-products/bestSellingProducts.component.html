@@ -1,17 +1,40 @@
-<section class="mt-24 w-[85%] m-auto flex items-center gap-9 flex-col md:flex-row">
-    <div class="w-1/4">
-        <app-section-title alignment="text-start" sectionName="Best Selling"></app-section-title>
-        <h2 class="mt-2.5 font-bold text-3xl text-maroon-700"><span class="text-soft-pink-500">Check Out</span> What
-            Everyone’s <span class="text-soft-pink-500">Buying</span> Right Now</h2>
-        <p class="leading-4 text-zinc-500 mt-2">Not sure what to choose? <br>Start with our best sellers, these are the
-            gifts our customers keep coming back for.
-            Whether you're celebrating a birthday, anniversary or wedding, our top picks are guaranteed to leave a
-            lasting impression.</p>
-        <div class="mt-24 justify-self-start text-nowrap">
-            <app-button label="Explore gifts" icon="pi pi-arrow-right" iconPosition="right"></app-button>
+<section class="mt-24  ">
+    <app-section-title alignment="text-start" sectionName="Best Selling"></app-section-title>
+    @if (bestSellingProducts().length > 0) {
+    <div class="flex flex-wrap lg:flex-nowrap gap-9">
+        <!-- Static part -->
+        <div class="flex flex-col justify-between gap-5">
+            <div class="w-full lg:w-[1/4] ">
+                <h2 class="mt-2.5 font-bold text-3xl text-maroon-700"><span class="text-soft-pink-500">Check Out</span>
+                    What
+                    Everyone’s <span class="text-soft-pink-500">Buying</span> Right Now</h2>
+                <p class="leading-4 text-zinc-500 mt-2">Not sure what to choose? <br>Start with our best sellers, these
+                    are
+                    the
+                    gifts our customers keep coming back for.
+                    Whether you're celebrating a birthday, anniversary or wedding, our top picks are guaranteed to leave
+                    a
+                    lasting impression.</p>
+            </div>
+            <div class="self-start text-nowrap">
+                <app-button label="Explore gifts" icon="pi pi-arrow-right" iconPosition="right"></app-button>
+            </div>
+        </div>
+
+        <!-- carousel -->
+        <div class="w-full lg:w-3/4 ">
+            <p-carousel [value]="bestSellingProducts()" [showIndicators]="false" [numVisible]="3" [numScroll]="1"
+                [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="3000">
+                <ng-template let-bestSellProduct #item>
+                    <app-product-card [product]="bestSellProduct"></app-product-card>
+                </ng-template>
+            </p-carousel>
+
         </div>
     </div>
-    <div class="w-3/4">
-        
-    </div>
+    }@else {
+    <h3 class="text-center text-4xl text-maroon-700 font-bold my-3">No products available</h3>
+    }
+
+
 </section>

@@ -1,20 +1,15 @@
-import { Component, OnDestroy, OnInit, inject, input, output } from '@angular/core';
+import { Component, OnInit, input, output } from '@angular/core';
 import { Toolbar } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
-import { Router, RouterLink } from "@angular/router";
-import { NavIconComponent } from "../nav-icon/navIcon.component";
-import { AuthService } from '@elevate-workspace/auth';
-import { map, Subscription } from 'rxjs';
+import { RouterLink } from "@angular/router";
 import { MenuItem } from 'primeng/api';
 import { Menu } from 'primeng/menu';
 import { NgIf } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
-import { HttpClient } from '@angular/common/http';
-import { locationResponse } from '../../../Core/interfaces/location/location.response';
-import { LocationAdaptorService } from '../../../Core/adaptor/location-adaptor/location-adaptor.service';
+import { NavIconComponent } from '../nav-icon/navIcon.component';
 
 
 @Component({
