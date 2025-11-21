@@ -5,6 +5,7 @@ import { HomeResponse } from '../../interfaces/HomeResponse/home-response';
 import { Observable } from 'rxjs';
 import { homeApi } from '../../../Core/base/home-api';
 import { Endpoints } from '../../../Core/enums/endpoints';
+import { Testimonials } from '../../interfaces/testimonials';
 
 @Injectable({
   providedIn: 'root',
@@ -15,5 +16,8 @@ export class HomeService implements homeApi {
 
   getHomeDetails(): Observable<HomeResponse> {
     return this._httpClient.get<HomeResponse>(`${this._BASE_URL}` + Endpoints.home);
+  }
+  getTestimonials(): Observable<Testimonials>{
+    return this._httpClient.get<Testimonials>(`${this._BASE_URL}` + "/testimonials");
   }
 }
