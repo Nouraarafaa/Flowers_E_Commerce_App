@@ -8,9 +8,17 @@
   @if (loading()) {
       <i class="fa fa-spin fa-spinner"></i> {{ label() }}
   } @else {
+    @if (iconPosition()=='left') {
       @if (icon()) {
         <i [class]="icon()"></i>
       }
+    }
       {{ label() }}
+    @if (iconPosition()=='right') {
+      @if (icon()) {
+        <i [class]="icon()"></i>
+      }
+    }
+
   }
 </button>

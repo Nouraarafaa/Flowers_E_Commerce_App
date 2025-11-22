@@ -3,18 +3,20 @@ import { TrustedByComponent } from '../homeComponents/TrustedBy/TrustedBy.compon
 import { GalleryComponent } from '../homeComponents/gallery/gallery.component';
 import { PopularProductsComponent } from './components/popular-products/popular-products.component';
 import { HomeService } from '../../../Shared/services/home/home.service';
+import { BestSellingProductsComponent } from "../homeComponents/best-selling-products/bestSellingProducts.component";
+import { Subject, takeUntil } from 'rxjs';
+import { BenefitsComponent } from '../../../Shared/components/benefits/benefits.component';
 import {
   BestSeller,
   Category,
   Occasion,
   Product,
 } from '../../../Shared/interfaces/HomeResponse/home-response';
-import { Subject, takeUntil } from 'rxjs';
-import { BenefitsComponent } from '../../../Shared/components/benefits/benefits.component';
+
 
 @Component({
   selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent],
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

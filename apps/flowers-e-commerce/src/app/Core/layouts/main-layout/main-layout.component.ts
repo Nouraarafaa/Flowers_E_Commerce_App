@@ -1,8 +1,8 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from "@angular/router";
-import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
-import { NavSideBarComponent } from "../../../shared/components/nav-side-bar/navSideBar.component";
-import { NavigationBarComponent } from "../../../shared/components/navigation-bar/navigationBar.component";
+import { NavbarComponent } from '../../../Shared/components/navbar/navbar.component';
+import { NavSideBarComponent } from "../../../Shared/components/nav-side-bar/navSideBar.component";
+import { NavigationBarComponent } from "../../../Shared/components/navigation-bar/navigationBar.component";
 import { map, Subscription } from 'rxjs';
 import { AuthService } from '@elevate-workspace/auth';
 import { LocationAdaptorService } from '../../adaptor/location-adaptor/location-adaptor.service';

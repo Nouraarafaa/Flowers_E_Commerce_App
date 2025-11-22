@@ -1,16 +1,15 @@
-import { Component, HostListener, inject, input, OnDestroy, OnInit, output, ViewChild } from '@angular/core';
+import { Component, HostListener,input, OnInit, output, ViewChild } from '@angular/core';
 import { DrawerModule } from 'primeng/drawer';
 import { ButtonModule } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
 import { Drawer } from 'primeng/drawer';
-import { AuthService } from '@elevate-workspace/auth';
-
 import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
-import { NavLinkSideBarComponent } from "../nav-link-side-bar/navLinkSideBar.component";
 import { Dialog } from 'primeng/dialog';
-import { ButtonComponent } from "../ui/button/button.component";
+import { ButtonComponent } from '../ui/button/button.component';
+import { NavLinkSideBarComponent } from '../nav-link-side-bar/navLinkSideBar.component';
+
 
 
 @Component({
