@@ -11,10 +11,11 @@ import {
 } from '../../../Shared/interfaces/HomeResponse/home-response';
 import { Subject, takeUntil } from 'rxjs';
 import { BenefitsComponent } from '../../../Shared/components/benefits/benefits.component';
+import { PromotionalCardsComponent } from "./components/promotional-cards/promotional-cards.component";
 
 @Component({
   selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent],
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, PromotionalCardsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
