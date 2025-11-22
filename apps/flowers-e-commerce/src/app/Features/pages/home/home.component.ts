@@ -12,13 +12,11 @@ import {
   Occasion,
   Product,
 } from '../../../Shared/interfaces/HomeResponse/home-response';
-import { Subject, takeUntil } from 'rxjs';
-import { BenefitsComponent } from '../../../Shared/components/benefits/benefits.component';
 import { TestimonialsComponent } from "../homeComponents/testimonials/testimonials.component";
 
 @Component({
   selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, TestimonialsComponent],
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, TestimonialsComponent, BestSellingProductsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
