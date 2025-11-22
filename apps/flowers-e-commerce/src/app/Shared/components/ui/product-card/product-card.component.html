@@ -1,9 +1,9 @@
-<div class="product-card w-full p-2 lg:max-w-[302px]">
+<div class="product-card w-full p-2 ">
     <div class="relative w-full group">
 
-        <img class="w-full h-[272px] object-cover rounded-[12px] cursor-pointer" [src]="product().imgCover" [alt]="product().title">
+        <img class="w-full h-[272px] object-cover rounded-xl cursor-pointer" [src]="product().imgCover" [alt]="product().title">
 
-        <div class="absolute inset-0 bg-maroon-600 opacity-0 group-hover:opacity-50 transition-opacity duration-300 rounded-[12px]"></div>
+        <div class="absolute inset-0 bg-maroon-600 opacity-0 group-hover:opacity-50 transition-opacity duration-300 rounded-xl"></div>
 
         <div class="absolute inset-0 flex justify-center items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer">
@@ -37,7 +37,7 @@
     </div>
     <div class="flex justify-between items-end text-black">
         <div>
-            <h3 class="text-maroon-700 text-lg font-semibold py-2">{{product().title.split(" ").splice(0,2).join(" ")}}</h3>
+            <h3 class="text-maroon-700 text-lg font-semibold py-2 text-nowrap">{{product().title.split(" ").splice(0,2).join(" ")}}</h3>
             <div class="rating flex items-center my-1">
                 @for (star of [].constructor(getStars(product().rateAvg).full); track $index) {
                     <i class="fas fa-star text-yellow-star"></i>

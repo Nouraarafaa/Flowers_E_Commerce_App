@@ -1,5 +1,9 @@
-<app-promotional-cards></app-promotional-cards>
-<app-benefits></app-benefits>
-<app-gallery></app-gallery>
+<section class="w-[85%] m-auto">
+    <app-promotional-cards></app-promotional-cards>
+    <app-benefits></app-benefits>
+    <app-best-selling-products [bestSellingProducts]="bestSeller()"></app-best-selling-products>
+    <app-popular-products [products]="products()"></app-popular-products>
+    <app-gallery></app-gallery>
+</section>
 <app-trusted-by></app-trusted-by>
-<app-popular-products [products]="products()"></app-popular-products>
+
