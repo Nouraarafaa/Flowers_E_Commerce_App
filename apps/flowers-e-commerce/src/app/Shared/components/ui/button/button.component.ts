@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 export class ButtonComponent {
   label = input<string>('');
   icon = input<string | null>(null);
+  iconPosition = input<'right'|'left'>('left');
   loading = input<boolean>(false);
   type = input<'button' | 'submit' | 'reset'>('button');
   styleClass = input<string>('');
