@@ -12,11 +12,12 @@ import {
   Occasion,
   Product,
 } from '../../../Shared/interfaces/HomeResponse/home-response';
+import { AboutUsComponent } from "./components/about-us/about-us.component";
 
 
 @Component({
   selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent],
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent, AboutUsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
