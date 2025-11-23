@@ -13,10 +13,12 @@ import {
   Product,
 } from '../../../Shared/interfaces/HomeResponse/home-response';
 import { TestimonialsComponent } from "../homeComponents/testimonials/testimonials.component";
+import { LeftBannerComponent } from "../homeComponents/left-banner/left-banner.component";
+import { BannerSliderComponent } from "../homeComponents/banner-slider/banner-slider.component";
 
 @Component({
   selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, TestimonialsComponent, BestSellingProductsComponent],
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, TestimonialsComponent, BestSellingProductsComponent, LeftBannerComponent, BannerSliderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

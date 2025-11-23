@@ -1,0 +1,27 @@
+<div class="hero-carousel">
+  <div class="slide">
+    <div class="slide-image"
+      [style.background-image]="'url(' + slides[currentSlide].image + ')'">
+    </div>
+
+    <div class="content">
+      <h1>{{ slides[currentSlide].title }}</h1>
+      <p>{{ slides[currentSlide].subtitle }}</p>
+      <button class="buy-btn">I’m buying!</button>
+    </div>
+
+    <div class="nav-arrows">
+      <button class="arrow prev" (click)="prevSlide()">‹</button>
+      <button class="arrow next" (click)="nextSlide()">›</button>
+    </div>
+
+    <div class="dots">
+      <span 
+        class="dot"
+        *ngFor="let s of slides; let i = index" 
+        [class.active]="i === currentSlide"
+        (click)="goToSlide(i)">
+      </span>
+    </div>
+  </div>
+</div>
