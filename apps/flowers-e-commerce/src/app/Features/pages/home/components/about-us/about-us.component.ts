@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
-import { ButtonComponent } from "apps/flowers-e-commerce/src/app/Shared/components/ui/button/button.component";
 
 @Component({
   selector: 'app-about-us',
-  imports: [ButtonComponent],
+  imports: [],
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.scss',
 })
-export class AboutUsComponent {}
+export class AboutUsComponent {
+  benefitsList = [
+    'Competitive Prices & Easy Shopping',
+    'Premium Quality & Elegant Packaging',
+    'Perfect for Every Occasion',
+    'Fast & Reliable Delivery',
+  ];
+}

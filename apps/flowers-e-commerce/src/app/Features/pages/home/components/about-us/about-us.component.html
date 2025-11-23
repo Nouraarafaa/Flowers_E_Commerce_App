@@ -1,14 +1,17 @@
 <section class="w-full flex justify-center bg-white">
-
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 py-32">
-
-        <div class="flex gap-2">
-            <div class="">
-                <img src="./Images/box-gift1.png" alt="" class="w-[329px] h-[376px] rounded-tl-[50px] rounded-tr-[120px] rounded-br-[120px] rounded-bl-[120px]">
+        <div class="flex justify-center items-center w-full gap-2">
+            <div class="relative pt-6 pl-7 w-fit h-fit">
+                <div class="absolute inset-0 top-2 left-2 border-[4px] border-maroon-600 rounded-tl-[50px] rounded-tr-[210px] rounded-br-[180px] rounded-bl-[120px] rotate-[3deg]"></div>
+                <img src="./Images/box-gift1.png" alt="" class="relative max-w-full w-[329px] h-[376px] rounded-tl-[50px] rounded-tr-[120px] rounded-br-[120px] rounded-bl-[120px]">
             </div>
             <div class="flex flex-col gap-2">
-                <img src="./Images/box-gift2.png" alt="" class="w-[193px] h-[193px] rounded-[150px]">
-                <img src="./Images/box-gift3.png" alt="" class="w-[193px] h-[144px] rounded-tl-[50px] rounded-tr-[100px] rounded-br-[100px] rounded-bl-[50px]">
+                <div>
+                    <img src="./Images/box-gift2.png" alt="" class="w-[193px] h-[193px] rounded-[150px]">
+                </div>
+                <div>
+                    <img src="./Images/box-gift3.png" alt="" class="w-[193px] h-[144px] rounded-tl-[50px] rounded-tr-[100px] rounded-br-[100px] rounded-bl-[50px]">
+                </div>
             </div>
         </div>
         <div class="flex flex-col gap-6 ">
@@ -16,37 +19,16 @@
             <h3 class="text-maroon-700 text-3xl font-bold leading-[100%] align-middle">Delivering the <span class="text-soft-pink-500">Finest</span>span> Gift Boxes for Your <span class="text-soft-pink-500">Special</span> Moments</h3>
             <p class="text-16px text-zinc-500 font-normal align-middle">Make every moment memorable with our premium gift boxes. Carefully curated and beautifully packaged, each box is filled with handpicked items designed to impress. Whether it's for a birthday, wedding, or a simple “thank you,” our gift boxes are crafted to leave a lasting impression — because thoughtful gifting starts here.</p>
             <button class="bg-maroon-600 text-white w-fit py-2 px-4 rounded-xl text-16px font-normal hover:bg-maroon-700 transition cursor-pointer">Discover <i class="fa-solid fa-arrow-right"></i></button>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3  text-gray-600">
-                <div class="flex items-start gap-3">
-                    <i class="fa-solid fa-check text-maroon-700"></i>
-                    <div>
-                        <p class="text-sm font-medium">Competitive Prices & Easy Shopping</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                @for (benefit of benefitsList ; track $index) {
+                    <div class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-maroon-700"></i>
+                        <div>
+                            <p class="text-sm font-normal text-zinc-800 align-middle"> {{benefit}} </p>
+                        </div>
                     </div>
-                </div>
-
-                <div class="flex items-start gap-3">
-                    <i class="fa-solid fa-check text-maroon-700"></i>
-                    <div>
-                        <p class="text-sm font-medium">Premium Quality & Elegant Packaging</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-3">
-                    <i class="fa-solid fa-check text-maroon-700"></i>
-                    <div>
-                        <p class="text-sm font-medium">Perfect for Every Occasion</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-3">
-                    <i class="fa-solid fa-check text-maroon-700"></i>
-                    <div>
-                        <p class="text-sm font-medium">Fast & Reliable Delivery</p>
-                    </div>
-                </div>  
+                }
             </div>
         </div>
-
     </div>
-
 </section>
