@@ -1,0 +1,31 @@
+<section class="testimonials">
+  <div class="flex flex-wrap items-center justify-center gap-15 pt-14">
+    @if(testimonials()){ @for (item of testimonials(); track $index) {
+    <div
+      class="card text-sm w-80 border border-gray-200 pb-6 rounded-lg bg-white shadow-[0px_4px_15px_0px] shadow-black/5"
+    >
+      <div class="flex flex-col items-center px-5 py-4 relative">
+        <img
+          class="h-24 w-24 absolute -top-14 rounded-full"
+          [src]="item.user.photo"
+          alt="userImage1"
+        />
+        <div class="pt-8 text-center">
+          <h1 class="text-lg font-medium text-gray-800">
+            {{ item.user.firstName + ' ' + item.user.lastName }}
+          </h1>
+        </div>
+        <div class="flex justify-center pt-4">
+          <div class="stars flex justify-center">
+            <p-rating [(ngModel)]="item.rating" [readonly]="true" />
+          </div>
+        </div>
+      </div>
+
+      <p class="text-gray-500 px-6 text-center">{{ item.content.slice(0,120) }}</p>
+    </div>
+    } } @else {
+    <h2>No Testimonials are found</h2>
+    }
+  </div>
+</section>
