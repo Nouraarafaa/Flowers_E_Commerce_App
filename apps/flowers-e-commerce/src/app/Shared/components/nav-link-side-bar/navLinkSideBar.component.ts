@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output, output } from '@angular/core';
+import { Component, EventEmitter, input, Output} from '@angular/core';
 import { Ripple } from 'primeng/ripple';
 import { NavIconComponent } from "../nav-icon/navIcon.component";
 import { RouterLink } from '@angular/router';
