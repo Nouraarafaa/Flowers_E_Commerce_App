@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { PromoCard } from '../../../../../Shared/interfaces/promo-card/promo-card';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-promotional-cards',
-  imports: [],
+  imports: [NgOptimizedImage],
   templateUrl: './promotional-cards.component.html',
   styleUrl: './promotional-cards.component.scss',
 })
