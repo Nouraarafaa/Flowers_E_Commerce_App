@@ -1,5 +1,70 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    @for (product of products(); track $index) {
-        <app-product-card [product]="product"></app-product-card>
-    }
-</div>
+<section class="my-32 flex flex-col gap-10">
+
+    <div class="flex justify-between items-center">
+        <app-section-title [sectionTitle]="'Most Popular'"></app-section-title>
+        <nav>
+            <ul class="flex gap-6">
+                <li>
+                    <button 
+                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
+                        (click)="setActiveCategory('all')"
+                        [class.text-maroon-600]="activeCategory() === 'all'"
+                        [class.text-zinc-700]="activeCategory() !== 'all'">
+                        All
+                    </button>
+                </li>
+
+                <li>
+                    <button 
+                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
+                        (click)="setActiveCategory('Wedding')"
+                        [class.text-maroon-600]="activeCategory() === 'Wedding'"
+                        [class.text-zinc-700]="activeCategory() !== 'Wedding'">
+                        Wedding
+                    </button>
+                </li>
+
+                <li>
+                    <button 
+                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
+                        (click)="setActiveCategory('Anniversary')"
+                        [class.text-maroon-600]="activeCategory() === 'Anniversary'"
+                        [class.text-zinc-700]="activeCategory() !== 'Anniversary'">
+                        Anniversary
+                    </button>
+                </li>
+
+                <li>
+                    <button 
+                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
+                        (click)="setActiveCategory('Birthday')"
+                        [class.text-maroon-600]="activeCategory() === 'Birthday'"
+                        [class.text-zinc-700]="activeCategory() !== 'Birthday'">
+                        Birthday
+                    </button>
+                </li>
+
+                <li>
+                    <button 
+                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
+                        (click)="setActiveCategory('Engagement')"
+                        [class.text-maroon-600]="activeCategory() === 'Engagement'"
+                        [class.text-zinc-700]="activeCategory() !== 'Engagement'">
+                        Engagement
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        @for (product of products(); track $index) {
+            <app-product-card [product]="product"></app-product-card>
+        }
+    </div>
+
+    <div class="flex justify-end gap-2.5 ">
+        <a class="text-maroon-700 font-semibold text-16px align-middle cursor-pointer hover:text-maroon-600 transition-colors duration-200">View More <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+</section>
