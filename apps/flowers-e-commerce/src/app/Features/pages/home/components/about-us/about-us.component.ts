@@ -1,8 +1,10 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
+import { SectionTitleComponent } from "../../../../../shared/components/section-title/sectionTitle.component";
 
 @Component({
   selector: 'app-about-us',
-  imports: [],
+  imports: [NgOptimizedImage, SectionTitleComponent],
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.scss',
 })
