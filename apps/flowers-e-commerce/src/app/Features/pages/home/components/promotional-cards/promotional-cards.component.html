@@ -2,7 +2,7 @@
     <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-10">
         @for (card of cards; track $index) {
             <div class="relative w-full  max-w-[410px] aspect-410/271 mx-auto rounded-2xl overflow-hidden flex items-end p-6 group transition-transform duration-300">
-                <img ngOptimizedImage [src]="card.img" [alt]="card.label" width="410" height="271" class="absolute inset-0 w-full h-full object-cover">
+                <img ngOptimizedImage [ngSrc]="card.img"  [alt]="card.label" width="410" height="271" class="absolute inset-0 w-full h-full object-cover">
                 <div class="absolute inset-0 bg-linear-to-b from-[rgba(0,0,0,0)] to-[rgba(0,0,0,0.5)] group-hover:to-[rgba(0,0,0,0.7)] transition-all duration-300 ease-in-out"></div>
                 <div class="relative z-10 w-full text-white">
                     <span class="inline-block bg-maroon-50 text-maroon-600 text-xs px-2 py-0.5 font-medium rounded-full mb-2" > {{card.label}} </span>
