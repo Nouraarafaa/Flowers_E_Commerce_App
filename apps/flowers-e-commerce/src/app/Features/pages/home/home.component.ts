@@ -39,7 +39,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.products.set(res.products);
           this.categories.set(res.categories);
           this.bestSeller.set(res.bestSeller);
