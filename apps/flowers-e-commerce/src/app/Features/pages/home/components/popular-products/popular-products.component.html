@@ -2,54 +2,55 @@
 
     <div class="flex justify-between items-center">
         <app-section-title [sectionTitle]="'Most Popular'"></app-section-title>
+
         <nav>
             <ul class="flex gap-6">
                 <li>
-                    <button 
-                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
-                        (click)="setActiveCategory('all')"
-                        [class.text-maroon-600]="activeCategory() === 'all'"
-                        [class.text-zinc-700]="activeCategory() !== 'all'">
+                    <button
+                        (click)="setOccasion('all')"
+                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
+                        [class.text-maroon-600]="activeOccasion() === 'all'"
+                        [class.text-zinc-700]="activeOccasion() !== 'all'">
                         All
                     </button>
                 </li>
 
                 <li>
-                    <button 
-                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
-                        (click)="setActiveCategory('Wedding')"
-                        [class.text-maroon-600]="activeCategory() === 'Wedding'"
-                        [class.text-zinc-700]="activeCategory() !== 'Wedding'">
+                    <button
+                        (click)="setOccasion('Wedding')"
+                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
+                        [class.text-maroon-600]="activeOccasion() === getOccasionIdByName('Wedding')"
+                        [class.text-zinc-700]="activeOccasion() !== getOccasionIdByName('Wedding')">
                         Wedding
                     </button>
                 </li>
 
                 <li>
-                    <button 
-                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
-                        (click)="setActiveCategory('Anniversary')"
-                        [class.text-maroon-600]="activeCategory() === 'Anniversary'"
-                        [class.text-zinc-700]="activeCategory() !== 'Anniversary'">
+                    <button
+                        (click)="setOccasion('Anniversary')"
+                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
+                        [class.text-maroon-600]="activeOccasion() === getOccasionIdByName('Anniversary')"
+                        [class.text-zinc-700]="activeOccasion() !== getOccasionIdByName('Anniversary')">
                         Anniversary
                     </button>
                 </li>
 
                 <li>
-                    <button 
-                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
-                        (click)="setActiveCategory('Birthday')"
-                        [class.text-maroon-600]="activeCategory() === 'Birthday'"
-                        [class.text-zinc-700]="activeCategory() !== 'Birthday'">
+                    <button
+                        (click)="setOccasion('Birthday')"
+                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
+                        [class.text-maroon-600]="activeOccasion() === getOccasionIdByName('Birthday')"
+                        [class.text-zinc-700]="activeOccasion() !== getOccasionIdByName('Birthday')">
                         Birthday
                     </button>
                 </li>
 
                 <li>
-                    <button 
-                        class="text-zinc-700 font-medium text-16px align-middle cursor-pointer"
-                        (click)="setActiveCategory('Engagement')"
-                        [class.text-maroon-600]="activeCategory() === 'Engagement'"
-                        [class.text-zinc-700]="activeCategory() !== 'Engagement'">
+                    <button
+                        (click)="setOccasion('Engagement')"
+                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
+                        [class.text-maroon-600]="activeOccasion() === getOccasionIdByName('Engagement')"
+                        [class.text-zinc-700]="activeOccasion() !== getOccasionIdByName('Engagement')">
                         Engagement
                     </button>
                 </li>
@@ -58,7 +59,7 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        @for (product of products(); track $index) {
+        @for (product of filteredProducts(); track $index) {
             <app-product-card [product]="product"></app-product-card>
         }
     </div>

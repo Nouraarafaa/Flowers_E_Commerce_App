@@ -1,7 +1,7 @@
 import { Component, computed, input, signal } from '@angular/core';
 import { ProductCardComponent } from '../../../../../Shared/components/ui/product-card/product-card.component';
 import {
-  Category,
+  Occasion,
   Product,
 } from '../../../../../Shared/interfaces/HomeResponse/home-response';
 import { SectionTitleComponent } from '../../../../../shared/components/section-title/sectionTitle.component';
@@ -14,23 +14,46 @@ import { SectionTitleComponent } from '../../../../../shared/components/section-
 })
 export class PopularProductsComponent {
   products = input.required<Product[]>();
-  categories = input.required<Category[]>();
+  occasions = input.required<Occasion[]>();
 
 
-  activeCategory = signal<string>('all');
+  listOfOccasions = [
+    { label: 'Wedding', key: 'Wedding' },
+    { label: 'Anniversary', key: 'Anniversary' },
+    { label: 'Birthday', key: 'Birthday' },
+    { label: 'Engagement', key: 'Engagement' },
+  ];
 
-  setActiveCategory(categoryId: string) {
-    this.activeCategory.set(categoryId);
+  activeOccasion = signal<string>('all');
+
+  getOccasionIdByName(name: string): string | null {
+    const occasion = this.occasions().find(
+      (occ) => occ.name.toLowerCase() === name.toLowerCase()
+    );
+    return occasion?._id ?? null;
   }
 
   filteredProducts = computed(() => {
-  const selected = this.activeCategory();
+    const selected = this.activeOccasion();
+    const allProducts = this.products();
 
     if (selected === 'all') {
-      return this.products();
+      return allProducts;
     }
 
-    return this.products().filter(p => p.category === selected);
+    return allProducts.filter((product) => product.occasion === selected);
   });
 
+  setOccasion(name: string) {
+    if (name === 'all') {
+      this.activeOccasion.set('all');
+      return;
+    }
+
+    const id = this.getOccasionIdByName(name);
+    if (id) {
+      this.activeOccasion.set(id);
+    }
+  }
+  
 }
