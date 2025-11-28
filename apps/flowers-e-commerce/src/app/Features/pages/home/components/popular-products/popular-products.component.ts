@@ -5,7 +5,7 @@ import {
   Product,
 } from '../../../../../Shared/interfaces/HomeResponse/home-response';
 import { SectionTitleComponent } from '../../../../../shared/components/section-title/sectionTitle.component';
-
+ 
 @Component({
   selector: 'app-popular-products',
   imports: [ProductCardComponent, SectionTitleComponent],
@@ -55,5 +55,5 @@ export class PopularProductsComponent {
       this.activeOccasion.set(id);
     }
   }
-  
+
 }
