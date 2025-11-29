@@ -12,11 +12,12 @@ import {
   Occasion,
   Product,
 } from '../../../Shared/interfaces/HomeResponse/home-response';
+import { PromotionalCardsComponent } from "./components/promotional-cards/promotional-cards.component";
 
 
 @Component({
   selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent],
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent, PromotionalCardsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -38,7 +39,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
-          console.log(res.products);
           this.products.set(res.products);
           this.categories.set(res.categories);
           this.bestSeller.set(res.bestSeller);
