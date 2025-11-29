@@ -26,7 +26,11 @@
             <p-carousel [value]="bestSellingProducts()" [showIndicators]="false" [numVisible]="3" [numScroll]="1"
                 [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="3000">
                 <ng-template let-bestSellProduct #item>
-                    <app-product-card [product]="bestSellProduct"></app-product-card>
+                    
+                 
+            <app-product-card [product]="bestSellProduct"></app-product-card>
+       
+                 
                 </ng-template>
             </p-carousel>
 
