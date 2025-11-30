@@ -1,6 +1,6 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
-import { SectionTitleComponent } from "../../../../../shared/components/section-title/sectionTitle.component";
+import { SectionTitleComponent } from "../../../../../Shared/components/section-title/sectionTitle.component";
 
 @Component({
   selector: 'app-about-us',
