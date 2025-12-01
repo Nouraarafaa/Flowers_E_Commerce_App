@@ -4,25 +4,26 @@
     border-color: transparent;
     color: var(--color-maroon-50);
     &:not(:disabled):hover {
-     background: var(--color-maroon-700);
-    border-color: transparent;
-    color: var(--color-maroon-50);
+      background: var(--color-maroon-700);
+      border-color: transparent;
+      color: var(--color-maroon-50);
     }
-
   }
- 
-   .p-carousel-prev-button {
 
+  .p-carousel-prev-button {
     z-index: 5;
-  margin-right: -35px;
-    
+    margin-right: -25px;
   }
-  .p-carousel-next-button{
-  
-   z-index: 5;
-  margin-left: -35px;
+  .p-carousel-next-button {
+    z-index: 5;
+    margin-left: -25px;
+  }
+  .p-carousel-content {
+    gap: 0rem !important;
+  }
 
+  .p-carousel-viewport {
+    margin-left: -12px; 
+    margin-right: -12px;
   }
-  
-  
 }
