@@ -23,10 +23,12 @@
 
         <!-- carousel -->
         <div class="w-full lg:w-3/4 ">
-            <p-carousel [value]="bestSellingProducts()" [showIndicators]="false" [numVisible]="3" [numScroll]="1"
+            <p-carousel [value]="bestSellingProducts()" [showIndicators]="false" [numVisible]="3" [numScroll]="1" 
                 [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="3000">
                 <ng-template let-bestSellProduct #item>
+                    <div class="px-3">
                     <app-product-card [product]="bestSellProduct"></app-product-card>
+                    </div>                    
                 </ng-template>
             </p-carousel>
 

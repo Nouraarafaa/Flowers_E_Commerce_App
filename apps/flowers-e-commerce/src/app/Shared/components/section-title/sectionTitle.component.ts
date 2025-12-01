@@ -7,7 +7,7 @@ import { Component, input } from '@angular/core';
   styleUrl: './sectionTitle.component.scss',
 })
 export class SectionTitleComponent {
-  alignment=input.required<string>();
+  alignment=input<string>();
   sectionName=input<string>();
   sectionTitle=input<string>();
 }

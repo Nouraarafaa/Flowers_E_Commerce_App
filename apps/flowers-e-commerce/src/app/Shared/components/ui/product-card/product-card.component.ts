@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
 import { Product } from '../../../interfaces/HomeResponse/home-response';
+import { SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-card',
-  imports: [],
+  imports: [SlicePipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })

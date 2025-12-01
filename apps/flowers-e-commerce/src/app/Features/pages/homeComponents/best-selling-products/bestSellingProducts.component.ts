@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { SectionTitleComponent } from "apps/flowers-e-commerce/src/app/shared/components/section-title/sectionTitle.component";
+import { SectionTitleComponent } from "apps/flowers-e-commerce/src/app/Shared/components/section-title/sectionTitle.component";
 import { ButtonComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/button/button.component';
 import { BestSeller } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
 import { Carousel } from 'primeng/carousel';

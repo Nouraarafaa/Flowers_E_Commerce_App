@@ -12,6 +12,7 @@ import {
   Occasion,
   Product,
 } from '../../../Shared/interfaces/HomeResponse/home-response';
+<<<<<<< HEAD
 import { TestimonialsComponent } from "../homeComponents/testimonials/testimonials.component";
 import { LeftBannerComponent } from "../homeComponents/left-banner/left-banner.component";
 import { BannerSliderComponent } from "../homeComponents/banner-slider/banner-slider.component";
@@ -19,6 +20,15 @@ import { BannerSliderComponent } from "../homeComponents/banner-slider/banner-sl
 @Component({
   selector: 'app-home',
   imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, TestimonialsComponent, BestSellingProductsComponent, LeftBannerComponent, BannerSliderComponent],
+=======
+import { PromotionalCardsComponent } from "./components/promotional-cards/promotional-cards.component";
+import { AboutUsComponent } from "./components/about-us/about-us.component";
+
+
+@Component({
+  selector: 'app-home',
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent, PromotionalCardsComponent, AboutUsComponent],
+>>>>>>> 21da4869cc0a1718afb0432539bdae42fdd9c70a
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -40,7 +50,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
-          console.log(res.products);
           this.products.set(res.products);
           this.categories.set(res.categories);
           this.bestSeller.set(res.bestSeller);
