@@ -1,0 +1,38 @@
+.HomeSliderAndBanner {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.HomeSliderAndBanner > app-left-banner {
+  flex: 0 0 320px; 
+}
+
+.HomeSliderAndBanner > app-banner-slider {
+  flex: 1 1 0;
+  min-width: 300px; 
+  width: 100%;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .HomeSliderAndBanner > app-left-banner,
+  .HomeSliderAndBanner > app-banner-slider {
+    flex: 1 1 48%;
+    min-width: 200px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .HomeSliderAndBanner {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .HomeSliderAndBanner > * {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+}

@@ -14,11 +14,13 @@ import {
 } from '../../../Shared/interfaces/HomeResponse/home-response';
 import { PromotionalCardsComponent } from "./components/promotional-cards/promotional-cards.component";
 import { AboutUsComponent } from "./components/about-us/about-us.component";
+import { BannerSliderComponent } from "../homeComponents/banner-slider/banner-slider.component";
+import { LeftBannerComponent } from "../homeComponents/left-banner/left-banner.component";
 
 
 @Component({
   selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent, PromotionalCardsComponent, AboutUsComponent],
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent, PromotionalCardsComponent, AboutUsComponent, BannerSliderComponent, LeftBannerComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

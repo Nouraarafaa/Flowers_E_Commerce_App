@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "roseApp": "nx s flowers-e-commerce --o"
+    "roseApp": "nx s flowers-e-commerce --o",
+    "docs:build": "npx compodoc -p tsconfig.app.json -d documentation",
+    "docs:serve": "npx compodoc -s -p tsconfig.app.json",
+    "docs:build:prod": "npx compodoc -p tsconfig.app.json -d documentation --theme gitbook --disablePrivate"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +40,7 @@
     "@angular/cli": "~19.2.0",
     "@angular/compiler-cli": "~19.2.0",
     "@angular/language-service": "~19.2.0",
+    "@compodoc/compodoc": "^1.1.32",
     "@eslint/js": "^9.8.0",
     "@nx/angular": "^21.6.4",
     "@nx/devkit": "20.5.0",
