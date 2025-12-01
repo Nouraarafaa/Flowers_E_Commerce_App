@@ -12,23 +12,15 @@ import {
   Occasion,
   Product,
 } from '../../../Shared/interfaces/HomeResponse/home-response';
-<<<<<<< HEAD
-import { TestimonialsComponent } from "../homeComponents/testimonials/testimonials.component";
-import { LeftBannerComponent } from "../homeComponents/left-banner/left-banner.component";
-import { BannerSliderComponent } from "../homeComponents/banner-slider/banner-slider.component";
-
-@Component({
-  selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, TestimonialsComponent, BestSellingProductsComponent, LeftBannerComponent, BannerSliderComponent],
-=======
 import { PromotionalCardsComponent } from "./components/promotional-cards/promotional-cards.component";
 import { AboutUsComponent } from "./components/about-us/about-us.component";
+import { BannerSliderComponent } from "../homeComponents/banner-slider/banner-slider.component";
+import { LeftBannerComponent } from "../homeComponents/left-banner/left-banner.component";
 
 
 @Component({
   selector: 'app-home',
-  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent, PromotionalCardsComponent, AboutUsComponent],
->>>>>>> 21da4869cc0a1718afb0432539bdae42fdd9c70a
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent, PromotionalCardsComponent, AboutUsComponent, BannerSliderComponent, LeftBannerComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
