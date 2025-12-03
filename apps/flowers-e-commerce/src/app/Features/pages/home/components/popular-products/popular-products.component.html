@@ -1,58 +1,38 @@
+
 <section class="my-32 flex flex-col gap-10">
 
-    <div class="flex justify-between items-center">
+    <div class="flex flex-wrap gap-2 justify-between items-center ">
         <app-section-title [sectionTitle]="'Most Popular'"></app-section-title>
+
         <nav>
             <ul class="flex gap-6">
+                <!-- All -->
                 <li>
                     <button
-                        (click)="setOccasion('all')"
-                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
+                        (click)="activeOccasion.set('all')"
+                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer
+                            active:text-maroon-500 active:scale-90 transition-all duration-300"
                         [class.text-maroon-600]="activeOccasion() === 'all'"
                         [class.text-zinc-700]="activeOccasion() !== 'all'">
                         All
                     </button>
                 </li>
 
-                <li>
-                    <button
-                        (click)="setOccasion('Wedding')"
-                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
-                        [class.text-maroon-600]="activeOccasion() === getOccasionIdByName('Wedding')"
-                        [class.text-zinc-700]="activeOccasion() !== getOccasionIdByName('Wedding')">
-                        Wedding
-                    </button>
-                </li>
+                <!-- 4 Occasions  -->
+                @for (occ of occasions().slice(0, 4); track occ._id) {
+                    <li>
+                        <button
+                        (click)="setOccasion(occ._id)"
+                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer
+                                active:text-maroon-500 active:scale-90 transition-all duration-300"
+                        [class.text-maroon-600]="activeOccasion() === occ._id"
+                        [class.text-zinc-700]="activeOccasion() !== occ._id">
 
-                <li>
-                    <button
-                        (click)="setOccasion('Anniversary')"
-                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
-                        [class.text-maroon-600]="activeOccasion() === getOccasionIdByName('Anniversary')"
-                        [class.text-zinc-700]="activeOccasion() !== getOccasionIdByName('Anniversary')">
-                        Anniversary
-                    </button>
-                </li>
+                        {{ occ.name }}
 
-                <li>
-                    <button
-                        (click)="setOccasion('Birthday')"
-                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
-                        [class.text-maroon-600]="activeOccasion() === getOccasionIdByName('Birthday')"
-                        [class.text-zinc-700]="activeOccasion() !== getOccasionIdByName('Birthday')">
-                        Birthday
-                    </button>
-                </li>
-
-                <li>
-                    <button
-                        (click)="setOccasion('Engagement')"
-                        class="text-zinc-700 font-medium text-[16px] align-middle cursor-pointer active:text-maroon-500 active:scale-90 transition-all duration-300"
-                        [class.text-maroon-600]="activeOccasion() === getOccasionIdByName('Engagement')"
-                        [class.text-zinc-700]="activeOccasion() !== getOccasionIdByName('Engagement')">
-                        Engagement
-                    </button>
-                </li>
+                        </button>
+                    </li>
+                }
             </ul>
         </nav>
     </div>
