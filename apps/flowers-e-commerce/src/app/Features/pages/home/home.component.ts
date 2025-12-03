@@ -10,10 +10,10 @@ import {
   BestSeller,
   Category,
   Occasion,
-  Product,
 } from '../../../Shared/interfaces/HomeResponse/home-response';
 import { PromotionalCardsComponent } from "./components/promotional-cards/promotional-cards.component";
 import { AboutUsComponent } from "./components/about-us/about-us.component";
+import { Product } from '../../../Shared/interfaces/product';
 
 
 @Component({
