@@ -19,6 +19,7 @@ import { Product } from '../../../Shared/interfaces/product';
 @Component({
   selector: 'app-home',
   imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent, PromotionalCardsComponent, AboutUsComponent],
+  imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, BestSellingProductsComponent, PromotionalCardsComponent, AboutUsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
