@@ -1,5 +1,4 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { ProductService } from '../../services/product-service/product.service';
 import { ProductListComponent } from "../product-list/productList.component";
 import { Product } from '../../../../../Shared/interfaces/product';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
@@ -17,14 +16,12 @@ import { Subscription } from 'rxjs';
   styleUrl: './products.component.scss',
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  private readonly _productService = inject(ProductService);
   private readonly _homeService = inject(HomeService);
 
   categories = signal<Category[]>([]);
   occasions = signal<Occasion[]>([]);
   products = signal<Product[]>([]);
 
-  getAllProductsSub!: Subscription;
   getHomeDetailsSub!: Subscription;
 
   // fullProducts from API
@@ -40,31 +37,24 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.getAllProducts();
-    this.getCategoriesAndOccasions();
+    this.getProductsAndCategoriesAndOccasions();
   }
 
-  getCategoriesAndOccasions() {
+  getProductsAndCategoriesAndOccasions() {
     this.getHomeDetailsSub = this._homeService.getHomeDetails().subscribe({
       next: (res) => {
+        this.products.set(res.products);
+         this.fullProducts.set(res.products);
+        this.totalRecords = res.products.length; 
         this.categories.set(res.categories);
         this.occasions.set(res.occasions);
+
+        
+        this.paginateProducts(this.first, this.rows);
       }
     });
   }
 
-
-  getAllProducts() {
-    this.getAllProductsSub = this._productService.getAllProducts().subscribe({
-      next: (res) => {
-        this.products.set(res.products);
-        this.fullProducts.set(res.products);
-        this.totalRecords = res.metadata.totalItems; 
-
-        this.paginateProducts(this.first, this.rows);
-      }
-    })
-  }
 
   paginateProducts(firstIndex: number, pageSize: number): void {
     const allProducts = this.fullProducts();
@@ -83,7 +73,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.getAllProductsSub?.unsubscribe();
     this.getHomeDetailsSub?.unsubscribe();
   }
 }

@@ -14,8 +14,8 @@ import { Rating } from 'primeng/rating';
 export class ProductFiltersComponent {
   categoryFilters = input.required<Category[]>();
   occasionFilters = input.required<Occasion[]>();
-  selectedCategoryId = signal<string>('');
-  selectedOccasionId = signal<string>('');
+selectedCategoryIds = signal<string[]>([]);
+  selectedOccasionIds = signal<string[]>([]);
   priceStartNum!: number;
   priceEndNum!: number;
 
@@ -24,12 +24,33 @@ export class ProductFiltersComponent {
 
 
   filterByCategory(category: Category) {
-    this.selectedCategoryId.set(category._id);
-
+    
+    this.selectedCategoryIds.update(currentIds => {
+      const id = category._id;
+      if (currentIds.includes(id)) {
+        // If ID is already present, remove it (deselect)
+        return currentIds.filter((existingId) => existingId !== id);
+        
+      } else {
+        // If ID is not present, add it (select)
+        return [...currentIds, id];
+      }
+    });
+    // console.log(this.selectedCategoryIds());
+    
   }
-  filterByOccasion(occasion: Occasion) {
-    this.selectedOccasionId.set(occasion._id);
 
+  filterByOccasion(occasion: Occasion) {
+    this.selectedOccasionIds.update(currentIds => {
+      const id = occasion._id;
+      if (currentIds.includes(id)) {
+        // If ID is already present, remove it (deselect)
+        return currentIds.filter(existingId => existingId !== id);
+      } else {
+        // If ID is not present, add it (select)
+        return [...currentIds, id];
+      }
+    });
   }
 
   resetAllfilters() {
