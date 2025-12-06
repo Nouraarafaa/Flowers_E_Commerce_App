@@ -6,7 +6,6 @@
   font-family: 'Edwardian Script';
 }
 
-
 @import 'primeicons/primeicons.css';
 :root {
   --maroon-800: #501419;
@@ -43,7 +42,8 @@
   --open-sans: 'Open Sans', sans-serif;
   --Edwardian: 'Edwardian Script';
   --Sarabun: 'Sarabun', sans-serif;
-
+  --p-rating-icon-hover-color: #fba707 !important;
+  --p-rating-icon-active-color: #fba707 !important;
 
   --13px: 13px;
   --16px: 16px;
@@ -88,7 +88,7 @@
   --text-13px: var(--13px);
   --text-16px: var(--16px);
 }
-body{
+body {
   font-family: var(--font-Sarabun);
 }
 .nav-icon {
@@ -99,6 +99,12 @@ body{
 }
 .side-bar-link {
   @apply flex items-center cursor-pointer p-4;
+}
+.price-filter-input {
+  @apply w-full focus:border-maroon-500 focus:border-2 outline-0 text-maroon-700 rounded-[10px] border border-zinc-300 p-4 mt-1.5 placeholder:text-zinc-400 placeholder:font-inter placeholder:text-sm;
+}
+.reset-button-filter {
+  @apply disabled:bg-zinc-200 disabled:text-zinc-800 disabled:cursor-not-allowed cursor-pointer hover:bg-maroon-50/55 duration-300 py-2.5 px-4 bg-maroon-50 text-maroon-600 font-semibold font-mulish text-sm w-full rounded-[10px] flex items-center justify-center gap-2.5;
 }
 .location-text::before {
   content: 'Deliver to:';

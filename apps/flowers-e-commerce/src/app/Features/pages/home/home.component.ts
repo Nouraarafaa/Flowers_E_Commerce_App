@@ -14,6 +14,7 @@ import {
 } from '../../../Shared/interfaces/HomeResponse/home-response';
 import { TestimonialsComponent } from "../homeComponents/testimonials/testimonials.component";
 
+
 @Component({
   selector: 'app-home',
   imports: [TrustedByComponent, GalleryComponent, PopularProductsComponent, BenefitsComponent, TestimonialsComponent, BestSellingProductsComponent],

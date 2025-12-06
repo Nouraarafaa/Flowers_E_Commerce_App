@@ -1,0 +1,24 @@
+:host ::ng-deep {
+  .p-select {
+    display: none;
+  }
+ 
+  .p-paginator-page, .p-paginator-next, .p-paginator-last, .p-paginator-first, .p-paginator-prev {
+    color: var(--color-zinc-800);
+  }
+  .p-paginator-page.p-paginator-page-selected {
+    background-color: var(--color-maroon-600);
+    color: white;
+}
+.p-paginator-page, .p-paginator-next, .p-paginator-last, .p-paginator-first, .p-paginator-prev {
+   
+    border-radius: 8px;
+    border: 1px solid #F4F4F5;
+    
+}
+.p-paginator-page:not(.p-disabled):not(.p-paginator-page-selected):hover, .p-paginator-first:not(.p-disabled):hover, .p-paginator-prev:not(.p-disabled):hover, .p-paginator-next:not(.p-disabled):hover, .p-paginator-last:not(.p-disabled):hover {
+    background-color: var(--color-maroon-50);
+    color: var(--color-maroon-800);
+
+}
+}
