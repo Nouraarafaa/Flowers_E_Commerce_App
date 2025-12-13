@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-filter-name',
@@ -8,4 +8,8 @@ import { Component, input } from '@angular/core';
 })
 export class FilterNameComponent {
   filterName= input.required<string>();
+  clicked=output<void>();
+  onClick(){
+    this.clicked.emit();
+  }
 }
