@@ -15,10 +15,6 @@ import {
 import { TestimonialsComponent } from "../homeComponents/testimonials/testimonials.component";
 import { PromotionalCardsComponent } from "./components/promotional-cards/promotional-cards.component";
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8151824dba2844546363b57c6bbcd0e99be69cd8
 
 @Component({
   selector: 'app-home',

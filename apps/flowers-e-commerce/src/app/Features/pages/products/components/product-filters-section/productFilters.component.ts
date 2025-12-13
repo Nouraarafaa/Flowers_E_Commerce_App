@@ -52,8 +52,8 @@ export class ProductFiltersComponent {
   }
   resetCategory() {
     // console.log(this.selectedCategoryIds());
-    // this.selectedCategoryIds.set([]);
-    // console.log(this.selectedCategoryIds());
+    this.selectedCategoryIds.set([]);
+    console.log(this.selectedCategoryIds());
 
 
   }
