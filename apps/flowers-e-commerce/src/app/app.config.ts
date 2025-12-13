@@ -8,21 +8,25 @@ import Aura from '@primeng/themes/aura';
 import { BASE_URL } from '@elevate-workspace/auth';
 import { environment } from './Core/environments/environment.prod';
 import { headerInterceptor } from './Core/interceptors/header/header.interceptor';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling( {scrollPositionRestoration: "top"} ), withViewTransitions()),
-    provideHttpClient(withFetch(),withInterceptors([headerInterceptor])),
+    provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top" }), withViewTransitions()),
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
     provideAnimationsAsync(),
     providePrimeNG({
-      theme: {
-        preset: Aura,
-      },
+        theme: {
+            preset: Aura,
+        },
     }),
     {
-      provide: BASE_URL,
-      useValue: environment.BaseUrl
-    }
-  ],
+        provide: BASE_URL,
+        useValue: environment.BaseUrl
+    },
+    provideStore(),
+    provideEffects()
+],
 };
