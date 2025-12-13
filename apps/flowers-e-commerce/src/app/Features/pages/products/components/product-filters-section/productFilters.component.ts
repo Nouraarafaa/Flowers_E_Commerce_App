@@ -24,20 +24,17 @@ export class ProductFiltersComponent {
 
 
   filterByCategory(category: Category) {
-
     this.selectedCategoryIds.update(currentIds => {
       const id = category._id;
       if (currentIds.includes(id)) {
         // If ID is already present, remove it (deselect)
         return currentIds.filter((existingId) => existingId !== id);
-
       } else {
         // If ID is not present, add it (select)
         return [...currentIds, id];
       }
     });
     // console.log(this.selectedCategoryIds());
-
   }
 
   filterByOccasion(occasion: Occasion) {
