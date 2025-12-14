@@ -48,7 +48,7 @@
         <div class="border-b border-zinc-100 pb-5">
             <app-filter-name (clicked)="resetRating()" filterName="Rating"></app-filter-name>
             <div class="mt-2.5">
-                <p-rating [(ngModel)]="starsNumsSelected" />
+                <p-rating  [(ngModel)]="starsNumsSelected" />
             </div>
         </div>
         <!-- price filter -->
@@ -58,11 +58,11 @@
             <div class="flex gap-2 mt-2.5">
                 <div class="w-1/2">
                     <span class="font-inter font-medium text-zinc-800 text-sm">from</span>
-                    <input [(ngModel)]="priceStartNum" type="text" placeholder="0" class="price-filter-input">
+                    <input (input)="filterByPrice()" [(ngModel)]="minPrice" type="text" placeholder="0" class="price-filter-input">
                 </div>
                 <div class="w-1/2">
                     <span class="font-inter font-medium text-zinc-800 text-sm">to</span>
-                    <input [(ngModel)]="priceEndNum" type="text" placeholder="10000000" class="price-filter-input">
+                    <input (input)="filterByPrice()" [(ngModel)]="maxPrice" type="text" placeholder="10000000" class="price-filter-input">
                 </div>
 
             </div>
@@ -73,8 +73,8 @@
                     selectedCategoryIds().length === 0 
                     && selectedOccasionIds().length === 0
                     && starsNumsSelected==null 
-                    && priceStartNum==null
-                    && priceEndNum==null " class="reset-button-filter">
+                    && minPrice==null
+                    && maxPrice==null " class="reset-button-filter">
                 <i class="pi pi-undo"></i>
                 <span>Reset All</span>
             </button>

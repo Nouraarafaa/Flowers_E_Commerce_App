@@ -12,7 +12,7 @@ export interface ProductFilters {
 export interface ProductsState{
     originalProducts: Product[];
     products:Product[];
-    filters:ProductFilters|null;
+    filters:ProductFilters;
     isLoading:boolean;
     error:string|null;
 }
@@ -21,7 +21,14 @@ export interface ProductsState{
 export const initialProductsState:ProductsState={
     originalProducts: [],
     products:[],
-    filters:null,
+    filters:{ 
+        category: null,
+        occasion: null,
+        minPrice: null,
+        maxPrice: null,
+        starRating: null,
+        searchTerm: null,
+    },
     isLoading:false,
     error:null
 }

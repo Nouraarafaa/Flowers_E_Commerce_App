@@ -1,9 +1,11 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
 import { FilterNameComponent } from "../filter-name/filterName.component";
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rating } from 'primeng/rating';
+import { Store } from '@ngrx/store';
+import * as ProductActions from 'apps/flowers-e-commerce/src/app/Core/store/products/products.actions';
 
 @Component({
   selector: 'app-product-filters',
@@ -16,10 +18,12 @@ export class ProductFiltersComponent {
   occasionFilters = input.required<Occasion[]>();
   selectedCategoryIds = signal<string[]>([]);
   selectedOccasionIds = signal<string[]>([]);
-  priceStartNum!: number;
-  priceEndNum!: number;
+  minPrice!: number;
+  maxPrice!: number;
 
   starsNumsSelected!: number;
+
+  private readonly _store = inject(Store);
 
 
 
@@ -50,28 +54,45 @@ export class ProductFiltersComponent {
     });
 
   }
-  resetCategory() {
-    // console.log(this.selectedCategoryIds());
-    this.selectedCategoryIds.set([]);
-    console.log(this.selectedCategoryIds());
 
-
+  filterByPrice() {
+    console.log(this.minPrice, this.maxPrice);
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          minPrice: this.minPrice,
+          maxPrice: this.maxPrice
+        }
+      })
+    );
   }
 
-  resetOccasion() {
+  
 
-  }
 
-  resetRating() {
 
-  }
+resetCategory() {
+  // console.log(this.selectedCategoryIds());
+  this.selectedCategoryIds.set([]);
+  console.log(this.selectedCategoryIds());
 
-  resetPrice() {
 
-  }
+}
 
-  resetAllfilters() {
-    // reset all filters
+resetOccasion() {
 
-  }
+}
+
+resetRating() {
+
+}
+
+resetPrice() {
+
+}
+
+resetAllfilters() {
+  // reset all filters
+
+}
 }
