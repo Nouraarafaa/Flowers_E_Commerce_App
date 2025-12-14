@@ -145,10 +145,21 @@ export class ProductFiltersComponent {
   }
 
   resetAllfilters() {
-    // reset all filters
-
+    this.selectedCategoryIds.set([]);
+    this.selectedOccasionIds.set([]);
+    this.starsNumsSelected = 0;
+    this.rangeValues=[0,0];
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          minPrice: null,
+          maxPrice: null,
+          category:null,
+          occasion:null,
+          searchTerm:null,
+          starRating:null
+        }
+      })
+    );
   }
-
-
-
 }
