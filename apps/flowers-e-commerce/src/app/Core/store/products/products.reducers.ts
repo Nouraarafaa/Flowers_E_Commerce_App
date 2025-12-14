@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialProductsState } from "./products.state";
-import { setFilters, setProducts, sortProducts } from "./products.actions";
+import { setFilters, setProducts} from "./products.actions";
 
 export const productsReducer = createReducer(
     initialProductsState,
@@ -9,11 +9,7 @@ export const productsReducer = createReducer(
         originalProducts: products
 
     })),
-    on(sortProducts, (state, { products }) => ({
-        ...state,
-        products
-
-    })),
+   
     on(setFilters, (state, { filters }) => ({
         ...state,
         filters: {
