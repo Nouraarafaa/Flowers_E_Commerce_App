@@ -9,10 +9,6 @@ export const setProducts = createAction(
     '[products] set Products',
     props<{ products: Product[] }>());
 
-export const sortProducts = createAction(
-    '[products] sort Products',
-    props<{ products: Product[] }>());
-
 export const setFilters = createAction(
     '[Product List] Set Filters',
     props<{ filters: Partial<ProductFilters> }>()
