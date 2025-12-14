@@ -7,11 +7,11 @@ import { Rating } from 'primeng/rating';
 import { Store } from '@ngrx/store';
 import * as ProductActions from 'apps/flowers-e-commerce/src/app/Core/store/products/products.actions';
 import { Slider } from 'primeng/slider';
-import { InputTextModule } from 'primeng/inputtext';
+
 
 @Component({
   selector: 'app-product-filters',
-  imports: [FilterNameComponent, SlicePipe, FormsModule, Rating , Slider,InputTextModule],
+  imports: [FilterNameComponent, SlicePipe, FormsModule, Rating , Slider],
   templateUrl: './productFilters.component.html',
   styleUrl: './productFilters.component.scss',
 })
@@ -91,6 +91,17 @@ export class ProductFiltersComponent {
         this.filterByPrice(); 
       }
     }
+  }
+
+  filterByRating() {
+    console.log(this.starsNumsSelected);
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          starRating:this.starsNumsSelected
+        }
+      })
+    );
   }
   
 

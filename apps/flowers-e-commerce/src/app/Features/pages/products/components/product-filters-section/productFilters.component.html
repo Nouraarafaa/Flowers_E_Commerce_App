@@ -48,7 +48,7 @@
         <div class="border-b border-zinc-100 pb-5">
             <app-filter-name (clicked)="resetRating()" filterName="Rating"></app-filter-name>
             <div class="mt-2.5">
-                <p-rating  [(ngModel)]="starsNumsSelected" />
+                <p-rating (click)="filterByRating()" [(ngModel)]="starsNumsSelected" />
             </div>
         </div>
         <!-- price filter -->

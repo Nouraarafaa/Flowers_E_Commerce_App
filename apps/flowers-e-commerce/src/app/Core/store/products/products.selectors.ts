@@ -36,7 +36,7 @@ export const selectFilteredProducts = createSelector(
     }
     // 4. Apply Star Filter
     if (filters.starRating) {
-      
+      filtered = filtered.filter(p => p.rateAvg === filters.starRating);
     }
 
     // 4. Apply Search Term Filter
