@@ -15,17 +15,7 @@ export class HomeService implements homeApi {
   private readonly _BASE_URL = inject(BASE_URL);
 
   getHomeDetails(): Observable<HomeResponse> {
-    return this._httpClient.get<HomeResponse>(`${this._BASE_URL}` + Endpoints.home).pipe(
-        map(response => {
-          // 1. Access the products array
-          const productsArray = response.products;
-    
-          // 2. Sort the products array by price (Low to High)
-          productsArray.sort((a:Product, b:Product) => a.priceAfterDiscount !- b.priceAfterDiscount !);
-          
-          return response;
-        })
-      );
+    return this._httpClient.get<HomeResponse>(`${this._BASE_URL}` + Endpoints.home);
   }
   getTestimonials(): Observable<Testimonials>{
     return this._httpClient.get<Testimonials>(`${this._BASE_URL}` + "/testimonials");

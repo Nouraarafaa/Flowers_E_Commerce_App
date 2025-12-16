@@ -6,6 +6,10 @@ import { ProductFiltersComponent } from "../product-filters-section/productFilte
 import { HomeService } from 'apps/flowers-e-commerce/src/app/Shared/services/home/home.service';
 import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { loadProducts } from './../../../../../Core/store/products/products.actions';
+import { selectFilteredProducts, selectOriginalProducts } from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
+
 
 
 
@@ -18,11 +22,14 @@ import { Subscription } from 'rxjs';
 export class ProductsComponent implements OnInit, OnDestroy {
   private readonly _homeService = inject(HomeService);
 
+  _store = inject(Store);
+
   categories = signal<Category[]>([]);
   occasions = signal<Occasion[]>([]);
   products = signal<Product[]>([]);
 
   getHomeDetailsSub!: Subscription;
+  getProductsSub!: Subscription;
 
   // fullProducts from API
   fullProducts = signal<Product[]>([]);
@@ -37,19 +44,29 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.getProductsAndCategoriesAndOccasions();
-  }
+    this.getCategoriesAndOccasions();
+    this.getProductsFromStore();
 
-  getProductsAndCategoriesAndOccasions() {
+  }
+  
+  getCategoriesAndOccasions() {
     this.getHomeDetailsSub = this._homeService.getHomeDetails().subscribe({
       next: (res) => {
-        this.products.set(res.products);
-         this.fullProducts.set(res.products);
-        this.totalRecords = res.products.length; 
         this.categories.set(res.categories);
         this.occasions.set(res.occasions);
 
-        
+
+      }
+    });
+  }
+
+  getProductsFromStore() {
+   this._store.dispatch(loadProducts());
+    this.getProductsSub = this._store.select(selectFilteredProducts).subscribe({
+      next: (res) => {
+        this.products.set(res);
+        this.fullProducts.set(res);
+        this.totalRecords = res.length;
         this.paginateProducts(this.first, this.rows);
       }
     });
@@ -74,5 +91,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.getHomeDetailsSub?.unsubscribe();
+    this.getProductsSub?.unsubscribe();
   }
 }

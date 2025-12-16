@@ -10,6 +10,8 @@ import { environment } from './Core/environments/environment.prod';
 import { headerInterceptor } from './Core/interceptors/header/header.interceptor';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
+import { productsReducer } from './Core/store/products/products.reducers';
+import { productsEffects } from './Core/store/products/products.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,7 +28,9 @@ export const appConfig: ApplicationConfig = {
         provide: BASE_URL,
         useValue: environment.BaseUrl
     },
-    provideStore(),
-    provideEffects()
+    provideStore({
+        products:productsReducer
+    }),
+    provideEffects([productsEffects])
 ],
 };

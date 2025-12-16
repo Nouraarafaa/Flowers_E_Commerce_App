@@ -1,27 +1,31 @@
-import { Product } from "../../../Shared/interfaces/HomeResponse/home-response";
+import { Product } from '../../../Shared/interfaces/HomeResponse/home-response';
 
 export interface ProductFilters {
-  category: string [] | null;
-  occasion: string [] | null;
-  minPrice: number | null;
-  maxPrice: number | null;
-  starRating: number | null;
-  searchTerm: string | null;
+    category: string[] | null;
+    occasion: string[] | null;
+    minPrice: number | null;
+    maxPrice: number | null;
+    starRating: number | null;
+    searchTerm: string | null;
 }
 
-export interface ProductsState{
+export interface ProductsState {
     originalProducts: Product[];
-    products:Product[];
-    filters:ProductFilters|null;
-    isLoading:boolean;
-    error:string|null;
+    filters: ProductFilters;
+    isLoading: boolean;
+    error: string | null;
 }
 
-
-export const initialProductsState:ProductsState={
+export const initialProductsState: ProductsState = {
     originalProducts: [],
-    products:[],
-    filters:null,
-    isLoading:false,
-    error:null
-}
+    filters: {
+        category: null,
+        occasion: null,
+        minPrice: null,
+        maxPrice: null,
+        starRating: null,
+        searchTerm: null,
+    },
+    isLoading: false,
+    error: null,
+};
