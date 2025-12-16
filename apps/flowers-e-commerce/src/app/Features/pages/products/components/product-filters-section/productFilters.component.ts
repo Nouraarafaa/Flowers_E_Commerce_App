@@ -42,20 +42,25 @@ export class ProductFiltersComponent {
     });
     // console.log(this.selectedCategoryIds());
   }
+filterByOccasion(occasion: Occasion) {
+  this.selectedOccasionIds.update((currentIds) => {
+    const id = occasion._id;
+    return currentIds.includes(id)
+      ? currentIds.filter((existingId) => existingId !== id)
+      : [...currentIds, id];
+  });
 
-  filterByOccasion(occasion: Occasion) {
-    this.selectedOccasionIds.update(currentIds => {
-      const id = occasion._id;
-      if (currentIds.includes(id)) {
-        // If ID is already present, remove it (deselect)
-        return currentIds.filter(existingId => existingId !== id);
-      } else {
-        // If ID is not present, add it (select)
-        return [...currentIds, id];
-      }
-    });
+  this._store.dispatch(
+    ProductActions.setFilters({
+      filters: {
+        occasion: this.selectedOccasionIds().length
+          ? this.selectedOccasionIds()
+          : null,
+      },
+    })
+  );
+}
 
-  }
 
 
   filterByPrice() {
@@ -70,7 +75,7 @@ export class ProductFiltersComponent {
   }
 
   convertRangeToNumber(index: 0 | 1) {
-    let value = this.rangeValues[index];
+    const value = this.rangeValues[index];
 
     if (typeof value === 'string') {
       let numericValue = parseFloat(value);
@@ -116,16 +121,17 @@ resetCategory() {
 }
 
 resetOccasion() {
-
+  this.selectedOccasionIds.set([]);
+  this._store.dispatch(
+    ProductActions.setFilters({
+      filters: { occasion: null },
+    })
+  );
 }
 
-resetRating() {
+resetRating() { /* empty */ }
 
-}
-
-resetPrice() {
-
-}
+resetPrice() { /* empty */ }
 
 resetAllfilters() {
   // reset all filters

@@ -1,33 +1,36 @@
-import { inject, Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { map, switchMap, tap } from "rxjs";
-import { HomeService } from "../../../Shared/services/home/home.service";
-import { loadProducts, setProducts } from "./products.actions";
-import { Product } from "../../../Shared/interfaces/product";
-
-
+import { inject, Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, map, switchMap } from 'rxjs';
+import { of } from 'rxjs';
+import { HomeService } from '../../../Shared/services/home/home.service';
+import {
+    loadProducts,
+    loadProductsSuccess,
+    loadProductsFailure,
+} from './products.actions';
 
 @Injectable()
 export class productsEffects {
-    private readonly _homeService = inject(HomeService);
-    _action = inject(Actions);
-    callApi = createEffect(
-        () => this._action.pipe(
+    private readonly actions$ = inject(Actions);
+    private readonly homeService = inject(HomeService);
+
+    loadProducts$ = createEffect(() =>
+        this.actions$.pipe(
             ofType(loadProducts),
             switchMap(() =>
-                this._homeService.getHomeDetails().pipe(
-                    tap((data) => {
-                        const productsArray = data.products;
+                this.homeService.getHomeDetails().pipe(
+                    map((data) => {
+                        const sortedProducts = [...data.products].sort(
+                            (a, b) => a.priceAfterDiscount! - b.priceAfterDiscount!
+                        );
 
-                        // 2. Sort the products array by price (Low to High)
-                        productsArray.sort((a: Product, b: Product) => a.priceAfterDiscount! - b.priceAfterDiscount!);
-
-                        return data;
+                        return loadProductsSuccess({ products: sortedProducts });
                     }),
-                    map((data) => setProducts({ products: data.products }))
+                    catchError(() =>
+                        of(loadProductsFailure({ error: 'Failed to load products' }))
+                    )
                 )
             )
         )
     );
-
-} 
+}

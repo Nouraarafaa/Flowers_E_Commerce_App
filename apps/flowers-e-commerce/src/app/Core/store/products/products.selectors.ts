@@ -1,49 +1,76 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ProductsState } from "./products.state";
-import { Product } from "../../../Shared/interfaces/HomeResponse/home-response";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { ProductsState } from './products.state';
 
-export const selectProductState = createFeatureSelector<ProductsState>('products');
+export const selectProductsState =
+  createFeatureSelector<ProductsState>('products');
 
+// 🔹 Basic selectors
 export const selectOriginalProducts = createSelector(
-    selectProductState,
-    (state)=>state.originalProducts
+  selectProductsState,
+  (state) => state.originalProducts
 );
 
-
-export const selectProductFilters = createSelector(
-  selectProductState,
+export const selectFilters = createSelector(
+  selectProductsState,
   (state) => state.filters
 );
 
+export const selectIsLoading = createSelector(
+  selectProductsState,
+  (state) => state.isLoading
+);
+
+export const selectError = createSelector(
+  selectProductsState,
+  (state) => state.error
+);
+
+// 🔥 Filtered Products
 export const selectFilteredProducts = createSelector(
   selectOriginalProducts,
-  selectProductFilters,
+  selectFilters,
   (products, filters) => {
-    // 1. Start with the full list
-    let filtered = products;
+    let filtered = [...products];
 
-    // 2. Apply Category Filter
-    if (filters.category) {
-   
+    // Category
+    if (filters.category?.length) {
+      filtered = filtered.filter(p =>
+        filters.category!.includes(p.category)
+      );
     }
 
-    // 3. Apply Price Filter
-    if (filters.minPrice) {
-      filtered = filtered.filter(p => p.priceAfterDiscount! >= filters.minPrice!);
-    }
-    if (filters.maxPrice) {
-      filtered = filtered.filter(p => p.priceAfterDiscount! <= filters.maxPrice!);
-    }
-    // 4. Apply Star Filter
-    if (filters.starRating) {
-      filtered = filtered.filter(p => p.rateAvg === filters.starRating);
+    // Occasion
+    if (filters.occasion && filters.occasion.length > 0) {
+      filtered = filtered.filter(product =>
+        filters.occasion!.includes(product.occasion)
+      );
     }
 
-    // 4. Apply Search Term Filter
-    if (filters.searchTerm) {
 
+    // Min Price
+    if (filters.minPrice !== null) {
+      filtered = filtered.filter(
+        p => p.priceAfterDiscount! >= filters.minPrice!
+      );
     }
 
-    return filtered; // Return the final array
+    // Max Price
+    if (filters.maxPrice !== null) {
+      filtered = filtered.filter(
+        p => p.priceAfterDiscount! <= filters.maxPrice!
+      );
+    }
+
+    // Rating
+    if (filters.starRating !== null) {
+      filtered = filtered.filter(
+        p => p.rateAvg === filters.starRating
+      );
+    }
+
+    // Search
+    if (filters.searchTerm) { /* empty */ }
+
+    return filtered;
   }
 );
