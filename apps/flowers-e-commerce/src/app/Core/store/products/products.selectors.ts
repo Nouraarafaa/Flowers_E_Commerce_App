@@ -25,7 +25,7 @@ export const selectError = createSelector(
   (state) => state.error
 );
 
-// 🔥 Filtered Products
+//Filtered Products
 export const selectFilteredProducts = createSelector(
   selectOriginalProducts,
   selectFilters,

@@ -1,10 +1,10 @@
-<section class="pe-3 flex flex-col gap-1.5">
+<section class=" pe-3 flex flex-col gap-1.5">
     <!-- category filter -->
-    <div class="h-[300px] border-b border-zinc-100 pb-5">
+    <div class=" h-[300px] border-b border-zinc-100 pb-5">
         <app-filter-name (clicked)="resetCategory()" filterName="Category"></app-filter-name>
-        <div class="h-[90%] overflow-y-auto mt-2.5">
+        <div class=" h-[90%] overflow-y-auto mt-2.5">
             @for(category of categoryFilters() ; track $index){
-            <div class="flex items-center mb-1 rounded cursor-pointer  duration-300 "
+            <div class="dark:bg-zinc-700 dark:text-white flex items-center mb-1 rounded cursor-pointer  duration-300 "
                 (click)="filterByCategory(category)"
                 [class]="selectedCategoryIds().includes(category._id) ? 'bg-maroon-50 hover:bg-maroon-50':'bg-zinc-200 hover:bg-zinc-300'">
                 <div class="p-1 rounded-s"
