@@ -23,7 +23,7 @@ export class ProductFiltersComponent {
 
   rangeValues: number[] = [0, 0];
 
-  starsNumsSelected!: number;
+  starsNumsSelected: number=0;
 
   private readonly _store = inject(Store);
 
@@ -150,16 +150,6 @@ export class ProductFiltersComponent {
     this.starsNumsSelected = 0;
     this.rangeValues=[0,0];
     this._store.dispatch(
-      ProductActions.setFilters({
-        filters: {
-          minPrice: null,
-          maxPrice: null,
-          category:null,
-          occasion:null,
-          searchTerm:null,
-          starRating:null
-        }
-      })
-    );
+      ProductActions.resetFilters());
   }
 }

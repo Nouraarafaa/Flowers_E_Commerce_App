@@ -13,3 +13,7 @@ export const setFilters = createAction(
     '[Product List] Set Filters',
     props<{ filters: Partial<ProductFilters> }>()
 );
+
+export const resetFilters = createAction(
+    '[Products] Reset Filters');
+
