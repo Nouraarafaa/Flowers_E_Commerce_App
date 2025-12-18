@@ -1,5 +1,5 @@
 import { Component, input, signal } from '@angular/core';
-import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
+import { Category, Occasion } from '../../../../../Shared/interfaces/HomeResponse/home-response';
 import { FilterNameComponent } from "../filter-name/filterName.component";
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
