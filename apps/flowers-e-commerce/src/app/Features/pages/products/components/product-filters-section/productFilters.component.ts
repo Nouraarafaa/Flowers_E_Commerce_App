@@ -21,7 +21,7 @@ export class ProductFiltersComponent {
   selectedCategoryIds = signal<string[]>([]);
   selectedOccasionIds = signal<string[]>([]);
  
-  rangeValues: number[] = [0,100];
+  rangeValues: number[] = [0,0];
 
   starsNumsSelected!: number;
 

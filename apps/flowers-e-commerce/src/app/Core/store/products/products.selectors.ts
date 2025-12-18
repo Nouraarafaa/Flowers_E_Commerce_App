@@ -4,11 +4,6 @@ import { Product } from "../../../Shared/interfaces/HomeResponse/home-response";
 
 export const selectProductState = createFeatureSelector<ProductsState>('products');
 
-export const selectOriginalProducts = createSelector(
-    selectProductState,
-    (state)=>state.originalProducts
-);
-
 
 export const selectProductFilters = createSelector(
   selectProductState,
