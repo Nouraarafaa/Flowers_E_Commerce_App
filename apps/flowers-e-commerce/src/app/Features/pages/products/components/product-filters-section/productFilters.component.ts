@@ -9,6 +9,8 @@ import * as ProductActions from 'apps/flowers-e-commerce/src/app/Core/store/prod
 import { Slider } from 'primeng/slider';
 
 
+
+
 @Component({
   selector: 'app-product-filters',
   imports: [FilterNameComponent, SlicePipe, FormsModule, Rating, Slider],
@@ -21,11 +23,12 @@ export class ProductFiltersComponent {
   selectedCategoryIds = signal<string[]>([]);
   selectedOccasionIds = signal<string[]>([]);
 
-  rangeValues: number[] = [0, 100];
+  rangeValues: number[] = [0, 0];
 
   starsNumsSelected!: number;
 
   private readonly _store = inject(Store);
+
 
 
 
@@ -107,6 +110,13 @@ export class ProductFiltersComponent {
 
 
 
+
+
+
+
+
+
+
   resetCategory() {
     // console.log(this.selectedCategoryIds());
     this.selectedCategoryIds.set([]);
@@ -128,10 +138,27 @@ export class ProductFiltersComponent {
         }
       })
     );
+    this.starsNumsSelected = 0;
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          starRating: this.starsNumsSelected
+        }
+      })
+    );
 
   }
 
   resetPrice() {
+    this.rangeValues=[0,0]
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          minPrice: null,
+          maxPrice: null
+        }
+      })
+    );
 
   }
 
