@@ -2,9 +2,12 @@
   .p-rating {
     gap: 8px;
   }
-  .p-rating-icon  {
+  .p-rating-icon {
     color: var(--yellow-star);
     width: 25px;
     height: 25px;
+  }
+  .p-slider-range {
+    background: var(--color-maroon-700);
   }
 }
