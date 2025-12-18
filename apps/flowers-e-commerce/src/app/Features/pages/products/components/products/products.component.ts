@@ -8,7 +8,7 @@ import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/inter
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { loadProducts } from './../../../../../Core/store/products/products.actions';
-import { selectFilteredProducts, selectOriginalProducts } from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
+import { selectFilteredProducts} from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
 
 
 

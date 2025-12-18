@@ -11,6 +11,7 @@ export interface ProductFilters {
 
 export interface ProductsState{
     originalProducts: Product[];
+    filteredProducts: Product[];
     filters:ProductFilters;
     isLoading:boolean;
     error:string|null;
@@ -27,6 +28,7 @@ export const initialProductsState:ProductsState={
         starRating: null,
         searchTerm: null,
     },
+    filteredProducts: [],
     isLoading:false,
     error:null
 }
