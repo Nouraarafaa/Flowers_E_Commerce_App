@@ -22,20 +22,35 @@ export class ProductFiltersComponent {
   starsNumsSelected!: number;
 
 
-
   filterByCategory(category: Category) {
-    this.selectedCategoryIds.update(currentIds => {
-      const id = category._id;
-      if (currentIds.includes(id)) {
-        // If ID is already present, remove it (deselect)
-        return currentIds.filter((existingId) => existingId !== id);
-      } else {
-        // If ID is not present, add it (select)
-        return [...currentIds, id];
-      }
-    });
-    // console.log(this.selectedCategoryIds());
+    const currentIds = this.selectedCategoryIds();
+    const id = category._id;
+
+    let newIds: string[];
+    if (currentIds.includes(id)) {
+      newIds = currentIds.filter(existingId => existingId !== id);
+    } else {
+      newIds = [...currentIds, id];
+    }
+
+    this.selectedCategoryIds.set(newIds);
+
+
   }
+
+  // filterByCategory(category: Category) {
+  //   this.selectedCategoryIds.update(currentIds => {
+  //     const id = category._id;
+  //     if (currentIds.includes(id)) {
+  //       // If ID is already present, remove it (deselect)
+  //       return currentIds.filter((existingId) => existingId !== id);
+  //     } else {
+  //       // If ID is not present, add it (select)
+  //       return [...currentIds, id];
+  //     }
+  //   });
+  //   // console.log(this.selectedCategoryIds());
+  // }
 
   filterByOccasion(occasion: Occasion) {
     this.selectedOccasionIds.update(currentIds => {

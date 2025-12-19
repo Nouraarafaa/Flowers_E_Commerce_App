@@ -44,7 +44,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.getHomeDetailsSub = this._homeService.getHomeDetails().subscribe({
       next: (res) => {
         this.products.set(res.products);
-         this.fullProducts.set(res.products);
+        this.fullProducts.set(res.products);
         this.totalRecords = res.products.length; 
         this.categories.set(res.categories);
         this.occasions.set(res.occasions);
