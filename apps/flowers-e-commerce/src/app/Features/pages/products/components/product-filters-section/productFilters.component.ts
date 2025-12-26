@@ -25,7 +25,11 @@ export class ProductFiltersComponent {
 
   rangeValues: number[] = [0, 0];
 
-  starsNumsSelected!: number;
+  rangeValues: number[] = [0, 0];
+
+  starsNumsSelected: number=0;
+
+  private readonly _store = inject(Store);
 
   private readonly _store = inject(Store);
 
