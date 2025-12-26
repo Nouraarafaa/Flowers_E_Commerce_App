@@ -123,11 +123,52 @@ export class ProductFiltersComponent {
     console.log(this.selectedCategoryIds());
 
 
+  filterByPrice() {
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          minPrice: this.rangeValues[0],
+          maxPrice: this.rangeValues[1]
+        }
+      })
+    );
   }
 
-  resetOccasion() {
+  convertRangeToNumber(index: 0 | 1) {
+    let value = this.rangeValues[index];
 
+    if (typeof value === 'string') {
+      let numericValue = parseFloat(value);
+      
+      // 1. Check bounds against [min] and [max] (2000 in your case)
+      if (numericValue < 0) numericValue = 0;
+      if (numericValue > 2000) numericValue = 2000;
+      
+      if (!isNaN(numericValue)) {
+        // 2. Update the value in the existing array
+        this.rangeValues[index] = numericValue;
+        
+        // 3. CRITICAL STEP: Replace the array with a new copy.
+        // This forces Angular and the p-slider component to re-render.
+        this.rangeValues = [...this.rangeValues]; 
+        
+        // Optional: Call your filter function immediately if desired
+        this.filterByPrice(); 
+      }
+    }
   }
+
+  filterByRating() {
+    console.log(this.starsNumsSelected);
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          starRating:this.starsNumsSelected
+        }
+      })
+    );
+  }
+  
 
   resetRating() {
     this.starsNumsSelected = 0;
@@ -147,7 +188,6 @@ export class ProductFiltersComponent {
       })
     );
 
-  }
 
   resetPrice() {
     this.rangeValues=[0,0]
@@ -160,10 +200,7 @@ export class ProductFiltersComponent {
       })
     );
 
-  }
 
-  resetAllfilters() {
-    // reset all filters
 
   }
 
