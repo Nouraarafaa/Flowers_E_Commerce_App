@@ -10,6 +10,11 @@ export const selectOriginalProducts = createSelector(
   (state) => state.originalProducts
 );
 
+export const selectProducts = createSelector(
+  selectProductsState,
+  (state) => state.products
+);
+
 export const selectFilters = createSelector(
   selectProductsState,
   (state) => state.filters
@@ -25,9 +30,9 @@ export const selectError = createSelector(
   (state) => state.error
 );
 
-// 🔥 Filtered Products
+// Filtered Products
 export const selectFilteredProducts = createSelector(
-  selectOriginalProducts,
+  selectProducts,
   selectFilters,
   (products, filters) => {
     let filtered = [...products];

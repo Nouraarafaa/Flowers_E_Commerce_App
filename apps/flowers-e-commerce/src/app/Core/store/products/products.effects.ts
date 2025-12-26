@@ -7,6 +7,7 @@ import {
     loadProducts,
     loadProductsSuccess,
     loadProductsFailure,
+    sortProducts,
 } from './products.actions';
 
 @Injectable()
@@ -20,17 +21,21 @@ export class productsEffects {
             switchMap(() =>
                 this.homeService.getHomeDetails().pipe(
                     map((data) => {
-                        const sortedProducts = [...data.products].sort(
-                            (a, b) => a.priceAfterDiscount! - b.priceAfterDiscount!
-                        );
-
-                        return loadProductsSuccess({ products: sortedProducts });
+                        return loadProductsSuccess({ products: data.products });
                     }),
                     catchError(() =>
                         of(loadProductsFailure({ error: 'Failed to load products' }))
                     )
                 )
             )
+        )
+    );
+
+
+    sortAfterLoad$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(loadProductsSuccess),
+            map(() => sortProducts({ sortBy: 'priceLowHigh' }))
         )
     );
 }

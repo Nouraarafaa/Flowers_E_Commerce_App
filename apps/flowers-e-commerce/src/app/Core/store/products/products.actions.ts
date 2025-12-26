@@ -24,3 +24,8 @@ export const setFilters = createAction(
     '[Products] Set Filters',
     props<{ filters: Partial<ProductFilters> }>()
 );
+
+export const sortProducts = createAction(
+    '[Products] Sort Products',
+    props<{ sortBy: string }>()
+);

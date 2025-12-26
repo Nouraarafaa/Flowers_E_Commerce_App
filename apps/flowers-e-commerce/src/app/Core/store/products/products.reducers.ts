@@ -5,6 +5,7 @@ import {
     loadProductsSuccess,
     loadProductsFailure,
     setFilters,
+    sortProducts,
 } from './products.actions';
 
 export const productsReducer = createReducer(
@@ -21,6 +22,7 @@ export const productsReducer = createReducer(
     on(loadProductsSuccess, (state, { products }) => ({
         ...state,
         originalProducts: products,
+        products: products,
         isLoading: false,
     })),
 
@@ -38,5 +40,19 @@ export const productsReducer = createReducer(
             ...state.filters,
             ...filters,
         },
-    }))
+    })),
+
+    // Sort Products
+    on(sortProducts, (state, { sortBy }) => {
+        let sortedProducts = [...state.products];
+        if (sortBy === 'priceLowHigh') {
+            sortedProducts = sortedProducts.sort(
+                (a, b) => (a.priceAfterDiscount || 0) - (b.priceAfterDiscount || 0)
+            );
+        }
+        return {
+            ...state,
+            products: sortedProducts,
+        };
+    })
 );
