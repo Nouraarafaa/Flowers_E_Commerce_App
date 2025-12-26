@@ -44,6 +44,24 @@ export class ProductFiltersComponent {
     this.selectedCategoryIds.set([]);
     this.dispatchFilters();
   }
+filterByOccasion(occasion: Occasion) {
+  this.selectedOccasionIds.update((currentIds) => {
+    const id = occasion._id;
+    return currentIds.includes(id)
+      ? currentIds.filter((existingId) => existingId !== id)
+      : [...currentIds, id];
+  });
+
+  this._store.dispatch(
+    ProductActions.setFilters({
+      filters: {
+        occasion: this.selectedOccasionIds().length
+          ? this.selectedOccasionIds()
+          : null,
+      },
+    })
+  );
+}
 
   /* ================= OCCASION ================= */
   filterByOccasion(occasion: Occasion) {
@@ -72,6 +90,7 @@ export class ProductFiltersComponent {
 
     this.filterByPrice();
   }
+  
 
   resetPrice() {
     this.rangeValues = [0, 2000];
