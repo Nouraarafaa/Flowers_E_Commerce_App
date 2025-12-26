@@ -11,12 +11,5 @@ export const setProducts = createAction(
 
 export const setFilters = createAction(
     '[Product List] Set Filters',
-    props<{ filters: Partial<ProductFilters> }>());
-
-export const resetFilters = createAction(
-    '[Products] Reset Filters');
-
-export const setLoading = createAction(
-    '[products] set Loading',
-    props<{ Loading: boolean }>());
-
+    props<{ filters: Partial<ProductFilters> }>()
+);

@@ -5,8 +5,8 @@ import { Product } from "../../../Shared/interfaces/HomeResponse/home-response";
 export const selectProductState = createFeatureSelector<ProductsState>('products');
 
 export const selectOriginalProducts = createSelector(
-  selectProductState,
-  (state) => state.originalProducts
+    selectProductState,
+    (state)=>state.originalProducts
 );
 
 
@@ -24,7 +24,7 @@ export const selectFilteredProducts = createSelector(
 
     // 2. Apply Category Filter
     if (filters.category) {
-
+   
     }
 
     // 3. Apply Price Filter
@@ -46,9 +46,4 @@ export const selectFilteredProducts = createSelector(
 
     return filtered; // Return the final array
   }
-);
-
-export const selectLoading = createSelector(
-  selectProductState,
-  (state) => state.isLoading
 );
