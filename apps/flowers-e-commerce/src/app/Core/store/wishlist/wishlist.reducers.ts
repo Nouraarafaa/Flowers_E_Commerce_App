@@ -17,10 +17,11 @@ export const wishlistReducer = createReducer(
     error: null,
     successMessage: null
   })),
-  on(addToWishlistSuccess, (state, { message }) => ({
+  on(addToWishlistSuccess, (state, { message, productId }) => ({
     ...state,
     isLoading: false,
-    successMessage: message
+    successMessage: message,
+    ids: [...state.ids, productId]
   })),
   on(addToWishlistFailure, (state, { error }) => ({
     ...state,
@@ -34,10 +35,11 @@ export const wishlistReducer = createReducer(
     error: null,
     successMessage: null
   })),
-  on(removeFromWishlistSuccess, (state, { message }) => ({
+  on(removeFromWishlistSuccess, (state, { message, productId }) => ({
     ...state,
     isLoading: false,
-    successMessage: message
+    successMessage: message,
+    ids: state.ids.filter(id => id !== productId)
   })),
   on(removeFromWishlistFailure, (state, { error }) => ({
     ...state,

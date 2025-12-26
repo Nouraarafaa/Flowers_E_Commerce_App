@@ -7,7 +7,7 @@ export const addToWishlist = createAction(
 
 export const addToWishlistSuccess = createAction(
   '[Wishlist] Add To Wishlist Success',
-  props<{ message: string }>()
+  props<{ message: string; productId: string }>()
 );
 
 export const addToWishlistFailure = createAction(
@@ -22,7 +22,7 @@ export const removeFromWishlist = createAction(
 
 export const removeFromWishlistSuccess = createAction(
   '[Wishlist] Remove From Wishlist Success',
-  props<{ message: string }>()
+  props<{ message: string; productId: string }>()
 );
 
 export const removeFromWishlistFailure = createAction(

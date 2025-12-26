@@ -17,3 +17,8 @@ export const selectWishlistSuccessMessage = createSelector(
   selectWishlistState,
   (state) => state.successMessage
 );
+
+export const selectWishlistIds = createSelector(
+  selectWishlistState,
+  (state) => state.ids
+);

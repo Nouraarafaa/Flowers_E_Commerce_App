@@ -10,10 +10,18 @@
 
         <div
             class="absolute inset-0 flex justify-center items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button onclick="onAddToWishlist($event)"
+            @if (isInWishlist$ | async; as inWishlist) {
+            <button (click)="toggleWishlist($event, inWishlist)"
+                class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer">
+                <i
+                    [class]="inWishlist ? 'fa-solid fa-heart fa-lg text-maroon-700' : 'fa-regular fa-heart fa-lg text-maroon-700'"></i>
+            </button>
+            } @else {
+            <button (click)="toggleWishlist($event, false)"
                 class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer">
                 <i class="fa-regular fa-heart fa-lg text-maroon-700"></i>
             </button>
+            }
             <a class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer">
                 <i class="fa-regular fa-eye fa-lg text-maroon-700"></i>
             </a>

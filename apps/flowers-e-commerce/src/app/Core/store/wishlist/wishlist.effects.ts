@@ -21,7 +21,7 @@ export class WishlistEffects {
       ofType(addToWishlist),
       switchMap(({ productId }) =>
         this.wishlistService.addToWishlist(productId).pipe(
-          map((response) => addToWishlistSuccess({ message: response.message })),
+          map((response) => addToWishlistSuccess({ message: response.message, productId })),
           catchError((error) => of(addToWishlistFailure({ error: error.message })))
         )
       )
@@ -33,7 +33,7 @@ export class WishlistEffects {
       ofType(removeFromWishlist),
       switchMap(({ productId }) =>
         this.wishlistService.removeFromWishlist(productId).pipe(
-          map((response) => removeFromWishlistSuccess({ message: response.message })),
+          map((response) => removeFromWishlistSuccess({ message: response.message, productId })),
           catchError((error) => of(removeFromWishlistFailure({ error: error.message })))
         )
       )

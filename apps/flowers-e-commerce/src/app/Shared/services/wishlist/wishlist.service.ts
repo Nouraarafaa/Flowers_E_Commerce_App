@@ -11,10 +11,10 @@ export class WishlistService {
   private readonly _BASE_URL = inject(BASE_URL);
 
   addToWishlist(productId: string): Observable<any> {
-    return this._httpClient.post(`${this._BASE_URL}/api/v1/wishlist/add`, { product: productId });
+    return this._httpClient.post(`${this._BASE_URL}/wishlist/add`, { productId: productId });
   }
 
   removeFromWishlist(productId: string): Observable<any> {
-    return this._httpClient.delete(`${this._BASE_URL}/api/v1/wishlist/${productId}`);
+    return this._httpClient.delete(`${this._BASE_URL}/wishlist/${productId}`);
   }
 }
