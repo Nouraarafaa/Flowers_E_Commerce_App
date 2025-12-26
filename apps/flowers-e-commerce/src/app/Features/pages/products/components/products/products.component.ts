@@ -15,7 +15,7 @@ import { selectFilteredProducts, selectOriginalProducts } from 'apps/flowers-e-c
 
 @Component({
   selector: 'app-products',
-  imports: [ProductListComponent, PaginatorModule, ProductFiltersComponent],
+  imports: [ProductListComponent, PaginatorModule, ProductFiltersComponent, SkeletonListComponent, AsyncPipe],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -40,6 +40,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   // 'rows': number of current products page 
   rows: number = 10;
   totalRecords: number = 0; // totalItems from API
+
 
 
 
