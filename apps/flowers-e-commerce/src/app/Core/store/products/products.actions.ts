@@ -11,5 +11,5 @@ export const setProducts = createAction(
 
 export const setFilters = createAction(
     '[Product List] Set Filters',
-    props<{ filters: Partial<ProductFilters> }>());
-
+    props<{ filters: Partial<ProductFilters> }>()
+);
