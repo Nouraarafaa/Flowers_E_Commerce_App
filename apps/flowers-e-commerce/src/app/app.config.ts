@@ -12,25 +12,28 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { productsReducer } from './Core/store/products/products.reducers';
 import { productsEffects } from './Core/store/products/products.effects';
+import { wishlistReducer } from './Core/store/wishlist/wishlist.reducers';
+import { WishlistEffects } from './Core/store/wishlist/wishlist.effects';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top" }), withViewTransitions()),
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
-    provideAnimationsAsync(),
-    providePrimeNG({
-        theme: {
-            preset: Aura,
+    providers: [
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top" }), withViewTransitions()),
+        provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
+        provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Aura,
+            },
+        }),
+        {
+            provide: BASE_URL,
+            useValue: environment.BaseUrl
         },
-    }),
-    {
-        provide: BASE_URL,
-        useValue: environment.BaseUrl
-    },
-    provideStore({
-        products:productsReducer
-    }),
-    provideEffects([productsEffects])
-],
+        provideStore({
+            products: productsReducer,
+            wishlist: wishlistReducer
+        }),
+        provideEffects([productsEffects, WishlistEffects])
+    ],
 };
