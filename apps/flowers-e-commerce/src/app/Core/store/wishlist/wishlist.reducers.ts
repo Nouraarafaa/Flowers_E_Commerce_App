@@ -42,6 +42,7 @@ export const wishlistReducer = createReducer(
   on(removeFromWishlistFailure, (state, { error }) => ({
     ...state,
     isLoading: false,
-    error: error
+    error: error,
+    successMessage: null
   }))
 );
