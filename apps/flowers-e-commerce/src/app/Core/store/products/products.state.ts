@@ -11,14 +11,14 @@ export interface ProductFilters {
 
 export interface ProductsState {
     originalProducts: Product[];
-    filters: ProductFilters;
-    isLoading: boolean;
-    error: string | null;
+    filters:ProductFilters;
+    isLoading:boolean;
+    error:string|null;
 }
 
 export const initialProductsState: ProductsState = {
     originalProducts: [],
-    filters: {
+    filters:{ 
         category: null,
         occasion: null,
         minPrice: null,
@@ -26,6 +26,6 @@ export const initialProductsState: ProductsState = {
         starRating: null,
         searchTerm: null,
     },
-    isLoading: false,
-    error: null,
-};
+    isLoading:false,
+    error:null
+}
