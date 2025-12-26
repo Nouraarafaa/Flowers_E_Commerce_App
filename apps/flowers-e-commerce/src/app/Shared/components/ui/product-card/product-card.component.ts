@@ -1,4 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { addToWishlist, removeFromWishlist } from '../../../../Core/store/wishlist/wishlist.actions';
 import { Product } from '../../../interfaces/HomeResponse/home-response';
 import { SlicePipe } from '@angular/common';
 
@@ -10,6 +12,21 @@ import { SlicePipe } from '@angular/common';
 })
 export class ProductCardComponent {
   product = input.required<Product>();
+  private readonly store = inject(Store);
+
+  onAddToWishlist(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log('Product added to wishlist:', this.product());
+    this.store.dispatch(addToWishlist({ productId: this.product()._id }));
+  }
+
+  onRemoveFromWishlist(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log('Product removed from wishlist:', this.product());
+    this.store.dispatch(removeFromWishlist({ productId: this.product()._id }));
+  }
 
   getStars(rate: number) {
     const full = Math.floor(rate);

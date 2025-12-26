@@ -10,7 +10,8 @@
 
         <div
             class="absolute inset-0 flex justify-center items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer">
+            <button onclick="onAddToWishlist($event)"
+                class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer">
                 <i class="fa-regular fa-heart fa-lg text-maroon-700"></i>
             </button>
             <a class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer">
@@ -62,7 +63,8 @@
                     }
                 </div>
                 <div class="flex gap-2">
-                    <p class="dark:text-soft-pink-200 text-maroon-700 text-16px font-medium"> {{ product().priceAfterDiscount }} EGP </p>
+                    <p class="dark:text-soft-pink-200 text-maroon-700 text-16px font-medium"> {{
+                        product().priceAfterDiscount }} EGP </p>
                     <p class="text-zinc-400 text-16px font-medium line-through"> {{ product().price }} EGP </p>
                 </div>
             </div>
