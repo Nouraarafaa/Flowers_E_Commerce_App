@@ -10,12 +10,16 @@ import { Store } from '@ngrx/store';
 import { loadProducts } from './../../../../../Core/store/products/products.actions';
 import { selectFilteredProducts, selectOriginalProducts } from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
 
+import { Store } from '@ngrx/store';
+import { loadProducts } from './../../../../../Core/store/products/products.actions';
+import { selectFilteredProducts, selectOriginalProducts } from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
+
 
 
 
 @Component({
   selector: 'app-products',
-  imports: [ProductListComponent, PaginatorModule, ProductFiltersComponent],
+  imports: [ProductListComponent, PaginatorModule, ProductFiltersComponent, SkeletonListComponent, AsyncPipe],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -24,11 +28,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   _store = inject(Store);
 
+  _store = inject(Store);
+
   categories = signal<Category[]>([]);
   occasions = signal<Occasion[]>([]);
   products = signal<Product[]>([]);
 
   getHomeDetailsSub!: Subscription;
+  getProductsSub!: Subscription;
   getProductsSub!: Subscription;
 
   // fullProducts from API
@@ -40,6 +47,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   // 'rows': number of current products page 
   rows: number = 10;
   totalRecords: number = 0; // totalItems from API
+
 
 
 
