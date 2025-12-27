@@ -32,6 +32,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   getHomeDetailsSub!: Subscription;
   getProductsSub!: Subscription;
+  
 
   // fullProducts from API
   fullProducts = signal<Product[]>([]);
@@ -42,6 +43,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   // 'rows': number of current products page 
   rows: number = 10;
   totalRecords: number = 0; // totalItems from API
+
 
 
 
