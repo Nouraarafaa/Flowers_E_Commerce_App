@@ -20,17 +20,9 @@ export const productsReducer = createReducer(
 
     })),
 
-    on(resetFilters, (state) => ({
-        ...state,
-        filters: {
-            minPrice: null,
-            maxPrice: null,
-            category: null,
-            occasion: null,
-            searchTerm: null,
-            starRating: null
-        },
-
-        filteredProducts: [...state.originalProducts]
-    })),
+        on(resetFilters, (state) => ({
+            ...state,
+            filters:initialProductsState.filters,
+            filteredProducts: [...state.originalProducts]
+        })),
 )
