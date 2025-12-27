@@ -51,10 +51,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getCategoriesAndOccasions();
     this._store.dispatch(setLoading({ Loading: true }));
-    setTimeout(() => {
-      this.getProductsFromStore();
-      this._store.dispatch(setLoading({ Loading: false }));
-    }, 2000);
+     this.getProductsFromStore();
   }
 
   getCategoriesAndOccasions() {
@@ -72,7 +69,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this._store.dispatch(loadProducts());
     this.getProductsSub = this._store.select(selectFilteredProducts).subscribe({
       next: (res) => {
-        this.products.set(res);
+        setTimeout(() => {
+          this._store.dispatch(setLoading({ Loading: false }));
+          this.products.set(res);
+        },2000)
         this.fullProducts.set(res);
         this.totalRecords = res.length;
         this.paginateProducts(this.first, this.rows);

@@ -9,8 +9,6 @@ import * as ProductActions from 'apps/flowers-e-commerce/src/app/Core/store/prod
 import { Slider } from 'primeng/slider';
 
 
-
-
 @Component({
   selector: 'app-product-filters',
   imports: [FilterNameComponent, SlicePipe, FormsModule, Rating, Slider],
@@ -27,8 +25,6 @@ export class ProductFiltersComponent {
 
   rangeValues: number[] = [0, 0];
 
-
-
   starsNumsSelected: number=0;
 
   private readonly _store = inject(Store);
@@ -36,6 +32,17 @@ export class ProductFiltersComponent {
 
   /* ================= CATEGORY ================= */
   filterByCategory(category: Category) {
+    this.selectedCategoryIds.update(currentIds => {
+      const id = category._id;
+      if (currentIds.includes(id)) {
+        // If ID is already present, remove it (deselect)
+        return currentIds.filter((existingId) => existingId !== id);
+      } else {
+        // If ID is not present, add it (select)
+        return [...currentIds, id];
+      }
+    });
+    // console.log(this.selectedCategoryIds());
     this.selectedCategoryIds.update(currentIds => {
       const id = category._id;
       if (currentIds.includes(id)) {
@@ -64,7 +71,16 @@ export class ProductFiltersComponent {
   }
 
 
+
   filterByPrice() {
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          minPrice: this.rangeValues[0],
+          maxPrice: this.rangeValues[1]
+        }
+      })
+    );
     this._store.dispatch(
       ProductActions.setFilters({
         filters: {
@@ -77,6 +93,7 @@ export class ProductFiltersComponent {
 
   convertRangeToNumber(index: 0 | 1) {
     let value = this.rangeValues[index];
+
 
     if (typeof value === 'string') {
       let numericValue = parseFloat(value);
@@ -92,7 +109,25 @@ export class ProductFiltersComponent {
         // 3. CRITICAL STEP: Replace the array with a new copy.
         // This forces Angular and the p-slider component to re-render.
         this.rangeValues = [...this.rangeValues];
+    if (typeof value === 'string') {
+      let numericValue = parseFloat(value);
 
+      // 1. Check bounds against [min] and [max] (2000 in your case)
+      if (numericValue < 0) numericValue = 0;
+      if (numericValue > 2000) numericValue = 2000;
+
+      if (!isNaN(numericValue)) {
+        // 2. Update the value in the existing array
+        this.rangeValues[index] = numericValue;
+
+        // 3. CRITICAL STEP: Replace the array with a new copy.
+        // This forces Angular and the p-slider component to re-render.
+        this.rangeValues = [...this.rangeValues];
+
+        // Optional: Call your filter function immediately if desired
+        this.filterByPrice();
+      }
+    }
         // Optional: Call your filter function immediately if desired
         this.filterByPrice();
       }
@@ -113,25 +148,28 @@ export class ProductFiltersComponent {
 
 
 
-
   resetCategory() {
     this.selectedCategoryIds.set([]);
     console.log(this.selectedCategoryIds());
 
 
-}
+  }
 
-resetOccasion() {
+  resetOccasion() {
 
-}
+  }
 
-resetRating() {
+  resetRating() {
+    this.starsNumsSelected = 0;
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          starRating: this.starsNumsSelected
+        }
+      })
+    );
 
-}
-
-
-
-
+  }
 
   resetPrice() {
     this.rangeValues=[0,0]
@@ -154,5 +192,4 @@ resetRating() {
     this._store.dispatch(
       ProductActions.resetFilters());
   }
-
 }
