@@ -26,7 +26,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   _store = inject(Store);
 
-  _store = inject(Store);
 
   categories = signal<Category[]>([]);
   occasions = signal<Occasion[]>([]);

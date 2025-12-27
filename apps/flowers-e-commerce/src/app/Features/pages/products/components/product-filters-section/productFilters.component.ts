@@ -12,7 +12,6 @@ import { Slider } from 'primeng/slider';
 @Component({
   selector: 'app-product-filters',
   imports: [FilterNameComponent, SlicePipe, FormsModule, Rating, Slider],
-  imports: [FilterNameComponent, SlicePipe, FormsModule, Rating, Slider],
   templateUrl: './productFilters.component.html',
   styleUrl: './productFilters.component.scss',
 })
@@ -30,7 +29,6 @@ export class ProductFiltersComponent {
 
   private readonly _store = inject(Store);
 
-  private readonly _store = inject(Store);
 
   /* ================= CATEGORY ================= */
   filterByCategory(category: Category) {
