@@ -5,9 +5,15 @@
         </div>
         <div class="w-3/4 ps-6 border-s border-zinc-100  self-start ">
            
+              @if (isLoading$ | async) {
+
+            <app-skeleton-list></app-skeleton-list>
+
+            }@else {
+
             <app-product-list [products]="displayedProducts()"></app-product-list>
 
-            
+            }
             <div class="mt-6 font-open-sans font-medium text-[13px] border-t pt-4 border-zinc-100">
                 <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
                     [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]" />
