@@ -5,13 +5,8 @@ import { Product } from "../../../Shared/interfaces/HomeResponse/home-response";
 export const selectProductState = createFeatureSelector<ProductsState>('products');
 
 export const selectOriginalProducts = createSelector(
-<<<<<<< HEAD
   selectProductState,
   (state) => state.originalProducts
-=======
-    selectProductState,
-    (state)=>state.originalProducts
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
 );
 
 
@@ -29,11 +24,7 @@ export const selectFilteredProducts = createSelector(
 
     // 2. Apply Category Filter
     if (filters.category) {
-<<<<<<< HEAD
-
-=======
-   
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
+      /** */
     }
 
     // 3. Apply Price Filter
@@ -50,17 +41,14 @@ export const selectFilteredProducts = createSelector(
 
     // 4. Apply Search Term Filter
     if (filters.searchTerm) {
-
+      /** */
     }
 
     return filtered; // Return the final array
   }
 );
-<<<<<<< HEAD
 
 export const selectLoading = createSelector(
   selectProductState,
   (state) => state.isLoading
 );
-=======
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
