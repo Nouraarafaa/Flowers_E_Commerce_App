@@ -1,6 +1,6 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
-import { FilterNameComponent } from "../filter-name/filterName.component";
+import { FilterNameComponent } from '../filter-name/filterName.component';
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rating } from 'primeng/rating';
@@ -12,12 +12,15 @@ import { Slider } from 'primeng/slider';
 @Component({
   selector: 'app-product-filters',
   imports: [FilterNameComponent, SlicePipe, FormsModule, Rating, Slider],
+  imports: [FilterNameComponent, SlicePipe, FormsModule, Rating, Slider],
   templateUrl: './productFilters.component.html',
   styleUrl: './productFilters.component.scss',
 })
 export class ProductFiltersComponent {
+
   categoryFilters = input.required<Category[]>();
   occasionFilters = input.required<Occasion[]>();
+
   selectedCategoryIds = signal<string[]>([]);
   selectedOccasionIds = signal<string[]>([]);
 
@@ -27,8 +30,9 @@ export class ProductFiltersComponent {
 
   private readonly _store = inject(Store);
 
+  private readonly _store = inject(Store);
 
-
+  /* ================= CATEGORY ================= */
   filterByCategory(category: Category) {
     this.selectedCategoryIds.update(currentIds => {
       const id = category._id;
@@ -108,7 +112,6 @@ export class ProductFiltersComponent {
 
 
   resetCategory() {
-    // console.log(this.selectedCategoryIds());
     this.selectedCategoryIds.set([]);
     console.log(this.selectedCategoryIds());
 
