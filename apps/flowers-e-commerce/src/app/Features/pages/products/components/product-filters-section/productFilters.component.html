@@ -87,6 +87,7 @@
         <p-rating (click)="filterByRating()" [(ngModel)]="starsNumsSelected" />
       </div>
     </div>
+<<<<<<< HEAD
     <!-- price filter -->
 
     <div class="border-b border-zinc-100 pb-5">
@@ -124,6 +125,53 @@
         [range]="true"
         class="w-56"
       />
+=======
+    <div class="h-[300px]">
+        <!-- rating filter -->
+        <div class="border-b border-zinc-100 pb-5">
+            <app-filter-name (clicked)="resetRating()" filterName="Rating"></app-filter-name>
+            <div class="mt-2.5">
+                <p-rating (click)="filterByRating()" [(ngModel)]="starsNumsSelected" />
+                <p-rating (click)="filterByRating()" [(ngModel)]="starsNumsSelected" />
+            </div>
+        </div>
+        <!-- price filter -->
+
+        <div class="border-b border-zinc-100 pb-5">
+            <app-filter-name (clicked)="resetPrice()" filterName="Price"></app-filter-name>
+            <div class="flex gap-2 mt-2.5 mb-6">
+            <div class="flex gap-2 mt-2.5 mb-6">
+                <div class="w-1/2">
+                    <span class="font-inter font-medium text-zinc-800 text-sm">from</span>
+                    <input (input)="convertRangeToNumber(0)" [(ngModel)]="rangeValues[0]" type="text" placeholder="0" class="price-filter-input">
+                    <input (input)="convertRangeToNumber(0)" [(ngModel)]="rangeValues[0]" type="text" placeholder="0" class="price-filter-input">
+                </div>
+                <div class="w-1/2">
+                    <span class="font-inter font-medium text-zinc-800 text-sm">to</span>
+                    <input (input)="convertRangeToNumber(1)"[(ngModel)]="rangeValues[1]" type="text" placeholder="10000000" class="price-filter-input">
+                    <input (input)="convertRangeToNumber(1)"[(ngModel)]="rangeValues[1]" type="text" placeholder="10000000" class="price-filter-input">
+                </div>
+
+            </div>
+             <p-slider (onChange)="filterByPrice()" [min]="0" [max]="2000" [(ngModel)]="rangeValues" [range]="true" class="w-56" />
+             <p-slider (onChange)="filterByPrice()" [min]="0" [max]="2000" [(ngModel)]="rangeValues" [range]="true" class="w-56" />
+        </div>
+        <!-- reset filters button -->
+        <div class="py-4 ">
+            <button (click)="resetAllfilters()" [disabled]="
+                    selectedCategoryIds().length === 0 
+                    && selectedOccasionIds().length === 0
+                    && starsNumsSelected==null 
+                    && rangeValues[0]===0
+                    && rangeValues[1]===0 " class="reset-button-filter">
+                <i class="pi pi-undo"></i>
+                <span>Reset All</span>
+            </button>
+        </div>
+      
+      
+
+>>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
     </div>
     <!-- reset filters button -->
     <div class="py-4">
