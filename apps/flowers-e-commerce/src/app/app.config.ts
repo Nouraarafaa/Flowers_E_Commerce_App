@@ -13,6 +13,7 @@ import { provideEffects } from '@ngrx/effects';
 import { productsReducer } from './Core/store/products/products.reducers';
 import { productsEffects } from './Core/store/products/products.effects';
 import { wishlistReducer } from './Core/store/wishlist/wishlist.reducers';
+import { WishlistEffects } from './Core/store/wishlist/wishlist.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,6 +34,6 @@ export const appConfig: ApplicationConfig = {
             products: productsReducer,
             wishlist: wishlistReducer
         }),
-    provideEffects([productsEffects])
+    provideEffects([productsEffects, WishlistEffects])
 ],
 };

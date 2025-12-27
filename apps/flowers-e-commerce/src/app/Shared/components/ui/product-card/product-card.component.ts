@@ -1,10 +1,10 @@
 import { Component, inject, input } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { addToWishlist, removeFromWishlist } from '../../../../Core/store/wishlist/wishlist.actions';
+import { selectWishlistIds } from '../../../../Core/store/wishlist/wishlist.selectors';
 import { Product } from '../../../interfaces/HomeResponse/home-response';
 import { AsyncPipe, SlicePipe } from '@angular/common';
-import { Store } from '@ngrx/store';
-import { selectWishlistIds } from 'apps/flowers-e-commerce/src/app/Core/store/wishlist/wishlist.selectors';
 import { map } from 'rxjs';
-import { addToWishlist, removeFromWishlist } from 'apps/flowers-e-commerce/src/app/Core/store/wishlist/wishlist.actions';
 
 @Component({
   selector: 'app-product-card',
