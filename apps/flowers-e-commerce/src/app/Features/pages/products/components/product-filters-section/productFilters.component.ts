@@ -29,8 +29,20 @@ export class ProductFiltersComponent {
 
   private readonly _store = inject(Store);
 
+
   /* ================= CATEGORY ================= */
   filterByCategory(category: Category) {
+    this.selectedCategoryIds.update(currentIds => {
+      const id = category._id;
+      if (currentIds.includes(id)) {
+        // If ID is already present, remove it (deselect)
+        return currentIds.filter((existingId) => existingId !== id);
+      } else {
+        // If ID is not present, add it (select)
+        return [...currentIds, id];
+      }
+    });
+    // console.log(this.selectedCategoryIds());
     this.selectedCategoryIds.update(currentIds => {
       const id = category._id;
       if (currentIds.includes(id)) {
@@ -59,7 +71,16 @@ export class ProductFiltersComponent {
   }
 
 
+
   filterByPrice() {
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          minPrice: this.rangeValues[0],
+          maxPrice: this.rangeValues[1]
+        }
+      })
+    );
     this._store.dispatch(
       ProductActions.setFilters({
         filters: {
@@ -72,6 +93,7 @@ export class ProductFiltersComponent {
 
   convertRangeToNumber(index: 0 | 1) {
     let value = this.rangeValues[index];
+
 
     if (typeof value === 'string') {
       let numericValue = parseFloat(value);
@@ -87,7 +109,25 @@ export class ProductFiltersComponent {
         // 3. CRITICAL STEP: Replace the array with a new copy.
         // This forces Angular and the p-slider component to re-render.
         this.rangeValues = [...this.rangeValues];
+    if (typeof value === 'string') {
+      let numericValue = parseFloat(value);
 
+      // 1. Check bounds against [min] and [max] (2000 in your case)
+      if (numericValue < 0) numericValue = 0;
+      if (numericValue > 2000) numericValue = 2000;
+
+      if (!isNaN(numericValue)) {
+        // 2. Update the value in the existing array
+        this.rangeValues[index] = numericValue;
+
+        // 3. CRITICAL STEP: Replace the array with a new copy.
+        // This forces Angular and the p-slider component to re-render.
+        this.rangeValues = [...this.rangeValues];
+
+        // Optional: Call your filter function immediately if desired
+        this.filterByPrice();
+      }
+    }
         // Optional: Call your filter function immediately if desired
         this.filterByPrice();
       }
