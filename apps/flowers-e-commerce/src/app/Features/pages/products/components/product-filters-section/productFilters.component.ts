@@ -1,14 +1,18 @@
 import { Component, inject, input, signal } from '@angular/core';
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
 import { FilterNameComponent } from '../filter-name/filterName.component';
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rating } from 'primeng/rating';
-import { Slider } from 'primeng/slider';
 import { Store } from '@ngrx/store';
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import * as ProductActions from 'apps/flowers-e-commerce/src/app/Core/store/products/products.actions';
+import { Slider } from 'primeng/slider';
+
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
 
 @Component({
   selector: 'app-product-filters',
@@ -23,83 +27,170 @@ export class ProductFiltersComponent {
 
   selectedCategoryIds = signal<string[]>([]);
   selectedOccasionIds = signal<string[]>([]);
+<<<<<<< HEAD
+=======
 
-  rangeValues: number[] = [0, 2000];
-  starsNumsSelected = 0;
+  rangeValues: number[] = [0, 0];
+>>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
+
+  rangeValues: number[] = [0, 0];
+
+  starsNumsSelected: number=0;
 
   private readonly _store = inject(Store);
 
+
   /* ================= CATEGORY ================= */
   filterByCategory(category: Category) {
-    this.selectedCategoryIds.update(ids =>
-      ids.includes(category._id)
-        ? ids.filter(id => id !== category._id)
-        : [...ids, category._id]
-    );
-
-    this.dispatchFilters();
+    this.selectedCategoryIds.update(currentIds => {
+      const id = category._id;
+      if (currentIds.includes(id)) {
+        // If ID is already present, remove it (deselect)
+        return currentIds.filter((existingId) => existingId !== id);
+      } else {
+        // If ID is not present, add it (select)
+        return [...currentIds, id];
+      }
+    });
+    // console.log(this.selectedCategoryIds());
   }
 
-  resetCategory() {
-    this.selectedCategoryIds.set([]);
-    this.dispatchFilters();
-  }
-
-  /* ================= OCCASION ================= */
   filterByOccasion(occasion: Occasion) {
-    this.selectedOccasionIds.update(ids =>
-      ids.includes(occasion._id)
-        ? ids.filter(id => id !== occasion._id)
-        : [...ids, occasion._id]
-    );
+    this.selectedOccasionIds.update(currentIds => {
+      const id = occasion._id;
+      if (currentIds.includes(id)) {
+        // If ID is already present, remove it (deselect)
+        return currentIds.filter(existingId => existingId !== id);
+      } else {
+        // If ID is not present, add it (select)
+        return [...currentIds, id];
+      }
+    });
 
-    this.dispatchFilters();
   }
 
-  /* ================= PRICE ================= */
+
   filterByPrice() {
-    this.dispatchFilters();
-  }
-
-  convertRangeToNumber(index: 0 | 1) {
-    let value = Number(this.rangeValues[index]);
-
-    if (isNaN(value)) return;
-
-    value = Math.max(0, Math.min(2000, value));
-    this.rangeValues[index] = value;
-    this.rangeValues = [...this.rangeValues];
-
-    this.filterByPrice();
-  }
-
-  resetPrice() {
-    this.rangeValues = [0, 2000];
-    this.dispatchFilters();
-  }
-
-  /* ================= RATING ================= */
-  filterByRating() {
-    this.dispatchFilters();
-  }
-
-  resetRating() {
-    this.starsNumsSelected = 0;
-    this.dispatchFilters();
-  }
-
-  /* ================= DISPATCH ================= */
-  private dispatchFilters() {
     this._store.dispatch(
       ProductActions.setFilters({
         filters: {
-          categories: this.selectedCategoryIds(),
-          occasions: this.selectedOccasionIds(),
           minPrice: this.rangeValues[0],
-          maxPrice: this.rangeValues[1],
+          maxPrice: this.rangeValues[1]
+        }
+      })
+    );
+  }
+
+  convertRangeToNumber(index: 0 | 1) {
+    let value = this.rangeValues[index];
+
+    if (typeof value === 'string') {
+      let numericValue = parseFloat(value);
+
+      // 1. Check bounds against [min] and [max] (2000 in your case)
+      if (numericValue < 0) numericValue = 0;
+      if (numericValue > 2000) numericValue = 2000;
+
+      if (!isNaN(numericValue)) {
+        // 2. Update the value in the existing array
+        this.rangeValues[index] = numericValue;
+
+        // 3. CRITICAL STEP: Replace the array with a new copy.
+        // This forces Angular and the p-slider component to re-render.
+        this.rangeValues = [...this.rangeValues];
+
+        // Optional: Call your filter function immediately if desired
+        this.filterByPrice();
+      }
+    }
+  }
+
+  filterByRating() {
+    console.log(this.starsNumsSelected);
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
           starRating: this.starsNumsSelected
         }
       })
     );
   }
+
+
+
+
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+>>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
+  resetCategory() {
+    this.selectedCategoryIds.set([]);
+    console.log(this.selectedCategoryIds());
+
+
+  }
+
+  resetOccasion() {
+
+  }
+
+  resetRating() {
+    this.starsNumsSelected = 0;
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          starRating: this.starsNumsSelected
+        }
+      })
+    );
+<<<<<<< HEAD
+=======
+    this.starsNumsSelected = 0;
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          starRating: this.starsNumsSelected
+        }
+      })
+    );
+>>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
+
+  }
+
+  resetPrice() {
+    this.rangeValues=[0,0]
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          minPrice: null,
+          maxPrice: null
+        }
+      })
+    );
+
+<<<<<<< HEAD
+  }
+
+  resetAllfilters() {
+    this.selectedCategoryIds.set([]);
+    this.selectedOccasionIds.set([]);
+    this.starsNumsSelected = 0;
+    this.rangeValues=[0,0];
+    this._store.dispatch(
+      ProductActions.resetFilters());
+  }
+=======
+
+
+  }
+
+
+
+>>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
 }
