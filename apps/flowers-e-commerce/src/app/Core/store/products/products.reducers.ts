@@ -2,7 +2,7 @@
 
 import { createReducer, on } from "@ngrx/store";
 import { initialProductsState } from "./products.state";
-import { setFilters, setProducts} from "./products.actions";
+import { resetFilters, setFilters, setLoading, setProducts } from "./products.actions";
 
 export const productsReducer = createReducer(
     initialProductsState,
@@ -55,4 +55,21 @@ export const productsReducer = createReducer(
         filteredProducts: filtered 
     };
 }),
+  on(resetFilters, (state) => ({
+        ...state,
+        filters: {
+            minPrice: null,
+            maxPrice: null,
+            category: null,
+            occasion: null,
+            searchTerm: null,
+            starRating: null
+        },
+
+        filteredProducts: [...state.originalProducts]
+    })),
+on(setLoading, (state, { Loading }) => ({
+        ...state,
+        isLoading: Loading
+    }))
 )

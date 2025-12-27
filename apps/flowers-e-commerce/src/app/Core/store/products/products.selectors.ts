@@ -15,3 +15,8 @@ export const selectFilteredProducts = createSelector(
   (state) => state.filteredProducts
 );
 
+export const selectLoading = createSelector(
+  selectProductState,
+  (state) => state.isLoading
+);
+
