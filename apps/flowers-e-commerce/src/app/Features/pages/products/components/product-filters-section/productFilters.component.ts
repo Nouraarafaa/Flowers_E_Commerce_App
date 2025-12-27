@@ -29,8 +29,6 @@ export class ProductFiltersComponent {
 
   private readonly _store = inject(Store);
 
-  private readonly _store = inject(Store);
-
   /* ================= CATEGORY ================= */
   filterByCategory(category: Category) {
     this.selectedCategoryIds.update(currentIds => {
