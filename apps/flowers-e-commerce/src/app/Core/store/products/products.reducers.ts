@@ -1,38 +1,61 @@
+
+
 import { createReducer, on } from "@ngrx/store";
 import { initialProductsState } from "./products.state";
-<<<<<<< HEAD
 import { resetFilters, setFilters, setLoading, setProducts } from "./products.actions";
-=======
-import { setFilters, setProducts} from "./products.actions";
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
 
 export const productsReducer = createReducer(
     initialProductsState,
     on(setProducts, (state, { products }) => ({
         ...state,
-<<<<<<< HEAD
         originalProducts: products,
         filteredProducts: products
 
     })),
-
-=======
-        originalProducts: products
-
-    })),
    
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
-    on(setFilters, (state, { filters }) => ({
+    on(setFilters, (state, { filters }) => {
+    const updatedFilters = { 
+        ...state.filters, 
+        ...filters 
+    };
+
+    const filtered = state.originalProducts.filter(product => {
+        
+        //  (Category)
+        const matchesCategory = updatedFilters.category 
+            ? updatedFilters.category.includes(product.category) 
+            : true;
+
+        //  (Min & Max)
+        const matchesMinPrice = updatedFilters.minPrice 
+            ? (product.priceAfterDiscount ?? 0) >= updatedFilters.minPrice 
+            : true;
+            
+        const matchesMaxPrice = updatedFilters.maxPrice 
+            ? (product.priceAfterDiscount ?? 0) <= updatedFilters.maxPrice 
+            : true;
+
+        //  (Stars)
+        const matchesStars = updatedFilters.starRating 
+            ? (product.rateAvg ?? 0) === updatedFilters.starRating 
+            : true;
+
+        //  (Search Term)
+        const matchesSearch = updatedFilters.searchTerm 
+            ? product.title?.toLowerCase().includes(updatedFilters.searchTerm.toLowerCase()) 
+            : true;
+
+        // Combine all conditions
+        return matchesCategory && matchesMinPrice && matchesMaxPrice && matchesStars && matchesSearch;
+    });
+
+    return {
         ...state,
-        filters: {
-            ...state.filters,
-            ...filters, // Merge new filters with existing ones
-        }
-<<<<<<< HEAD
-
-    })),
-
-    on(resetFilters, (state) => ({
+        filters: updatedFilters,
+        filteredProducts: filtered 
+    };
+}),
+  on(resetFilters, (state) => ({
         ...state,
         filters: {
             minPrice: null,
@@ -45,13 +68,8 @@ export const productsReducer = createReducer(
 
         filteredProducts: [...state.originalProducts]
     })),
-
-    on(setLoading, (state, { Loading }) => ({
+on(setLoading, (state, { Loading }) => ({
         ...state,
         isLoading: Loading
     }))
-=======
-        
-    })),
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
 )

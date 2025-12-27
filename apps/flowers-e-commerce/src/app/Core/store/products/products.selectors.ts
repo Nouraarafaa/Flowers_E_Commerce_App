@@ -4,16 +4,6 @@ import { Product } from "../../../Shared/interfaces/HomeResponse/home-response";
 
 export const selectProductState = createFeatureSelector<ProductsState>('products');
 
-export const selectOriginalProducts = createSelector(
-<<<<<<< HEAD
-  selectProductState,
-  (state) => state.originalProducts
-=======
-    selectProductState,
-    (state)=>state.originalProducts
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
-);
-
 
 export const selectProductFilters = createSelector(
   selectProductState,
@@ -21,46 +11,12 @@ export const selectProductFilters = createSelector(
 );
 
 export const selectFilteredProducts = createSelector(
-  selectOriginalProducts,
-  selectProductFilters,
-  (products, filters) => {
-    // 1. Start with the full list
-    let filtered = products;
-
-    // 2. Apply Category Filter
-    if (filters.category) {
-<<<<<<< HEAD
-
-=======
-   
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
-    }
-
-    // 3. Apply Price Filter
-    if (filters.minPrice) {
-      filtered = filtered.filter(p => p.priceAfterDiscount! >= filters.minPrice!);
-    }
-    if (filters.maxPrice) {
-      filtered = filtered.filter(p => p.priceAfterDiscount! <= filters.maxPrice!);
-    }
-    // 4. Apply Star Filter
-    if (filters.starRating) {
-      filtered = filtered.filter(p => p.rateAvg === filters.starRating);
-    }
-
-    // 4. Apply Search Term Filter
-    if (filters.searchTerm) {
-
-    }
-
-    return filtered; // Return the final array
-  }
+  selectProductState,
+  (state) => state.filteredProducts
 );
-<<<<<<< HEAD
 
 export const selectLoading = createSelector(
   selectProductState,
   (state) => state.isLoading
 );
-=======
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
+

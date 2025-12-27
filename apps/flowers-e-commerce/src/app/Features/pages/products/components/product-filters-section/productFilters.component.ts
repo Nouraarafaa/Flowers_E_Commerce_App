@@ -8,11 +8,8 @@ import { Store } from '@ngrx/store';
 import * as ProductActions from 'apps/flowers-e-commerce/src/app/Core/store/products/products.actions';
 import { Slider } from 'primeng/slider';
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
 
 @Component({
   selector: 'app-product-filters',
@@ -27,13 +24,10 @@ export class ProductFiltersComponent {
 
   selectedCategoryIds = signal<string[]>([]);
   selectedOccasionIds = signal<string[]>([]);
-<<<<<<< HEAD
-=======
 
   rangeValues: number[] = [0, 0];
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
 
-  rangeValues: number[] = [0, 0];
+
 
   starsNumsSelected: number=0;
 
@@ -119,49 +113,25 @@ export class ProductFiltersComponent {
 
 
 
-<<<<<<< HEAD
-=======
 
-
-
-
-
-
-
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
   resetCategory() {
     this.selectedCategoryIds.set([]);
     console.log(this.selectedCategoryIds());
 
 
-  }
+}
 
-  resetOccasion() {
+resetOccasion() {
 
-  }
+}
 
-  resetRating() {
-    this.starsNumsSelected = 0;
-    this._store.dispatch(
-      ProductActions.setFilters({
-        filters: {
-          starRating: this.starsNumsSelected
-        }
-      })
-    );
-<<<<<<< HEAD
-=======
-    this.starsNumsSelected = 0;
-    this._store.dispatch(
-      ProductActions.setFilters({
-        filters: {
-          starRating: this.starsNumsSelected
-        }
-      })
-    );
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
+resetRating() {
 
-  }
+}
+
+
+
+
 
   resetPrice() {
     this.rangeValues=[0,0]
@@ -174,7 +144,6 @@ export class ProductFiltersComponent {
       })
     );
 
-<<<<<<< HEAD
   }
 
   resetAllfilters() {
@@ -185,12 +154,5 @@ export class ProductFiltersComponent {
     this._store.dispatch(
       ProductActions.resetFilters());
   }
-=======
 
-
-  }
-
-
-
->>>>>>> 7d45d4f69a32575f7cff71dcd821b95bbfd277f0
 }
