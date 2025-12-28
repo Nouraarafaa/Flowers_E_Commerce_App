@@ -1,42 +1,75 @@
-import { createReducer, on } from '@ngrx/store';
-import { initialProductsState } from './products.state';
-import {
-    loadProducts,
-    loadProductsSuccess,
-    loadProductsFailure,
-    setFilters,
-} from './products.actions';
+
+
+import { createReducer, on } from "@ngrx/store";
+import { initialProductsState } from "./products.state";
+import { resetFilters, setFilters, setLoading, setProducts } from "./products.actions";
 
 export const productsReducer = createReducer(
     initialProductsState,
-
-    // Loading
-    on(loadProducts, (state) => ({
-        ...state,
-        isLoading: true,
-        error: null,
-    })),
-
-    // Success
-    on(loadProductsSuccess, (state, { products }) => ({
+    on(setProducts, (state, { products }) => ({
         ...state,
         originalProducts: products,
-        isLoading: false,
-    })),
+        filteredProducts: products
 
-    // Failure
-    on(loadProductsFailure, (state, { error }) => ({
+    })),
+   
+    on(setFilters, (state, { filters }) => {
+    const updatedFilters = { 
+        ...state.filters, 
+        ...filters 
+    };
+
+    const filtered = state.originalProducts.filter(product => {
+        
+        //  (Category)
+        const matchesCategory = updatedFilters.category 
+            ? updatedFilters.category.includes(product.category) 
+            : true;
+
+        //  (Min & Max)
+        const matchesMinPrice = updatedFilters.minPrice 
+            ? (product.priceAfterDiscount ?? 0) >= updatedFilters.minPrice 
+            : true;
+            
+        const matchesMaxPrice = updatedFilters.maxPrice 
+            ? (product.priceAfterDiscount ?? 0) <= updatedFilters.maxPrice 
+            : true;
+
+        //  (Stars)
+        const matchesStars = updatedFilters.starRating 
+            ? (product.rateAvg ?? 0) === updatedFilters.starRating 
+            : true;
+
+        //  (Search Term)
+        const matchesSearch = updatedFilters.searchTerm 
+            ? product.title?.toLowerCase().includes(updatedFilters.searchTerm.toLowerCase()) 
+            : true;
+
+        // Combine all conditions
+        return matchesCategory && matchesMinPrice && matchesMaxPrice && matchesStars && matchesSearch;
+    });
+
+    return {
         ...state,
-        isLoading: false,
-        error,
-    })),
-
-    // Filters
-    on(setFilters, (state, { filters }) => ({
+        filters: updatedFilters,
+        filteredProducts: filtered 
+    };
+}),
+  on(resetFilters, (state) => ({
         ...state,
         filters: {
-            ...state.filters,
-            ...filters,
+            minPrice: null,
+            maxPrice: null,
+            category: null,
+            occasion: null,
+            searchTerm: null,
+            starRating: null
         },
+
+        filteredProducts: [...state.originalProducts]
+    })),
+on(setLoading, (state, { Loading }) => ({
+        ...state,
+        isLoading: Loading
     }))
-);
+)
