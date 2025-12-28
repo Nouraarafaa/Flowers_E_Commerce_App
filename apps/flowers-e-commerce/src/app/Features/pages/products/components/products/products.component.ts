@@ -8,7 +8,9 @@ import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/inter
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { loadProducts } from './../../../../../Core/store/products/products.actions';
-import { selectFilteredProducts, selectOriginalProducts } from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
+import { selectFilteredProducts } from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
+import { SkeletonListComponent } from '../skeleton-list/skeletonList.component';
+import { AsyncPipe } from '@angular/common';
 
 
 
@@ -36,10 +38,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
   // displayedProduct=>current products page
   displayedProducts = signal<Product[]>([]);
   // 'first':first product index
-  first: number = 0;
+  first = 0;
   // 'rows': number of current products page 
-  rows: number = 10;
-  totalRecords: number = 0; // totalItems from API
+  rows = 10;
+  totalRecords = 0; // totalItems from API
 
 
 
