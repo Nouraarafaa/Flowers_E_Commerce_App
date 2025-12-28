@@ -15,33 +15,36 @@
             </div>
             }
         </div>
+        <span class="ps-2.5 capitalize">{{ category.name }}</span>
+      </div>
+      }
     </div>
-    <!-- occasion filter -->
-    <div class="h-[300px] border-b border-zinc-100 pb-5">
-        <app-filter-name (clicked)="resetOccasion()" filterName="Occasion"></app-filter-name>
-        <div class="h-[90%] overflow-y-auto mt-2.5">
-            <div class="grid grid-cols-2 gap-2">
-                @for(occasion of occasionFilters() ; track $index){
-                <div class="relative rounded-lg  cursor-pointer" (click)="filterByOccasion(occasion)">
-                    <img [src]="occasion.image" class="w-full h-[74px]  rounded-lg " alt="occasion image">
-                    <span
-                        class="absolute top-1/2 start-1/2 -translate-1/2 font-Primary font-medium text-zinc-50 z-10 text-center">
-                        @if (occasion.name.length > 15) {
-                        {{ occasion.name | slice:0:15 }}
-                        <span>...</span>
-                        }@else {
-                        {{ occasion.name }}
-                        }
-                    </span>
-                    <div class="absolute inset-0 rounded-lg duration-1000"
-                        [class]="selectedOccasionIds().includes(occasion._id) ? 'bg-linear-[180deg,#00000040_0%,#A6252A_100%]':'bg-linear-[180deg,rgba(0,0,0,0.4)_0%,rgba(0,0,0,0.8)_100%] hover:bg-linear-[180deg,rgba(0,0,0,0.25)_0%,rgba(0,0,0,0.5)_100%]'">
-                    </div>
-                </div>
-                }
-            </div>
-
+  </div>
+  <!-- occasion filter -->
+  <div class="h-[300px] border-b border-zinc-100 pb-5">
+    <app-filter-name (clicked)="resetOccasion()" filterName="Occasion"></app-filter-name>
+    <div class="h-[90%] overflow-y-auto mt-2.5">
+      <div class="grid grid-cols-2 gap-2">
+        @for(occasion of occasionFilters() ; track $index){
+        <div class="relative rounded-lg cursor-pointer" (click)="filterByOccasion(occasion)">
+          <img [src]="occasion.image" class="w-full h-[74px] rounded-lg" alt="occasion image" />
+          <span
+            class="absolute top-1/2 start-1/2 -translate-1/2 font-Primary font-medium text-zinc-50 z-10 text-center">
+            @if (occasion.name.length > 15) {
+            {{ occasion.name | slice : 0 : 15 }}
+            <span>...</span>
+            }@else {
+            {{ occasion.name }}
+            }
+          </span>
+          <div class="absolute inset-0 rounded-lg duration-1000" [class]="
+              selectedOccasionIds().includes(occasion._id)
+                ? 'bg-linear-[180deg,#00000040_0%,#A6252A_100%]'
+                : 'bg-linear-[180deg,rgba(0,0,0,0.4)_0%,rgba(0,0,0,0.8)_100%] hover:bg-linear-[180deg,rgba(0,0,0,0.25)_0%,rgba(0,0,0,0.5)_100%]'
+            "></div>
         </div>
-
+        }
+      </div>
     </div>
     <div class="h-[300px]">
         <!-- rating filter -->
@@ -68,9 +71,19 @@
             </div>
              <p-slider (onChange)="filterByPrice()" [min]="0" [max]="2000" [(ngModel)]="rangeValues" [range]="true" class="w-56" />
         </div>
-        <!-- reset filters button -->
-        <div class="py-4 ">
-            <button (click)="resetAllfilters()" [disabled]="
+        <div class="w-1/2">
+          <span class="font-inter font-medium text-zinc-800 text-sm">to</span>
+          <input (input)="convertRangeToNumber(1)" [(ngModel)]="rangeValues[1]" type="text" placeholder="10000000"
+            class="price-filter-input">
+        </div>
+
+      </div>
+      <p-slider (onChange)="filterByPrice()" [min]="0" [max]="2000" [(ngModel)]="rangeValues" [range]="true"
+        class="w-56" />
+    </div>
+    <!-- reset filters button -->
+    <div class="py-4 ">
+      <button (click)="resetAllfilters()" [disabled]="
                     selectedCategoryIds().length === 0 
                     && selectedOccasionIds().length === 0
                     && starsNumsSelected===null 
@@ -82,5 +95,11 @@
         </div>
       
 
+        <i class="pi pi-undo"></i>
+        <span>Reset All</span>
+      </button>
     </div>
+
+
+  </div>
 </section>

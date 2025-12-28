@@ -1,6 +1,6 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
-import { FilterNameComponent } from "../filter-name/filterName.component";
+import { FilterNameComponent } from '../filter-name/filterName.component';
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rating } from 'primeng/rating';
@@ -16,19 +16,27 @@ import { Slider } from 'primeng/slider';
   styleUrl: './productFilters.component.scss',
 })
 export class ProductFiltersComponent {
+
   categoryFilters = input.required<Category[]>();
   occasionFilters = input.required<Occasion[]>();
+
   selectedCategoryIds = signal<string[]>([]);
   selectedOccasionIds = signal<string[]>([]);
  
   rangeValues: number[] = [0,100];
 
-  starsNumsSelected!: number;
+  rangeValues: number[] = [0, 0];
 
   private readonly _store = inject(Store);
 
 
 
+  starsNumsSelected: number=0;
+
+  private readonly _store = inject(Store);
+
+
+  /* ================= CATEGORY ================= */
   filterByCategory(category: Category) {
     this.selectedCategoryIds.update(currentIds => {
       const id = category._id;
