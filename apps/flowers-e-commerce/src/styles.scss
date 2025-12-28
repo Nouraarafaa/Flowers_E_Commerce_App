@@ -122,3 +122,75 @@ html.dark body {
   z-index: 10000 !important;
 }
 
+// Global dark mode button styles
+html.dark {
+  // PrimeNG buttons
+  .p-button {
+    background-color: var(--color-soft-pink-300) !important;
+    color: var(--color-zinc-900) !important;
+    border-color: var(--color-soft-pink-300) !important;
+    font-weight: 500;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--color-soft-pink-200) !important;
+      border-color: var(--color-soft-pink-200) !important;
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(255, 102, 139, 0.25) !important;
+    }
+  }
+  
+  // Secondary/outlined buttons in dark mode
+  .p-button-outlined {
+    background-color: transparent !important;
+    color: var(--color-soft-pink-300) !important;
+    border-color: var(--color-soft-pink-300) !important;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--color-soft-pink-300) !important;
+      color: var(--color-zinc-900) !important;
+    }
+  }
+  
+  // Text buttons in dark mode
+  .p-button-text {
+    background-color: transparent !important;
+    color: var(--color-soft-pink-300) !important;
+    
+    &:hover:not(:disabled) {
+      background-color: rgba(255, 163, 185, 0.1) !important;
+    }
+  }
+  
+  // Custom button classes
+  button:not(.p-button) {
+    &.bg-maroon-600,
+    &.bg-maroon-700,
+    &.bg-maroon-500 {
+      background-color: var(--color-soft-pink-300) !important;
+      color: var(--color-zinc-900) !important;
+      
+      &:hover:not(:disabled) {
+        background-color: var(--color-soft-pink-200) !important;
+      }
+    }
+  }
+  
+  // Reset button filter dark mode
+  .reset-button-filter {
+    background-color: var(--color-soft-pink-300) !important;
+    color: var(--color-zinc-900) !important;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--color-soft-pink-200) !important;
+    }
+    
+    &:disabled {
+      background-color: var(--color-zinc-700) !important;
+      color: var(--color-zinc-500) !important;
+    }
+  }
+}
+
+
