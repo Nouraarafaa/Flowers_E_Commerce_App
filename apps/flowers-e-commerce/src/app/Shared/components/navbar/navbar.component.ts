@@ -1,10 +1,10 @@
-import { Component, OnInit, input, output } from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import { Toolbar } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { MenuItem } from 'primeng/api';
 import { Menu } from 'primeng/menu';
 import { NgIf } from '@angular/common';
@@ -32,6 +32,7 @@ export class NavbarComponent implements OnInit {
   clicked = output<void>();
 
   items: MenuItem[] | undefined;
+  private _router = inject(Router);
 
 
   ngOnInit() {
@@ -45,6 +46,7 @@ export class NavbarComponent implements OnInit {
           {
             label: 'My Profile',
             icon: 'pi pi-user',
+           command: () => { this._router.navigate(['/profile']); }
 
           },
           {
