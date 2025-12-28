@@ -5,11 +5,11 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { ProductFiltersComponent } from "../product-filters-section/productFilters.component";
 import { HomeService } from 'apps/flowers-e-commerce/src/app/Shared/services/home/home.service';
 import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { loadProducts, setLoading } from './../../../../../Core/store/products/products.actions';
-import { selectFilteredProducts, selectLoading } from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
-import { SkeletonListComponent } from "../skeleton-list/skeletonList.component";
+import { loadProducts } from './../../../../../Core/store/products/products.actions';
+import { selectFilteredProducts } from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
+import { SkeletonListComponent } from '../skeleton-list/skeletonList.component';
 import { AsyncPipe } from '@angular/common';
 
 
@@ -26,24 +26,22 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   _store = inject(Store);
 
-
   categories = signal<Category[]>([]);
   occasions = signal<Occasion[]>([]);
   products = signal<Product[]>([]);
 
   getHomeDetailsSub!: Subscription;
   getProductsSub!: Subscription;
-  isLoading$: Observable<boolean> = this._store.select(selectLoading);
 
   // fullProducts from API
   fullProducts = signal<Product[]>([]);
   // displayedProduct=>current products page
   displayedProducts = signal<Product[]>([]);
   // 'first':first product index
-  first: number = 0;
+  first = 0;
   // 'rows': number of current products page 
-  rows: number = 10;
-  totalRecords: number = 0; // totalItems from API
+  rows = 10;
+  totalRecords = 0; // totalItems from API
 
 
 
@@ -53,7 +51,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this._store.dispatch(setLoading({ Loading: true }));
      this.getProductsFromStore();
   }
-
+  
   getCategoriesAndOccasions() {
     this.getHomeDetailsSub = this._homeService.getHomeDetails().subscribe({
       next: (res) => {
@@ -66,7 +64,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   getProductsFromStore() {
-    this._store.dispatch(loadProducts());
+   this._store.dispatch(loadProducts());
     this.getProductsSub = this._store.select(selectFilteredProducts).subscribe({
       next: (res) => {
         setTimeout(() => {

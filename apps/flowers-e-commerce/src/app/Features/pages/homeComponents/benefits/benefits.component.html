@@ -1,7 +1,7 @@
-<section class="w-[85%]  m-auto mt-10 bg-maroon-50 p-10 rounded-2xl font-Sarabun">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 justify-items-center sm:justify-items-start ">
+<section class="w-[85%]  m-auto mt-10 dark:bg-zinc-700 bg-maroon-50 p-10 rounded-2xl font-Sarabun">
+    <div class="dark:bg-zinc-700 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 justify-items-center sm:justify-items-start ">
         @for (b of benefitsList; track $index) {
-        <div class="flex justify-center items-center gap-2">
+        <div class="dark:bg-zinc-700 flex justify-center items-center gap-2">
             <div class=" rounded-full bg-maroon-600 flex justify-center items-center p-4">
                 <i class=" pi" [class]="b.icon" style="color:white; font-size: 30px;"></i>
             </div>

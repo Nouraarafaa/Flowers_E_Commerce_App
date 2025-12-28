@@ -1,5 +1,8 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
+import {
+  Category,
+  Occasion,
+} from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
 import { FilterNameComponent } from '../filter-name/filterName.component';
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +19,6 @@ import { Slider } from 'primeng/slider';
   styleUrl: './productFilters.component.scss',
 })
 export class ProductFiltersComponent {
-
   categoryFilters = input.required<Category[]>();
   occasionFilters = input.required<Occasion[]>();
 
@@ -28,7 +30,6 @@ export class ProductFiltersComponent {
   starsNumsSelected: number=0;
 
   private readonly _store = inject(Store);
-
 
   /* ================= CATEGORY ================= */
   filterByCategory(category: Category) {
@@ -53,21 +54,39 @@ export class ProductFiltersComponent {
         return [...currentIds, id];
       }
     });
-    // console.log(this.selectedCategoryIds());
+
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          category: this.selectedCategoryIds().length
+            ? this.selectedCategoryIds()
+            : null,
+        },
+      })
+    );
   }
 
   filterByOccasion(occasion: Occasion) {
-    this.selectedOccasionIds.update(currentIds => {
+    this.selectedOccasionIds.update((currentIds) => {
       const id = occasion._id;
       if (currentIds.includes(id)) {
         // If ID is already present, remove it (deselect)
-        return currentIds.filter(existingId => existingId !== id);
+        return currentIds.filter((existingId) => existingId !== id);
       } else {
         // If ID is not present, add it (select)
         return [...currentIds, id];
       }
     });
 
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          occasion: this.selectedOccasionIds().length
+            ? this.selectedOccasionIds()
+            : null,
+        },
+      })
+    );
   }
 
 
@@ -89,12 +108,34 @@ export class ProductFiltersComponent {
         }
       })
     );
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          minPrice: this.rangeValues[0],
+          maxPrice: this.rangeValues[1],
+        },
+      })
+    );
   }
 
   convertRangeToNumber(index: 0 | 1) {
     let value = this.rangeValues[index];
 
 
+    if (typeof value === 'string') {
+      let numericValue = parseFloat(value);
+
+      // 1. Check bounds against [min] and [max] (2000 in your case)
+      if (numericValue < 0) numericValue = 0;
+      if (numericValue > 2000) numericValue = 2000;
+
+      if (!isNaN(numericValue)) {
+        // 2. Update the value in the existing array
+        this.rangeValues[index] = numericValue;
+
+        // 3. CRITICAL STEP: Replace the array with a new copy.
+        // This forces Angular and the p-slider component to re-render.
+        this.rangeValues = [...this.rangeValues];
     if (typeof value === 'string') {
       let numericValue = parseFloat(value);
 
@@ -139,8 +180,8 @@ export class ProductFiltersComponent {
     this._store.dispatch(
       ProductActions.setFilters({
         filters: {
-          starRating: this.starsNumsSelected
-        }
+          starRating: this.starsNumsSelected,
+        },
       })
     );
   }
@@ -172,24 +213,22 @@ export class ProductFiltersComponent {
   }
 
   resetPrice() {
-    this.rangeValues=[0,0]
+    this.rangeValues = [0, 0];
     this._store.dispatch(
       ProductActions.setFilters({
         filters: {
           minPrice: null,
-          maxPrice: null
-        }
+          maxPrice: null,
+        },
       })
     );
-
   }
 
   resetAllfilters() {
     this.selectedCategoryIds.set([]);
     this.selectedOccasionIds.set([]);
     this.starsNumsSelected = 0;
-    this.rangeValues=[0,0];
-    this._store.dispatch(
-      ProductActions.resetFilters());
+    this.rangeValues = [0, 0];
+    this._store.dispatch(ProductActions.resetFilters());
   }
 }
