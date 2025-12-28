@@ -19,4 +19,3 @@ export const resetFilters = createAction(
 export const setLoading = createAction(
     '[products] set Loading',
     props<{ Loading: boolean }>());
-

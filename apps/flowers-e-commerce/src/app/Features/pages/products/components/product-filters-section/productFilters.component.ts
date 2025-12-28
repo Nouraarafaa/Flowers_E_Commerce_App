@@ -9,11 +9,9 @@ import * as ProductActions from 'apps/flowers-e-commerce/src/app/Core/store/prod
 import { Slider } from 'primeng/slider';
 
 
-
-
 @Component({
   selector: 'app-product-filters',
-  imports: [FilterNameComponent, SlicePipe, FormsModule, Rating, Slider],
+  imports: [FilterNameComponent, SlicePipe, FormsModule, Rating , Slider],
   templateUrl: './productFilters.component.html',
   styleUrl: './productFilters.component.scss',
 })
@@ -24,8 +22,12 @@ export class ProductFiltersComponent {
 
   selectedCategoryIds = signal<string[]>([]);
   selectedOccasionIds = signal<string[]>([]);
+ 
+  rangeValues: number[] = [0,100];
 
   rangeValues: number[] = [0, 0];
+
+  private readonly _store = inject(Store);
 
 
 
@@ -48,20 +50,25 @@ export class ProductFiltersComponent {
     });
     // console.log(this.selectedCategoryIds());
   }
+filterByOccasion(occasion: Occasion) {
+  this.selectedOccasionIds.update((currentIds) => {
+    const id = occasion._id;
+    return currentIds.includes(id)
+      ? currentIds.filter((existingId) => existingId !== id)
+      : [...currentIds, id];
+  });
 
-  filterByOccasion(occasion: Occasion) {
-    this.selectedOccasionIds.update(currentIds => {
-      const id = occasion._id;
-      if (currentIds.includes(id)) {
-        // If ID is already present, remove it (deselect)
-        return currentIds.filter(existingId => existingId !== id);
-      } else {
-        // If ID is not present, add it (select)
-        return [...currentIds, id];
-      }
-    });
+  this._store.dispatch(
+    ProductActions.setFilters({
+      filters: {
+        occasion: this.selectedOccasionIds().length
+          ? this.selectedOccasionIds()
+          : null,
+      },
+    })
+  );
+}
 
-  }
 
 
   filterByPrice() {
@@ -76,25 +83,25 @@ export class ProductFiltersComponent {
   }
 
   convertRangeToNumber(index: 0 | 1) {
-    let value = this.rangeValues[index];
+    const value = this.rangeValues[index];
 
     if (typeof value === 'string') {
       let numericValue = parseFloat(value);
-
+      
       // 1. Check bounds against [min] and [max] (2000 in your case)
       if (numericValue < 0) numericValue = 0;
       if (numericValue > 2000) numericValue = 2000;
-
+      
       if (!isNaN(numericValue)) {
         // 2. Update the value in the existing array
         this.rangeValues[index] = numericValue;
-
+        
         // 3. CRITICAL STEP: Replace the array with a new copy.
         // This forces Angular and the p-slider component to re-render.
-        this.rangeValues = [...this.rangeValues];
-
+        this.rangeValues = [...this.rangeValues]; 
+        
         // Optional: Call your filter function immediately if desired
-        this.filterByPrice();
+        this.filterByPrice(); 
       }
     }
   }
@@ -104,55 +111,41 @@ export class ProductFiltersComponent {
     this._store.dispatch(
       ProductActions.setFilters({
         filters: {
-          starRating: this.starsNumsSelected
+          starRating:this.starsNumsSelected
         }
       })
     );
   }
+  
 
 
 
-
-
-  resetCategory() {
-    this.selectedCategoryIds.set([]);
-    console.log(this.selectedCategoryIds());
+resetCategory() {
+  // console.log(this.selectedCategoryIds());
+  this.selectedCategoryIds.set([]);
+  console.log(this.selectedCategoryIds());
 
 
 }
 
 resetOccasion() {
+  this.selectedOccasionIds.set([]);
+  this._store.dispatch(
+    ProductActions.setFilters({
+      filters: { occasion: null },
+    })
+  );
+}
+
+resetRating() { /* empty */ }
+
+resetPrice() { /* empty */ }
+
+resetAllfilters() {
+  // reset all filters
 
 }
 
-resetRating() {
 
-}
-
-
-
-
-
-  resetPrice() {
-    this.rangeValues=[0,0]
-    this._store.dispatch(
-      ProductActions.setFilters({
-        filters: {
-          minPrice: null,
-          maxPrice: null
-        }
-      })
-    );
-
-  }
-
-  resetAllfilters() {
-    this.selectedCategoryIds.set([]);
-    this.selectedOccasionIds.set([]);
-    this.starsNumsSelected = 0;
-    this.rangeValues=[0,0];
-    this._store.dispatch(
-      ProductActions.resetFilters());
-  }
 
 }

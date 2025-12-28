@@ -1,21 +1,19 @@
-<section class="pe-3 flex flex-col gap-1.5">
-  <!-- category filter -->
-  <div class="h-[300px] border-b border-zinc-100 pb-5">
-    <app-filter-name (clicked)="resetCategory()" filterName="Category"></app-filter-name>
-    <div class="h-[90%] overflow-y-auto mt-2.5">
-      @for(category of categoryFilters() ; track $index){
-      <div class="flex items-center mb-1 rounded cursor-pointer duration-300" (click)="filterByCategory(category)"
-        [class]="
-          selectedCategoryIds().includes(category._id)
-            ? 'bg-maroon-50 hover:bg-maroon-50'
-            : 'bg-zinc-200 hover:bg-zinc-300'
-        ">
-        <div class="p-1 rounded-s" [class]="
-            selectedCategoryIds().includes(category._id)
-              ? 'bg-maroon-600'
-              : 'bg-zinc-500'
-          ">
-          <img [src]="category.image" class="w-[21px] h-5 rounded-s" alt="icon" />
+<section class=" pe-3 flex flex-col gap-1.5">
+    <!-- category filter -->
+    <div class=" h-[300px] border-b border-zinc-100 pb-5">
+        <app-filter-name (clicked)="resetCategory()" filterName="Category"></app-filter-name>
+        <div class=" h-[90%] overflow-y-auto mt-2.5">
+            @for(category of categoryFilters() ; track $index){
+            <div class="dark:bg-zinc-700 dark:text-white flex items-center mb-1 rounded cursor-pointer  duration-300 "
+                (click)="filterByCategory(category)"
+                [class]="selectedCategoryIds().includes(category._id) ? 'bg-maroon-50 hover:bg-maroon-50':'bg-zinc-200 hover:bg-zinc-300'">
+                <div class="p-1 rounded-s"
+                    [class]="selectedCategoryIds().includes(category._id) ? 'bg-maroon-600':'bg-zinc-500'">
+                    <img [src]="category.image" class="w-[21px] h-5 rounded-s " alt="icon">
+                </div>
+                <span class="ps-2.5 capitalize">{{category.name}}</span>
+            </div>
+            }
         </div>
         <span class="ps-2.5 capitalize">{{ category.name }}</span>
       </div>
@@ -48,25 +46,30 @@
         }
       </div>
     </div>
-  </div>
+    <div class="h-[300px]">
+        <!-- rating filter -->
+        <div class="border-b border-zinc-100 pb-5">
+            <app-filter-name (clicked)="resetRating()" filterName="Rating"></app-filter-name>
+            <div class="mt-2.5">
+                <p-rating (click)="filterByRating()" [(ngModel)]="starsNumsSelected" />
+            </div>
+        </div>
+        <!-- price filter -->
 
-  <div class="h-[300px]">
-    <!-- rating filter -->
-    <div class="border-b border-zinc-100 pb-5">
-      <app-filter-name (clicked)="resetRating()" filterName="Rating"></app-filter-name>
-      <div class="mt-2.5">
-        <p-rating (click)="filterByRating()" [(ngModel)]="starsNumsSelected" />
-      </div>
-    </div>
-    <!-- price filter -->
+        <div class="border-b border-zinc-100 pb-5">
+            <app-filter-name (clicked)="resetPrice()" filterName="Price"></app-filter-name>
+            <div class="flex gap-2 mt-2.5 mb-6">
+                <div class="w-1/2">
+                    <span class="font-inter font-medium text-zinc-800 text-sm">from</span>
+                    <input (input)="convertRangeToNumber(0)" [(ngModel)]="rangeValues[0]" type="text" placeholder="0" class="price-filter-input">
+                </div>
+                <div class="w-1/2">
+                    <span class="font-inter font-medium text-zinc-800 text-sm">to</span>
+                    <input (input)="convertRangeToNumber(1)"[(ngModel)]="rangeValues[1]" type="text" placeholder="10000000" class="price-filter-input">
+                </div>
 
-    <div class="border-b border-zinc-100 pb-5">
-      <app-filter-name (clicked)="resetPrice()" filterName="Price"></app-filter-name>
-      <div class="flex gap-2 mt-2.5 mb-6">
-        <div class="w-1/2">
-          <span class="font-inter font-medium text-zinc-800 text-sm">from</span>
-          <input (input)="convertRangeToNumber(0)" [(ngModel)]="rangeValues[0]" type="text" placeholder="0"
-            class="price-filter-input">
+            </div>
+             <p-slider (onChange)="filterByPrice()" [min]="0" [max]="2000" [(ngModel)]="rangeValues" [range]="true" class="w-56" />
         </div>
         <div class="w-1/2">
           <span class="font-inter font-medium text-zinc-800 text-sm">to</span>
@@ -83,9 +86,14 @@
       <button (click)="resetAllfilters()" [disabled]="
                     selectedCategoryIds().length === 0 
                     && selectedOccasionIds().length === 0
-                    && starsNumsSelected==null 
+                    && starsNumsSelected===null 
                     && rangeValues[0]===0
-                    && rangeValues[1]===0 " class="reset-button-filter">
+                    && rangeValues[1]===100 " class="reset-button-filter">
+                <i class="pi pi-undo"></i>
+                <span>Reset All</span>
+            </button>
+        </div>
+      
 
         <i class="pi pi-undo"></i>
         <span>Reset All</span>
