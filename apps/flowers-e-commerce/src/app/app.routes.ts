@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { loggedGuard } from './Core/guards/logged/logged.guard';
+import { authGuard } from './Core/guards/auth/auth.guard';
 // import { authGuard } from './Core/guards/auth/auth.guard';
 
 
@@ -13,6 +14,12 @@ export const appRoutes: Route[] = [
             { path: "occasions", loadComponent: () => import('./Features/pages/occasions/occasions.component').then((c) => c.OccasionsComponent), title: "Occasions" },
             { path: "contact", loadComponent: () => import('./Features/pages/contact/contact.component').then((c) => c.ContactComponent), title: "Contact" },
             { path: "about", loadComponent: () => import('./Features/pages/about/about.component').then((c) => c.AboutComponent), title: "About" },
+            {
+                path: "profile", canActivate: [authGuard], loadComponent: () => import('./Features/pages/profile/components/profile/profile.component').then((c) => c.ProfileComponent), title: "Profile", children: [
+                    { path: "change-password", loadComponent: () => import('./Features/pages/profile/components/change-password/changePassword.component').then((c) => c.ChangePasswordComponent), title: "Change Password" },
+
+                ]
+            },
         ]
     },
     {

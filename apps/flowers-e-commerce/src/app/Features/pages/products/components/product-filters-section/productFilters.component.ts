@@ -87,7 +87,6 @@ export class ProductFiltersComponent {
         // 3. CRITICAL STEP: Replace the array with a new copy.
         // This forces Angular and the p-slider component to re-render.
         this.rangeValues = [...this.rangeValues];
-
         // Optional: Call your filter function immediately if desired
         this.filterByPrice();
       }
