@@ -36,6 +36,8 @@ export class NavbarComponent implements OnInit {
 
 
   ngOnInit() {
+    this.isDarkMode = localStorage.getItem('darkMode') === 'true';
+    this.updateDarkClass();
     this.items = [
       {
         separator: true
@@ -78,7 +80,23 @@ export class NavbarComponent implements OnInit {
     ];
 
   }
+  isDarkMode = false;
 
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('darkMode', this.isDarkMode.toString());
+    this.updateDarkClass();
+  }
+
+  private updateDarkClass() {
+    const root = document.documentElement;
+    if (this.isDarkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }
 
   onClick() {
     this.clicked.emit();

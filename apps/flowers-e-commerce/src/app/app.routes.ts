@@ -20,7 +20,6 @@ export const appRoutes: Route[] = [
 
                 ]
             },
-            {path: "wishlist",canActivate: [authGuard], loadComponent: () => import('./Features/pages/wishlist/components/wishlist-component/wishlist.component').then((c) => c.WishlistComponent), title: "Wishlist" }
         ]
     },
     {

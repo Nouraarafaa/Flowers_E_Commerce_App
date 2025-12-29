@@ -19,4 +19,3 @@ export const selectLoading = createSelector(
   selectProductState,
   (state) => state.isLoading
 );
-
