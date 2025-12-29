@@ -21,7 +21,6 @@
   .p-toolbar-center {
     gap: 10px;
     flex-basis: 65%;
-   
   }
 
   .p-inputtext {
@@ -38,15 +37,15 @@
     padding: 0;
   }
   .p-menu {
-    border-radius: 12px;  
-}
-.p-menu-item-link {
+    border-radius: 12px;
+  }
+  .p-menu-item-link {
     padding: 6px 8px;
     gap: 8px;
-}
-.p-menu-item-link:hover{
-  background-color: var(--color-red-50);
-}
+  }
+  .p-menu-item-link:hover {
+    background-color: var(--color-red-50);
+  }
 }
 .name-text::before {
   content: 'Hello';
@@ -56,3 +55,40 @@
   top: -7px;
 }
 
+:host-context(.dark) {
+  .name-text::before {
+    color: var(--color-zinc-400);
+  }
+}
+
+:host-context(.dark) ::ng-deep {
+  .p-toolbar {
+    background-color: var(--color-zinc-900) !important;
+  }
+
+  .p-menu {
+    background-color: var(--color-zinc-800) !important;
+    border: 1px solid var(--color-zinc-700) !important;
+  }
+
+  .p-menu .p-menuitem-text {
+    color: var(--color-zinc-200) !important;
+  }
+
+  .p-menu .p-menuitem-icon {
+    color: var(--color-zinc-400) !important;
+  }
+
+  .p-menu-item-link:hover {
+    background-color: var(--color-zinc-700) !important;
+  }
+
+  .p-inputtext {
+    background-color: var(--color-zinc-800) !important;
+    color: white !important;
+    border-color: var(--color-zinc-700) !important;
+    &::placeholder {
+      color: var(--color-zinc-500);
+    }
+  }
+}

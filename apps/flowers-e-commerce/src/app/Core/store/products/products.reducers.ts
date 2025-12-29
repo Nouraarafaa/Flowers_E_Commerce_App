@@ -1,58 +1,67 @@
-import { createReducer, on } from '@ngrx/store';
-import { initialProductsState } from './products.state';
-import {
-    loadProducts,
-    loadProductsSuccess,
-    loadProductsFailure,
-    setFilters,
-    sortProducts,
-} from './products.actions';
+import { createReducer, on } from "@ngrx/store";
+import { initialProductsState } from "./products.state";
+import { resetFilters, setFilters, setLoading, setProducts } from "./products.actions";
 
 export const productsReducer = createReducer(
     initialProductsState,
-
-    // Loading
-    on(loadProducts, (state) => ({
-        ...state,
-        isLoading: true,
-        error: null,
-    })),
-
-    // Success
-    on(loadProductsSuccess, (state, { products }) => ({
+    on(setProducts, (state, { products }) => ({
         ...state,
         originalProducts: products,
-        products: products,
-        isLoading: false,
+        filteredProducts: products
+       
+
     })),
 
-    // Failure
-    on(loadProductsFailure, (state, { error }) => ({
-        ...state,
-        isLoading: false,
-        error,
-    })),
-
-    // Filters
-    on(setFilters, (state, { filters }) => ({
-        ...state,
-        filters: {
+    on(setFilters, (state, { filters }) => {
+        const updatedFilters = {
             ...state.filters,
-            ...filters,
-        },
-    })),
+            ...filters
+        };
 
-    // Sort Products
-    on(sortProducts, (state, { sortBy }) => {
-        let sortedProducts = [...state.products];
-        if (sortBy === 'priceLowHigh') {
-            sortedProducts = sortedProducts.sort(
-                (a, b) => (a.priceAfterDiscount || 0) - (b.priceAfterDiscount || 0)
-            );
-        }
+        const filtered = state.originalProducts.filter(product => {
+
+            //  (Category)
+            const matchesCategory = updatedFilters.category
+                ? updatedFilters.category.includes(product.category)
+                : true;
+
+            //  (Min & Max)
+            const matchesMinPrice = updatedFilters.minPrice
+                ? (product.priceAfterDiscount ?? 0) >= updatedFilters.minPrice
+                : true;
+
+            const matchesMaxPrice = updatedFilters.maxPrice
+                ? (product.priceAfterDiscount ?? 0) <= updatedFilters.maxPrice
+                : true;
+
+            //  (Stars)
+            const matchesStars = updatedFilters.starRating
+                ? (product.rateAvg ?? 0) === updatedFilters.starRating
+                : true;
+
+            //  (Search Term)
+            const matchesSearch = updatedFilters.searchTerm
+                ? product.title?.toLowerCase().includes(updatedFilters.searchTerm.toLowerCase())
+                : true;
+
+            // Combine all conditions
+            return matchesCategory && matchesMinPrice && matchesMaxPrice && matchesStars && matchesSearch;
+        });
+
         return {
             ...state,
-            products: sortedProducts,
+            filters: updatedFilters,
+            filteredProducts: filtered
         };
-    })
-);
+    }),
+
+    on(resetFilters, (state) => ({
+        ...state,
+        filters: initialProductsState.filters,
+        filteredProducts: [...state.originalProducts]
+    })),
+    on(setLoading, (state, { Loading }) => ({
+        ...state,
+        isLoading: Loading
+    }))
+)

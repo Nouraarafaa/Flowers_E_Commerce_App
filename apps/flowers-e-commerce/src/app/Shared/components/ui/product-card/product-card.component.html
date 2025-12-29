@@ -1,4 +1,4 @@
-<div class="product-card w-full">
+<div class="dark:text-soft-pink-200 product-card w-full">
     <div class="relative w-full group">
 
         <img class="w-full h-[272px] object-cover rounded-xl cursor-pointer" [src]="product().imgCover"
@@ -40,7 +40,7 @@
 
     </div>
     <div class="overflow-hidden">
-        <h3 class="text-maroon-700 text-lg font-semibold py-2 text-nowrap ">
+        <h3 class="dark:text-soft-pink-200 text-maroon-700 text-lg font-semibold py-2 text-nowrap ">
             @if (product().title.length > 18) {
             {{ product().title | slice:0:18 }}
             <span>...</span>
@@ -62,7 +62,7 @@
                     }
                 </div>
                 <div class="flex gap-2">
-                    <p class="text-maroon-700 text-16px font-medium"> {{ product().priceAfterDiscount }} EGP </p>
+                    <p class="dark:text-soft-pink-200 text-maroon-700 text-16px font-medium"> {{ product().priceAfterDiscount }} EGP </p>
                     <p class="text-zinc-400 text-16px font-medium line-through"> {{ product().price }} EGP </p>
                 </div>
             </div>
