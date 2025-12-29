@@ -19,3 +19,13 @@ export const resetFilters = createAction(
 export const setLoading = createAction(
     '[products] set Loading',
     props<{ Loading: boolean }>());
+
+export const sortProducts = createAction(
+    '[Products] Sort Products',
+    props<{ sortBy: string }>()
+);
+
+export const loadProductsFailure = createAction(
+    '[Products] Load Products Failure',
+    props<{ error: string }>()
+);

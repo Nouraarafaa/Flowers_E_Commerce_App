@@ -1,8 +1,8 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { map, switchMap, tap } from "rxjs";
+import { catchError, map, of, switchMap, tap } from "rxjs";
 import { HomeService } from "../../../Shared/services/home/home.service";
-import { loadProducts, setProducts } from "./products.actions";
+import { loadProducts, loadProductsFailure, setProducts } from "./products.actions";
 import { Product } from "../../../Shared/interfaces/product";
 
 
@@ -24,10 +24,11 @@ export class productsEffects {
 
                         return data;
                     }),
-                    map((data) => setProducts({ products: data.products }))
-                )
+                    map((data) => setProducts({ products: data.products })),
+                    catchError(() =>
+                        of(loadProductsFailure({ error: 'Failed to load products' })))
             )
         )
-    );
+    ));
 
 } 
