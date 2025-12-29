@@ -20,6 +20,7 @@ export interface ProductsState{
 
 export const initialProductsState:ProductsState={
     originalProducts: [],
+    filteredProducts: [],
     filters:{ 
         category: null,
         occasion: null,
@@ -28,7 +29,6 @@ export const initialProductsState:ProductsState={
         starRating: null,
         searchTerm: null,
     },
-    filteredProducts: [],
     isLoading:false,
     error:null
 }

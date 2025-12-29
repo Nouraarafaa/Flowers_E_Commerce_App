@@ -75,7 +75,7 @@
         </div>
 
       </div>
-      <p-slider (onChange)="filterByPrice()" [min]="0" [max]="2000" [(ngModel)]="rangeValues" [range]="true"
+      <p-slider (onChange)="filterByPrice()" [min]="0" [max]="5000" [(ngModel)]="rangeValues" [range]="true"
         class="w-56" />
     </div>
     <!-- reset filters button -->
@@ -83,7 +83,7 @@
       <button (click)="resetAllfilters()" [disabled]="
                     selectedCategoryIds().length === 0 
                     && selectedOccasionIds().length === 0
-                    && starsNumsSelected===null 
+                    && starsNumsSelected==0 
                     && rangeValues[0]===0
                     && rangeValues[1]===0 " class="reset-button-filter">
 

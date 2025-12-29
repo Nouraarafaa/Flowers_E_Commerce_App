@@ -1,8 +1,5 @@
 import { Component, inject, input, signal } from '@angular/core';
-import {
-  Category,
-  Occasion,
-} from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
+import {Category,Occasion,} from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
 import { FilterNameComponent } from '../filter-name/filterName.component';
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -24,9 +21,9 @@ export class ProductFiltersComponent {
   selectedCategoryIds = signal<string[]>([]);
   selectedOccasionIds = signal<string[]>([]);
 
-  rangeValues: number[] = [0, 100];
+  rangeValues: number[] = [0, 0];
 
-  starsNumsSelected = 0;
+  starsNumsSelected: number=0;
 
   private readonly _store = inject(Store);
 
@@ -42,16 +39,7 @@ export class ProductFiltersComponent {
         return [...currentIds, id];
       }
     });
-
-    this._store.dispatch(
-      ProductActions.setFilters({
-        filters: {
-          category: this.selectedCategoryIds().length
-            ? this.selectedCategoryIds()
-            : null,
-        },
-      })
-    );
+    
   }
 
   filterByOccasion(occasion: Occasion) {
@@ -65,17 +53,9 @@ export class ProductFiltersComponent {
         return [...currentIds, id];
       }
     });
-
-    this._store.dispatch(
-      ProductActions.setFilters({
-        filters: {
-          occasion: this.selectedOccasionIds().length
-            ? this.selectedOccasionIds()
-            : null,
-        },
-      })
-    );
   }
+
+
 
   filterByPrice() {
     this._store.dispatch(
@@ -86,17 +66,19 @@ export class ProductFiltersComponent {
         },
       })
     );
+  
   }
 
   convertRangeToNumber(index: 0 | 1) {
     const value = this.rangeValues[index];
 
+
     if (typeof value === 'string') {
       let numericValue = parseFloat(value);
 
-      // 1. Check bounds against [min] and [max] (2000 in your case)
+      // 1. Check bounds against [min] and [max] (5000 in your case)
       if (numericValue < 0) numericValue = 0;
-      if (numericValue > 2000) numericValue = 2000;
+      if (numericValue > 5000) numericValue = 5000;
 
       if (!isNaN(numericValue)) {
         // 2. Update the value in the existing array
@@ -123,31 +105,30 @@ export class ProductFiltersComponent {
     );
   }
 
+
+
+
   resetCategory() {
     this.selectedCategoryIds.set([]);
-    this._store.dispatch(
-      ProductActions.setFilters({
-        filters: { category: null },
-      })
-    );
+    console.log(this.selectedCategoryIds());
+
+
   }
 
   resetOccasion() {
-    this.selectedOccasionIds.set([]);
-    this._store.dispatch(
-      ProductActions.setFilters({
-        filters: { occasion: null },
-      })
-    );
+
   }
 
   resetRating() {
     this.starsNumsSelected = 0;
     this._store.dispatch(
       ProductActions.setFilters({
-        filters: { starRating: null },
+        filters: {
+          starRating: this.starsNumsSelected
+        }
       })
     );
+
   }
 
   resetPrice() {
