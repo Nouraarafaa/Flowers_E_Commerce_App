@@ -1,14 +1,16 @@
-<section class="w-[85%] m-auto bg-maroon-50 rounded-2xl mt-[139px] py-10 px-2">
-  <div class="trustedBy-section">
-  <div class="title">
-    <p>
-      Trusted by over <span class="num">4.5k+</span> companies
-    </p>
+<section class="dark:bg-zinc-800 bg-[#FBEAEA]">
+  <div class="w-[85%] m-auto bg-maroon-50 rounded-2xl mt-[139px] py-10 px-2 dark:bg-zinc-700">
+    <div class="trustedBy-section bg-[#FBEAEA] dark:bg-zinc-700">
+      <div class="title">
+        <p>
+          Trusted by over <span class="num">4.5k+</span> companies
+        </p>
+      </div>
+      <div class="companies">
+        @for (image of images; track $index) {
+          <img [src]="image.img" alt="company img">
+        }
+      </div>
+    </div>
   </div>
-  <div class="companies">
-    @for (image of images; track $index) {
-      <img [src]="image.img" alt="company img">
-    }
-  </div>
-</div>
 </section>

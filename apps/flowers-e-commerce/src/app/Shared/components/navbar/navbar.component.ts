@@ -1,10 +1,10 @@
-import { Component, OnInit, input, output } from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import { Toolbar } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { MenuItem } from 'primeng/api';
 import { Menu } from 'primeng/menu';
 import { NgIf } from '@angular/common';
@@ -32,9 +32,12 @@ export class NavbarComponent implements OnInit {
   clicked = output<void>();
 
   items: MenuItem[] | undefined;
+  private _router = inject(Router);
 
 
   ngOnInit() {
+    this.isDarkMode = localStorage.getItem('darkMode') === 'true';
+    this.updateDarkClass();
     this.items = [
       {
         separator: true
@@ -45,6 +48,7 @@ export class NavbarComponent implements OnInit {
           {
             label: 'My Profile',
             icon: 'pi pi-user',
+           command: () => { this._router.navigate(['/profile']); }
 
           },
           {
@@ -76,7 +80,23 @@ export class NavbarComponent implements OnInit {
     ];
 
   }
+  isDarkMode = false;
 
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('darkMode', this.isDarkMode.toString());
+    this.updateDarkClass();
+  }
+
+  private updateDarkClass() {
+    const root = document.documentElement;
+    if (this.isDarkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }
 
   onClick() {
     this.clicked.emit();
