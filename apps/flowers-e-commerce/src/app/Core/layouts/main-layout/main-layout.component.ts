@@ -10,6 +10,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { locationResponse } from '../../interfaces/location/location.response';
 import { FooterComponent } from "../../pages/footer/footer.component";
+import { Store } from '@ngrx/store';
+import { selectWishlistProducts } from '../../store/wishlist/wishlist.selectors';
+import { loadWishlist } from '../../store/wishlist/wishlist.actions';
 
 
 @Component({
@@ -35,6 +38,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   private readonly _authService = inject(AuthService);
   private readonly _locationAdaptorService = inject(LocationAdaptorService);
   private readonly _httpClient = inject(HttpClient);
+  private readonly _store = inject(Store);
   
 
 
@@ -42,6 +46,28 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getUserStatus();
     this.getUserLocation();
+    this.getWishlistItemsCount();
+  }
+
+  getWishlistItemsCount(): void {
+    this._store.dispatch(loadWishlist());
+    this._store.select(selectWishlistProducts).subscribe({
+      next: (res) => {
+        this.wihlistItems = res.length;
+        console.log(this.wihlistItems);
+        
+      }
+    })
+
+    // Or using the async pipe in the template:
+    // this._store.select(selectWishlistItemsCount);
+
+    // Example without selector (not recommended for real use):
+    // let count = 0;
+    // this._store.select('wishlist').subscribe(wishlistState => {
+    //   count = wishlistState.items.length;
+    // });
+    // this.wihlistItems = count;
   }
 
   getUserStatus() {
