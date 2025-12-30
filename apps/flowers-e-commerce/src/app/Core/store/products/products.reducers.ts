@@ -25,6 +25,11 @@ export const productsReducer = createReducer(
                 ? updatedFilters.category.includes(product.category)
                 : true;
 
+            //  (Occasion)
+            const matchesOccasion = updatedFilters.occasion
+                ? updatedFilters.occasion.includes(product.occasion)
+                : true;
+
             //  (Min & Max)
             const matchesMinPrice = updatedFilters.minPrice
                 ? (product.priceAfterDiscount ?? 0) >= updatedFilters.minPrice
@@ -45,7 +50,7 @@ export const productsReducer = createReducer(
                 : true;
 
             // Combine all conditions
-            return matchesCategory && matchesMinPrice && matchesMaxPrice && matchesStars && matchesSearch;
+            return matchesCategory && matchesOccasion && matchesMinPrice && matchesMaxPrice && matchesStars && matchesSearch;
         });
 
         return {
@@ -64,4 +69,5 @@ export const productsReducer = createReducer(
         ...state,
         isLoading: Loading
     }))
+    
 )

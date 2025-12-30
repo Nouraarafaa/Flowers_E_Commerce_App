@@ -1,5 +1,5 @@
 import { Component, inject, input, signal } from '@angular/core';
-import {Category,Occasion,} from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
+import { Category, Occasion, } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
 import { FilterNameComponent } from '../filter-name/filterName.component';
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +23,7 @@ export class ProductFiltersComponent {
 
   rangeValues: number[] = [0, 0];
 
-  starsNumsSelected: number=0;
+  starsNumsSelected: number = 0;
 
   private readonly _store = inject(Store);
 
@@ -39,22 +39,27 @@ export class ProductFiltersComponent {
         return [...currentIds, id];
       }
     });
-    
+
   }
 
   filterByOccasion(occasion: Occasion) {
     this.selectedOccasionIds.update((currentIds) => {
       const id = occasion._id;
-      if (currentIds.includes(id)) {
-        // If ID is already present, remove it (deselect)
-        return currentIds.filter((existingId) => existingId !== id);
-      } else {
-        // If ID is not present, add it (select)
-        return [...currentIds, id];
-      }
+      return currentIds.includes(id)
+        ? currentIds.filter((existingId) => existingId !== id)
+        : [...currentIds, id];
     });
-  }
 
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          occasion: this.selectedOccasionIds().length
+            ? this.selectedOccasionIds()
+            : null,
+        },
+      })
+    );
+  }
 
 
   filterByPrice() {
@@ -66,7 +71,7 @@ export class ProductFiltersComponent {
         },
       })
     );
-  
+
   }
 
   convertRangeToNumber(index: 0 | 1) {
@@ -115,7 +120,12 @@ export class ProductFiltersComponent {
   }
 
   resetOccasion() {
-
+    this.selectedOccasionIds.set([]);
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: { occasion: null },
+      })
+    );
   }
 
   resetRating() {

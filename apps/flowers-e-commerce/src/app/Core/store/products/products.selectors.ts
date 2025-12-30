@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { ProductsState } from "./products.state";
-import { Product } from "../../../Shared/interfaces/HomeResponse/home-response";
 
 export const selectProductState = createFeatureSelector<ProductsState>('products');
 
@@ -18,4 +17,9 @@ export const selectFilteredProducts = createSelector(
 export const selectLoading = createSelector(
   selectProductState,
   (state) => state.isLoading
+);
+
+export const selectError = createSelector(
+  selectProductState,
+  (state) => state.error
 );
