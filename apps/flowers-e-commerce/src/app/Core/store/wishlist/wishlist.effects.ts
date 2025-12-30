@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { WishlistService } from '../../services/wishlist/wishlist.service';
+import { WishlistService } from '../../../Features/services/wishlist/wishlist.service';
 import {
   addToWishlist,
   addToWishlistFailure,
