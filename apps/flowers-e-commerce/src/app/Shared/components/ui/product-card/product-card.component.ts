@@ -1,15 +1,36 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { addToWishlist, removeFromWishlist } from '../../../../Core/store/wishlist/wishlist.actions';
+import { selectWishlistIds } from '../../../../Core/store/wishlist/wishlist.selectors';
 import { Product } from '../../../interfaces/HomeResponse/home-response';
-import { SlicePipe } from '@angular/common';
+import { AsyncPipe, SlicePipe } from '@angular/common';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-product-card',
-  imports: [SlicePipe],
+  imports: [SlicePipe, AsyncPipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
   product = input.required<Product>();
+  private readonly store = inject(Store);
+
+  isInWishlist$ = this.store.select(selectWishlistIds).pipe(
+    map(ids => ids.includes(this.product()._id))
+  );
+
+  toggleWishlist(event: Event, inWishlist: boolean) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (inWishlist) {
+      console.log('Removing product from wishlist:', this.product());
+      this.store.dispatch(removeFromWishlist({ productId: this.product()._id }));
+    } else {
+      console.log('Adding product to wishlist:', this.product());
+      this.store.dispatch(addToWishlist({ productId: this.product()._id }));
+    }
+  }
 
   getStars(rate: number) {
     const full = Math.floor(rate);
