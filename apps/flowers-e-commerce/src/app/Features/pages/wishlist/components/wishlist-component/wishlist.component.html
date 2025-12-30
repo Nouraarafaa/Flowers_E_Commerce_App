@@ -1,14 +1,42 @@
-<section class="w-[85%] m-auto">
-    <div class="flex justify-between items-center">
-        <div>
-            <h2>WishList</h2>
-            <span>10 products</span>
-        </div>
-        <div>
+<section class="w-[85%] m-auto font-Primary">
+    <!-- header -->
+    <div class="flex justify-between items-center mt-16">
+        <h2 class=" font-bold text-5xl text-zinc-800">WishList<span class="font-medium text-base text-zinc-400"> 10
+                products</span></h2>
+
+        <div
+            class="flex py-2.5 px-8 rounded-[10px] bg-maroon-50 gap-0.5 cursor-pointer hover:bg-maroon-50/50 transition-all duration-300">
             <img src="/Images/brush-cleaning.png" alt="">
-            <button>Clear Wishlist</button>
+            <a class="text-maroon-600 text-sm font-semibold font-mulish">Clear Wishlist</a>
 
         </div>
+    </div>
+    <!-- products -->
+    <div class=" border border-zinc-200 rounded-md p-5 mt-5 ">
+        <!-- this  -->
+        <div class="grid grid-cols-1 md:grid-cols-[auto_1fr] justify-between gap-4 pb-5 border-zinc-200 border-b mb-5">
+            <img src="/Images/box-gift3.png" class="w-full md:w-[117px] rounded-md" alt="">
+            <div class="flex flex-col justify-between gap-2.5">
+                <div class="flex justify-between items-start gap-2">
+                    <div>
+                        <h4 class="font-semibold text-maroon-700 text-sm">Dreamy White Roses Bouquet</h4>
+                        <span class="font-medium"><i class="pi pi-star-fill text-yellow-star"></i> Rating : 4.5/5 <span
+                                class=" text-blue-600">(8 ratings)</span></span>
+                    </div>
+                    <div class="flex cursor-pointer bg-red-600 rounded-[10px] p-2.5 font-medium text-sm text-white gap-2 items-center hover:bg-maroon-50 hover:text-maroon-700 transition-all duration-300"> 
+                        <i class="pi pi-trash"></i>
+                        <a class="">Remove</a>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-bold text-2xl text-zinc-800"><span class="text-base font-medium text-maroon-600">(x1)</span> 199.50 <span class="text-base font-medium">EGP</span></span>
+                </div>
+
+            </div>
+        </div>
+
+
+
 
     </div>
 </section>
