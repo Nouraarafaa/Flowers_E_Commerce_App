@@ -29,11 +29,13 @@ export class NavbarComponent implements OnInit {
   cartItemsNavBar = input.required<number>();
   notificationNumNavBar = input.required<number>();
 
+  private readonly _router = inject(Router);
+  
   clicked = output<void>();
 
-  items: MenuItem[] | undefined;
-  private _router = inject(Router);
+  isDarkMode = false;
 
+  items: MenuItem[] | undefined;
 
   ngOnInit() {
     this.isDarkMode = localStorage.getItem('darkMode') === 'true';
@@ -43,13 +45,13 @@ export class NavbarComponent implements OnInit {
         separator: true
       },
       {
-
         items: [
           {
             label: 'My Profile',
             icon: 'pi pi-user',
-           command: () => { this._router.navigate(['/profile']); }
-
+            command: () => {
+              this._router.navigate(['/profile'])
+            }
           },
           {
             label: 'My Addresses',
@@ -59,7 +61,6 @@ export class NavbarComponent implements OnInit {
           {
             label: 'My Orders',
             icon: `svg-order-icon`,
-
 
           },
           {
@@ -80,7 +81,6 @@ export class NavbarComponent implements OnInit {
     ];
 
   }
-  isDarkMode = false;
 
 
   toggleDarkMode() {
