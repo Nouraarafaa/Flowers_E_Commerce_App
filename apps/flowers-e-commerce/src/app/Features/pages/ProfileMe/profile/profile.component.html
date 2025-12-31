@@ -1,0 +1,26 @@
+<section class="w-[90%] mx-auto">
+    <div class="flex my-10 gap-9">
+
+        <p-drawer [(visible)]="visible" [closable]="false" [modal]="true" position="left" [dismissible]="true" class="lg:hidden">
+            <app-sidebar></app-sidebar>
+        </p-drawer>
+
+        <!-- side bar -->
+        <aside class="hidden lg:block lg:w-[20%] ml-5">
+            <app-sidebar></app-sidebar>
+        </aside>
+    
+        <!-- Update Profile & Change Password -->
+        <main class="w-full h-auto lg:w-[80%]">
+            <div class="sidebar flex lg:hidden justify-between items-center px-3 py-0.5">
+                <h2 class="font-bold text-5xl ">Update Profile</h2>
+                <div class="card flex justify-center">
+                    <p-button (click)="visible = true" styleClass="bg-main" icon="pi pi-bars" />
+                </div>
+            </div>
+
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</section>
+

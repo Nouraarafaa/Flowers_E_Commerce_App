@@ -13,15 +13,15 @@ import { finalize, Subject, takeUntil, timer } from 'rxjs';
 @Component({
   selector: 'app-change-password',
   imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, RouterLink, AuthStatusComponent, ButtonComponent],
-  templateUrl: './changePassword.component.html',
-  styleUrl: './changePassword.component.scss',
+  templateUrl: './change-password.component.html',
+  styleUrl: './change-password.component.scss',
 })
 export class ChangePasswordComponent {
-
+  
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authService = inject(AuthService);  
   private destroy$ = new Subject<void>();
-   successPassword:WritableSignal<string> = signal("");
+  successPassword:WritableSignal<string> = signal("");
   errorMsgPassword:WritableSignal<string> = signal("");
   isCallingAPI:WritableSignal<boolean> = signal(false);
   togglePassword: WritableSignal<boolean> = signal(false);
@@ -54,8 +54,6 @@ export class ChangePasswordComponent {
           if (res.message === "success") {
             timer(1000).pipe(takeUntil(this.destroy$)).subscribe(()=>{
               localStorage.setItem("flowersEcommerceToken", res.token);
-             
-           
             })
             this.successPassword.set(res.message)
           }
