@@ -24,7 +24,7 @@ export const wishlistReducer = createReducer(
     error: error
   })),
 
-  on(addToWishlist, (state ,{product}) => ({
+  on(addToWishlist, (state, { product }) => ({
     ...state,
     isLoading: true,
     wishlist: [...state.wishlist, product],
@@ -45,7 +45,7 @@ export const wishlistReducer = createReducer(
     error: error,
     successMessage: null
   })),
-  
+
   on(removeFromWishlist, (state, { productId }) => ({
     ...state,
     wishlist: state.wishlist.filter(p => p._id !== productId),
@@ -68,10 +68,6 @@ export const wishlistReducer = createReducer(
     successMessage: null
   })),
 
-  on(clearWishlist, (state) => ({
-  ...state,
-  wishlist: initialWishlistState.wishlist, 
-  ids: initialWishlistState.ids,
-})),
+  on(clearWishlist, () => initialWishlistState)
 
 );
