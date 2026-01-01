@@ -3,6 +3,11 @@ import { WishlistState } from './wishlist.state';
 
 export const selectWishlistState = createFeatureSelector<WishlistState>('wishlist');
 
+export const selectWishlistProducts = createSelector(
+  selectWishlistState,
+  (state) => state.wishlist
+);
+
 export const selectIsWishlistLoading = createSelector(
   selectWishlistState,
   (state) => state.isLoading

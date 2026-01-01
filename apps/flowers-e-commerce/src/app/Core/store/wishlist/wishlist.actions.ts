@@ -1,13 +1,25 @@
 import { createAction, props } from '@ngrx/store';
+import { Product } from './../../../Features/pages/wishlist/interfaces/wishlist';
+
+export const loadWishlist = createAction(
+'[Wishlist] load Wishlist');
+
+export const loadWishlistError = createAction(
+'[Wishlist] Load Error',
+  props<{ error: string }>());
+
+export const setWishlist = createAction(
+'[Wishlist] set Wishlist',
+  props<{ products: Product[] }>());
 
 export const addToWishlist = createAction(
   '[Wishlist] Add To Wishlist',
-  props<{ productId: string }>()
+  props<{ product: Product }>()
 );
 
 export const addToWishlistSuccess = createAction(
   '[Wishlist] Add To Wishlist Success',
-  props<{ message: string; productId: string }>()
+  props<{ message: string; product: Product }>()
 );
 
 export const addToWishlistFailure = createAction(
@@ -28,4 +40,8 @@ export const removeFromWishlistSuccess = createAction(
 export const removeFromWishlistFailure = createAction(
   '[Wishlist] Remove From Wishlist Failure',
   props<{ error: string }>()
+);
+
+export const clearWishlist = createAction(
+  '[Wishlist] Remove From Wishlist Failure'
 );
