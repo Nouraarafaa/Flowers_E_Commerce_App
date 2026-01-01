@@ -2,12 +2,12 @@
     <div class="flex my-10 gap-9">
 
         <p-drawer [(visible)]="visible" [closable]="false" [modal]="true" position="left" [dismissible]="true" class="lg:hidden">
-            <app-sidebar></app-sidebar>
+            <app-sidebar (clicked)="logoutUser()"></app-sidebar>
         </p-drawer>
 
         <!-- side bar -->
         <aside class="hidden lg:block lg:w-[20%] ml-5">
-            <app-sidebar></app-sidebar>
+            <app-sidebar (clicked)="logoutUser()"></app-sidebar>
         </aside>
     
         <!-- Update Profile & Change Password -->

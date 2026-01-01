@@ -59,15 +59,6 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
       }
     })
 
-    // Or using the async pipe in the template:
-    // this._store.select(selectWishlistItemsCount);
-
-    // Example without selector (not recommended for real use):
-    // let count = 0;
-    // this._store.select('wishlist').subscribe(wishlistState => {
-    //   count = wishlistState.items.length;
-    // });
-    // this.wihlistItems = count;
   }
 
   getUserStatus() {
