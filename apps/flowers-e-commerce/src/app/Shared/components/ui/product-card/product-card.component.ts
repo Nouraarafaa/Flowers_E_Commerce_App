@@ -28,7 +28,7 @@ export class ProductCardComponent {
       this.store.dispatch(removeFromWishlist({ productId: this.product()._id }));
     } else {
       console.log('Adding product to wishlist:', this.product());
-      this.store.dispatch(addToWishlist({ productId: this.product()._id }));
+      this.store.dispatch(addToWishlist({ product: this.product() }));
     }
   }
 
