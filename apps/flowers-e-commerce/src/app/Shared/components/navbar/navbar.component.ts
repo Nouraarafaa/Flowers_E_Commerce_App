@@ -10,11 +10,13 @@ import { Menu } from 'primeng/menu';
 import { NgIf } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { NavIconComponent } from '../nav-icon/navIcon.component';
+import { FormsModule } from '@angular/forms';
+import { SearchService } from '../../services/search/search.service';
 
 
 @Component({
   selector: 'app-navbar',
-  imports: [RippleModule, NgIf, Menu, Toolbar, ButtonModule, InputTextModule, IconField, InputIcon, RouterLink, NavIconComponent],
+  imports: [RippleModule, NgIf, Menu, Toolbar, ButtonModule, InputTextModule, IconField, InputIcon, RouterLink, NavIconComponent, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
