@@ -20,4 +20,7 @@ export class HomeService implements homeApi {
   getTestimonials(): Observable<Testimonials>{
     return this._httpClient.get<Testimonials>(`${this._BASE_URL}` + "/testimonials");
   }
+  getProductById(id: string): Observable<{ message: string, product: Product }> {
+    return this._httpClient.get<{ message: string, product: Product }>(`${this._BASE_URL}${Endpoints.products}/${id}`);
+  }
 }

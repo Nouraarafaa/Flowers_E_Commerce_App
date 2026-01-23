@@ -1,9 +1,27 @@
-<section class="w-[85%] m-auto mt-[68px]">
-    <div class="flex justify-center gap-3 ">
-        <div class="w-1/4">
+<section class="w-[92%] lg:w-[85%] m-auto mt-[68px]">
+    <div class="flex flex-col lg:flex-row justify-center gap-3">
+        <!-- Sidebar for Desktop -->
+        <aside class="hidden lg:block lg:w-1/4">
             <app-product-filters [categoryFilters]="categories()" [occasionFilters]="occasions()"></app-product-filters>
+        </aside>
+
+        <!-- Filters Toggle for Mobile -->
+        <div class="lg:hidden flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-100 dark:border-zinc-700 shadow-sm mb-4">
+             <button (click)="visibleFilters.set(true)" class="flex items-center gap-2 text-maroon-600 dark:text-soft-pink-300 font-bold active:scale-95 duration-200">
+                <i class="pi pi-filter"></i>
+                <span>Filters & Sorting</span>
+             </button>
+             <span class="text-xs font-medium text-zinc-500 dark:text-zinc-400">{{totalRecords}} Items</span>
         </div>
-        <div class="w-3/4 ps-6 border-s border-zinc-100  self-start ">
+
+        <!-- Mobile Drawer Filters -->
+        <p-drawer [visible]="visibleFilters()" (visibleChange)="visibleFilters.set($event)" position="left" [header]="'Filters & Sorting'" styleClass="w-[300px] dark:bg-zinc-800 dark:text-zinc-100">
+             <div class="p-2">
+                <app-product-filters [categoryFilters]="categories()" [occasionFilters]="occasions()"></app-product-filters>
+             </div>
+        </p-drawer>
+
+        <div class="w-full lg:w-3/4 lg:ps-6 lg:border-s border-zinc-100 dark:border-zinc-700 self-start">
            
               @if (isLoading$ | async) {
 
@@ -14,7 +32,7 @@
             <app-product-list [products]="displayedProducts()"></app-product-list>
 
             }
-            <div class="mt-6 font-open-sans font-medium text-[13px] border-t pt-4 border-zinc-100">
+            <div class="mt-6 font-open-sans font-medium text-[13px] border-t pt-4 border-zinc-100 dark:border-zinc-700">
                 <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
                     [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]" />
             </div>

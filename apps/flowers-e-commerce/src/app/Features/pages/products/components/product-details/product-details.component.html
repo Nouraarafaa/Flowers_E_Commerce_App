@@ -1,0 +1,114 @@
+@if (!isLoading() && product()) {
+<div class="container mx-auto px-4 py-8 lg:px-24">
+  <div class="flex flex-col lg:flex-row gap-12">
+    <!-- Image Section -->
+    <div class="w-full lg:w-1/2">
+      <div class="relative rounded-2xl overflow-hidden bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 aspect-[4/3]">
+        <img [src]="selectedImage()" [alt]="product()?.title" class="w-full h-full object-contain p-4" />
+      </div>
+      
+      <!-- Thumbnails -->
+      <div class="grid grid-cols-6 gap-3 mt-4">
+        @for (img of product()?.images; track $index) {
+          <div 
+            (click)="changeImage(img)"
+            class="cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-200 aspect-square bg-zinc-50 dark:bg-zinc-800"
+            [class.border-maroon-600]="selectedImage() === img"
+            [class.border-transparent]="selectedImage() !== img">
+            <img [src]="img" [alt]="'thumbnail ' + $index" class="w-full h-full object-cover" />
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Details Section -->
+    <div class="w-full lg:w-1/2 flex flex-col">
+      <h1 class="text-3xl lg:text-4xl font-bold text-zinc-800 dark:text-zinc-100 mb-4 font-inter">
+        {{ product()?.title }}
+      </h1>
+
+      <div class="flex items-center gap-4 mb-6">
+        <div class="flex items-center">
+          <span class="text-2xl lg:text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+            {{ product()?.priceAfterDiscount }} EGP
+          </span>
+          @if (product()?.priceAfterDiscount !== product()?.price) {
+            <span class="text-xl text-zinc-400 line-through ms-3">
+              {{ product()?.price }}
+            </span>
+          }
+        </div>
+        
+        <div class="flex items-center gap-2 px-3 py-1.5 bg-zinc-100 dark:bg-zinc-700/50 rounded-full">
+           <i class="pi pi-box text-zinc-500 dark:text-zinc-400"></i>
+           <span class="text-sm font-medium text-zinc-600 dark:text-zinc-300">
+             {{ product()?.quantity }} left in stock
+           </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 border-t border-zinc-100 dark:border-zinc-700 pt-6 mb-6">
+        <p-rating [(ngModel)]="product()!.rateAvg" [readonly]="true" />
+        <span class="text-zinc-600 dark:text-zinc-400 font-medium">
+          Rating: {{ product()?.rateAvg }}/5
+          <span class="text-blue-500 dark:text-blue-400 cursor-pointer ms-1">
+            ({{ product()?.rateCount }} ratings)
+          </span>
+        </span>
+      </div>
+
+      <div class="flex-grow">
+        <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-8">
+          {{ product()?.description }}
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-4 mt-auto">
+        <button 
+          (click)="toggleWishlist()"
+          class="p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors group">
+          <i class="pi pi-heart text-xl text-zinc-400 group-hover:text-red-500 transition-colors"></i>
+        </button>
+        
+        <button 
+          (click)="addToCart()"
+          class="flex-grow flex items-center justify-center gap-3 bg-maroon-700 hover:bg-maroon-800 dark:bg-maroon-600 dark:hover:bg-maroon-700 text-white font-bold py-4 px-8 rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-maroon-600/20">
+          <i class="pi pi-shopping-cart text-xl"></i>
+          <span>Add to Cart</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+} @else if (isLoading()) {
+  <!-- Skeleton Loader can be added here -->
+  <div class="container mx-auto px-4 py-8 lg:px-24 animate-pulse">
+    <div class="flex flex-col lg:flex-row gap-12">
+      <div class="w-full lg:w-1/2">
+        <div class="bg-zinc-200 dark:bg-zinc-700 rounded-2xl aspect-[4/3]"></div>
+        <div class="flex gap-3 mt-4">
+          <div class="bg-zinc-200 dark:bg-zinc-700 rounded-lg aspect-square w-16"></div>
+          <div class="bg-zinc-200 dark:bg-zinc-700 rounded-lg aspect-square w-16"></div>
+          <div class="bg-zinc-200 dark:bg-zinc-700 rounded-lg aspect-square w-16"></div>
+        </div>
+      </div>
+      <div class="w-full lg:w-1/2 flex flex-col gap-4">
+        <div class="h-10 bg-zinc-200 dark:bg-zinc-700 rounded w-3/4"></div>
+        <div class="h-6 bg-zinc-200 dark:bg-zinc-700 rounded w-1/4"></div>
+        <div class="h-24 bg-zinc-200 dark:bg-zinc-700 rounded mt-4"></div>
+        <div class="h-14 bg-zinc-200 dark:bg-zinc-700 rounded mt-auto"></div>
+      </div>
+    </div>
+  </div>
+} @else {
+  <!-- Error State -->
+  <div class="container mx-auto px-4 py-20 flex flex-col items-center justify-center text-center">
+    <i class="pi pi-exclamation-circle text-6xl text-zinc-300 mb-6"></i>
+    <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-2">Product Not Found</h2>
+    <p class="text-zinc-500 mb-8">The product you're looking for might have been removed or is currently unavailable.</p>
+    <button routerLink="/products" class="bg-maroon-700 text-white px-8 py-3 rounded-lg hover:bg-maroon-800 transition-colors">
+      Return to Products
+    </button>
+  </div>
+}

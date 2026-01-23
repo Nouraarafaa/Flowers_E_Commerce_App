@@ -107,7 +107,7 @@ html.dark body {
   @apply flex items-center cursor-pointer p-4;
 }
 .price-filter-input {
-  @apply w-full focus:border-maroon-500 focus:border-2 outline-0 text-maroon-700 rounded-[10px] border border-zinc-300 p-4 mt-1.5 placeholder:text-zinc-400 placeholder:font-inter placeholder:text-sm;
+  @apply w-full focus:border-maroon-500 focus:border-2 outline-0 text-maroon-700 rounded-[10px] border border-zinc-300 p-4 mt-1.5 placeholder:text-zinc-400 placeholder:font-inter placeholder:text-sm dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-100;
 }
 .reset-button-filter {
   @apply disabled:bg-zinc-200 disabled:text-zinc-800 disabled:cursor-not-allowed cursor-pointer hover:bg-maroon-50/55 duration-300 py-2.5 px-4 bg-maroon-50 text-maroon-600 font-semibold font-mulish text-sm w-full rounded-[10px] flex items-center justify-center gap-2.5;
@@ -190,6 +190,30 @@ html.dark {
     &:disabled {
       background-color: var(--color-zinc-700) !important;
       color: var(--color-zinc-500) !important;
+    }
+  }
+
+  // PrimeNG Select Overlay Dark Mode
+  .p-select-overlay {
+    background-color: var(--zinc-800) !important;
+    border-color: var(--zinc-700) !important;
+    color: var(--zinc-100) !important;
+    
+    .p-select-option {
+      color: var(--zinc-100) !important;
+      
+      &:hover {
+        background-color: var(--zinc-700) !important;
+      }
+      
+      &.p-select-option-selected {
+        background-color: var(--maroon-700) !important;
+        color: white !important;
+      }
+    }
+
+    .p-select-list-container {
+        background-color: var(--zinc-800) !important;
     }
   }
 }

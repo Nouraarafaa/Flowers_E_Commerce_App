@@ -9,6 +9,7 @@ export const appRoutes: Route[] = [
             { path: "", redirectTo: "home", pathMatch: "full" },
             { path: "home", loadComponent: () => import('./Features/pages/home/home.component').then((c) => c.HomeComponent), title: "Home" },
             { path: "products", loadComponent: () => import('./Features/pages/products/components/products/products.component').then((c) => c.ProductsComponent), title: "Products" },
+            { path: "products/:id", loadComponent: () => import('./Features/pages/products/components/product-details/product-details.component').then((c) => c.ProductDetailsComponent), title: "Product Details" },
             { path: "categories", loadComponent: () => import('./Features/pages/categories/categories.component').then((c) => c.CategoriesComponent), title: "Categories" },
             { path: "occasions", loadComponent: () => import('./Features/pages/occasions/occasions.component').then((c) => c.OccasionsComponent), title: "Occasions" },
             { path: "contact", loadComponent: () => import('./Features/pages/contact/contact.component').then((c) => c.ContactComponent), title: "Contact" },
