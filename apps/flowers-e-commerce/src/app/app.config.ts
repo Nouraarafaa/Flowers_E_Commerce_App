@@ -14,6 +14,8 @@ import { productsReducer } from './Core/store/products/products.reducers';
 import { productsEffects } from './Core/store/products/products.effects';
 import { wishlistReducer } from './Core/store/wishlist/wishlist.reducers';
 import { WishlistEffects } from './Core/store/wishlist/wishlist.effects';
+import { cartReducer } from './Core/store/cart/cart.reducer';
+import { CartEffects } from './Core/store/cart/cart.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,8 +34,9 @@ export const appConfig: ApplicationConfig = {
     },
         provideStore({
             products: productsReducer,
-            wishlist: wishlistReducer
+            wishlist: wishlistReducer,
+            cart:cartReducer
         }),
-    provideEffects([productsEffects, WishlistEffects])
+    provideEffects([productsEffects, WishlistEffects,CartEffects])
 ],
 };
