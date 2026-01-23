@@ -4,3 +4,18 @@
         font-size: 25px;
     }
 }
+
+:host-context(.dark) {
+    a {
+        color: var(--color-zinc-800) !important;
+        
+        &:hover {
+            color: var(--color-zinc-900) !important;
+        }
+        
+        &.router-link-active {
+            color: var(--color-red-600) !important;
+            border-bottom-color: var(--color-red-600) !important;
+        }
+    }
+}

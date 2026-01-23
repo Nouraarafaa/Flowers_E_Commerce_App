@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
 @font-face {
@@ -12,7 +13,6 @@
   --maroon-700: #741c21;
   --maroon-600: #a6252a;
   --maroon-500: #cd2e33;
-  --maroon-50: #fbeaea;
   --maroon-50: #fbeaea;
   --zinc-800: #27272a;
   --zinc-700: #3f3f46;
@@ -44,6 +44,8 @@
   --Sarabun: 'Sarabun', sans-serif;
   --p-rating-icon-hover-color: #fba707 !important;
   --p-rating-icon-active-color: #fba707 !important;
+  --p-tooltip-background: #741c21 !important;
+  --p-tooltip-text-color: #fbeaea !important;
 
   --13px: 13px;
   --16px: 16px;
@@ -91,6 +93,10 @@
 body {
   font-family: var(--font-Sarabun);
 }
+html.dark body {
+  @apply bg-zinc-800 ;
+}
+
 .nav-icon {
   @apply absolute text-white text-[10px] text-center font-medium top-[-5px] end-[-5px]  w-3.5 h-3.5 rounded-full bg-red-600;
 }
@@ -116,3 +122,76 @@ body {
 .p-dialog-mask {
   z-index: 10000 !important;
 }
+
+// Global dark mode button styles
+html.dark {
+  // PrimeNG buttons
+  .p-button {
+    background-color: var(--color-soft-pink-300) !important;
+    color: var(--color-zinc-900) !important;
+    border-color: var(--color-soft-pink-300) !important;
+    font-weight: 500;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--color-soft-pink-200) !important;
+      border-color: var(--color-soft-pink-200) !important;
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(255, 102, 139, 0.25) !important;
+    }
+  }
+  
+  // Secondary/outlined buttons in dark mode
+  .p-button-outlined {
+    background-color: transparent !important;
+    color: var(--color-soft-pink-300) !important;
+    border-color: var(--color-soft-pink-300) !important;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--color-soft-pink-300) !important;
+      color: var(--color-zinc-900) !important;
+    }
+  }
+  
+  // Text buttons in dark mode
+  .p-button-text {
+    background-color: transparent !important;
+    color: var(--color-soft-pink-300) !important;
+    
+    &:hover:not(:disabled) {
+      background-color: rgba(255, 163, 185, 0.1) !important;
+    }
+  }
+  
+  // Custom button classes
+  button:not(.p-button) {
+    &.bg-maroon-600,
+    &.bg-maroon-700,
+    &.bg-maroon-500 {
+      background-color: var(--color-soft-pink-300) !important;
+      color: var(--color-zinc-900) !important;
+      
+      &:hover:not(:disabled) {
+        background-color: var(--color-soft-pink-200) !important;
+      }
+    }
+  }
+  
+  // Reset button filter dark mode
+  .reset-button-filter {
+    background-color: var(--color-soft-pink-300) !important;
+    color: var(--color-zinc-900) !important;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--color-soft-pink-200) !important;
+    }
+    
+    &:disabled {
+      background-color: var(--color-zinc-700) !important;
+      color: var(--color-zinc-500) !important;
+    }
+  }
+}
+
+

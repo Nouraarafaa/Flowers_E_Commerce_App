@@ -1,0 +1,39 @@
+<section class="w-[85%] m-auto font-Primary">
+    <!-- header -->
+    <div class="flex justify-between items-center mt-16">
+        <h2 class=" font-bold text-5xl text-zinc-800 text-nowrap">WishList<span
+                class="font-medium text-base text-zinc-400"> {{(wishlist$ | async)?.length? (wishlist$ | async)?.length:''}}
+                {{(wishlist$ | async)?.length ? 'products' : ''}}</span></h2>
+
+        @if ((wishlist$ | async)?.length) {
+        <div pTooltip="clear wishlist" tooltipPosition="bottom"
+            class="text-nowrap flex py-2.5 px-8 rounded-[10px] bg-maroon-50 gap-0.5 cursor-pointer hover:bg-maroon-50/50 transition-all duration-300">
+            <img src="/Images/brush-cleaning.png" alt="">
+            <a class="text-maroon-600 text-sm font-semibold font-mulish hidden sm:block" (click)="clearWishlist()">Clear Wishlist</a>
+
+        </div>
+        }
+
+    </div>
+    <!-- products -->
+    <div class=" border border-zinc-200 rounded-md p-5 mt-5 ">
+        <!-- this  -->
+
+        @for (item of wishlist$ |async; track $index; let isLast = $last) {
+
+        <app-wishlist-card [photo]="item.imgCover" [title]="item.title" [price]="item.price"
+            [priceAfterDiscount]="item.priceAfterDiscount" [rating]="item.rateAvg" (clickedOnRemove)="removeFromWishlist(item._id)"></app-wishlist-card>
+        @if (!isLast) {
+        <div class="border-b border-zinc-200 mb-5"></div>
+
+        }
+        }@empty {
+        <h2 class="text-center text-maroon-700 font-bold text-4xl">WishList is Empty <i class="pi pi-heart-fill align-bottom" style="font-size: 36px; color: var(--maroon-500);"></i></h2>
+        }
+
+
+
+
+
+    </div>
+</section>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -9,4 +9,6 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent {
   title = 'flowers-e-commerce';
+
+
 }

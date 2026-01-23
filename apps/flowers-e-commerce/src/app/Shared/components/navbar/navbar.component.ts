@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { MenuItem } from 'primeng/api';
 import { Menu } from 'primeng/menu';
 import { NgIf } from '@angular/common';
@@ -31,24 +31,29 @@ export class NavbarComponent implements OnInit {
   cartItemsNavBar = input.required<number>();
   notificationNumNavBar = input.required<number>();
 
+  private readonly _router = inject(Router);
+  
   clicked = output<void>();
+
+  isDarkMode = false;
 
   items: MenuItem[] | undefined;
 
-  _searchService = inject(SearchService);
-
   ngOnInit() {
+    this.isDarkMode = localStorage.getItem('darkMode') === 'true';
+    this.updateDarkClass();
     this.items = [
       {
         separator: true
       },
       {
-
         items: [
           {
             label: 'My Profile',
             icon: 'pi pi-user',
-
+            command: () => {
+              this._router.navigate(['/profile'])
+            }
           },
           {
             label: 'My Addresses',
@@ -58,7 +63,6 @@ export class NavbarComponent implements OnInit {
           {
             label: 'My Orders',
             icon: `svg-order-icon`,
-
 
           },
           {
@@ -80,6 +84,21 @@ export class NavbarComponent implements OnInit {
 
   }
 
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem('darkMode', this.isDarkMode.toString());
+    this.updateDarkClass();
+  }
+
+  private updateDarkClass() {
+    const root = document.documentElement;
+    if (this.isDarkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }
 
   onClick() {
     this.clicked.emit();
