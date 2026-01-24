@@ -2,19 +2,22 @@
     <div class="grid gap-10 mt-16" [class.lg:grid-cols-[65%_35%]]="(cart$ | async)"
         [class.grid-cols-1]="!(cart$ | async)">
         <!-- cart section -->
-        <app-cart-section
-            [cart$]="cart$"
-            [cartList$]="cartList$"
-            (clearCartRequested)="handleClearCart()"
-            (removeProductRequested)="handleRemoveProduct($event)"
-            (continueShoppingRequested)="handleNavigation()">
+        <app-cart-section [cart$]="cart$" [cartList$]="cartList$" (clearCartRequested)="handleClearCart()"
+            (removeProductRequested)="handleRemoveProduct($event)" (continueShoppingRequested)="handleNavigation()">
         </app-cart-section>
 
         <!-- summary section -->
         @if ((cart$ | async)) {
-       <app-summery [discount]="discount" (checkoutRequested)="handleCheckout()" [totalPrice]="(cart$ |async)?.cart?.totalPrice"></app-summery>
+        <div class="flex flex-col gap-6 ">
+            <app-summery [discount]="discount" 
+                [totalPrice]="(cart$ |async)?.cart?.totalPrice"></app-summery>
+            <app-button label="Checkout" icon="pi pi-arrow-right" iconPosition="right"
+                (buttonClick)="checkoutRequested()"></app-button>
+        </div>
+
         }
     </div>
+
 
 
 

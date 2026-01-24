@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { SectionTitleComponent } from "apps/flowers-e-commerce/src/app/Shared/components/section-title/sectionTitle.component";
@@ -49,8 +49,9 @@ export class CartComponent implements OnInit {
     this._router.navigate(['/products']);
   }
 
-  handleCheckout(){
-
+  
+  checkoutRequested() {
+  
   }
 
 }
