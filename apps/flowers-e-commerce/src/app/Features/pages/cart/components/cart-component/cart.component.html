@@ -1,18 +1,38 @@
 <section class="w-[85%] m-auto font-Primary">
     <div class="grid gap-10 mt-16" [class.lg:grid-cols-[65%_35%]]="(cart$ | async)"
         [class.grid-cols-1]="!(cart$ | async)">
+
+        <!--if step = 1 cart section will appear  -->
+        @if (step == 1) {
         <!-- cart section -->
         <app-cart-section [cart$]="cart$" [cartList$]="cartList$" (clearCartRequested)="handleClearCart()"
             (removeProductRequested)="handleRemoveProduct($event)" (continueShoppingRequested)="handleNavigation()">
         </app-cart-section>
+        }
+        @if (step == 2) {
+            <div class="flex flex-col">
+   
+        <p-steps [activeIndex]="active" [model]="items"/>
+        <h2>Shipping Address</h2>
+        <div class="self-end">
+        <app-button label="Next" styleClass="px-10" (buttonClick)="shippingAndPaymentSteps()" icon="pi pi-arrow-right" iconPosition="right"></app-button>
+
+        </div>
+            </div>
+     
+        }
+
 
         <!-- summary section -->
         @if ((cart$ | async)) {
         <div class="flex flex-col gap-6 ">
-            <app-summery [discount]="discount" 
-                [totalPrice]="(cart$ |async)?.cart?.totalPrice"></app-summery>
+            <app-summery [discount]="discount" [totalPrice]="(cart$ |async)?.cart?.totalPrice"></app-summery>
+
+            @if (step == 1) {
             <app-button label="Checkout" icon="pi pi-arrow-right" iconPosition="right"
                 (buttonClick)="checkoutRequested()"></app-button>
+            }
+
         </div>
 
         }
