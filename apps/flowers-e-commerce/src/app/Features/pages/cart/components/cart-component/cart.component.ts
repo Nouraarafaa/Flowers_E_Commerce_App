@@ -69,7 +69,7 @@ export class CartComponent implements OnInit {
     this.step = 2;
   }
 
-  shippingAndPaymentSteps() {
+  navigateToPayment() {
     this.active = 1;
     
   }
