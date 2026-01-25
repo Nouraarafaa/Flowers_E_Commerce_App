@@ -29,7 +29,7 @@ export class CartComponent implements OnInit {
   cart$: Observable<CartResponse | null> = of(null);
   cartList$: Observable<CartItem[]> = of([]);
   discount: boolean = false;
-  step: number = 2;
+  step: number = 1;
   items: MenuItem[] | undefined;
 
   active: number = 0;
