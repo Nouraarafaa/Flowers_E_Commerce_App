@@ -9,17 +9,31 @@
             (removeProductRequested)="handleRemoveProduct($event)" (continueShoppingRequested)="handleNavigation()">
         </app-cart-section>
         }
-        @if (step == 2) {
-            <div class="flex flex-col">
-   
-        <p-steps [activeIndex]="active" [model]="items"/>
-        <h2>Shipping Address</h2>
-        <div class="self-end">
-        <app-button label="Next" styleClass="px-10" (buttonClick)="navigateToPayment()" icon="pi pi-arrow-right" iconPosition="right"></app-button>
 
-        </div>
+        <!-- if step = 2 shipping addresses will appear -->
+        @if (step == 2) {
+        <div class="flex flex-col">
+
+            <p-steps [activeIndex]="active" [model]="items" />
+            @if (active == 0) {
+            <app-shipping-addresses [userAddressesInput$]="userAddresses$" (userSelectedAddressflag)="addressSelected()"></app-shipping-addresses>
+            }
+            @if (active == 1) {
+                <h2>payment method</h2>
+            }
+
+            <div class="self-end">
+               
+                <button [disabled]="userHasSelectedAddress"
+                    class="disabled:cursor-not-allowed cursor-pointer font-mulish font-semibold text-sm bg-maroon-600 text-white dark:bg-soft-pink-300 dark:text-zinc-800 rounded-[10px] py-2.5 px-10"
+                    (click)="navigateToPayment()">Next
+                    <i class="pi pi-arrow-right text-sm! "></i>
+                </button>
+            
+
             </div>
-     
+        </div>
+
         }
 
 

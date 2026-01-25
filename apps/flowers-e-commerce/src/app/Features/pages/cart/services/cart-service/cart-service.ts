@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from 'apps/flowers-e-commerce/src/app/Core/environments/environment';
 import { Observable } from 'rxjs';
-import { CartResponse } from '../interfaces/cart';
+import { CartResponse } from '../../interfaces/cart';
 
 @Injectable({
   providedIn: 'root'
