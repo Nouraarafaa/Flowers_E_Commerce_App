@@ -16,7 +16,7 @@
 
             <p-steps [activeIndex]="active" [model]="items" />
             @if (active == 0) {
-            <app-shipping-addresses [userAddressesInput$]="userAddresses$" (userSelectedAddressflag)="addressSelected()"></app-shipping-addresses>
+            <app-shipping-addresses (OnAddNewAddress)="addNewAddress()" [userAddressesInput$]="userAddresses$" (userSelectedAddressflag)="addressSelected()"></app-shipping-addresses>
             }
             @if (active == 1) {
                 <h2>payment method</h2>
@@ -51,7 +51,10 @@
 
         }
     </div>
+@if (addressModalvisible) {
+<app-address-modal [userAddressesInput$]="userAddresses$" (hide)="addressModalvisible=false"></app-address-modal>
 
+}
 
 
 

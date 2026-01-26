@@ -36,10 +36,14 @@
         </p>
 
     </div>
+    }@empty {
+        <h2 class="font-Primary text-2xl font-semibold dark:text-white mb-6">No saved addresses</h2>
     }
 
     <div class="border-b border-zinc-100 pt-2.5 pb-9 flex flex-col justify-center gap-3">
+        @if ((userAddressesInput$()|async)?.length != 0) {
         <span class="or-divider text-center text-zinc-500 font-Primary font-semibold text-lg dark:text-white">OR</span>
+        }
         <button (click)="addNewAddress()"
             class="font-Primary font-semibold text-lg text-maroon-600 dark:text-maroon-600 hover:bg-soft-pink-50 transition-colors duration-300 bg-maroon-50 rounded-[10px] py-3.5 px-4 cursor-pointer">Add
             a New Address</button>

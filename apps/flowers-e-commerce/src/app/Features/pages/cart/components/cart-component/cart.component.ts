@@ -16,10 +16,11 @@ import { MenuItem } from 'primeng/api';
 import { ShippingAddressesComponent } from "../shipping-addresses/shippingAddresses.component";
 import { UserAddressesService } from '../../services/user-addresses-service/user-addresses.service';
 import { Address } from '../../interfaces/address';
+import { AddressModalComponent } from "../address-modal/addressModal.component";
 
 @Component({
   selector: 'app-cart',
-  imports: [AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent, StepsModule, ButtonModule, ShippingAddressesComponent],
+  imports: [ AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent, StepsModule, ButtonModule, ShippingAddressesComponent, AddressModalComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
@@ -29,7 +30,7 @@ export class CartComponent implements OnInit {
   cart$: Observable<CartResponse | null> = of(null);
   cartList$: Observable<CartItem[]> = of([]);
   discount: boolean = false;
-  step: number = 1;
+  step: number = 2;
   items: MenuItem[] | undefined;
 
   active: number = 0;
@@ -37,6 +38,8 @@ export class CartComponent implements OnInit {
   userAddresses$: Observable<Address[]> = of([]);
   private readonly _userAddressesService = inject(UserAddressesService);
   userHasSelectedAddress: boolean = true;
+
+   addressModalvisible: boolean = false;
 
   ngOnInit(): void {
 
@@ -89,6 +92,10 @@ export class CartComponent implements OnInit {
   addressSelected() {
     this.userHasSelectedAddress = false;
 
+  }
+  addNewAddress(){
+    this.addressModalvisible=true;
+    
   }
 
 }
