@@ -1,0 +1,52 @@
+<div class="flex flex-col gap-6">
+            
+            <!-- header -->
+            <div class="flex justify-between items-center ">
+                <h2 class="wishlist-and-cart-title">Cart<span class="products-num-wishlist-and-cart"> {{(cart$()
+                        |async)? (cart$() | async)?.numOfCartItems : ""}}
+                        {{(cart$() | async) ? 'products' : ''}}</span></h2>
+
+                @if ((cart$() | async)) {
+                <div pTooltip="clear cart" tooltipPosition="bottom"
+                    class="text-nowrap flex py-2.5 px-8 rounded-[10px] bg-maroon-50 gap-0.5 cursor-pointer hover:bg-maroon-50/50 transition-all duration-300">
+                    <img src="/Images/brush-cleaning.png" alt="brush-cleaning">
+                    <a class="text-maroon-600 text-sm font-semibold font-mulish hidden sm:block"
+                        (click)="onClearCart()">Clear Cart</a>
+
+                </div>
+                }
+
+            </div>
+            <!-- products -->
+            <div class=" border border-zinc-200 rounded-md p-5  ">
+
+
+                @for (item of cartList$() |async; track $index; let isLast = $last) {
+
+                <app-cart-card [photo]="item.product.imgCover" [title]="item.product.title"
+                    [rateCount]="item.product.rateCount" [quantity]="item.quantity"
+                    [price]="item.product.price" [rating]="item.product.rateAvg"
+                    (clickedOnRemove)="onRemoveFromCart(item.product._id)"></app-cart-card>
+                @if (!isLast) {
+                <div class="border-b border-zinc-200 mb-5"></div>
+
+                }
+                }@empty {
+                <div class="my-16">
+                    <img src="/Images/no-cart.png" alt="cart is empty" class="w-60 m-auto ">
+                    <p class="font-Primary text-zinc-400 text-lg text-center">Your cart is empty, wanna try shopping?
+                    </p>
+                </div>
+                }
+
+
+
+
+
+            </div>
+            <!-- continue shopping btn -->
+            <div class="self-start">
+                <app-button label="Continue Shopping" icon="pi pi-arrow-left" iconPosition="left"
+                    (buttonClick)="onContinueShopping()"></app-button>
+            </div>
+        </div>

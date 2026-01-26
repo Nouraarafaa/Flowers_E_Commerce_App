@@ -1,0 +1,41 @@
+<div class="grid grid-cols-1 md:grid-cols-[auto_1fr] justify-between gap-4 pb-5  ">
+    <img [src]="photo()" class="w-full md:w-[117px] rounded-md" alt="">
+    <!--right side  -->
+    <div class="flex flex-col justify-between gap-2.5">
+        <!-- title & rating & remove btn -->
+        <div class="flex justify-between items-start gap-2">
+            <div class="dark:text-white">
+                <h4 class="font-semibold text-maroon-700 text-sm dark:text-soft-pink-200">{{ title() }}</h4>
+                <span class="font-medium"><i class="pi pi-star-fill text-yellow-star"></i> Rating : {{ rating() }}/5
+                </span>
+                <span class="font-Primary font-medium text-blue-600">({{ rateCount() }} ratings)</span>
+            </div>
+            <div
+                class="flex cursor-pointer bg-red-600 rounded-[10px] p-2.5 font-medium text-sm text-white gap-2 items-center hover:bg-maroon-50 hover:text-maroon-700 transition-all duration-300">
+                <i class="pi pi-trash"></i>
+                <a (click)="RemoveFromCart()">Remove</a>
+            </div>
+        </div>
+        <!-- price & quantity & buttons -->
+        <div class="flex justify-between items-end">
+            <div class="font-bold text-2xl text-zinc-800 text-nowrap dark:text-white">
+                <span class="text-maroon-600 text-base font-medium">(x{{quantity()}}) </span>
+                <span>{{price()}}</span><span class="text-base font-medium me-2.5"> EGP</span>
+
+            </div>
+            <div class="flex gap-2 justify-center ">
+                <div class="minus-plus-btn">
+                    <img src="/Images/minus.png" alt="">
+                </div>
+                <input type="text" class="dark:bg-white border w-[103px] border-zinc-200 rounded-xl focus:outline-none px-3.5 text-zinc-400 font-inter"
+                   disabled [value]="quantity()">
+                <div class="minus-plus-btn">
+                    <img src="/Images/plus.png" alt="">
+                    </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
