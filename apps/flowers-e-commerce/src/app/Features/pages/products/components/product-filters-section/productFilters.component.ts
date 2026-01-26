@@ -1,16 +1,17 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { Category, Occasion, } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
+import { Category, Occasion, } from '../../../../../Shared/interfaces/HomeResponse/home-response';
 import { FilterNameComponent } from '../filter-name/filterName.component';
 import { SlicePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Rating } from 'primeng/rating';
 import { Store } from '@ngrx/store';
-import * as ProductActions from 'apps/flowers-e-commerce/src/app/Core/store/products/products.actions';
+import * as ProductActions from '../../../../../Core/store/products/products.actions';
 import { Slider } from 'primeng/slider';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-product-filters',
-  imports: [FilterNameComponent, SlicePipe, FormsModule, Rating, Slider],
+  imports: [FilterNameComponent, SlicePipe, FormsModule, Rating, Slider, SelectModule],
   templateUrl: './productFilters.component.html',
   styleUrl: './productFilters.component.scss',
 })
@@ -23,9 +24,34 @@ export class ProductFiltersComponent {
 
   rangeValues: number[] = [0, 0];
 
-  starsNumsSelected: number = 0;
+  starsNumsSelected = 0;
+
+  sortOptions = [
+    { label: 'Price: Low to High', value: { sortBy: 'price', sortOrder: 'asc' } },
+    { label: 'Price: High to Low', value: { sortBy: 'price', sortOrder: 'desc' } },
+    { label: 'Rating: Highest First', value: { sortBy: 'rateAvg', sortOrder: 'desc' } },
+    { label: 'Title: A to Z', value: { sortBy: 'title', sortOrder: 'asc' } },
+    { label: 'Title: Z to A', value: { sortBy: 'title', sortOrder: 'desc' } },
+    { label: 'Category: A to Z', value: { sortBy: 'category', sortOrder: 'asc' } },
+    { label: 'Category: Z to A', value: { sortBy: 'category', sortOrder: 'desc' } },
+  ];
+
+  selectedSort = signal<{ sortBy: string, sortOrder: string } | null>(null);
 
   private readonly _store = inject(Store);
+
+  onSortChange(event: { value: { sortBy: string, sortOrder: string } }) {
+    const { sortBy, sortOrder } = event.value;
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          sortBy,
+          sortOrder: sortOrder as 'asc' | 'desc',
+        },
+      })
+    );
+  }
+
 
   /* ================= CATEGORY ================= */
   filterByCategory(category: Category) {
@@ -40,6 +66,15 @@ export class ProductFiltersComponent {
       }
     });
 
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          category: this.selectedCategoryIds().length
+            ? this.selectedCategoryIds()
+            : null,
+        },
+      })
+    );
   }
 
   filterByOccasion(occasion: Occasion) {
@@ -114,9 +149,11 @@ export class ProductFiltersComponent {
 
   resetCategory() {
     this.selectedCategoryIds.set([]);
-    console.log(this.selectedCategoryIds());
-
-
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: { category: null },
+      })
+    );
   }
 
   resetOccasion() {
@@ -152,11 +189,24 @@ export class ProductFiltersComponent {
     );
   }
 
+  resetSort() {
+    this.selectedSort.set(null);
+    this._store.dispatch(
+      ProductActions.setFilters({
+        filters: {
+          sortBy: null,
+          sortOrder: null,
+        },
+      })
+    );
+  }
+
   resetAllfilters() {
     this.selectedCategoryIds.set([]);
     this.selectedOccasionIds.set([]);
     this.starsNumsSelected = 0;
     this.rangeValues = [0, 0];
+    this.selectedSort.set(null);
     this._store.dispatch(ProductActions.resetFilters());
   }
 }

@@ -18,7 +18,7 @@ export const productsReducer = createReducer(
             ...filters
         };
 
-        const filtered = state.originalProducts.filter(product => {
+        let filtered = state.originalProducts.filter(product => {
 
             //  (Category)
             const matchesCategory = updatedFilters.category
@@ -52,6 +52,39 @@ export const productsReducer = createReducer(
             // Combine all conditions
             return matchesCategory && matchesOccasion && matchesMinPrice && matchesMaxPrice && matchesStars && matchesSearch;
         });
+
+        // Apply Sorting
+        if (updatedFilters.sortBy) {
+            filtered = [...filtered].sort((a, b) => {
+                let valA: string | number;
+                let valB: string | number;
+
+                switch (updatedFilters.sortBy) {
+                    case 'price':
+                        valA = a.priceAfterDiscount ?? a.price;
+                        valB = b.priceAfterDiscount ?? b.price;
+                        break;
+                    case 'rateAvg':
+                        valA = a.rateAvg ?? 0;
+                        valB = b.rateAvg ?? 0;
+                        break;
+                    case 'title':
+                        valA = a.title?.toLowerCase() ?? '';
+                        valB = b.title?.toLowerCase() ?? '';
+                        break;
+                    case 'category':
+                        valA = a.category?.toLowerCase() ?? '';
+                        valB = b.category?.toLowerCase() ?? '';
+                        break;
+                    default:
+                        return 0;
+                }
+
+                if (valA < valB) return updatedFilters.sortOrder === 'desc' ? 1 : -1;
+                if (valA > valB) return updatedFilters.sortOrder === 'desc' ? -1 : 1;
+                return 0;
+            });
+        }
 
         return {
             ...state,

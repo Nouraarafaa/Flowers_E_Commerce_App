@@ -4,21 +4,34 @@ import { addToWishlist, removeFromWishlist } from '../../../../Core/store/wishli
 import { selectWishlistIds } from '../../../../Core/store/wishlist/wishlist.selectors';
 import { Product } from '../../../interfaces/HomeResponse/home-response';
 import { AsyncPipe, SlicePipe } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 
 @Component({
   selector: 'app-product-card',
-  imports: [SlicePipe, AsyncPipe],
+  standalone: true,
+  imports: [SlicePipe, AsyncPipe, RouterLink],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
   product = input.required<Product>();
   private readonly store = inject(Store);
+  private readonly router = inject(Router);
 
   isInWishlist$ = this.store.select(selectWishlistIds).pipe(
     map(ids => ids.includes(this.product()._id))
   );
+
+  goToDetails(event?: Event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    const id = this.product()._id;
+    console.log('Navigating to product details with ID:', id);
+    this.router.navigate(['/products', id]);
+  }
 
   toggleWishlist(event: Event, inWishlist: boolean) {
     event.stopPropagation();
