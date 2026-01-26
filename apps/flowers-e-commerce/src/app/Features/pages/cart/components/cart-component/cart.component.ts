@@ -10,10 +10,13 @@ import { ButtonComponent } from "apps/flowers-e-commerce/src/app/Shared/componen
 import { Router } from '@angular/router';
 import { CartSectionComponent } from "../cart-items-section/cart-section.component";
 import { SummeryComponent } from "../summery-section/summery.component";
+import { StepsModule } from 'primeng/steps';
+import { ButtonModule } from 'primeng/button';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-cart',
-  imports: [AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent],
+  imports: [AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent, StepsModule, ButtonModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
@@ -23,9 +26,21 @@ export class CartComponent implements OnInit {
   cart$: Observable<CartResponse | null> = of(null);
   cartList$: Observable<CartItem[]> = of([]);
   discount: boolean = false;
+  step: number = 2;
+  items: MenuItem[] | undefined;
+
+  active: number = 0;
 
   ngOnInit(): void {
     this.getCartProducts();
+     this.items = [
+            {
+                label: ''
+            },
+            {
+                label: ''
+            }   
+        ];
 
 
   }
@@ -49,9 +64,14 @@ export class CartComponent implements OnInit {
     this._router.navigate(['/products']);
   }
 
-  
+
   checkoutRequested() {
-  
+    this.step = 2;
+  }
+
+  navigateToPayment() {
+    this.active = 1;
+    
   }
 
 }
