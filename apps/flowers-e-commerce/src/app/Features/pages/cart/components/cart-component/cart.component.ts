@@ -13,10 +13,13 @@ import { SummeryComponent } from "../summery-section/summery.component";
 import { StepsModule } from 'primeng/steps';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem } from 'primeng/api';
+import { ShippingAddressesComponent } from "../shipping-addresses/shippingAddresses.component";
+import { UserAddressesService } from '../../services/user-addresses-service/user-addresses.service';
+import { Address } from '../../interfaces/address';
 
 @Component({
   selector: 'app-cart',
-  imports: [AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent, StepsModule, ButtonModule],
+  imports: [AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent, StepsModule, ButtonModule, ShippingAddressesComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
@@ -26,21 +29,27 @@ export class CartComponent implements OnInit {
   cart$: Observable<CartResponse | null> = of(null);
   cartList$: Observable<CartItem[]> = of([]);
   discount: boolean = false;
-  step: number = 2;
+  step: number = 1;
   items: MenuItem[] | undefined;
 
   active: number = 0;
 
+  userAddresses$: Observable<Address[]> = of([]);
+  private readonly _userAddressesService = inject(UserAddressesService);
+  userHasSelectedAddress: boolean = true;
+
   ngOnInit(): void {
+
     this.getCartProducts();
-     this.items = [
-            {
-                label: ''
-            },
-            {
-                label: ''
-            }   
-        ];
+    this.items = [
+      {
+        label: ''
+      },
+      {
+        label: ''
+      }
+    ];
+     this.getUserAddresses();
 
 
   }
@@ -50,6 +59,9 @@ export class CartComponent implements OnInit {
     this.cart$ = this._store.select(selectCart);
     this.cartList$ = this._store.select(selectCartItems);
 
+  }
+   getUserAddresses() {
+    this.userAddresses$ = this._userAddressesService.getLoggedUserAddresses();
   }
 
   handleClearCart() {
@@ -71,7 +83,12 @@ export class CartComponent implements OnInit {
 
   navigateToPayment() {
     this.active = 1;
-    
+
+  }
+
+  addressSelected() {
+    this.userHasSelectedAddress = false;
+
   }
 
 }
