@@ -4,7 +4,7 @@
     <div class="flex justify-between items-center mt-6 font-Primary border-b pb-4 border-zinc-200">
         <header class="font-bold text-3xl text-zinc-800">{{dialogType}}</header>
         @if ((userAddressesInput$()|async)?.length != 0) {
-        <button class="py-3.5 px-4 bg-maroon-50 rounded-[10px] font-medium text-maroon-600"
+        <button class="cursor-pointer py-3.5 px-4 bg-maroon-50 rounded-[10px] font-medium text-maroon-600"
             (click)="addNewAddress()">Add a New Address</button>
         }
     </div>
@@ -59,27 +59,53 @@
     <p-steps [activeIndex]="active" [model]="items" />
     @if (active == 0) {
     <div class="mb-16">
-        <h3 class="font-Primary text-2xl text-maroon-600 font-medium pb-3 border-b border-zinc-200 mb-4">Enter address details</h3>
-        <form>
+        <h3 class="font-Primary text-2xl text-maroon-600 font-medium pb-3 border-b border-zinc-200 mb-4">Enter address
+            details</h3>
+        <form [formGroup]="addressForm" (ngSubmit)="addressFormSubmit()">
             <div class="font-inter mb-4">
+                @let cityControl = addressForm.get("city");
                 <label for="city" class="font-medium text-sm text-zinc-800 mb-1.5">City</label>
-                <input type="text" id="city" class="w-full border border-zinc-300 rounded-[10px] p-4 placeholder:text-zinc-400 placeholder:text-sm focus:outline-0" placeholder="Enter city name" name="city" />
+                <app-form-input formControlName="city" id="city" type="text" [nameControl]="cityControl"
+                    placeholder="Enter city name"></app-form-input>
+                <app-error-message [nameControl]="cityControl"></app-error-message>
             </div>
             <div class="font-inter mb-4">
+                @let addressControl = addressForm.get("street");
                 <label for="address" class="font-medium text-sm text-zinc-800 mb-1.5">Address</label>
-                <textarea type="text" id="address" class="w-full h-36 resize-none border border-zinc-300 rounded-[10px] p-4 placeholder:text-zinc-400 placeholder:text-sm focus:outline-0" placeholder="Enter your full address" name="address"></textarea>
+                <textarea type="text" id="address" formControlName="street"
+                    class="w-full h-36 resize-none border border-zinc-300 rounded-[10px] p-4 placeholder:text-zinc-400 placeholder:text-sm focus:outline-0"
+                    placeholder="Enter your full address" name="address" [class]="{
+                        'border-[#7A1D1D]': !addressControl?.invalid || !addressControl?.touched || !addressControl?.dirty,
+                        'border-[#F04438]': addressControl?.invalid && (addressControl?.touched || addressControl?.dirty)
+                    }"></textarea>
+                <app-error-message [nameControl]="addressControl"></app-error-message>
             </div>
             <div class="font-inter mb-4">
+                @let phoneControl = addressForm.get("phone");
                 <label for="phone" class="font-medium text-sm text-zinc-800 mb-1.5">Phone</label>
-                <input type="phone" id="phone" class="w-full border border-zinc-300 rounded-[10px] p-4 placeholder:text-zinc-400 placeholder:text-sm focus:outline-0" placeholder="Phone number" name="phone" />
+                <app-form-input formControlName="phone" id="phone" type="tel" [nameControl]="phoneControl"
+                    placeholder="Enter phone number"></app-form-input>
+                <app-error-message [nameControl]="phoneControl"></app-error-message>
+
             </div>
+
+            <app-button label="Next" type="submit" [loading]="isCallingAPI()" [parentForm]="addressForm"></app-button>
+
         </form>
     </div>
     }
     @if (active == 1) {
-        <h2>Google map</h2>
+    <div class="flex items-center gap-4">
+        <button class="size-9 rounded-full bg-maroon-600 flex items-center justify-center text-white cursor-pointer"
+            (click)="active = 0">
+            <i class="pi pi-arrow-left"></i>
+        </button>
+        <h4 class="font-medium text-2xl text-maroon-600 ">Find Your Location</h4>
+
+    </div>
+
 
     }
-    <app-button label="Next" (buttonClick)="determineGoogleLocation()"></app-button>
+
     }
 </p-dialog>
