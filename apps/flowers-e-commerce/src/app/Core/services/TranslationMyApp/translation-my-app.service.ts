@@ -7,8 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class TranslationMyAppService {
   private readonly renderer = inject(RendererFactory2).createRenderer(null, null);
+  private readonly translateService = inject(TranslateService);
 
-  constructor(private translateService: TranslateService, @Inject(PLATFORM_ID) private platformId: object) {
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {
     if (isPlatformBrowser(this.platformId)) {
       this.translateService.setDefaultLang('en');
 
