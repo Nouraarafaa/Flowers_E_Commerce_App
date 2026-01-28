@@ -40,6 +40,10 @@ export class UpdateProfileComponent implements OnInit {
   ];
 
 
+  
+  submitForm(): void{
+    console.log(this.registerForm.value);
+  }
 
 
 
