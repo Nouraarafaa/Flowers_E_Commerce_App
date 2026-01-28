@@ -8,6 +8,13 @@ export interface LoggedUserDataResponse {
   user: User;
 }
 
+export interface Address {
+  _id: string;
+  street: string;
+  city: string;
+  phone: string;
+}
+
 export interface User {
   firstName: string;
   lastName: string;
@@ -16,11 +23,12 @@ export interface User {
   phone: string;
   photo: string;
   role: string;
-  wishlist: any[];
+  wishlist: string[];
   _id: string;
-  addresses: any[];
+  addresses: Address[];
   createdAt: string;
 }
+
 
 export interface ForgotPasswordResponse {
   message: string;

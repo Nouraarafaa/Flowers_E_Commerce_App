@@ -1,0 +1,18 @@
+
+.discount{
+  position: relative;
+  
+&::before, &::after {
+  content: "";
+  width: 115px;
+  height: 1px;
+  background-color: var(--color-zinc-300);
+  position: absolute;
+  top: 44%;
+  left: 0px;
+}
+&::after {
+  right: 0px;
+  left: auto;
+}
+}

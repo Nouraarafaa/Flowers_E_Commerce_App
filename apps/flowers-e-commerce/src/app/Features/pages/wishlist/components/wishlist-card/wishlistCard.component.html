@@ -1,0 +1,20 @@
+<div class="grid grid-cols-1 md:grid-cols-[auto_1fr] justify-between gap-4 pb-5  ">
+            <img [src]="photo()" class="w-full md:w-[117px] rounded-md" alt="">
+            <div class="flex flex-col justify-between gap-2.5">
+                <div class="flex justify-between items-start gap-2">
+                    <div class="dark:text-white">
+                        <h4 class="font-semibold text-maroon-700 text-sm dark:text-soft-pink-200">{{ title() }}</h4>
+                        <span class="font-medium"><i class="pi pi-star-fill text-yellow-star"></i> Rating : {{ rating() }}/5 </span>
+                    </div>
+                    <div class="flex cursor-pointer bg-red-600 rounded-[10px] p-2.5 font-medium text-sm text-white gap-2 items-center hover:bg-maroon-50 hover:text-maroon-700 transition-all duration-300"> 
+                        <i class="pi pi-trash"></i>
+                        <a (click)="RemoveFromWishlist()">Remove</a>
+                    </div>
+                </div>
+                <div class="font-bold text-2xl text-zinc-800 dark:text-white">
+                    <span>{{priceAfterDiscount()}}</span><span class="text-base font-medium me-2.5"> EGP</span>
+                    <span class="font-bold text-2xl text-zinc-300 line-through"> {{ price() }}</span><span class="text-base font-medium text-zinc-300 "> EGP</span>
+                </div>
+
+            </div>
+        </div>
