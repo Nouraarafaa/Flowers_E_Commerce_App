@@ -33,7 +33,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
 
   dialogType: 'My addresses' | 'Add a new address' | 'Update address info' = 'My addresses';
-  
+
   visible: boolean = true;
   active: number = 0;
   userName: string = '';
@@ -147,8 +147,14 @@ export class AddressModalComponent implements OnInit, OnDestroy {
       lat: parseFloat(address.lat),
       lng: parseFloat(address.long)
     };
-
     
+    this.center = { lat: parseFloat(address.lat), lng: parseFloat(address.long) };
+    this.mapOptions = {
+      center: this.center,
+      zoom: this.zoom
+    };
+
+
 
   }
 
@@ -168,34 +174,34 @@ export class AddressModalComponent implements OnInit, OnDestroy {
     console.log('payload', payload);
     if (this.dialogType == 'Add a new address') {
       this._toastrService.success('Address added successfuly');
-    this._userAddressesService.addAddress(payload).subscribe({
-      next:(res)=>{
-        console.log(res);
-        setTimeout(()=>{
-          this.isCallingAPI.set(false);
-          this.hideDialog();
-        },1000);
-        
-        
-      }
-    });
-    }else if (this.dialogType == 'Update address info') {
-      console.log(this.addressIdToBeEdited);
-      
-      this._toastrService.success('Address updated successfuly');
-      this._userAddressesService.updateAddress(payload,this.addressIdToBeEdited).subscribe({
-        next:(res)=>{
+      this._userAddressesService.addAddress(payload).subscribe({
+        next: (res) => {
           console.log(res);
-          setTimeout(()=>{
+          setTimeout(() => {
             this.isCallingAPI.set(false);
             this.hideDialog();
-          },1000);
-          
+          }, 1000);
+
+
+        }
+      });
+    } else if (this.dialogType == 'Update address info') {
+      console.log(this.addressIdToBeEdited);
+
+      this._toastrService.success('Address updated successfuly');
+      this._userAddressesService.updateAddress(payload, this.addressIdToBeEdited).subscribe({
+        next: (res) => {
+          console.log(res);
+          setTimeout(() => {
+            this.isCallingAPI.set(false);
+            this.hideDialog();
+          }, 1000);
+
         }
       });
     }
-    
-    
+
+
 
   }
 
