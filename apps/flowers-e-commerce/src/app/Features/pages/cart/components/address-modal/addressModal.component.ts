@@ -147,7 +147,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
       lat: parseFloat(address.lat),
       lng: parseFloat(address.long)
     };
-    
+
     this.center = { lat: parseFloat(address.lat), lng: parseFloat(address.long) };
     this.mapOptions = {
       center: this.center,
@@ -157,9 +157,17 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
 
   }
-
+  addressesAfterdeletedAddress: Address[] = [];
   deleteAddress(addressId: string) {
     console.log('delete address id', addressId);
+    this._userAddressesService.deleteAddress(addressId).subscribe({
+
+      next:(res) => {
+        this._toastrService.success('Address deleted successfuly');
+        this.addressesAfterdeletedAddress = res;
+        console.log(res);
+      }
+    });
   }
 
   saveAddress() {

@@ -20,3 +20,8 @@ export interface addressPayload {
   long: string;
   username: string;
 }
+
+export interface deleteAddressResponse {
+  message: string;
+  address: Address[];
+}
