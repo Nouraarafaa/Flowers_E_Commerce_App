@@ -40,6 +40,8 @@ export class AddressModalComponent implements OnInit, OnDestroy {
   addressIdToBeEdited: string = '';
   isCallingAPI: WritableSignal<boolean> = signal(false);
   getLoggedUserDataSubs$!: Subscription;
+  addAddressSubs$!: Subscription;
+  updateAddressSubs$!: Subscription;
 
 
 
@@ -174,7 +176,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
     console.log('payload', payload);
     if (this.dialogType == 'Add a new address') {
       this._toastrService.success('Address added successfuly');
-      this._userAddressesService.addAddress(payload).subscribe({
+      this.addAddressSubs$ = this._userAddressesService.addAddress(payload).subscribe({
         next: (res) => {
           console.log(res);
           setTimeout(() => {
@@ -189,7 +191,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
       console.log(this.addressIdToBeEdited);
 
       this._toastrService.success('Address updated successfuly');
-      this._userAddressesService.updateAddress(payload, this.addressIdToBeEdited).subscribe({
+      this.updateAddressSubs$ = this._userAddressesService.updateAddress(payload, this.addressIdToBeEdited).subscribe({
         next: (res) => {
           console.log(res);
           setTimeout(() => {
@@ -208,6 +210,8 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.getLoggedUserDataSubs$?.unsubscribe();
+    this.addAddressSubs$?.unsubscribe();
+    this.updateAddressSubs$?.unsubscribe();
   }
 
 
