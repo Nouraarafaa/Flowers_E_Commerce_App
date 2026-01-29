@@ -10,10 +10,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '@elevate-workspace/auth';
 import { FormInputComponent } from "apps/flowers-e-commerce/src/app/Shared/components/ui/form-input/form-input.component";
 import { ErrorMessageComponent } from "apps/flowers-e-commerce/src/app/Shared/components/ui/error-message/error-message.component";
+import { GoogleMapsModule } from '@angular/google-maps';
+import { UserAddressesService } from '../../services/user-addresses-service/user-addresses.service';
+import { ToastrService } from 'ngx-toastr';
+import { UserAddressesComponent } from "../user-address-modal/userAddresses.component";
 
 @Component({
   selector: 'app-address-modal',
-  imports: [ReactiveFormsModule, Dialog, AsyncPipe, StepsModule, ButtonComponent, FormInputComponent, ErrorMessageComponent],
+  imports: [ReactiveFormsModule, Dialog, AsyncPipe, StepsModule, ButtonComponent, FormInputComponent, ErrorMessageComponent, GoogleMapsModule, UserAddressesComponent],
   templateUrl: './addressModal.component.html',
   styleUrl: './addressModal.component.scss',
 })
@@ -23,10 +27,12 @@ export class AddressModalComponent implements OnInit, OnDestroy {
   items: MenuItem[] | undefined;
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authService = inject(AuthService);
+  private readonly _userAddressesService = inject(UserAddressesService);
+  private readonly _toastrService = inject(ToastrService);
 
 
 
-  dialogType: 'My addresses' | 'Add a new address' | 'Update address info' = 'Add a new address'; 
+  dialogType: 'My addresses' | 'Add a new address' | 'Update address info' = 'My addresses';
   // don't forget to change default value to 'My addresses'
   visible: boolean = true;
   active: number = 0;
@@ -37,14 +43,20 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
 
   addressForm: FormGroup = this._formBuilder.group({
-    // street: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s]{5,}$/)]],
-    // phone: [null, [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]],
-    // city: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-    street: [null],
-    phone: [null],
-    city: [null],
+    street: [null, [Validators.required, Validators.pattern(/^[0-9a-zA-Z\s.,-]{10,100}$/)]],
+    phone: [null, [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]],
+    city: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
   }
   );
+
+  center: google.maps.LatLngLiteral = { lat: 40.73061, lng: -73.935242 };
+  zoom = 12;
+  marker: { lat: number, lng: number } = this.center;
+
+  mapOptions: google.maps.MapOptions = {
+    center: this.center,
+    zoom: this.zoom
+  };
 
 
   ngOnInit(): void {
@@ -56,41 +68,61 @@ export class AddressModalComponent implements OnInit, OnDestroy {
         label: ''
       }
     ];
+
+    this.getUserLocation();
+    this.getUserName();
+
   }
 
-  addressFormSubmit() {
-    if (this.addressForm.valid) {
-      this.isCallingAPI.set(true);
-      this.getUserName();
-    }
+  getUserLocation() {
+    navigator.geolocation.getCurrentPosition((position) => {
+
+      let latitude = position.coords.latitude;
+      let longitude = position.coords.longitude;
+
+      this.center = { lat: latitude, lng: longitude };
+      this.marker = { lat: latitude, lng: longitude };
+
+      this.mapOptions = {
+        center: this.center,
+        zoom: this.zoom
+      };
+    });
   }
 
   getUserName() {
     this.getLoggedUserDataSubs$ = this._authService.getLoggedUserData().subscribe({
       next: (res) => {
         this.userName = `${res.user.firstName} ${res.user.lastName}`;
-        this.determineGoogleLocation(this.userName);
       }
     })
 
   }
 
-  determineGoogleLocation(userName: string) {
+  navigationToGoogleMapToDetermineLocation() {
     this.isCallingAPI.set(false);
-    console.log("addressForm valid", this.addressForm.value);
-    console.log("User Name:", userName);
-
-
-
-
     this.active = 1;
-    // const payload = {
-    //   street: this.addressForm.get('street')?.value,
-    //   phone: this.addressForm.get('phone')?.value,
-    //   city: this.addressForm.get('city')?.value,
-    // };
   }
 
+  addressFormSubmit() {
+    if (this.addressForm.valid) {
+      this.isCallingAPI.set(true);
+      this.navigationToGoogleMapToDetermineLocation();
+    }
+  }
+
+
+
+  onMapClick(event: google.maps.MapMouseEvent) {
+    const lat = event.latLng?.lat()!;
+    const lng = event.latLng?.lng()!;
+
+    // console.log(lat, lng);
+    this.marker = {
+      lat,
+      lng
+    };
+  }
 
   hideDialog() {
     this.hide.emit();
@@ -102,11 +134,39 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
   editAddress(addressId: string) {
     this.dialogType = 'Update address info';
+    console.log('edit address id', addressId);
   }
 
   deleteAddress(addressId: string) {
+    console.log('delete address id', addressId);
+  }
+
+  saveAddress() {
+    const payload = {
+      street: this.addressForm.get('street')?.value,
+      phone: this.addressForm.get('phone')?.value,
+      city: this.addressForm.get('city')?.value,
+      lat: (this.marker.lat).toString(),
+      long: (this.marker.lng).toString(),
+      username: this.userName
+    };
+    console.log('payload', payload);
+    this._toastrService.success('Address added successfuly');
+    this._userAddressesService.addAddress(payload).subscribe({
+      next:(res)=>{
+        console.log(res);
+        setTimeout(()=>{
+          this.isCallingAPI.set(false);
+          this.hideDialog();
+        },1000);
+        // this.hideDialog();
+        
+      }
+    });
+    
 
   }
+
 
   ngOnDestroy(): void {
     this.getLoggedUserDataSubs$?.unsubscribe();

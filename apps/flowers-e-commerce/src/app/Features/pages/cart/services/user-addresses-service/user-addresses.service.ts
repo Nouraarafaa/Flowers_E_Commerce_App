@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from 'apps/flowers-e-commerce/src/app/Core/environments/environment';
 import { map, Observable } from 'rxjs';
-import { Address, AddressResponse } from '../../interfaces/address';
+import { Address, addressPayload, AddressResponse } from '../../interfaces/address';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,11 @@ export class UserAddressesService {
 
   getLoggedUserAddresses(): Observable<Address[]> {
     return this._httpClient.get<AddressResponse>(`${environment.BaseUrl}/addresses`)
+      .pipe(map((res) => res.addresses));
+    }
+
+  addAddress(payload: addressPayload): Observable<Address[]> {
+    return this._httpClient.patch<AddressResponse>(`${environment.BaseUrl}/addresses`, payload)
       .pipe(map((res) => res.addresses));
     }
 }

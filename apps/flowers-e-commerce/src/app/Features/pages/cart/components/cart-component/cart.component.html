@@ -16,20 +16,21 @@
 
             <p-steps [activeIndex]="active" [model]="items" />
             @if (active == 0) {
-            <app-shipping-addresses (OnAddNewAddress)="addNewAddress()" [userAddressesInput$]="userAddresses$" (userSelectedAddressflag)="addressSelected()"></app-shipping-addresses>
+            <app-shipping-addresses (OnAddNewAddress)="addNewAddress()" [userAddressesInput$]="userAddresses$"
+                (userSelectedAddressflag)="addressSelected()"></app-shipping-addresses>
             }
             @if (active == 1) {
-                <h2>payment method</h2>
+            <h2>payment method</h2>
             }
 
             <div class="self-end">
-               
+
                 <button [disabled]="userHasSelectedAddress"
                     class="disabled:cursor-not-allowed cursor-pointer font-mulish font-semibold text-sm bg-maroon-600 text-white dark:bg-soft-pink-300 dark:text-zinc-800 rounded-[10px] py-2.5 px-10"
                     (click)="navigateToPayment()">Next
                     <i class="pi pi-arrow-right text-sm! "></i>
                 </button>
-            
+
 
             </div>
         </div>
@@ -51,15 +52,15 @@
 
         }
     </div>
-@if (addressModalvisible) {
-<app-address-modal [userAddressesInput$]="userAddresses$" (hide)="addressModalvisible=false"></app-address-modal>
+    @if (addressModalvisible) {
+    <app-address-modal [userAddressesInput$]="userAddresses$" (hide)="closeAddressModal()"></app-address-modal>
 
-}
+    }
 
 
 
     <!-- products You may like -->
-    <div class="mt-[50px]">
+    <div class="mt-12.5">
         <app-section-title sectionTitle="products you may like" alignment="text-start"></app-section-title>
         <!-- carousal here -->
     </div>

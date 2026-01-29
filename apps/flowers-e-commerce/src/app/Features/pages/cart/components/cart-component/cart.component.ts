@@ -99,4 +99,9 @@ export class CartComponent implements OnInit {
     
   }
 
+  closeAddressModal(){
+    this.addressModalvisible=false;
+    this.getUserAddresses();
+  }
+
 }
