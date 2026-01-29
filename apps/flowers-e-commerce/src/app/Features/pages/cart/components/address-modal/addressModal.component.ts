@@ -1,4 +1,4 @@
-import { Component, inject, input, OnDestroy, OnInit, output, signal, WritableSignal } from '@angular/core';
+import { Component, effect, inject, input, OnDestroy, OnInit, output, signal, WritableSignal } from '@angular/core';
 import { Dialog } from 'primeng/dialog';
 import { Observable, of, Subscription } from 'rxjs';
 import { Address } from '../../interfaces/address';
@@ -40,6 +40,8 @@ export class AddressModalComponent implements OnInit, OnDestroy {
   addressIdToBeEdited: string = '';
   isCallingAPI: WritableSignal<boolean> = signal(false);
   getLoggedUserDataSubs$!: Subscription;
+  addAddressSubs$?: Subscription;
+  updateAddressSubs$?: Subscription;
 
 
 
@@ -59,6 +61,13 @@ export class AddressModalComponent implements OnInit, OnDestroy {
     zoom: this.zoom
   };
 
+  localAddresses = signal<Observable<Address[]>>(of([]));
+
+  constructor() {
+    effect(() => {
+      this.localAddresses.set(this.userAddressesInput$());
+    }, { allowSignalWrites: true });
+  }
 
   ngOnInit(): void {
     this.items = [
@@ -157,14 +166,14 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
 
   }
-  addressesAfterdeletedAddress: Address[] = [];
+  
   deleteAddress(addressId: string) {
     console.log('delete address id', addressId);
     this._userAddressesService.deleteAddress(addressId).subscribe({
 
-      next:(res) => {
+      next: (res) => {
         this._toastrService.success('Address deleted successfuly');
-        this.addressesAfterdeletedAddress = res;
+        this.localAddresses.set(of(res));
         console.log(res);
       }
     });
@@ -182,7 +191,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
     console.log('payload', payload);
     if (this.dialogType == 'Add a new address') {
       this._toastrService.success('Address added successfuly');
-      this._userAddressesService.addAddress(payload).subscribe({
+      this.addAddressSubs$ = this._userAddressesService.addAddress(payload).subscribe({
         next: (res) => {
           console.log(res);
           setTimeout(() => {
@@ -197,7 +206,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
       console.log(this.addressIdToBeEdited);
 
       this._toastrService.success('Address updated successfuly');
-      this._userAddressesService.updateAddress(payload, this.addressIdToBeEdited).subscribe({
+      this.updateAddressSubs$ = this._userAddressesService.updateAddress(payload, this.addressIdToBeEdited).subscribe({
         next: (res) => {
           console.log(res);
           setTimeout(() => {
@@ -216,6 +225,8 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.getLoggedUserDataSubs$?.unsubscribe();
+    this.addAddressSubs$?.unsubscribe();
+    this.updateAddressSubs$?.unsubscribe();
   }
 
 

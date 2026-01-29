@@ -3,7 +3,7 @@
     @if (dialogType == 'My addresses') {
         <app-user-addresses
         [dialogTypeInput]="dialogType"
-        [userAddressesInput]="(userAddressesInput$() | async) || []"
+        [userAddressesInput]="(localAddresses() | async)!"
         (addAddressClicked)="addNewAddress()"
         (editAddressClicked)="editAddress($event)"
         (deleteAddressClicked)="deleteAddress($event)"
