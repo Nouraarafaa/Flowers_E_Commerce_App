@@ -1,5 +1,5 @@
 <div class="flex justify-between items-center mt-6 font-Primary border-b pb-4 border-zinc-200">
-        <header class="font-bold text-3xl text-zinc-800">{{dialogTypeInput()}}</header>
+        <header class="font-bold text-3xl text-zinc-800 dark:text-white">{{dialogTypeInput()}}</header>
         @if (userAddressesInput()?.length != 0) {
         <button class="cursor-pointer py-3.5 px-4 bg-maroon-50 rounded-[10px] font-medium text-maroon-600"
             (click)="onAddNewAddress()">Add a New Address</button>
@@ -17,7 +17,7 @@
                     <h3 class="font-semibold text-2xl text-zinc-800 dark:text-white">{{address.city}}</h3>
 
                 </div>
-                <div class="flex gap-1.5 items-center justify-center">
+                <div class="flex gap-1.5 items-center justify-center dark:text-white">
                     <i class="pi pi-phone"></i>
                     <span class="font-medium text-lg text-zinc-500 dark:text-white">+2{{address.phone}}</span>
                 </div>

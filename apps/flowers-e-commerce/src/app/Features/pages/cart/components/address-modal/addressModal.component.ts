@@ -33,7 +33,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
 
   dialogType: 'My addresses' | 'Add a new address' | 'Update address info' = 'My addresses';
-  // don't forget to change default value to 'My addresses'
+  
   visible: boolean = true;
   active: number = 0;
   userName: string = '';
