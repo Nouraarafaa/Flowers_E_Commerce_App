@@ -39,6 +39,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
   userName: string = '';
   isCallingAPI: WritableSignal<boolean> = signal(false);
   getLoggedUserDataSubs$!: Subscription;
+ addAddressSubs$!: Subscription;
 
 
 
@@ -152,14 +153,14 @@ export class AddressModalComponent implements OnInit, OnDestroy {
     };
     console.log('payload', payload);
     this._toastrService.success('Address added successfuly');
-    this._userAddressesService.addAddress(payload).subscribe({
+    this.addAddressSubs$ = this._userAddressesService.addAddress(payload).subscribe({
       next:(res)=>{
         console.log(res);
         setTimeout(()=>{
           this.isCallingAPI.set(false);
           this.hideDialog();
         },1000);
-        // this.hideDialog();
+       
         
       }
     });
@@ -170,6 +171,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.getLoggedUserDataSubs$?.unsubscribe();
+    this.addAddressSubs$?.unsubscribe();
   }
 
 
