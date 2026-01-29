@@ -11,14 +11,14 @@ export class UserAddressesComponent {
   dialogTypeInput = input<string>();
   userAddressesInput = input<Address[]>();
   addAddressClicked = output<void>();
-  editAddressClicked = output<string>();
+  editAddressClicked = output<Address>();
   deleteAddressClicked = output<string>();
 
   onAddNewAddress() {
     this.addAddressClicked.emit();
   }
-  onEditAddress(addressId: string) {
-    this.editAddressClicked.emit(addressId);
+  onEditAddress(address: Address) {
+    this.editAddressClicked.emit(address);
   }
   onDeleteAddress(addressId: string) {
     this.deleteAddressClicked.emit(addressId);

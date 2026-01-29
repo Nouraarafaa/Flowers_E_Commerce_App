@@ -76,7 +76,7 @@
             <span>Find My Location</span>
         </button>
     </div>
-    <app-button class="mt-6" label="Add Address" (buttonClick)="saveAddress()" [loading]="isCallingAPI()"></app-button>
+    <app-button class="mt-6" [label]="dialogType == 'Add a new address' ? 'Add Address' : 'Update Address'" (buttonClick)="saveAddress()" [loading]="isCallingAPI()"></app-button>
     }
 
     }

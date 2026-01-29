@@ -21,4 +21,8 @@ export class UserAddressesService {
     return this._httpClient.patch<AddressResponse>(`${environment.BaseUrl}/addresses`, payload)
       .pipe(map((res) => res.addresses));
     }
+  updateAddress(payload: addressPayload,addressId:string): Observable<Address[]> {
+    return this._httpClient.patch<AddressResponse>(`${environment.BaseUrl}/addresses/${addressId}`, payload)
+      .pipe(map((res) => res.addresses));
+    }
 }

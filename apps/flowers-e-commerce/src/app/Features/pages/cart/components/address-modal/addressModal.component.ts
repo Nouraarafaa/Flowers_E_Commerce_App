@@ -37,6 +37,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
   visible: boolean = true;
   active: number = 0;
   userName: string = '';
+  addressIdToBeEdited: string = '';
   isCallingAPI: WritableSignal<boolean> = signal(false);
   getLoggedUserDataSubs$!: Subscription;
 
@@ -132,9 +133,23 @@ export class AddressModalComponent implements OnInit, OnDestroy {
     this.dialogType = 'Add a new address';
   }
 
-  editAddress(addressId: string) {
+
+  editAddress(address: Address) {
     this.dialogType = 'Update address info';
-    console.log('edit address id', addressId);
+    this.addressIdToBeEdited = address._id;
+    console.log('edit address id', address);
+    this.addressForm.patchValue({
+      street: address.street,
+      phone: address.phone,
+      city: address.city
+    });
+    this.marker = {
+      lat: parseFloat(address.lat),
+      lng: parseFloat(address.long)
+    };
+
+    
+
   }
 
   deleteAddress(addressId: string) {
@@ -151,7 +166,8 @@ export class AddressModalComponent implements OnInit, OnDestroy {
       username: this.userName
     };
     console.log('payload', payload);
-    this._toastrService.success('Address added successfuly');
+    if (this.dialogType == 'Add a new address') {
+      this._toastrService.success('Address added successfuly');
     this._userAddressesService.addAddress(payload).subscribe({
       next:(res)=>{
         console.log(res);
@@ -159,10 +175,26 @@ export class AddressModalComponent implements OnInit, OnDestroy {
           this.isCallingAPI.set(false);
           this.hideDialog();
         },1000);
-        // this.hideDialog();
+        
         
       }
     });
+    }else if (this.dialogType == 'Update address info') {
+      console.log(this.addressIdToBeEdited);
+      
+      this._toastrService.success('Address updated successfuly');
+      this._userAddressesService.updateAddress(payload,this.addressIdToBeEdited).subscribe({
+        next:(res)=>{
+          console.log(res);
+          setTimeout(()=>{
+            this.isCallingAPI.set(false);
+            this.hideDialog();
+          },1000);
+          
+        }
+      });
+    }
+    
     
 
   }
