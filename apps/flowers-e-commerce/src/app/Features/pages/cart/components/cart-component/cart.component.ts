@@ -57,17 +57,7 @@ export class CartComponent implements OnInit {
       }
     ];
      this.getUserAddresses();
-    this.items = [
-      {
-        label: ''
-      },
-      {
-        label: ''
-      }
-    ];
-     this.getUserAddresses();
-
-
+    
   }
 
   getCartProducts() {
