@@ -40,6 +40,7 @@ export class CartComponent implements OnInit {
   userAddresses$: Observable<Address[]> = of([]);
   private readonly _userAddressesService = inject(UserAddressesService);
   userHasSelectedAddress: boolean = true;
+  addressObject:Address ={} as Address
 
    addressModalvisible: boolean = false;
 
@@ -106,9 +107,16 @@ export class CartComponent implements OnInit {
     this.active = 0;
 
   }
-
-  addressSelected() {
+  
+  addressSelected(address?:Address) {
     this.userHasSelectedAddress = false;
+    if(address){
+    this.addressObject = address;
+    console.log(this.addressObject);
+    
+    }
+
+
 
   }
   addNewAddress(){

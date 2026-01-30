@@ -10,7 +10,7 @@
         </app-cart-section>
         }
 
-        <!-- if step = 2 shipping addresses will appear -->
+        
 
         <!-- if step = 2 shipping addresses will appear -->
         @if (step == 2) {
@@ -19,7 +19,7 @@
             <p-steps [activeIndex]="active" [model]="items" />
             @if (active == 0) {
             <app-shipping-addresses (OnAddNewAddress)="addNewAddress()" [userAddressesInput$]="userAddresses$"
-                (userSelectedAddressflag)="addressSelected()"></app-shipping-addresses>
+                (userSelectedAddressflag)="addressSelected()" (addressSelectedObject)="addressSelected($event)"></app-shipping-addresses>
             <div class="self-end">
 
                 <button [disabled]="userHasSelectedAddress"
@@ -32,7 +32,8 @@
             </div>
             }
             @if (active == 1) {
-            <app-payment (onClickToBackToShipping)="navigateToShipping()"></app-payment>
+            <app-payment (onClickToBackToShipping)="navigateToShipping()"
+                          [userAddress]="addressObject"  ></app-payment>
             }
 
 
