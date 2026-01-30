@@ -10,6 +10,10 @@ import { environment } from './Core/environments/environment.prod';
 import { headerInterceptor } from './Core/interceptors/header/header.interceptor';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+
+
 import { productsReducer } from './Core/store/products/products.reducers';
 import { productsEffects } from './Core/store/products/products.effects';
 import { wishlistReducer } from './Core/store/wishlist/wishlist.reducers';
@@ -18,11 +22,21 @@ import { cartReducer } from './Core/store/cart/cart.reducer';
 import { CartEffects } from './Core/store/cart/cart.effects';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
+    providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top" }), withViewTransitions()),
     provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
     provideAnimationsAsync(),
+
+    provideTranslateService({
+        lang: 'en',
+        fallbackLang: 'en',
+        loader: provideTranslateHttpLoader({
+            prefix: '/i18n/',
+            suffix: '.json'
+        })
+    }),
+
     providePrimeNG({
         theme: {
             preset: Aura,
