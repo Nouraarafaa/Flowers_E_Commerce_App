@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-payment',
@@ -9,9 +9,10 @@ import { Component } from '@angular/core';
 export class PaymentComponent {
 
   paymentMethodSelected: string = '';
+  onClickToBackToShipping = output();
 
   navigateToShipping(){
-
+    this.onClickToBackToShipping.emit();
   }
   onCheckout(){}
   paymentMethod(method: string){

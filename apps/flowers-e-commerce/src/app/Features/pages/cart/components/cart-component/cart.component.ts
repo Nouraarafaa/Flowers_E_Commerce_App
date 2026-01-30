@@ -90,6 +90,10 @@ export class CartComponent implements OnInit {
     this.active = 1;
 
   }
+  navigateToShipping() {
+    this.active = 0;
+
+  }
 
   addressSelected() {
     this.userHasSelectedAddress = false;
