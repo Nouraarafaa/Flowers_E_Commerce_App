@@ -9,11 +9,12 @@ import { FormInputComponent } from "../../../Shared/components/ui/form-input/for
 import { ErrorMessageComponent } from "../../../Shared/components/ui/error-message/error-message.component";
 import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
 import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
+import { TranslatePipe } from '@ngx-translate/core';
 // import { OtherAuthApis } from '../../base/otherAuthApis';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, ɵInternalFormsSharedModule, RouterLink, AuthStatusComponent, ButtonComponent],
+  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, ɵInternalFormsSharedModule, RouterLink, AuthStatusComponent, ButtonComponent, TranslatePipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

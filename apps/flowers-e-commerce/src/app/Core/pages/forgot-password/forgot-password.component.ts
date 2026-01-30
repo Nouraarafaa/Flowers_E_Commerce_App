@@ -10,10 +10,11 @@ import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/a
 import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
 import { InputOtp } from 'primeng/inputotp';
 import { OtherAuthService } from '../../services/otherAuthService/other-auth.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, RouterLink, AuthStatusComponent, ButtonComponent, InputOtp],
+  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, RouterLink, AuthStatusComponent, ButtonComponent, InputOtp, TranslatePipe],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
