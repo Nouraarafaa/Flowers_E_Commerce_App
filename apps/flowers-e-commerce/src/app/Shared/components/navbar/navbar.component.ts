@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, input, output, signal } from '@angular/core';
+import { Component, OnInit, inject, input, output } from '@angular/core';
 import { Toolbar } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -12,13 +12,11 @@ import { RippleModule } from 'primeng/ripple';
 import { NavIconComponent } from '../nav-icon/navIcon.component';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from '../../services/search/search.service';
-import { ToggleButton } from 'primeng/togglebutton';
-import { TranslationMyAppService } from '../../../Core/services/TranslationMyApp/translation-my-app.service';
 
 
 @Component({
   selector: 'app-navbar',
-  imports: [RippleModule, NgIf, Menu, Toolbar, ButtonModule, InputTextModule, IconField, InputIcon, RouterLink, NavIconComponent, FormsModule, ToggleButton],
+  imports: [RippleModule, NgIf, Menu, Toolbar, ButtonModule, InputTextModule, IconField, InputIcon, RouterLink, NavIconComponent, FormsModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -36,17 +34,6 @@ export class NavbarComponent implements OnInit {
   private readonly _router = inject(Router);
   
   clicked = output<void>();
-
-  checkedModel = false; // false = en, true = ar
-
-  public translation = inject(TranslationMyAppService);
-
-  onLangChange() {
-    const lang = this.checkedModel ? 'ar' : 'en';
-    this.translation.setLanguage(lang);
-  }
-
-  _searchService = inject(SearchService);
 
   isDarkMode = false;
 

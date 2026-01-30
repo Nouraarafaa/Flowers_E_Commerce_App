@@ -3,33 +3,33 @@
     <div class="flex justify-center items-center flex-col gap-10">
         
         <div>
-            <p class="text-5xl text-maroon-700  font-Edwardian"> {{"Register.BecomePartOfOurFamily" | translate }} </p>
+            <p class="text-5xl text-maroon-700  font-Edwardian">Become part of our family!</p>
         </div>
         <div class="form w-[410px] h-auto border-y border-[#E4E4E7] py-8">
             <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="flex flex-col gap-8">
                 <div class="userName flex gap-5">
                     <div class="firstName"> 
                         @let firstNameControl = registerForm.get("firstName");
-                        <label for="firstName" class="text-black text-[14px] font-inter font-medium"> {{"Register.FirstName" | translate }} </label>
+                        <label for="firstName" class="text-black text-[14px] font-inter font-medium">First Name</label>
                         <app-form-input formControlName="firstName" [id]="'firstName'" [type]="'text'" [nameControl]="firstNameControl" [placeholder]="'First Name...'" ></app-form-input>
                         <app-error-message [nameControl]="firstNameControl"></app-error-message>
                     </div> 
                     <div class="lastName"> 
                         @let lastNameControl = registerForm.get("lastName");
-                        <label for="lastName" class="text-black text-[14px] font-inter font-medium"> {{"Register.LastName" | translate }} </label>
+                        <label for="lastName" class="text-black text-[14px] font-inter font-medium">Last Name</label>
                         <app-form-input formControlName="lastName" [id]="'lastName'" [type]="'text'" [nameControl]="lastNameControl" [placeholder]="'Last Name...'" ></app-form-input>
                         <app-error-message [nameControl]="lastNameControl"></app-error-message>
                     </div> 
                 </div>
                 <div class="email"> 
                     @let emailControl = registerForm.get("email");
-                    <label for="email" class="text-black text-[14px] font-inter font-medium"> {{"Register.Email" | translate }} </label>
+                    <label for="email" class="text-black text-[14px] font-inter font-medium">Email</label>
                     <app-form-input formControlName="email" [id]="'email'" [type]="'email'" [nameControl]="emailControl" [placeholder]="'Email...'"></app-form-input>
                     <app-error-message [nameControl]="emailControl"></app-error-message>
                 </div>
                 <div class="phone"> 
                     @let phoneControl = registerForm.get("phone");
-                    <label for="phone" class="text-black text-[14px] font-inter font-medium"> {{"Register.Phone" | translate }} </label>
+                    <label for="phone" class="text-black text-[14px] font-inter font-medium">Phone</label>
                     <div class="relative mt-3">
                         <div class="absolute inset-y-0 left-0 flex items-center gap-2 pl-3 pointer-events-none">
                             <img src="./Images/flag.png" alt="EG" class="rounded-[50%]"/>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="gender"> 
                     @let genderControl = registerForm.get("gender");
-                    <label for="gender" class="text-black text-[14px] font-inter font-medium"> {{"Register.gender" | translate }} </label>
+                    <label for="gender" class="text-black text-[14px] font-inter font-medium">gender</label>
                     <p-dropdown id="gender" [options]="genderOptions"
                     optionLabel="label"
                     optionValue="value"
@@ -63,7 +63,7 @@
                 </div>
                 <div class="password relative"> 
                     @let passwordControl = registerForm.get("password");
-                    <label for="password" class="text-black text-[14px] font-inter font-medium"> {{"Register.Password" | translate }} </label>
+                    <label for="password" class="text-black text-[14px] font-inter font-medium">Password</label>
                     <app-form-input formControlName="password" [id]="'password'" [type]="togglePassword() ? 'text' : 'password'" [nameControl]="passwordControl" [placeholder]="'Password...'" ></app-form-input>                
                     @if (togglePassword()) {
                         <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye"></i> </span>
@@ -74,7 +74,7 @@
                 </div> 
                 <div class="rePassword relative">  
                     @let rePasswordControl = registerForm.get("rePassword");
-                    <label for="rePassword" class="text-black text-[14px] font-inter font-medium"> {{"Register.ConfirmPassword" | translate }} </label>
+                    <label for="rePassword" class="text-black text-[14px] font-inter font-medium">Confirm Password</label>
                     <app-form-input formControlName="rePassword" [id]="'rePassword'" [type]="togglePassword() ? 'text' : 'password'" [nameControl]="rePasswordControl" [placeholder]="'confirm Password...'" ></app-form-input>                
                     @if (togglePassword()) {
                         <span (click)="togglePasswordVisibility()" class="absolute cursor-pointer top-[38px] right-2"> <i class="fa-solid fa-eye"></i> </span>
@@ -108,7 +108,7 @@
                     }
                 </div>
 
-                <app-button label=" {{'Register.CreateAccount' | translate }} " type="submit" [loading]="isCallingAPI()"></app-button>
+                <app-button label="Create Account" type="submit" [loading]="isCallingAPI()"></app-button>
                 
                 @if (success()) {
                     <app-auth-status [type]="'success'" [message]="success()" ></app-auth-status>
@@ -120,7 +120,7 @@
         </div>
         
         <div class="logIn flex justify-center text-[16px] font-inter font-medium">
-            <p class="text-[#313131]"> {{"Register.AlreadyHaveAnAccount?" | translate }} </p> <a routerLink="/login" class="text-maroon-700 hover:text-maroon-500 transition-colors duration-300 pl-1"> {{"Register.Login" | translate }} </a>
+            <p class="text-[#313131]">Already have an account?</p> <a routerLink="/login" class="text-maroon-700 hover:text-maroon-500 transition-colors duration-300 pl-1">Login</a>
         </div>
 
     </div>

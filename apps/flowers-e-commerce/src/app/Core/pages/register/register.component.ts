@@ -12,11 +12,10 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink, FormInputComponent, ErrorMessageComponent, NgClass, AuthStatusComponent, DropdownModule, ButtonComponent, InputGroupModule, InputGroupAddonModule, TranslatePipe],
+  imports: [ReactiveFormsModule, RouterLink, FormInputComponent, ErrorMessageComponent, NgClass, AuthStatusComponent, DropdownModule, ButtonComponent, InputGroupModule, InputGroupAddonModule],
 
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
