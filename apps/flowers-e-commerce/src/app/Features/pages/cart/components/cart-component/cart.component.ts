@@ -45,7 +45,17 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.getCartProducts();
+    this.items = [
+      {
+        label: ''
+      },
+      {
+        label: ''
+      }
+    ];
+     this.getUserAddresses();
     this.items = [
       {
         label: ''
@@ -68,6 +78,7 @@ export class CartComponent implements OnInit {
    getUserAddresses() {
     this.userAddresses$ = this._userAddressesService.getLoggedUserAddresses();
   }
+   
 
   handleClearCart() {
 
@@ -88,6 +99,7 @@ export class CartComponent implements OnInit {
 
   navigateToPayment() {
     this.active = 1;
+
 
   }
   navigateToShipping() {

@@ -28,6 +28,5 @@ export class ShippingAddressesComponent{
 
   addNewAddress() {
     this.OnAddNewAddress.emit();
-    // Implementation for adding a new address
   }
 }
