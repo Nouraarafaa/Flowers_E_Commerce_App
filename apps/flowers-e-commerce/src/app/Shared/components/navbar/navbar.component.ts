@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
 
   checkedModel = false; // false = en, true = ar
 
-  translation = inject(TranslationMyAppService);
+  public translation = inject(TranslationMyAppService);
 
   onLangChange() {
     const lang = this.checkedModel ? 'ar' : 'en';

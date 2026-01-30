@@ -31,7 +31,7 @@ export class TranslationMyAppService {
     this.translateService.use(lang);
     this.updateDirection(lang);
   }
-
+ 
   private updateDirection(lang: 'en' | 'ar'): void {
     this.renderer.setAttribute(
       document.documentElement,
