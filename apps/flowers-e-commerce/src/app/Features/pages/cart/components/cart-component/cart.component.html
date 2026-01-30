@@ -18,11 +18,6 @@
             @if (active == 0) {
             <app-shipping-addresses (OnAddNewAddress)="addNewAddress()" [userAddressesInput$]="userAddresses$"
                 (userSelectedAddressflag)="addressSelected()"></app-shipping-addresses>
-            }
-            @if (active == 1) {
-            <h2>payment method</h2>
-            }
-
             <div class="self-end">
 
                 <button [disabled]="userHasSelectedAddress"
@@ -33,6 +28,12 @@
 
 
             </div>
+            }
+            @if (active == 1) {
+            <app-payment></app-payment>
+            }
+
+
         </div>
 
         }

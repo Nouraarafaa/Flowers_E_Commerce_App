@@ -1,0 +1,38 @@
+<section class="flex flex-col">
+    <div class="flex items-center gap-4">
+        <button
+            class="flex items-center gap-1.5 rounded-[10px] bg-zinc-100 p-2.5 font-mulish font-semibold text-sm text-zinc-800 cursor-pointer"
+            (click)="navigateToShipping()">
+            <i class="pi pi-arrow-left"></i>
+            <span>Back</span>
+        </button>
+        <h2 class="font-Primary font-semibold text-3xl dark:text-white">Payment Method</h2>
+    </div>
+    <div
+        class="mt-6 flex items-center gap-4 font-Primary font-semibold text-2xl text-center mb-3 border-b pb-5 border-zinc-100">
+        <!-- cash -->
+        <div
+            class="p-4 rounded-xl border border-zinc-200 flex flex-col justify-center items-center cursor-pointer bg-white "
+            [class.bg-zinc-50]="paymentMethodSelected == 'cash'"
+            (click)="paymentMethod('cash')">
+            <img src="/Images/cash.png" class="w-48.75" alt="cash on delivery">
+            <h4 [class.text-maroon-600]="paymentMethodSelected == 'cash'">Cash on Delivery</h4>
+            <p class="font-mulish text-sm text-zinc-500 mb-4.5">You’ll pay in cash when your order is delivered.</p>
+        </div>
+        <!-- credit -->
+        <div
+            class="p-4 rounded-xl border border-zinc-200 flex flex-col justify-center items-center cursor-pointer bg-white"
+            [class.bg-zinc-50]="paymentMethodSelected == 'credit'"
+            (click)="paymentMethod('credit')">
+            <img src="/Images/credit.png" class="w-48.75" alt="credit card">
+            <h4 [class.text-maroon-600]="paymentMethodSelected == 'credit'">Credit Card</h4>
+            <p class="font-mulish text-sm text-zinc-500">You’ll be securely redirected to Stripe to complete <br> your
+                payment.</p>
+        </div>
+    </div>
+    <button 
+        class="self-end disabled:cursor-not-allowed cursor-pointer font-mulish font-semibold text-sm bg-maroon-600 text-white dark:bg-soft-pink-300 dark:text-zinc-800 rounded-[10px] py-2.5 px-10"
+        (click)="onCheckout()">Checkout
+        <i class="pi pi-arrow-right text-sm! "></i>
+    </button>
+</section>

@@ -17,10 +17,11 @@ import { ShippingAddressesComponent } from "../shipping-addresses/shippingAddres
 import { UserAddressesService } from '../../services/user-addresses-service/user-addresses.service';
 import { Address } from '../../interfaces/address';
 import { AddressModalComponent } from "../address-modal/addressModal.component";
+import { PaymentComponent } from "../payment/payment.component";
 
 @Component({
   selector: 'app-cart',
-  imports: [ AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent, StepsModule, ButtonModule, ShippingAddressesComponent, AddressModalComponent],
+  imports: [AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent, StepsModule, ButtonModule, ShippingAddressesComponent, AddressModalComponent, PaymentComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
