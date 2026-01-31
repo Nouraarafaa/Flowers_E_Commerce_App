@@ -1,6 +1,6 @@
 <section class="w-[85%] m-auto font-Primary">
     <div class="grid gap-10 mt-16" [class.lg:grid-cols-[65%_35%]]="((cartList$ | async)?.length != 0)"
-        [class.grid-cols-1]="!((cartList$ | async)?.length != 0)">
+        [class.grid-cols-1]="((cartList$ | async)?.length == 0)">
 
         <!--if step = 1 cart section will appear  -->
         @if (step == 1) {
