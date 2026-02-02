@@ -4,6 +4,7 @@ export interface CashResponse {
 }
 
 export interface Order {
+  expanded?:boolean;
   user: string;
   orderItems: OrderItem[];
   totalPrice: number;
