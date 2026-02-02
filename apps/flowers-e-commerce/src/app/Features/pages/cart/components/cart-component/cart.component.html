@@ -1,6 +1,6 @@
 <section class="w-[85%] m-auto font-Primary">
-    <div class="grid gap-10 mt-16" [class.lg:grid-cols-[65%_35%]]="(cart$ | async)"
-        [class.grid-cols-1]="!(cart$ | async)">
+    <div class="grid gap-10 mt-16" [class.lg:grid-cols-[65%_35%]]="((cartList$ | async)?.length != 0)"
+        [class.grid-cols-1]="((cartList$ | async)?.length == 0)">
 
         <!--if step = 1 cart section will appear  -->
         @if (step == 1) {
@@ -10,6 +10,8 @@
         </app-cart-section>
         }
 
+        
+
         <!-- if step = 2 shipping addresses will appear -->
         @if (step == 2) {
         <div class="flex flex-col">
@@ -17,7 +19,7 @@
             <p-steps [activeIndex]="active" [model]="items" />
             @if (active == 0) {
             <app-shipping-addresses (OnAddNewAddress)="addNewAddress()" [userAddressesInput$]="userAddresses$"
-                (userSelectedAddressflag)="addressSelected()"></app-shipping-addresses>
+                (userSelectedAddressflag)="addressSelected()" (addressSelectedObject)="addressSelected($event)"></app-shipping-addresses>
             <div class="self-end">
 
                 <button [disabled]="userHasSelectedAddress"
@@ -30,7 +32,8 @@
             </div>
             }
             @if (active == 1) {
-            <app-payment></app-payment>
+            <app-payment (onClickToBackToShipping)="navigateToShipping()"
+                          [userAddress]="addressObject"  ></app-payment>
             }
 
 
@@ -40,10 +43,9 @@
 
 
         <!-- summary section -->
-        @if ((cart$ | async)) {
+        @if ((cartList$ | async)?.length != 0) {
         <div class="flex flex-col gap-6 ">
             <app-summery [discount]="discount" [totalPrice]="(cart$ |async)?.cart?.totalPrice"></app-summery>
-
             @if (step == 1) {
             <app-button label="Checkout" icon="pi pi-arrow-right" iconPosition="right"
                 (buttonClick)="checkoutRequested()"></app-button>

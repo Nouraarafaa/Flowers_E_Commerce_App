@@ -40,10 +40,12 @@ export class CartComponent implements OnInit {
   userAddresses$: Observable<Address[]> = of([]);
   private readonly _userAddressesService = inject(UserAddressesService);
   userHasSelectedAddress: boolean = true;
+  addressObject:Address ={} as Address
 
    addressModalvisible: boolean = false;
 
   ngOnInit(): void {
+
 
     this.getCartProducts();
     this.items = [
@@ -55,8 +57,7 @@ export class CartComponent implements OnInit {
       }
     ];
      this.getUserAddresses();
-
-
+    
   }
 
   getCartProducts() {
@@ -68,6 +69,7 @@ export class CartComponent implements OnInit {
    getUserAddresses() {
     this.userAddresses$ = this._userAddressesService.getLoggedUserAddresses();
   }
+   
 
   handleClearCart() {
 
@@ -89,6 +91,32 @@ export class CartComponent implements OnInit {
   navigateToPayment() {
     this.active = 1;
 
+
+  }
+  navigateToShipping() {
+    this.active = 0;
+
+  }
+  
+  addressSelected(address?:Address) {
+    this.userHasSelectedAddress = false;
+    if(address){
+    this.addressObject = address;
+    console.log(this.addressObject);
+    
+    }
+
+
+
+  }
+  addNewAddress(){
+    this.addressModalvisible=true;
+    
+  }
+
+  closeAddressModal(){
+    this.addressModalvisible=false;
+    this.getUserAddresses();
   }
 
   addressSelected() {
