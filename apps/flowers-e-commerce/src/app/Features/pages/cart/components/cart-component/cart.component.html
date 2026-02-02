@@ -1,0 +1,63 @@
+<section class="w-[85%] m-auto font-Primary">
+    <div class="grid gap-10 mt-16" [class.lg:grid-cols-[65%_35%]]="(cart$ | async)"
+        [class.grid-cols-1]="!(cart$ | async)">
+
+        <!--if step = 1 cart section will appear  -->
+        @if (step == 1) {
+        <!-- cart section -->
+        <app-cart-section [cart$]="cart$" [cartList$]="cartList$" (clearCartRequested)="handleClearCart()"
+            (removeProductRequested)="handleRemoveProduct($event)" (continueShoppingRequested)="handleNavigation()">
+        </app-cart-section>
+        }
+
+        <!-- if step = 2 shipping addresses will appear -->
+        @if (step == 2) {
+        <div class="flex flex-col">
+
+            <p-steps [activeIndex]="active" [model]="items" />
+            @if (active == 0) {
+            <app-shipping-addresses [userAddressesInput$]="userAddresses$" (userSelectedAddressflag)="addressSelected()"></app-shipping-addresses>
+            }
+            @if (active == 1) {
+                <h2>payment method</h2>
+            }
+
+            <div class="self-end">
+               
+                <button [disabled]="userHasSelectedAddress"
+                    class="disabled:cursor-not-allowed cursor-pointer font-mulish font-semibold text-sm bg-maroon-600 text-white dark:bg-soft-pink-300 dark:text-zinc-800 rounded-[10px] py-2.5 px-10"
+                    (click)="navigateToPayment()">Next
+                    <i class="pi pi-arrow-right text-sm! "></i>
+                </button>
+            
+
+            </div>
+        </div>
+
+        }
+
+
+        <!-- summary section -->
+        @if ((cart$ | async)) {
+        <div class="flex flex-col gap-6 ">
+            <app-summery [discount]="discount" [totalPrice]="(cart$ |async)?.cart?.totalPrice"></app-summery>
+
+            @if (step == 1) {
+            <app-button label="Checkout" icon="pi pi-arrow-right" iconPosition="right"
+                (buttonClick)="checkoutRequested()"></app-button>
+            }
+
+        </div>
+
+        }
+    </div>
+
+
+
+
+    <!-- products You may like -->
+    <div class="mt-[50px]">
+        <app-section-title sectionTitle="products you may like" alignment="text-start"></app-section-title>
+        <!-- carousal here -->
+    </div>
+</section>

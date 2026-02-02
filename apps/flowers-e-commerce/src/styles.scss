@@ -49,6 +49,9 @@
 
   --13px: 13px;
   --16px: 16px;
+  --title-line: #ffe0e7;
+  --phone-icon-color:white;
+  
 }
 
 @theme {
@@ -89,13 +92,21 @@
 
   --text-13px: var(--13px);
   --text-16px: var(--16px);
+  
 }
 body {
   font-family: var(--font-Sarabun);
 }
-html.dark body {
+html.dark {
+  --title-line: #3f3f46;
+  --phone-icon-color:white;
+  body {
   @apply bg-zinc-800 ;
 }
+}
+
+
+
 
 .nav-icon {
   @apply absolute text-white text-[10px] text-center font-medium top-[-5px] end-[-5px]  w-3.5 h-3.5 rounded-full bg-red-600;
@@ -111,6 +122,24 @@ html.dark body {
 }
 .reset-button-filter {
   @apply disabled:bg-zinc-200 disabled:text-zinc-800 disabled:cursor-not-allowed cursor-pointer hover:bg-maroon-50/55 duration-300 py-2.5 px-4 bg-maroon-50 text-maroon-600 font-semibold font-mulish text-sm w-full rounded-[10px] flex items-center justify-center gap-2.5;
+}
+.wishlist-and-cart-title{
+  @apply font-bold text-5xl text-zinc-800 text-nowrap dark:text-white;
+}
+.products-num-wishlist-and-cart {
+  @apply font-medium text-base text-zinc-400;
+}
+.minus-plus-btn{
+  @apply p-3.5 cursor-pointer rounded-[10px] bg-maroon-50 text-maroon-600  hover:bg-maroon-50/50 transition-all duration-300;
+}
+.wishlist-and-cart-title{
+  @apply font-bold text-5xl text-zinc-800 text-nowrap dark:text-white;
+}
+.products-num-wishlist-and-cart {
+  @apply font-medium text-base text-zinc-400;
+}
+.minus-plus-btn{
+  @apply p-3.5 cursor-pointer rounded-[10px] bg-maroon-50 text-maroon-600  hover:bg-maroon-50/50 transition-all duration-300;
 }
 .location-text::before {
   content: 'Deliver to:';

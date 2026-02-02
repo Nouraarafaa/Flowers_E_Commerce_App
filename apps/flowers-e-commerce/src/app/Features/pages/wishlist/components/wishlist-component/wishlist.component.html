@@ -1,8 +1,8 @@
 <section class="w-[85%] m-auto font-Primary">
     <!-- header -->
     <div class="flex justify-between items-center mt-16">
-        <h2 class=" font-bold text-5xl text-zinc-800 text-nowrap">WishList<span
-                class="font-medium text-base text-zinc-400"> {{(wishlist$ | async)?.length? (wishlist$ | async)?.length:''}}
+        <h2 class=" wishlist-and-cart-title">WishList<span
+                class="products-num-wishlist-and-cart"> {{(wishlist$ | async)?.length? (wishlist$ | async)?.length:''}}
                 {{(wishlist$ | async)?.length ? 'products' : ''}}</span></h2>
 
         @if ((wishlist$ | async)?.length) {

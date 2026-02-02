@@ -17,7 +17,7 @@ import { Product } from '../../interfaces/wishlist';
 export class WishlistComponent implements OnInit {
   private readonly _store = inject(Store);
   wishlist$ !: Observable<Product[]>;
-  wishlistProducts = this._store.selectSignal(selectWishlistProducts);
+  // wishlistProducts = this._store.selectSignal(selectWishlistProducts);
 
   ngOnInit(): void {
     this.getWishlistProducts();
