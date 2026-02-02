@@ -1,0 +1,95 @@
+<section class="w-[85%] m-auto font-Primary mt-10">
+    <h2 class="font-bold text-zinc-800 text-5xl dark:text-white">Orders</h2>
+    <div class="mt-6 flex flex-col ">
+        @for (order of orders; track $index) {
+        <div class="rounded-xl bg-zinc-100 pb-4">
+            <!-- div for order number and date -->
+            <div
+                class="flex justify-between text-nowrap flex-wrap md:flex-nowrap items-center rounded-t-xl bg-maroon-600 dark:bg-soft-pink-200 dark:text-zinc-800 text-white p-4">
+                <span class="font-semibold text-2xl">Order {{order.orderNumber}}</span>
+                <span>Created in: <span class="font-semibold">{{order.createdAt |date:'medium'}}</span></span>
+            </div>
+            <!-- div for total price and status -->
+            <div
+                class="flex justify-between flex-wrap md:flex-nowrap items-center border-b border-zinc-200 pb-4 px-4 mt-4">
+                <!-- price & paid -->
+                <span class="text-2xl flex items-center gap-2">
+                    <span class="font-medium text-zinc-800">Total Price: <span class="font-semibold">{{order.totalPrice
+                            |
+                            currency:'EGP ':'symbol':'1.0-2'}}</span></span>
+                    @if (order.isPaid) {
+                    <span
+                        class="rounded-full px-2.5 py-1 text-white font-semibold bg-emerald-500 text-base flex items-center gap-2">
+                        <i class="pi pi-check font-semibold!"></i>
+                        <span>Paid</span>
+                    </span>
+                    }
+
+                </span>
+                <!-- order state -->
+                <span class="font-semibold text-base flex items-center gap-2">
+                    <span>Status :</span>
+                    <span class="rounded-full px-2.5 py-1 text-white font-semibold text-base flex items-center gap-2 "
+                        [class]="{'bg-blue-500':order.state =='pending',
+                                      'bg-red-600':order.state =='cancelled',
+                                      'bg-emerald-500':order.state =='done'
+                            }">
+                        <i class="pi pi-check font-semibold!"></i>
+                        <span>{{order.state =='pending'?'in progress':order.state}}</span>
+                    </span>
+                </span>
+
+            </div>
+            <!-- div for other part -->
+            <div class="mt-4 px-4 font-semibold text-zinc-800 capitalize">
+                <!-- payment method -->
+                <span class=" flex items-center gap-2">
+                    <span>Payment Method:</span>
+                    <span class="flex items-center gap-2 font-medium text-zinc-500">
+                        <i class="pi" [class]="{'pi-money-bill':order.paymentType=='cash',
+                        'pi-credit-card':order.paymentType=='cash'}"></i>
+                        <span>{{order.paymentType}}</span>
+                    </span></span>
+
+                <!-- delivery status -->
+                <span class=" flex items-center gap-2">
+                    <span>Delivery Status:</span>
+                    <span class="flex items-center gap-2 font-medium" [class]="{'text-yellow-600':!order.isDelivered,
+                        'text-emerald-600':order.isDelivered
+                    }">
+                        <i class="pi" [class]="{'pi-truck':!order.isDelivered,
+                        'pi-check':order.isDelivered}"></i>
+                        <span>{{order.isDelivered ?'Delivered':'Pending'}}</span>
+                    </span></span>
+
+                <!-- order items -->
+                <div class="relative">
+                    <div class="p-4 bg-white rounded-xl grid gap-3 items-stretch lg:justify-center overflow-x-hidden transition-all duration-700 ease-in-out"
+                        [style.max-height]="(order.expanded) ? '300px' : '250px'"
+                        [class.overflow-y-auto]="order.expanded" [class.overflow-hidden]="!order.expanded" [class]="{ 
+                            'lg:grid-cols-[50%_50%]': order.orderItems.length > 1,
+                            'grid-cols-1': order.orderItems.length < 2 
+                        }">
+
+                        @for (item of order.orderItems; track $index) {
+                        <app-order-item [orderItem]="item"></app-order-item>
+                        }
+
+
+                    </div>
+                    <div (click)="order.expanded = !order.expanded"
+                        class="flex flex-col items-center justify-end font-medium text-maroon-600 font-Primary cursor-pointer transition-all duration-300 w-full left-0"
+                        [class]="order.expanded ? 'relative h-10 mt-2' : 'absolute bottom-0 left-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent'">
+
+                        <span>{{ order.expanded ? 'Hide All' : 'Show All' }}</span>
+                        <i class="pi" [class.pi-angle-up]="order.expanded" [class.pi-angle-down]="!order.expanded"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        }
+
+    </div>
+
+</section>
