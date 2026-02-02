@@ -1,85 +1,115 @@
 <div class="dark:text-soft-pink-200 product-card w-full">
-    <div class="relative w-full group">
+  <div class="relative w-full group">
+    <img
+      class="w-full h-[272px] object-cover rounded-xl"
+      [src]="product().imgCover"
+      [alt]="product().title"
+    />
 
-        <img (click)="goToDetails()" class="w-full h-[272px] object-cover rounded-xl cursor-pointer" [src]="product().imgCover"
-            [alt]="product().title">
+    <div
+      class="absolute inset-0 bg-maroon-600 opacity-0 group-hover:opacity-50 transition-opacity duration-300 rounded-xl pointer-events-none"
+    ></div>
 
-        <div
-            class="absolute inset-0 bg-maroon-600 opacity-0 group-hover:opacity-50 transition-opacity duration-300 rounded-xl pointer-events-none">
-        </div>
-
-        <div
-            class="absolute inset-0 flex justify-center items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30">
-            @if (isInWishlist$ | async; as inWishlist) {
-            <button (click)="toggleWishlist($event, inWishlist)"
-                class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer">
-                <i
-                    [class]="inWishlist ? 'fa-solid fa-heart fa-lg text-maroon-700' : 'fa-regular fa-heart fa-lg text-maroon-700'"></i>
-            </button>
-            } @else {
-            <button (click)="toggleWishlist($event, false)"
-                class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer">
-                <i class="fa-regular fa-heart fa-lg text-maroon-700"></i>
-            </button>
-            }
-            <button (click)="goToDetails($event)" class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer z-50">
-                <i class="fa-regular fa-eye fa-lg text-maroon-700"></i>
-            </button>
-        </div>
-
-        <div class="absolute top-2 right-2 flex gap-2 z-20">
-            @if (isNew(product().createdAt)) {
-            <span class="px-2 py-1 text-xs font-semibold bg-soft-pink-50 text-black rounded-3xl shadow">
-                NEW
-            </span>
-            }
-
-            @if (isHot(product().sold)) {
-            <span class="px-2 py-1 text-xs font-semibold bg-soft-pink-50 text-red-600 rounded-3xl shadow">
-                HOT
-            </span>
-            }
-
-            @if (isOutOfStock(product().quantity)) {
-            <span class="px-2 py-1 text-xs font-semibold bg-red-600 text-white rounded-3xl shadow">
-                OUT OF STOCK
-            </span>
-            }
-        </div>
-
+    <div
+      class="absolute inset-0 flex justify-center items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30"
+    >
+      @if (isInWishlist$ | async; as inWishlist) {
+      <button
+        (click)="toggleWishlist($event, inWishlist)"
+        class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer"
+      >
+        <i
+          [class]="
+            inWishlist
+              ? 'fa-solid fa-heart fa-lg text-maroon-700'
+              : 'fa-regular fa-heart fa-lg text-maroon-700'
+          "
+        ></i>
+      </button>
+      } @else {
+      <button
+        (click)="toggleWishlist($event, false)"
+        class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer"
+      >
+        <i class="fa-regular fa-heart fa-lg text-maroon-700"></i>
+      </button>
+      }
+      <button
+        (click)="goToDetails($event)"
+        class="w-8 h-8 bg-white rounded-full flex justify-center items-center shadow cursor-pointer z-50"
+      >
+        <i class="fa-regular fa-eye fa-lg text-maroon-700"></i>
+      </button>
     </div>
-    <div class="overflow-hidden">
-        <h3 (click)="goToDetails()" class="dark:text-soft-pink-200 text-maroon-700 text-lg font-semibold py-2 text-nowrap cursor-pointer hover:underline ">
-            @if (product().title.length > 18) {
-            {{ product().title | slice:0:18 }}
-            <span>...</span>
-            }@else {
-            {{ product().title }}
-            }
-        </h3>
-        <div class="flex justify-between items-end text-black">
-            <div>
-                <div class="rating flex items-center my-1">
-                    @for (star of [].constructor(getStars(product().rateAvg).full); track $index) {
-                    <i class="fas fa-star text-yellow-star"></i>
-                    }
-                    @if (getStars(product().rateAvg).half) {
-                    <i class="fa-solid fa-star-half-stroke text-yellow-star"></i>
-                    }
-                    @for (star of [].constructor(getStars(product().rateAvg).empty); track $index) {
-                    <i class="far fa-star text-yellow-star"></i>
-                    }
-                </div>
-                <div class="flex gap-2">
-                    <p class="dark:text-soft-pink-200 text-maroon-700 text-16px font-medium"> {{
-                        product().priceAfterDiscount }} EGP </p>
-                    <p class="text-zinc-400 text-16px font-medium line-through"> {{ product().price }} EGP </p>
-                </div>
-            </div>
-            <button aria-label="Open cart" type="button"
-                class="cart bg-maroon-600 hover:bg-maroon-700 transition-colors duration-300 w-[42px] h-[42px] rounded-full flex justify-center items-center cursor-pointer">
-                <img src="./Icons/shopping-cart-icon.svg" alt="shopping cart icon" class="w-[24px] h-[24px]"> </button>
-        </div>
 
+    <div class="absolute top-2 right-2 flex gap-2 z-20">
+      @if (isNew(product().createdAt)) {
+      <span
+        class="px-2 py-1 text-xs font-semibold bg-soft-pink-50 text-black rounded-3xl shadow"
+      >
+        NEW
+      </span>
+      } @if (isHot(product().sold)) {
+      <span
+        class="px-2 py-1 text-xs font-semibold bg-soft-pink-50 text-red-600 rounded-3xl shadow"
+      >
+        HOT
+      </span>
+      } @if (isOutOfStock(product().quantity)) {
+      <span
+        class="px-2 py-1 text-xs font-semibold bg-red-600 text-white rounded-3xl shadow"
+      >
+        OUT OF STOCK
+      </span>
+      }
     </div>
+  </div>
+  <div class="overflow-hidden">
+    <h3
+      class="dark:text-soft-pink-200 text-maroon-700 text-lg font-semibold py-2 text-nowrap"
+    >
+      @if (product().title.length > 18) {
+      {{ product().title | slice : 0 : 18 }}
+      <span>...</span>
+      }@else {
+      {{ product().title }}
+      }
+    </h3>
+    <div class="flex justify-between items-end text-black">
+      <div>
+        <div class="rating flex items-center my-1">
+          @for (star of [].constructor(getStars(product().rateAvg).full); track
+          $index) {
+          <i class="fas fa-star text-yellow-star"></i>
+          } @if (getStars(product().rateAvg).half) {
+          <i class="fa-solid fa-star-half-stroke text-yellow-star"></i>
+          } @for (star of [].constructor(getStars(product().rateAvg).empty);
+          track $index) {
+          <i class="far fa-star text-yellow-star"></i>
+          }
+        </div>
+        <div class="flex gap-2">
+          <p
+            class="dark:text-soft-pink-200 text-maroon-700 text-16px font-medium"
+          >
+            {{ product().priceAfterDiscount }} EGP
+          </p>
+          <p class="text-zinc-400 text-16px font-medium line-through">
+            {{ product().price }} EGP
+          </p>
+        </div>
+      </div>
+      <button
+        aria-label="Open cart"
+        type="button"
+        class="cart bg-maroon-600 hover:bg-maroon-700 transition-colors duration-300 w-[42px] h-[42px] rounded-full flex justify-center items-center cursor-pointer"
+      >
+        <img
+          src="./Icons/shopping-cart-icon.svg"
+          alt="shopping cart icon"
+          class="w-[24px] h-[24px]"
+        />
+      </button>
+    </div>
+  </div>
 </div>
