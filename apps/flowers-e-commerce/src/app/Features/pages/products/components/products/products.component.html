@@ -1,11 +1,11 @@
 <section class="w-[85%] m-auto mt-[68px]">
     <div class="flex justify-center gap-3 ">
         <div class="w-1/4">
-            <app-product-filters [categoryFilters]="categories()" [occasionFilters]="occasions()"></app-product-filters>
+            <app-product-filters  [categoryFilters]="categories()" [occasionFilters]="occasions()"></app-product-filters>
         </div>
         <div class="w-3/4 ps-6 border-s border-zinc-100  self-start ">
-           
-              @if (isLoading$ | async) {
+        
+            @if (isLoading$ | async) {
 
             <app-skeleton-list></app-skeleton-list>
 

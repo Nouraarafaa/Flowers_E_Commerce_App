@@ -1,4 +1,4 @@
-import { Component, inject, input, OnDestroy, OnInit, output, signal, WritableSignal } from '@angular/core';
+import { Component, effect, inject, input, OnDestroy, OnInit, output, signal, WritableSignal } from '@angular/core';
 import { Dialog } from 'primeng/dialog';
 import { Observable, of, Subscription } from 'rxjs';
 import { Address } from '../../interfaces/address';
@@ -40,8 +40,8 @@ export class AddressModalComponent implements OnInit, OnDestroy {
   addressIdToBeEdited: string = '';
   isCallingAPI: WritableSignal<boolean> = signal(false);
   getLoggedUserDataSubs$!: Subscription;
-  addAddressSubs$!: Subscription;
-  updateAddressSubs$!: Subscription;
+  addAddressSubs$?: Subscription;
+  updateAddressSubs$?: Subscription;
 
 
 
@@ -61,6 +61,13 @@ export class AddressModalComponent implements OnInit, OnDestroy {
     zoom: this.zoom
   };
 
+  localAddresses = signal<Observable<Address[]>>(of([]));
+
+  constructor() {
+    effect(() => {
+      this.localAddresses.set(this.userAddressesInput$());
+    }, { allowSignalWrites: true });
+  }
 
   ngOnInit(): void {
     this.items = [
@@ -149,7 +156,6 @@ export class AddressModalComponent implements OnInit, OnDestroy {
       lat: parseFloat(address.lat),
       lng: parseFloat(address.long)
     };
-    
     this.center = { lat: parseFloat(address.lat), lng: parseFloat(address.long) };
     this.mapOptions = {
       center: this.center,
@@ -159,9 +165,17 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
 
   }
-
+  
   deleteAddress(addressId: string) {
     console.log('delete address id', addressId);
+    this._userAddressesService.deleteAddress(addressId).subscribe({
+
+      next: (res) => {
+        this._toastrService.success('Address deleted successfuly');
+        this.localAddresses.set(of(res));
+        console.log(res);
+      }
+    });
   }
 
   saveAddress() {

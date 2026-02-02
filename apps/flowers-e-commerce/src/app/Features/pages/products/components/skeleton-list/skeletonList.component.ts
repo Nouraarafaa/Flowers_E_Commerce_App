@@ -8,7 +8,5 @@ import { SkeletonCardComponent } from "../skeleton-card/skeletonCard.component";
   styleUrl: './skeletonList.component.scss',
 })
 export class SkeletonListComponent {
-   products=new Array(12);
-
-
+  products=new Array(12);
 }
