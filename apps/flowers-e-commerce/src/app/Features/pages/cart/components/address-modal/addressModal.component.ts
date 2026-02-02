@@ -1,4 +1,4 @@
-import { Component, inject, input, OnDestroy, OnInit, output, signal, WritableSignal } from '@angular/core';
+import { Component, effect, inject, input, OnDestroy, OnInit, output, signal, WritableSignal } from '@angular/core';
 import { Dialog } from 'primeng/dialog';
 import { Observable, of, Subscription } from 'rxjs';
 import { Address } from '../../interfaces/address';
@@ -33,13 +33,15 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
 
   dialogType: 'My addresses' | 'Add a new address' | 'Update address info' = 'My addresses';
-  
+
   visible: boolean = true;
   active: number = 0;
   userName: string = '';
+  addressIdToBeEdited: string = '';
   isCallingAPI: WritableSignal<boolean> = signal(false);
   getLoggedUserDataSubs$!: Subscription;
- addAddressSubs$!: Subscription;
+  addAddressSubs$?: Subscription;
+  updateAddressSubs$?: Subscription;
 
 
 
@@ -59,6 +61,13 @@ export class AddressModalComponent implements OnInit, OnDestroy {
     zoom: this.zoom
   };
 
+  localAddresses = signal<Observable<Address[]>>(of([]));
+
+  constructor() {
+    effect(() => {
+      this.localAddresses.set(this.userAddressesInput$());
+    }, { allowSignalWrites: true });
+  }
 
   ngOnInit(): void {
     this.items = [
@@ -133,13 +142,40 @@ export class AddressModalComponent implements OnInit, OnDestroy {
     this.dialogType = 'Add a new address';
   }
 
-  editAddress(addressId: string) {
-    this.dialogType = 'Update address info';
-    console.log('edit address id', addressId);
-  }
 
+  editAddress(address: Address) {
+    this.dialogType = 'Update address info';
+    this.addressIdToBeEdited = address._id;
+    console.log('edit address id', address);
+    this.addressForm.patchValue({
+      street: address.street,
+      phone: address.phone,
+      city: address.city
+    });
+    this.marker = {
+      lat: parseFloat(address.lat),
+      lng: parseFloat(address.long)
+    };
+    this.center = { lat: parseFloat(address.lat), lng: parseFloat(address.long) };
+    this.mapOptions = {
+      center: this.center,
+      zoom: this.zoom
+    };
+
+
+
+  }
+  
   deleteAddress(addressId: string) {
     console.log('delete address id', addressId);
+    this._userAddressesService.deleteAddress(addressId).subscribe({
+
+      next: (res) => {
+        this._toastrService.success('Address deleted successfuly');
+        this.localAddresses.set(of(res));
+        console.log(res);
+      }
+    });
   }
 
   saveAddress() {
@@ -152,19 +188,36 @@ export class AddressModalComponent implements OnInit, OnDestroy {
       username: this.userName
     };
     console.log('payload', payload);
-    this._toastrService.success('Address added successfuly');
-    this.addAddressSubs$ = this._userAddressesService.addAddress(payload).subscribe({
-      next:(res)=>{
-        console.log(res);
-        setTimeout(()=>{
-          this.isCallingAPI.set(false);
-          this.hideDialog();
-        },1000);
-       
-        
-      }
-    });
-    
+    if (this.dialogType == 'Add a new address') {
+      this._toastrService.success('Address added successfuly');
+      this.addAddressSubs$ = this._userAddressesService.addAddress(payload).subscribe({
+        next: (res) => {
+          console.log(res);
+          setTimeout(() => {
+            this.isCallingAPI.set(false);
+            this.hideDialog();
+          }, 1000);
+
+
+        }
+      });
+    } else if (this.dialogType == 'Update address info') {
+      console.log(this.addressIdToBeEdited);
+
+      this._toastrService.success('Address updated successfuly');
+      this.updateAddressSubs$ = this._userAddressesService.updateAddress(payload, this.addressIdToBeEdited).subscribe({
+        next: (res) => {
+          console.log(res);
+          setTimeout(() => {
+            this.isCallingAPI.set(false);
+            this.hideDialog();
+          }, 1000);
+
+        }
+      });
+    }
+
+
 
   }
 
@@ -172,6 +225,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.getLoggedUserDataSubs$?.unsubscribe();
     this.addAddressSubs$?.unsubscribe();
+    this.updateAddressSubs$?.unsubscribe();
   }
 
 

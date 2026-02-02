@@ -2,11 +2,10 @@
             
             <!-- header -->
             <div class="flex justify-between items-center ">
-                <h2 class="wishlist-and-cart-title">Cart<span class="products-num-wishlist-and-cart"> {{(cart$()
-                        |async)? (cart$() | async)?.numOfCartItems : ""}}
-                        {{(cart$() | async) ? 'products' : ''}}</span></h2>
+                <h2 class="wishlist-and-cart-title">Cart<span class="products-num-wishlist-and-cart"> {{((cartList$() | async)?.length != 0)? (cart$() | async)?.numOfCartItems : ""}}
+                        {{((cartList$() | async)?.length != 0) ? 'products' : ''}}</span></h2>
 
-                @if ((cart$() | async)) {
+                @if ((cartList$() | async)?.length != 0) {
                 <div pTooltip="clear cart" tooltipPosition="bottom"
                     class="text-nowrap flex py-2.5 px-8 rounded-[10px] bg-maroon-50 gap-0.5 cursor-pointer hover:bg-maroon-50/50 transition-all duration-300">
                     <img src="/Images/brush-cleaning.png" alt="brush-cleaning">
