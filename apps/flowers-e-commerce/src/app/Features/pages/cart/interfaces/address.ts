@@ -12,3 +12,16 @@ export interface Address {
   username: string;
   _id: string;
 }
+export interface addressPayload {
+  street: string;
+  phone: string;
+  city: string;
+  lat: string;
+  long: string;
+  username: string;
+}
+
+export interface deleteAddressResponse {
+  message: string;
+  address: Address[];
+}

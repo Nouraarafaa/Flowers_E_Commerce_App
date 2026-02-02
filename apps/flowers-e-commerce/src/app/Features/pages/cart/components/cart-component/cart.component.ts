@@ -16,10 +16,12 @@ import { MenuItem } from 'primeng/api';
 import { ShippingAddressesComponent } from "../shipping-addresses/shippingAddresses.component";
 import { UserAddressesService } from '../../services/user-addresses-service/user-addresses.service';
 import { Address } from '../../interfaces/address';
+import { AddressModalComponent } from "../address-modal/addressModal.component";
+import { PaymentComponent } from "../payment/payment.component";
 
 @Component({
   selector: 'app-cart',
-  imports: [AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent, StepsModule, ButtonModule, ShippingAddressesComponent],
+  imports: [AsyncPipe, SectionTitleComponent, ButtonComponent, CartSectionComponent, SummeryComponent, StepsModule, ButtonModule, ShippingAddressesComponent, AddressModalComponent, PaymentComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })
@@ -29,6 +31,7 @@ export class CartComponent implements OnInit {
   cart$: Observable<CartResponse | null> = of(null);
   cartList$: Observable<CartItem[]> = of([]);
   discount: boolean = false;
+  
   step: number = 1;
   items: MenuItem[] | undefined;
 
@@ -37,8 +40,12 @@ export class CartComponent implements OnInit {
   userAddresses$: Observable<Address[]> = of([]);
   private readonly _userAddressesService = inject(UserAddressesService);
   userHasSelectedAddress: boolean = true;
+  addressObject:Address ={} as Address
+
+   addressModalvisible: boolean = false;
 
   ngOnInit(): void {
+
 
     this.getCartProducts();
     this.items = [
@@ -50,8 +57,7 @@ export class CartComponent implements OnInit {
       }
     ];
      this.getUserAddresses();
-
-
+    
   }
 
   getCartProducts() {
@@ -63,6 +69,7 @@ export class CartComponent implements OnInit {
    getUserAddresses() {
     this.userAddresses$ = this._userAddressesService.getLoggedUserAddresses();
   }
+   
 
   handleClearCart() {
 
@@ -84,11 +91,32 @@ export class CartComponent implements OnInit {
   navigateToPayment() {
     this.active = 1;
 
+
+  }
+  navigateToShipping() {
+    this.active = 0;
+
+  }
+  
+  addressSelected(address?:Address) {
+    this.userHasSelectedAddress = false;
+    if(address){
+    this.addressObject = address;
+    console.log(this.addressObject);
+    
+    }
+
+
+
+  }
+  addNewAddress(){
+    this.addressModalvisible=true;
+    
   }
 
-  addressSelected() {
-    this.userHasSelectedAddress = false;
-
+  closeAddressModal(){
+    this.addressModalvisible=false;
+    this.getUserAddresses();
   }
 
 }

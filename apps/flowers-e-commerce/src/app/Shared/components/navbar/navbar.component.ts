@@ -76,6 +76,9 @@ export class NavbarComponent implements OnInit {
           {
             label: 'My Orders',
             icon: `svg-order-icon`,
+           command: () => {
+              this._router.navigate(['/allOrders'])
+            }
 
           },
           {

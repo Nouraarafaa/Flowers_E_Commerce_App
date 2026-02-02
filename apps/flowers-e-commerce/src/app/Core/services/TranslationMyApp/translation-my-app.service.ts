@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { inject, Inject, Injectable, PLATFORM_ID, RendererFactory2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
+
 @Injectable({
   providedIn: 'root',
 })

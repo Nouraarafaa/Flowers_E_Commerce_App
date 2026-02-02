@@ -1,0 +1,33 @@
+<div class="rounded-xl bg-[#FAFAFA] h-full">
+    <div class="flex items-center gap-4">
+        <img [src]="orderItem()?.product?.imgCover" class="w-29.25 rounded-e-xl rounded-s-xl md:rounded-e-none" alt="">
+    <!--right side  -->
+    <div class="flex flex-col justify-between gap-2.5">
+        <!-- title & rating -->
+        <div class="flex justify-between items-start gap-2 ps-4 md:ps-0">
+            <div >
+                <h4 class="font-semibold text-maroon-700 text-sm dark:text-soft-pink-200">{{ orderItem()?.product?.title }}</h4>
+                <span class="font-medium"><i class="pi pi-star-fill text-yellow-star"></i> Rating : {{ orderItem()?.product?.rateAvg }}/5
+                </span>
+                <span class="font-Primary font-medium text-blue-600">({{ orderItem()?.product?.rateCount }} ratings)</span>
+            </div>
+            
+        </div>
+        <!-- price & quantity -->
+        <div class="flex justify-between items-end ps-4 md:ps-0">
+            <div class="font-bold text-2xl text-zinc-800 text-nowrap">
+                <span class="text-maroon-600 text-base font-medium">(x{{orderItem()?.quantity}}) </span>
+                <span>{{orderItem()?.product?.price}}</span><span class="text-base font-medium me-2.5"> EGP</span>
+
+            </div>
+            
+
+        </div>
+
+
+    </div>
+    </div>
+    
+
+
+</div>
