@@ -156,7 +156,6 @@ export class AddressModalComponent implements OnInit, OnDestroy {
       lat: parseFloat(address.lat),
       lng: parseFloat(address.long)
     };
-
     this.center = { lat: parseFloat(address.lat), lng: parseFloat(address.long) };
     this.mapOptions = {
       center: this.center,

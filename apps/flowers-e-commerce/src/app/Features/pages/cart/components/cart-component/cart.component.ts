@@ -46,7 +46,6 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
 
-
     this.getCartProducts();
     this.items = [
       {
@@ -107,20 +106,6 @@ export class CartComponent implements OnInit {
     }
 
 
-
-  }
-  addNewAddress(){
-    this.addressModalvisible=true;
-    
-  }
-
-  closeAddressModal(){
-    this.addressModalvisible=false;
-    this.getUserAddresses();
-  }
-
-  addressSelected() {
-    this.userHasSelectedAddress = false;
 
   }
   addNewAddress(){
