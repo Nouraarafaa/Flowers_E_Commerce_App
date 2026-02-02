@@ -15,6 +15,7 @@ export const appRoutes: Route[] = [
             { path: "about", loadComponent: () => import('./Features/pages/about/about.component').then((c) => c.AboutComponent), title: "About" },
             { path: "wishlist", canActivate: [authGuard], loadComponent: () => import('./Features/pages/wishlist/components/wishlist-component/wishlist.component').then((c) => c.WishlistComponent), title: "Wishlist" },
             { path: "cart", canActivate: [authGuard], loadComponent: () => import('./Features/pages/cart/components/cart-component/cart.component').then((c) => c.CartComponent), title: "Cart" },
+            { path: "allOrders", canActivate: [authGuard], loadComponent: () => import('./Features/pages/user-orders/components/orders/userOrders.component').then((c) => c.UserOrdersComponent), title: "My Orders" },
             { path:"profile", canActivate: [authGuard], loadComponent: () => import('./Features/pages/ProfileMe/profile/profile.component').then((c) => c.ProfileComponent), children: [
                 { path: "", redirectTo: "update-profile", pathMatch: "full" },
                 { path:"update-profile", loadComponent: () => import('./Features/pages/ProfileMe/update-profile/update-profile.component').then((c) => c.UpdateProfileComponent), title:"Update Profile" },

@@ -30,7 +30,7 @@
                 payment.</p>
         </div>
     </div>
-    <button 
+    <button [disabled]="paymentMethodSelected == ''"
         class="self-end disabled:cursor-not-allowed cursor-pointer font-mulish font-semibold text-sm bg-maroon-600 text-white dark:bg-soft-pink-300 dark:text-zinc-800 rounded-[10px] py-2.5 px-10"
         (click)="onCheckout()">Checkout
         <i class="pi pi-arrow-right text-sm! "></i>

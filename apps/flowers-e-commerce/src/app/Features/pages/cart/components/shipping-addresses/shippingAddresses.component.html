@@ -1,7 +1,7 @@
 <h2 class="font-Primary text-3xl font-semibold dark:text-white mb-6">Shipping Address</h2>
 <div class="flex flex-col justify-center gap-3 mb-3">
     @for (address of userAddressesInput$()|async; track $index) {
-    <div (click)="selectAddress(address._id)"
+    <div (click)="selectAddress(address)"
         class="border border-zinc-300 px-4 py-3.5 rounded-xl font-Primary cursor-pointer hover:border-maroon-600 transition-all duration-300 dark:hover:border-soft-pink-300"
         [class]="{'bg-maroon-600':selectedAddressId === address._id,
                   'dark:bg-soft-pink-300':selectedAddressId === address._id
