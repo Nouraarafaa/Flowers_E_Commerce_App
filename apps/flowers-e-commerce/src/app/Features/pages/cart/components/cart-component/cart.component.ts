@@ -119,18 +119,6 @@ export class CartComponent implements OnInit {
     this.getUserAddresses();
   }
 
-  addressSelected() {
-    this.userHasSelectedAddress = false;
-
-  }
-  addNewAddress(){
-    this.addressModalvisible=true;
-    
-  }
-
-  closeAddressModal(){
-    this.addressModalvisible=false;
-    this.getUserAddresses();
-  }
+  
 
 }
