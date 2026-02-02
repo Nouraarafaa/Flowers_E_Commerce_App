@@ -79,7 +79,7 @@
                     </div>
                     <div (click)="order.expanded = !order.expanded"
                         class="flex flex-col items-center justify-end font-medium text-maroon-600 font-Primary cursor-pointer transition-all duration-300 w-full left-0"
-                        [class]="order.expanded ? 'relative h-10 mt-2' : 'absolute bottom-0 left-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent'">
+                        [class]="order.expanded ? 'relative h-10 mt-2' : 'absolute bottom-0 left-0 h-20 bg-linear-to-t from-white via-white/80 to-transparent'">
 
                         <span>{{ order.expanded ? 'Hide All' : 'Show All' }}</span>
                         <i class="pi" [class.pi-angle-up]="order.expanded" [class.pi-angle-down]="!order.expanded"></i>
