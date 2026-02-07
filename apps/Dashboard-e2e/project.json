@@ -1,0 +1,9 @@
+{
+  "name": "Dashboard-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/Dashboard-e2e/src",
+  "implicitDependencies": ["Dashboard"],
+  "// targets": "to see all targets run: nx show project Dashboard-e2e --web",
+  "targets": {}
+}
