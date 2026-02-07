@@ -7,6 +7,8 @@ export interface ProductFilters {
   maxPrice: number | null;
   starRating: number | null;
   searchTerm: string | null;
+  sortBy: string | null;
+  sortOrder: 'asc' | 'desc' | null;
 }
 
 export interface ProductsState{
@@ -28,6 +30,8 @@ export const initialProductsState:ProductsState={
         maxPrice: null,
         starRating: null,
         searchTerm: null,
+        sortBy: null,
+        sortOrder: null,
     },
     isLoading:false,
     error:null

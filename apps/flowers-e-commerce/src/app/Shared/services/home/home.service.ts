@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_URL } from '@elevate-workspace/auth';
-import { HomeResponse, Product } from '../../interfaces/HomeResponse/home-response';
-import { map, Observable } from 'rxjs';
+import { HomeResponse } from '../../interfaces/HomeResponse/home-response';
+import { Observable } from 'rxjs';
 import { homeApi } from '../../../Core/base/home-api';
 import { Endpoints } from '../../../Core/enums/endpoints';
 import { Testimonials } from '../../interfaces/testimonials';
