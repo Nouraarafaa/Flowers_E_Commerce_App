@@ -14,7 +14,7 @@
             <app-product-list [products]="displayedProducts()"></app-product-list>
 
             }
-            <div class="mt-6 font-open-sans font-medium text-[13px] border-t pt-4 border-zinc-100">
+            <div class="mt-6 font-open-sans font-medium text-[13px] border-t pt-4 border-zinc-100 dark:border-zinc-700">
                 <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
                     [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30]" />
             </div>

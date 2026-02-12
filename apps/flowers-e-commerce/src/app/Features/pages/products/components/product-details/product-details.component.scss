@@ -1,0 +1,26 @@
+:host ::ng-deep {
+  .p-rating {
+    gap: 4px;
+  }
+  
+  .p-rating-item {
+    &.p-rating-item-active {
+        .p-rating-icon {
+            color: var(--yellow-star);
+        }
+    }
+    
+    .p-rating-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.font-inter {
+    font-family: var(--font-inter);
+}
+
+.font-open-sans {
+    font-family: var(--font-open-sans);
+}
