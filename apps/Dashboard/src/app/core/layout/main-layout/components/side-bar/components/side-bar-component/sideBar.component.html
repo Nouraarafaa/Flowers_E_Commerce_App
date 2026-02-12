@@ -1,0 +1,55 @@
+<div class="flex flex-col items-center justify-between gap-10">
+    <div class="flex flex-col mt-9 gap-6 transition-all duration-300 text-zinc-800">
+        <img class="w-30 self-center" src="/Images/logo.png" alt="logo">
+        <!-- preview rose app button -->
+        <a [href]="websiteUrl" target="_blank"
+            class="bg-maroon-600 hover:bg-maroon-500 rounded-lg font-inter flex justify-center items-center gap-2 py-2.5 px-9 text-white font-semibold cursor-pointer ">
+            <img src="/Images/flower.png" alt="flower">
+            <span>Preview website</span>
+        </a>
+
+        <!-- router Links buttons -->
+        @for (sL of sideBarLinks; track $index) {
+        <app-side-bar-link [sideBarIcon]="sL.icon" [sideBarLinkName]="sL.sideLinkName"
+            [sideBarPagePath]="sL.pagePath"></app-side-bar-link>
+        }
+    </div>
+
+    <div class="pt-4 py-6 px-2.5 mx-2.5 border-t border-[#00000014] flex justify-between items-center">
+        <div class="flex font-Nunito  items-center gap-2.5">
+            @if (userPhoto == '') {
+            <div class="size-13.5 rounded-full bg-maroon-600 flex justify-center items-center">
+                <span class="font-Nunito text-xl text-white font-semibold">{{ firstName.charAt(0) }}</span>
+            </div>
+            }@else {
+            <img class="w-13.5 rounded-full" [src]="userPhoto" alt="user photo">
+            }
+            <div class="flex flex-col">
+                <span class="font-bold text-sm text-zinc-800">{{ firstName }} {{ lastName }}</span>
+                <span class="font-semibold text-[12px] text-[#2E2E3080]">{{userEmail}}</span>
+            </div>
+
+        </div>
+
+        <div>
+            <p-menu styleClass="text-start dark:bg-zinc-800 dark:border-zinc-700" #menu [model]="items" [popup]="true">
+                <ng-template #start>
+                    <p class="font-semibold text-sm text-maroon-700 font-inter px-2 py-1.5">
+                        {{ firstName }} {{ lastName }}
+                    </p>
+                </ng-template>
+                <ng-template #item let-item>
+                    <a pRipple class="flex items-center p-menu-item-link border-b border-zinc-200">
+                        <span [class]="item.icon" style="width: 16px"></span>
+                        <span class="font-inter text-sm font-medium text-zinc-700 dark:text-zinc-200">{{
+                            item.label
+                            }}</span>
+                    </a>
+                </ng-template>
+            </p-menu>
+            <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+        </div>
+
+    </div>
+
+</div>
