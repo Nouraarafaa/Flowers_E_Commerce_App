@@ -6,6 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import { SideBarLinkComponent } from "../sidebar-link/sideBarLink.component";
 import { AuthService } from '@elevate-workspace/auth';
 import { Subject, takeUntil } from 'rxjs';
+import { environment } from 'apps/Dashboard/src/app/core/environments/environment';
+
 
 @Component({
   selector: 'app-side-bar',
@@ -17,6 +19,7 @@ export class SideBarComponent implements OnInit,OnDestroy {
 
   private readonly _router = inject(Router);
   private readonly _authService = inject(AuthService);
+  websiteUrl = environment.websiteUrl;
 
   items: MenuItem[] | undefined;
   firstName: string = '';

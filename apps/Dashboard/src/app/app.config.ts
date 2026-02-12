@@ -1,9 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-<<<<<<< HEAD
 import { provideRouter, withHashLocation, withInMemoryScrolling, withViewTransitions } from '@angular/router';
-=======
-import { provideRouter } from '@angular/router';
->>>>>>> 9dd2d06c75ccbb892ed7bdc787e07cf1380bccb1
 import { appRoutes } from './app.routes';
 import {
   provideClientHydration,
