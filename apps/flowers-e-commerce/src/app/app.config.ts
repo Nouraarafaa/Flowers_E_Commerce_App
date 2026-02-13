@@ -12,8 +12,6 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
-
-
 import { productsReducer } from './Core/store/products/products.reducers';
 import { productsEffects } from './Core/store/products/products.effects';
 import { wishlistReducer } from './Core/store/wishlist/wishlist.reducers';

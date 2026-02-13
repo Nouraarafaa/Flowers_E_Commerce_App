@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "roseApp": "nx s flowers-e-commerce --o"
+    "roseApp": "nx s flowers-e-commerce --o",
+    "dashboardApp": "nx s dashboard --o"
   },
   "private": true,
   "dependencies": {
