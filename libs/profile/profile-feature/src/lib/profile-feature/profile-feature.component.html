@@ -5,13 +5,14 @@
         <div class="flex items-center gap-4">
             <div class="relative rounded-full">
                 <img class="size-30 rounded-full border border-[#E4E4E7]" [src]="userPhoto" alt="user photo">
-               <i (click)="fileInput.click()" 
-       class="pi pi-cloud-upload absolute bottom-1 end-1 text-lg bg-zinc-50 border border-zinc-200 p-2 rounded-full cursor-pointer shadow-sm hover:bg-zinc-100">
-    </i>
+                <i (click)="fileInput.click()"
+                    class="pi pi-cloud-upload absolute bottom-1 end-1 text-lg bg-zinc-50 border border-zinc-200 p-2 rounded-full cursor-pointer shadow-sm hover:bg-zinc-100">
+                </i>
 
-    <input #fileInput type="file" (change)="updateUserPhoto($event)" accept="image/*" style="display: none;"/>
-                
-               
+                <input #fileInput type="file" (change)="updateUserPhoto($event)" accept="image/*"
+                    style="display: none;" />
+
+
             </div>
 
             <div class="flex flex-col gap-4">
@@ -21,7 +22,7 @@
             </div>
         </div>
 
-        <div class="userName flex gap-5">
+        <div class="userName flex flex-col md:flex-row gap-5">
             <div class="firstName flex-1">
                 @let firstNameControl = updateForm.get("firstName");
                 <label for="firstName" class="text-black text-[14px] font-inter font-medium">First Name</label>

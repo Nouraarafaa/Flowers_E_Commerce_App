@@ -28,7 +28,10 @@ export interface ResetPasswordPayload {
 }
 
 export interface EditProfliePayload {
+  firstName: string;
   lastName: string;
+  email: string;
+  phone: string;
 }
 
 export interface ChangeUserRolePayload {

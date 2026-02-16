@@ -63,10 +63,10 @@ export class SideBarComponent implements OnInit,OnDestroy {
       {
         items: [
           {
-            label: 'Accout',
+            label: 'Account',
             icon: 'pi pi-user',
             command: () => {
-              this._router.navigate(['/profile'])
+              this._router.navigate(['/update-profile'])
             }
           }, {
             label: 'Log out',

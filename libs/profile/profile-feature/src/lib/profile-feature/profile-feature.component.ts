@@ -1,21 +1,20 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { FormInputComponent } from "../../../..//Shared/components/ui/form-input/form-input.component";
 import { DropdownModule } from 'primeng/dropdown';
-import { ButtonComponent } from "../../../../Shared/components/ui/button/button.component";
 import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@elevate-workspace/auth';
-import { ErrorMessageComponent } from "../../../../Shared/components/ui/error-message/error-message.component";
+import { FormInputComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/form-input/form-input.component';
+import { ButtonComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/button/button.component';
+import { ErrorMessageComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/error-message/error-message.component';
 import { Subject, takeUntil } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
-  selector: 'app-update-profile',
+  selector: 'lib-profile-feature',
   imports: [FormInputComponent, DropdownModule, ButtonComponent, ɵInternalFormsSharedModule, ReactiveFormsModule, ErrorMessageComponent],
-  templateUrl: './update-profile.component.html',
-  styleUrl: './update-profile.component.scss',
+  templateUrl: './profile-feature.component.html',
+  styleUrl: './profile-feature.component.scss',
 })
-export class UpdateProfileComponent implements OnInit, OnDestroy {
+export class ProfileFeatureComponent implements OnInit, OnDestroy {
   updateForm!: FormGroup;
   private readonly _authService = inject(AuthService);
   private readonly _formBuilder = inject(FormBuilder);
