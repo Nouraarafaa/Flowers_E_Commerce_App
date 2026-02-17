@@ -5,12 +5,12 @@
 
         <div class="flex items-center gap-4">
             <div class="relative rounded-full">
-                @if (userPhoto == '') {
+                @if (user().photo == '') {
                 <div class="size-30 rounded-full bg-maroon-600 flex justify-center items-center">
-                    <span class="font-Nunito text-6xl text-white font-semibold">{{ firstName.charAt(0) }}</span>
+                    <span class="font-Nunito text-6xl text-white font-semibold">{{ user().firstName.charAt(0) }}</span>
                 </div>
                 }@else {
-                <img class="size-30 rounded-full border border-[#E4E4E7]" [src]="userPhoto" alt="user photo">
+                <img class="size-30 rounded-full border border-[#E4E4E7]" [src]="user().photo" alt="user photo">
                 }
                 <i (click)="fileInput.click()"
                     class="pi pi-cloud-upload absolute bottom-1 end-1 text-lg bg-zinc-50 border border-zinc-200 p-2 rounded-full cursor-pointer shadow-sm hover:bg-zinc-100">

@@ -22,10 +22,8 @@ export class SideBarComponent implements OnInit,OnDestroy {
   websiteUrl = environment.websiteUrl;
 
   items: MenuItem[] | undefined;
-  firstName: string = '';
-  lastName: string = '';
-  userEmail: string = '';
-  userPhoto: string = '';
+  
+  user = this._authService.currentUser;
   private destroy$ = new Subject<void>();
 
   sideBarLinks: {
@@ -56,6 +54,9 @@ export class SideBarComponent implements OnInit,OnDestroy {
 
 
   ngOnInit() {
+    if (!this.user()) {
+      this._authService.getLoggedUserData().pipe(takeUntil(this.destroy$)).subscribe();
+    }
     this.items = [
       {
         separator: true
@@ -79,20 +80,10 @@ export class SideBarComponent implements OnInit,OnDestroy {
         ]
       }
     ];
-    this.getUserNameAndPhoto();
+   
   }
 
-  getUserNameAndPhoto(): void {
-    this._authService.getLoggedUserData().pipe(takeUntil(this.destroy$)).subscribe({
-      next: (res) => {
-        this.firstName = res.user.firstName;
-        this.lastName = res.user.lastName;
-        this.userEmail=res.user.email;
-        this.userPhoto = res.user.photo;
-
-      }
-    })
-  }
+ 
 
   onClick() {
     console.log("Logout");

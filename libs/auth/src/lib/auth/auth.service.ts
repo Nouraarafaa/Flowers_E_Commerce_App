@@ -1,12 +1,12 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthAPIAdaptorService } from './adaptor/auth-api.adapter';
 import { BASE_URL } from './base-url';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { ChangePasswordPayload, EditProfliePayload, ForgotPasswordPayload, LoginPayload, RegisterPayload, ResetPasswordPayload, VerifyCodePayload } from './interfaces/auth-payload';
 import { AuthAPI } from './base/AuthAPI';
 import { AuthModel } from './interfaces/auth-model';
-import { AuthResponse, ForgotPasswordResponse, LoggedUserDataResponse, MessageResponse, ResetOrChangePasswordResponse, VerifyCodeResponse } from './interfaces/auth-response';
+import { AuthResponse, ForgotPasswordResponse, LoggedUserDataResponse, MessageResponse, ResetOrChangePasswordResponse, User, VerifyCodeResponse } from './interfaces/auth-response';
 import { AuthEndPoint } from './enums/AuthEndPoint';
 
 @Injectable({
@@ -18,6 +18,11 @@ export class AuthService implements AuthAPI {
   private readonly _authAPIAdaptorService = inject(AuthAPIAdaptorService);
   private readonly _BASEURL = inject(BASE_URL);
 
+  currentUser = signal<User>({} as User);
+
+  updateUserSignal(data: User) {
+    this.currentUser.set(data);
+  }
 
   register(data: RegisterPayload): Observable<AuthModel> {
     return this._httpClient.post<AuthResponse>(this._BASEURL + AuthEndPoint.SignUp, data)
@@ -50,7 +55,9 @@ export class AuthService implements AuthAPI {
   }
 
   getLoggedUserData(): Observable<LoggedUserDataResponse> {
-    return this._httpClient.get<LoggedUserDataResponse>(this._BASEURL + AuthEndPoint.GetInfo);
+    return this._httpClient.get<LoggedUserDataResponse>(this._BASEURL + AuthEndPoint.GetInfo).pipe(
+      tap(res => this.currentUser.set(res.user))
+    );
   }
 
   editProflie(data: EditProfliePayload): Observable<LoggedUserDataResponse> {

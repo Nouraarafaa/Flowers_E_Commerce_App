@@ -20,13 +20,9 @@ export class ProfileFeatureComponent implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _toastrService = inject(ToastrService);
   private destroy$ = new Subject<void>();
-  firstName: string = '';
-  lastName: string = '';
-  userEmail: string = '';
-  userPhoto: string = '';
-  userGender: string = '';
-  userPhone: string = '';
 
+
+  user = this._authService.currentUser;
 
 
   ngOnInit(): void {
@@ -50,19 +46,14 @@ export class ProfileFeatureComponent implements OnInit, OnDestroy {
     let data;
     this._authService.getLoggedUserData().pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
-        this.firstName = res.user.firstName;
-        this.lastName = res.user.lastName;
-        this.userEmail = res.user.email;
-        this.userPhoto = res.user.photo;
-        this.userGender = res.user.gender;
-        this.userPhone = res.user.phone;
+        this._authService.currentUser.update(() => res.user);
 
         data = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.userEmail,
-          phone: this.userPhone.replace('+2', ''),
-          gender: this.userGender
+          firstName: this.user().firstName,
+          lastName: this.user().lastName,
+          email: this.user().email,
+          phone: this.user().phone.replace('+2', ''),
+          gender: this.user().gender
         }
 
         this.updateForm.patchValue(data);
@@ -88,6 +79,13 @@ export class ProfileFeatureComponent implements OnInit, OnDestroy {
     this._authService.editProflie(payload).pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
         this._toastrService.success(res.message);
+        this._authService.currentUser.update(user => ({
+            ...user,
+            firstName: this.updateForm.value.firstName, 
+            lastName: this.updateForm.value.lastName, 
+            email: this.updateForm.value.email, 
+            phone: this.updateForm.value.phone 
+          }));
       }
     })
   }
@@ -111,17 +109,21 @@ export class ProfileFeatureComponent implements OnInit, OnDestroy {
 
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      this.userPhoto = e.target.result; //  preview image to the uploaded file
+      this.user().photo = e.target.result; //  preview image to the uploaded file
     };
     reader.readAsDataURL(file);
 
-    if (file === this.userPhoto) {
+    if (file === this.user().photo) {
       this.updateForm.markAsPristine();
     } else {
       this.updateForm.markAsDirty();
       this._authService.uploadProfilePhoto(file).pipe(takeUntil(this.destroy$)).subscribe({
         next: () => {
           this._toastrService.success('Profile photo updated successfully');
+          this._authService.currentUser.update(user => ({
+            ...user,
+            photo: this.user().photo
+          }));
           this.updateForm.markAsPristine();
         },
         error: () => {
