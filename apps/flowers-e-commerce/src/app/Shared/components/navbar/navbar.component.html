@@ -40,7 +40,7 @@
         ></i
       ></a>
 
-      <p-menu styleClass="text-start dark:bg-zinc-800 dark:border-zinc-700" #menu [model]="items" [popup]="true">
+      <p-menu styleClass="text-start dark:bg-zinc-800 dark:border-zinc-700" #menu [model]="items()" [popup]="true">
         <ng-template #start>
           <p class="font-medium text-sm text-maroon-700 font-inter px-2 py-1.5">
             {{ firstNameNavBar() }} {{ lastNameNavBar() }}

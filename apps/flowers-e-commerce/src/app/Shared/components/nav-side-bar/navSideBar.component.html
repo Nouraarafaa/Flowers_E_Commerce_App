@@ -48,10 +48,12 @@
                                     <app-nav-link-side-bar type="svg" pageNameSideBar="/allOrders"
                                         navLinkName="My Orders"></app-nav-link-side-bar>
                                 </li>
-                                <li class="hover-side-bar">
+                                @if (userRoleSideBar()=='admin') {
+                                    <li class="hover-side-bar">
                                     <app-nav-link-side-bar type="normal" pageNameSideBar="/dashboard"
                                         iconNameSideBar="pi-cog" navLinkName="Dashboard"></app-nav-link-side-bar>
                                 </li>
+                                }
                                 }
                                 <li class="hover-side-bar">
                                     <app-nav-link-side-bar [userStatusSidebar]="userLoggedSideBar()? 'logged':'' "
