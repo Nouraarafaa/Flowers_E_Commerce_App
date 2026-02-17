@@ -32,6 +32,5 @@ export const appConfig: ApplicationConfig = {
       useValue: environment.BaseUrl
     },
     provideToastr()
-
   ],
 };
