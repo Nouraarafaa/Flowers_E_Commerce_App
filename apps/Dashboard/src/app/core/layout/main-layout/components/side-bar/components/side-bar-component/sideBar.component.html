@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center justify-between gap-10">
+<div class="flex flex-col items-center justify-between h-full">
     <div class="flex flex-col mt-9 gap-6 transition-all duration-300 text-zinc-800">
         <img class="w-30 self-center" src="/Images/logo.png" alt="logo">
         <!-- preview rose app button -->
@@ -15,8 +15,8 @@
         }
     </div>
 
-    <div class="pt-4 py-6 px-2.5 mx-2.5 border-t border-[#00000014] flex justify-between items-center">
-        <div class="flex font-Nunito  items-center gap-2.5">
+    <div class="self-end pt-5 px-2.5 mx-2.5 border-t border-[#00000014] flex justify-between items-center gap-1.5">
+        <div class=" font-Nunito  items-center size-13.5">
             @if (userPhoto == '') {
             <div class="size-13.5 rounded-full bg-maroon-600 flex justify-center items-center">
                 <span class="font-Nunito text-xl text-white font-semibold">{{ firstName.charAt(0) }}</span>
@@ -24,15 +24,18 @@
             }@else {
             <img class="w-13.5 rounded-full" [src]="userPhoto" alt="user photo">
             }
+
+
+        </div>
+
+        <div class="flex ">
             <div class="flex flex-col">
                 <span class="font-bold text-sm text-zinc-800">{{ firstName }} {{ lastName }}</span>
                 <span class="font-semibold text-[12px] text-[#2E2E3080]">{{userEmail}}</span>
             </div>
 
-        </div>
-
-        <div>
-            <p-menu styleClass="text-start dark:bg-zinc-800 dark:border-zinc-700" #menu [model]="items" [popup]="true">
+            <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+            <p-menu styleClass=" dark:bg-zinc-800 dark:border-zinc-700" #menu [model]="items" [popup]="true">
                 <ng-template #start>
                     <p class="font-semibold text-sm text-maroon-700 font-inter px-2 py-1.5">
                         {{ firstName }} {{ lastName }}
@@ -47,7 +50,6 @@
                     </a>
                 </ng-template>
             </p-menu>
-            <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
         </div>
 
     </div>
