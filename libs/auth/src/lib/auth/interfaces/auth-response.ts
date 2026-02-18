@@ -16,6 +16,7 @@ export interface Address {
 }
 
 export interface User {
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -23,12 +24,14 @@ export interface User {
   phone: string;
   photo: string;
   role: string;
-  wishlist: string[];
-  _id: string;
-  addresses: Address[];
+  wishlist: any[];
+  addresses: any[];
   createdAt: string;
+  passwordResetCode: string;
+  passwordResetExpires: string;
+  resetCodeVerified: boolean;
+  passwordChangedAt: string;
 }
-
 
 export interface ForgotPasswordResponse {
   message: string;
