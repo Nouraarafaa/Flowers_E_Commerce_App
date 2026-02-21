@@ -8,7 +8,7 @@
                 class="w-[120px] h-[120px] rounded-full object-cover border">
                 
                 <div class="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow-md border border-gray-200 flex items-center justify-center w-10 h-10 transform translate-x-1 translate-y-1 transition-transform hover:scale-110 active:scale-95">
-                    <img src="/Images/cloud-upload.png" alt="cloud-upload icon" class="w-9 h-9 object-contain">
+                    <img src="/Images/cloud-upload.png" alt="cloud-upload icon" class="w-8 h-8 object-contain">
                 </div>
                 
                 <input type="file" (change)="onFileSelected($event)"  accept="image/png, image/jpeg, image/gif" class="hidden">
@@ -62,7 +62,7 @@
                 disabled
                 class="w-full h-[49px] px-3 rounded-[10px] border border-[#D4D4D8] bg-gray-50 text-[#111] text-sm font-inter font-medium"
             />
-        </div>
+        </div> 
 
         @if (success()) {
             <app-auth-status [type]="'success'" [message]="success()" ></app-auth-status>
@@ -70,9 +70,10 @@
         @else if (errorMsg()) { 
             <app-auth-status [type]="'error'" [message]="errorMsg()" ></app-auth-status>
         }
+        
 
-        <div class="flex justify-between items-center pt-15">
-            <a class="text-maroon-500 text-16px font-medium cursor-pointer">Delete My Account</a>
+        <div class="flex justify-between items-center pt-15"> 
+            <a (click)="confirmDelete()" class="text-maroon-500 active:text-maroon-600 active:scale-90 transition-all duration-300 text-16px font-medium cursor-pointer">Delete My Account</a>
             <app-button [type]="'submit'" [label]="'Save Changes'" [loading]="isLoading()"  [disabled]="(isFormUnchanged() && !imageChanged()) || registerForm.invalid"></app-button>
         </div>
 

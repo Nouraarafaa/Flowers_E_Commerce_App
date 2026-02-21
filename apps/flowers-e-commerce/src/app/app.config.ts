@@ -20,37 +20,38 @@ import { wishlistReducer } from './Core/store/wishlist/wishlist.reducers';
 import { WishlistEffects } from './Core/store/wishlist/wishlist.effects';
 import { cartReducer } from './Core/store/cart/cart.reducer';
 import { CartEffects } from './Core/store/cart/cart.effects';
+import { ConfirmationService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
     providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top" }), withViewTransitions()),
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
-    provideAnimationsAsync(),
-
-    provideTranslateService({
-        lang: 'en',
-        fallbackLang: 'en',
-        loader: provideTranslateHttpLoader({
-            prefix: '/i18n/',
-            suffix: '.json'
-        })
-    }),
-
-    providePrimeNG({
-        theme: {
-            preset: Aura,
-        },
-    }),
-    {
-        provide: BASE_URL,
-        useValue: environment.BaseUrl
-    },
-        provideStore({
-            products: productsReducer,
-            wishlist: wishlistReducer,
-            cart:cartReducer
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top" }), withViewTransitions()),
+        provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
+        provideAnimationsAsync(),
+        ConfirmationService,
+        provideTranslateService({
+            lang: 'en',
+            fallbackLang: 'en',
+            loader: provideTranslateHttpLoader({
+                prefix: '/i18n/',
+                suffix: '.json'
+            })
         }),
-    provideEffects([productsEffects, WishlistEffects,CartEffects])
-],
+
+        providePrimeNG({
+            theme: {
+                preset: Aura,
+            },
+        }),
+        {
+            provide: BASE_URL,
+            useValue: environment.BaseUrl
+        },
+            provideStore({
+                products: productsReducer,
+                wishlist: wishlistReducer,
+                cart:cartReducer
+            }),
+        provideEffects([productsEffects, WishlistEffects,CartEffects])
+    ],
 };
