@@ -3,12 +3,15 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
+import { ChartModule } from 'primeng/chart';
 import { Router } from '@angular/router';
 import { CategoriesService, Category } from '../../../../core/services/categories/categories.service';
 import { InventoryService, LowStockProduct } from '../../../../core/services/inventory/inventory.service';
 import { ProductsService } from '../../../../core/services/products/products.service';
 import { StatisticsService } from '../../../../core/services/statistics/statistics.service';
 import { Product } from '../../../../core/interfaces/products/products.interface';
+
+import { ChartData, ChartOptions, ScriptableContext, TooltipItem } from 'chart.js';
 
 interface OrderStatus {
   label: string;
@@ -22,7 +25,7 @@ interface OrderStatus {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, CardModule, TagModule, ButtonModule],
+  imports: [CommonModule, CardModule, TagModule, ButtonModule, ChartModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -54,13 +57,17 @@ export class DashboardComponent implements OnInit {
     { label: 'Canceled', value: 19, percentage: '10%', color: 'bg-red-500', offset: 508.93, rotation: 324 },
   ];
 
-  monthlyPath = "M0,220 C100,200 150,260 200,210 C250,160 300,240 350,180 C400,120 450,220 500,140 C550,60 600,180 650,80 C700,50 750,150 800,100 C850,50 900,140 1000,110";
-  monthlyFill = "M0,220 C100,200 150,260 200,210 C250,160 300,240 350,180 C400,120 450,220 500,140 C550,60 600,180 650,80 C700,50 750,150 800,100 C850,50 900,140 1000,110 L1000,280 L0,280 Z";
+  chartData: ChartData<'line'> | undefined;
+  chartOptions: ChartOptions<'line'> | undefined;
   
-  weeklyPath = "M0,250 C100,100 200,180 300,120 C400,140 500,60 600,100 C700,40 800,90 900,30 1000,70";
-  weeklyFill = "M0,250 C100,100 200,180 300,120 C400,140 500,60 600,100 C700,40 800,90 900,30 1000,70 L1000,280 L0,280 Z";
+  doughnutData: ChartData<'doughnut'> | undefined;
+  doughnutOptions: ChartOptions<'doughnut'> | undefined;
+  
+  private rawRevenueData: { daily: number[], monthly: number[] } = { daily: [], monthly: [] };
 
   ngOnInit(): void {
+    this.initChartOptions();
+
     // Fetch Categories
     this.categoriesService.getCategories().subscribe({
       next: (res) => {
@@ -138,52 +145,214 @@ export class DashboardComponent implements OnInit {
             label: 'Canceled', 
             value: canceled, 
             percentage: total ? Math.round((canceled / total) * 100) + '%' : '0%', 
-            color: 'bg-red-50', // Matching the design color more closely if needed, but let's stick to consistent color names
+            color: 'bg-red-500',
             offset: this.calculateOffset(canceled, total),
             rotation: ((completed + inProgressTotal) / total) * 360
           },
         ];
 
-        // Ensure Canceled color is consistent with the palette
-        this.orderStatus[2].color = 'bg-red-500';
-
         // Update Revenue Charts
-        const dailyData = [...res.statistics.dailyRevenue].reverse().map(d => d.revenue);
-        const monthlyData = [...res.statistics.monthlyRevenue].reverse().map(d => d.revenue);
-
-        if (dailyData.length > 0) {
-          this.weeklyPath = this.generateSmoothPath(dailyData, 1000, 280);
-          this.weeklyFill = this.weeklyPath + " L1000,280 L0,280 Z";
-        }
-
-        if (monthlyData.length > 0) {
-          this.monthlyPath = this.generateSmoothPath(monthlyData, 1000, 280);
-          this.monthlyFill = this.monthlyPath + " L1000,280 L0,280 Z";
-        }
+        this.rawRevenueData.daily = [...res.statistics.dailyRevenue].reverse().map(d => d.revenue);
+        this.rawRevenueData.monthly = [...res.statistics.monthlyRevenue].reverse().map(d => d.revenue);
+        
+        this.updateChartData();
+        this.updateDoughnutData();
       }
     });
   }
 
-  private generateSmoothPath(data: number[], width: number, height: number): string {
-    if (!data.length) return "";
-    const max = Math.max(...data, 1);
-    const stepX = width / (data.length - 1);
-    
-    return data.reduce((path, val, i) => {
-      const x = i * stepX;
-      const y = height - (val / max) * (height * 0.8); // 0.8 to keep some padding at top
-      return i === 0 ? `M${x},${y}` : `${path} L${x},${y}`;
-    }, "");
+  private initChartOptions() {
+    this.initDoughnutOptions();
+    this.chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 0.6,
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false,
+          backgroundColor: '#A6252A',
+          titleColor: '#fff',
+          bodyColor: '#fff',
+          bodyFont: {
+            size: 13,
+            weight: 'bold'
+          },
+          padding: 12,
+          displayColors: false,
+          callbacks: {
+            label: (context: TooltipItem<'line'>) => {
+              const value = context.parsed.y ?? 0;
+              return ` Revenue: ${value.toLocaleString()} EGP`;
+            }
+          }
+        }
+      },
+      layout: {
+        padding: {
+          top: 20,
+          bottom: 30,
+          left: 10,
+          right: 10
+        }
+      },
+      scales: {
+        x: {
+          display: true,
+          position: 'bottom',
+          grid: {
+            display: false,
+          },
+          border: {
+            display: false
+          },
+          ticks: {
+            color: '#A1A1AA',
+            padding: 10,
+            font: {
+              size: 11,
+              weight: 600
+            }
+          }
+        },
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: '#F4F4F5',
+            drawTicks: false,
+          },
+          border: {
+            display: false
+          },
+          ticks: {
+            color: '#D4D4D8',
+            maxTicksLimit: 8,
+            padding: 10,
+            font: {
+              weight: 'bold',
+              size: 10
+            },
+            callback: (value: number | string) => {
+              const numValue = typeof value === 'string' ? parseFloat(value) : value;
+              if (numValue >= 1000000) return (numValue / 1000000).toFixed(1) + 'M';
+              if (numValue >= 1000) return (numValue / 1000) + 'k';
+              return numValue;
+            }
+          }
+        }
+      },
+      elements: {
+        line: {
+          tension: 0.4,
+          cubicInterpolationMode: 'monotone'
+        },
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 6,
+          hoverBackgroundColor: '#A6252A',
+          hoverBorderColor: '#fff',
+          hoverBorderWidth: 2
+        }
+      }
+    };
+  }
+
+  private updateChartData() {
+    const isMonthly = this.revenueView === 'Monthly';
+    const data = isMonthly ? this.rawRevenueData.monthly : this.rawRevenueData.daily;
+    const labels = isMonthly 
+      ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].slice(0, data.length)
+      : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].slice(0, data.length);
+
+    this.chartData = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Revenue',
+          data: data,
+          fill: true,
+          borderColor: '#A6252A',
+          borderWidth: 3,
+          backgroundColor: (context: ScriptableContext<'line'>) => {
+            const chart = context.chart;
+            const { ctx, chartArea } = chart;
+            if (!chartArea) return undefined;
+            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            gradient.addColorStop(0, 'rgba(166, 37, 42, 0.45)');
+            gradient.addColorStop(1, 'rgba(166, 37, 42, 0)');
+            return gradient;
+          }
+        }
+      ]
+    };
+  }
+
+  private updateDoughnutData() {
+    this.doughnutData = {
+      labels: this.orderStatus.map(s => s.label),
+      datasets: [
+        {
+          data: this.orderStatus.map(s => s.value),
+          backgroundColor: ['#00BC7D', '#2B7FFF', '#EF4444'], 
+          hoverBackgroundColor: ['#00A36C', '#1E6CEB', '#DA3131'],
+          borderWidth: 0,
+          spacing: 2
+        }
+      ]
+    };
+  }
+
+  private initDoughnutOptions() {
+    this.doughnutOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '70%',
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          padding: 12,
+          cornerRadius: 8,
+          titleFont: {
+            size: 14,
+            weight: 'bold'
+          },
+          bodyFont: {
+            size: 13
+          },
+          callbacks: {
+            label: (context: TooltipItem<'doughnut'>) => {
+              const label = context.label || '';
+              const value = (context.parsed as number) || 0;
+              const datasetData = context.dataset.data as number[];
+              const total = datasetData.reduce((a: number, b: number) => a + b, 0);
+              const percentage = Math.round((value / total) * 100) + '%';
+              return ` ${label}: ${value} (${percentage})`;
+            }
+          }
+        }
+      },
+      animation: {
+        animateRotate: true,
+        animateScale: true
+      }
+    };
   }
 
   private calculateOffset(count: number, total: number): number {
-    if (!total) return 565.48;
-    const circumference = 565.48;
-    return circumference - ((count / total) * circumference);
+    if (!total) return 0;
+    return (count / total) * 100;
   }
 
   setRevenueView(view: 'Monthly' | 'Weekly') {
     this.revenueView = view;
+    this.updateChartData();
   }
 
   viewAllCategories() {

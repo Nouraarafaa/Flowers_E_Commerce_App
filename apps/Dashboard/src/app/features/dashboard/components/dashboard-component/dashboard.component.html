@@ -45,37 +45,27 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       
       <!-- Orders Status -->
-      <div class="bg-white p-8 rounded-3xl shadow-sm border border-transparent lg:col-span-1 flex flex-col">
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-transparent lg:col-span-1 flex flex-col overflow-hidden">
         <h2 class="text-2xl font-black text-zinc-900 text-center mb-8">Orders Status</h2>
         
-        <div class="flex items-center justify-center relative my-4">
-          <svg class="w-60 h-60 transform -rotate-90">
-              <circle cx="120" cy="120" r="90" stroke="#F4F4F5" stroke-width="40" fill="transparent" />
+        <div class="flex items-center justify-center relative my-4 h-60">
+           <p-chart type="doughnut" [data]="doughnutData" [options]="doughnutOptions" styleClass="w-60 h-60"></p-chart>
+           
+           <!-- Floating Percentage Labels on Chart -->
+           <div class="absolute inset-0 pointer-events-none">
               @for (status of orderStatus; track status.label) {
-                <circle cx="120" cy="120" r="90" 
-                        [attr.stroke]="status.color.includes('emerald') ? '#00BC7D' : status.color.includes('blue') ? '#2B7FFF' : '#EF4444'" 
-                        stroke-width="40" fill="transparent" 
-                        stroke-dasharray="565.48" 
-                        [attr.stroke-dashoffset]="status.offset"
-                        [style.transform]="'rotate(' + status.rotation + 'deg)'"
-                        style="transform-origin: center; transition: all 0.5s ease;"></circle>
+                @if (status.value > 0) {
+                  <div class="absolute size-10 bg-white/90 rounded-full shadow-md flex items-center justify-center text-[10px] font-black text-zinc-800 border border-zinc-50 transition-all duration-700"
+                       [ngClass]="{
+                         'top-[20%] left-[20%]': status.label === 'Completed',
+                         'bottom-[20%] left-[22%]': status.label === 'In progress',
+                         'top-[22%] right-[20%]': status.label === 'Canceled'
+                       }">
+                    {{ status.percentage }}
+                  </div>
+                }
               }
-          </svg>
-          <!-- Chart Labels -->
-          <div class="absolute inset-0 pointer-events-none">
-             @for (status of orderStatus; track status.label) {
-               @if (status.percentage !== '0%') {
-                 <div class="absolute size-10 bg-white/90 rounded-full shadow-md flex items-center justify-center text-[10px] font-black text-zinc-800 border border-zinc-50 transition-all duration-700"
-                      [ngClass]="{
-                        'top-[20%] left-[20%]': status.label === 'Completed',
-                        'bottom-[20%] left-[20%]': status.label === 'In progress',
-                        'top-[22%] right-[15%]': status.label === 'Canceled'
-                      }">
-                   {{ status.percentage }}
-                 </div>
-               }
-             }
-          </div>
+           </div>
         </div>
         
         <div class="space-y-4 px-2 mt-8">
@@ -92,7 +82,7 @@
       </div>
 
       <!-- Revenue -->
-      <div class="bg-white p-8 rounded-3xl shadow-sm border border-transparent lg:col-span-2">
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-transparent lg:col-span-2 overflow-hidden">
         <div class="flex justify-between items-center mb-10">
            <h2 class="text-xl font-black text-zinc-800">Revenue</h2>
            <div class="flex gap-4 items-center">
@@ -101,33 +91,8 @@
            </div>
         </div>
         
-        <div class="h-[320px] relative w-full px-2">
-           <div class="absolute left-0 top-0 h-[280px] flex flex-col justify-between text-[11px] text-zinc-300 font-black">
-              <span>5000</span><span>4000</span><span>3000</span><span>2000</span><span>1000</span><span>0</span>
-           </div>
-           <div class="ml-12 h-[280px] border-l border-b border-zinc-50 relative group">
-              <svg class="w-full h-full" viewBox="0 0 1000 280" preserveAspectRatio="none">
-                 <defs>
-                   <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                     <stop offset="0%" style="stop-color:rgba(166, 37, 42, 0.45);stop-opacity:1" />
-                     <stop offset="100%" style="stop-color:rgba(166, 37, 42, 0);stop-opacity:1" />
-                   </linearGradient>
-                 </defs>
-                 <path [attr.d]="revenueView === 'Monthly' ? monthlyFill : weeklyFill" fill="url(#chartGrad)" class="transition-all duration-500" />
-                 <path [attr.d]="revenueView === 'Monthly' ? monthlyPath : weeklyPath" fill="none" stroke="#A6252A" stroke-width="3" stroke-linejoin="round" class="transition-all duration-500" />
-                 
-                 @if (revenueView === 'Monthly') {
-                 <g>
-                    <circle cx="650" cy="80" r="6" fill="#A6252A" class="animate-pulse" />
-                    <rect x="620" y="45" width="70" height="26" rx="6" fill="#A6252A" />
-                    <text x="655" y="62" fill="white" font-size="11" font-weight="900" text-anchor="middle">4500 EGP</text>
-                 </g>
-                 }
-              </svg>
-              <div class="absolute bottom-[-30px] w-full flex justify-between text-[11px] text-zinc-400 font-bold px-4">
-                <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span>
-              </div>
-           </div>
+        <div class="h-[320px] w-full px-2 relative">
+           <p-chart type="line" [data]="chartData" [options]="chartOptions" styleClass="h-full w-full"></p-chart>
         </div>
       </div>
     </div>
@@ -140,7 +105,13 @@
         <h2 class="text-xl font-black text-zinc-800 mb-8">Top Selling Products</h2>
         <div class="space-y-3 overflow-y-auto pr-2 custom-scrollbar">
           @for (prod of topSellingProducts; track $index) {
-          <div class="flex justify-between items-center p-4 rounded-xl transition-all hover:translate-x-1" [ngClass]="{'bg-amber-50/50 border border-amber-100/50': $index === 0, 'bg-zinc-50 border border-zinc-100/50': $index !== 0}">
+          <div class="flex justify-between items-center p-4 rounded-xl transition-all hover:translate-x-1" 
+               [ngClass]="{
+                 'bg-amber-50/50 border border-amber-100/50': $index === 0,
+                 'bg-slate-50/50 border border-slate-200/50': $index === 1,
+                 'bg-orange-50/50 border border-orange-100/50': $index === 2,
+                 'bg-zinc-50 border border-zinc-100/50': $index > 2
+               }">
              <div class="flex items-center gap-2 overflow-hidden">
                 <span class="font-bold text-zinc-800 text-sm whitespace-nowrap overflow-hidden text-ellipsis">{{ prod.title }}</span>
                 <span class="text-[11px] text-zinc-400 font-bold whitespace-nowrap">({{ prod.price | number }} EGP)</span>
