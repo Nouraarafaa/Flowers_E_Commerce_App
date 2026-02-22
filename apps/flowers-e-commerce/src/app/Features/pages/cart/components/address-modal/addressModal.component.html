@@ -1,0 +1,83 @@
+<p-dialog styleClass="dark:bg-zinc-800!" [modal]="true" [(visible)]="visible" [style]="{ width: '850px' }" closable="false">
+    <!-- for show first modal that contains user Addresses -->
+    @if (dialogType == 'My addresses') {
+        <app-user-addresses
+        [dialogTypeInput]="dialogType"
+        [userAddressesInput]="(localAddresses() | async)!"
+        (addAddressClicked)="addNewAddress()"
+        (editAddressClicked)="editAddress($event)"
+        (deleteAddressClicked)="deleteAddress($event)"
+        ></app-user-addresses>
+    
+    }
+
+    <!-- for show Add a new address modal OR show Update address info modal -->
+
+    @if(dialogType == 'Add a new address' || dialogType == 'Update address info') {
+    <header class="font-bold text-3xl text-zinc-800 mt-6 dark:text-white">{{dialogType}}</header>
+    <p-steps [activeIndex]="active" [model]="items" />
+    <!-- active = 0 show the form -->
+    @if (active == 0) {
+    <div class="mb-16">
+        <h3 class="font-Primary text-2xl text-maroon-600 font-medium pb-3 border-b border-zinc-200 mb-4 dark:text-soft-pink-300">Enter address
+            details</h3>
+        <form [formGroup]="addressForm" (ngSubmit)="addressFormSubmit()">
+            <div class="font-inter mb-4">
+                @let cityControl = addressForm.get("city");
+                <label for="city" class="font-medium text-sm text-zinc-800 mb-1.5">City</label>
+                <app-form-input formControlName="city" id="city" type="text" [nameControl]="cityControl"
+                    placeholder="Enter city name"></app-form-input>
+                <app-error-message [nameControl]="cityControl"></app-error-message>
+            </div>
+            <div class="font-inter mb-4">
+                @let addressControl = addressForm.get("street");
+                <label for="address" class="font-medium text-sm text-zinc-800 mb-1.5">Address</label>
+                <textarea type="text" id="address" formControlName="street"
+                    class="bg-white w-full h-36 resize-none border border-zinc-300 rounded-[10px] p-4 placeholder:text-zinc-400 placeholder:text-sm focus:outline-0"
+                    placeholder="Enter your full address" name="address" [class]="{
+                        'border-[#7A1D1D]': !addressControl?.invalid || !addressControl?.touched || !addressControl?.dirty,
+                        'border-[#F04438]': addressControl?.invalid && (addressControl?.touched || addressControl?.dirty)
+                    }"></textarea>
+                <app-error-message [nameControl]="addressControl"></app-error-message>
+            </div>
+            <div class="font-inter mb-4">
+                @let phoneControl = addressForm.get("phone");
+                <label for="phone" class="font-medium text-sm text-zinc-800 mb-1.5">Phone</label>
+                <app-form-input formControlName="phone" id="phone" type="tel" [nameControl]="phoneControl"
+                    placeholder="Enter phone number"></app-form-input>
+                <app-error-message [nameControl]="phoneControl"></app-error-message>
+
+            </div>
+
+            <app-button label="Next" type="submit" [loading]="isCallingAPI()" [parentForm]="addressForm"></app-button>
+
+        </form>
+    </div>
+    }
+    
+    <!-- active = 1 show the Google map -->
+    @if (active == 1) {
+    <div class="flex items-center gap-4 border-b pb-3 border-zinc-200">
+        <button class="size-9 rounded-full bg-maroon-600 flex items-center justify-center text-white cursor-pointer"
+            (click)="active = 0">
+            <i class="pi pi-arrow-left"></i>
+        </button>
+        <h4 class="font-medium text-2xl text-maroon-600 dark:text-soft-pink-300">Find Your Location</h4>
+    </div>
+    <div class="map-container mt-4 mb-14 relative">
+        <google-map width="100%" height="100%" [options]="mapOptions" (mapClick)="onMapClick($event)">
+            <map-marker [position]="marker"></map-marker>
+        </google-map>
+        <button
+            class="bg-white border border-maroon-600 py-2.5 px-3.5 rounded-[10px] font-mulish text-maroon-600 
+            text-sm font-semibold flex items-center gap-2 absolute top-2.5 end-15 cursor-pointer hover:bg-maroon-50 transition-all duration-300"
+            (click)="getUserLocation()">
+            <i class="pi pi-map-marker"></i>
+            <span>Find My Location</span>
+        </button>
+    </div>
+    <app-button class="mt-6" [label]="dialogType == 'Add a new address' ? 'Add Address' : 'Update Address'" (buttonClick)="saveAddress()" [loading]="isCallingAPI()"></app-button>
+    }
+
+    }
+</p-dialog>

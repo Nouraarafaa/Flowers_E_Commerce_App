@@ -1,0 +1,49 @@
+<div class="flex justify-between items-center mt-6 font-Primary border-b pb-4 border-zinc-200">
+        <header class="font-bold text-3xl text-zinc-800 dark:text-white">{{dialogTypeInput()}}</header>
+        @if (userAddressesInput()?.length != 0) {
+        <button class="cursor-pointer py-3.5 px-4 bg-maroon-50 rounded-[10px] font-medium text-maroon-600"
+            (click)="onAddNewAddress()">Add a New Address</button>
+        }
+    </div>
+    <div class="flex flex-col gap-9">
+        @for (address of userAddressesInput(); track $index) {
+        <div
+            class="relative border border-zinc-300 px-5 py-3.5 rounded-xl font-Primary cursor-pointer hover:border-maroon-600 transition-all duration-300 dark:hover:border-soft-pink-300">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center gap-3 justify-center">
+                    <div class="size-8.25 rounded-full bg-emerald-500 flex justify-center items-center">
+                        <i class="pi pi-map-marker text-white!"></i>
+                    </div>
+                    <h3 class="font-semibold text-2xl text-zinc-800 dark:text-white">{{address.city}}</h3>
+
+                </div>
+                <div class="flex gap-1.5 items-center justify-center dark:text-white">
+                    <i class="pi pi-phone"></i>
+                    <span class="font-medium text-lg text-zinc-500 dark:text-white">+2{{address.phone}}</span>
+                </div>
+
+            </div>
+            <p class="font-medium text-zinc-800 mt-1.5 bg-zinc-100 rounded-full py-1 px-3 inline-block">
+                {{address.street}}
+            </p>
+
+            <!-- div for edit address -->
+            <div class="size-8.25 rounded-full border border-zinc-400 flex justify-center items-center absolute end-0 translate-1/2 top-0 bg-white hover:bg-zinc-50 cursor-pointer"
+                (click)="onEditAddress(address)">
+                <i class="pi pi-pencil"></i>
+            </div>
+            <!-- div for delete address -->
+            <div class="size-8.25 rounded-full flex justify-center items-center absolute end-0 translate-1/2 bottom-8 bg-red-600 hover:bg-red-500 cursor-pointer text-white"
+                (click)="onDeleteAddress(address._id)">
+                <i class="pi pi-trash"></i>
+            </div>
+
+        </div>
+
+        }@empty {
+        <button class="py-3.5 px-4 bg-maroon-50 rounded-[10px] font-medium text-maroon-600"
+            (click)="onAddNewAddress()">Add a New Address</button>
+        }
+
+
+    </div>

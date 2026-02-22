@@ -1,5 +1,5 @@
 <div class="bg-maroon-50 flex justify-between items-center px-5">
-    <img src="/Images/logo.png" (click)="openDrawer()" class="w-[85px] cursor-pointer" alt="logo">
+    <img src="/Images/logo.png" (click)="openDrawer()" class="w-21.25 cursor-pointer" alt="logo">
     <a class="cursor-pointer" (click)="openDrawer()"><i class="pi pi-bars"
             style="color: maroon; font-size: 25px;"></i></a>
 </div>
@@ -9,7 +9,7 @@
             <div class="flex flex-col h-full">
                 <div class="flex items-center justify-between px-6 pt-4 shrink-0">
                     <span>
-                        <img src="/Images/logo.png" class="w-[85px] border-maroon-700" alt="logo">
+                        <img src="/Images/logo.png" class="w-21.25 border-maroon-700" alt="logo">
                     </span>
                     <div>
                         @if (userLoggedSideBar()) {
@@ -45,13 +45,15 @@
                                         navLinkName="My Addresses"></app-nav-link-side-bar>
                                 </li>
                                 <li class="hover-side-bar">
-                                    <app-nav-link-side-bar type="svg" pageNameSideBar="/myorders"
+                                    <app-nav-link-side-bar type="svg" pageNameSideBar="/allOrders"
                                         navLinkName="My Orders"></app-nav-link-side-bar>
                                 </li>
-                                <li class="hover-side-bar">
+                                @if (userRoleSideBar()=='admin') {
+                                    <li class="hover-side-bar">
                                     <app-nav-link-side-bar type="normal" pageNameSideBar="/dashboard"
                                         iconNameSideBar="pi-cog" navLinkName="Dashboard"></app-nav-link-side-bar>
                                 </li>
+                                }
                                 }
                                 <li class="hover-side-bar">
                                     <app-nav-link-side-bar [userStatusSidebar]="userLoggedSideBar()? 'logged':'' "
@@ -100,7 +102,7 @@
     [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
     <ng-template #header>
         <div class="inline-flex items-center justify-center gap-2">
-            <img src="/Images/logo.png" class="w-[85px] border-maroon-700" alt="logo">
+            <img src="/Images/logo.png" class="w-21.25 border-maroon-700" alt="logo">
         </div>
     </ng-template>
     <ng-template #closeicon>

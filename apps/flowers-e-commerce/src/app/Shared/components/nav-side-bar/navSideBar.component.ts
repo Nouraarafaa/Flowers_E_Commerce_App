@@ -27,6 +27,7 @@ export class NavSideBarComponent implements OnInit {
   lastNameSideBar = input.required<string>();
   userPhotoSideBar = input.required<string>();
   userCitySideBar = input.required<string>();
+  userRoleSideBar = input.required<string>();
   wihlistItemsSideBar = input.required<number>();
   cartItemsSideBar = input.required<number>();
   notificationNumSideBar = input.required<number>();

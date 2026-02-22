@@ -3,21 +3,21 @@ import { ProductListComponent } from "../product-list/productList.component";
 import { Product } from '../../../../../Shared/interfaces/product';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { ProductFiltersComponent } from "../product-filters-section/productFilters.component";
-import { HomeService } from 'apps/flowers-e-commerce/src/app/Shared/services/home/home.service';
-import { Category, Occasion } from 'apps/flowers-e-commerce/src/app/Shared/interfaces/HomeResponse/home-response';
+import { HomeService } from '../../../../../Shared/services/home/home.service';
+import { Category, Occasion } from '../../../../../Shared/interfaces/HomeResponse/home-response';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { loadProducts, setLoading } from './../../../../../Core/store/products/products.actions';
-import { selectFilteredProducts, selectLoading } from 'apps/flowers-e-commerce/src/app/Core/store/products/products.selectors';
+import { loadProducts, setLoading } from '../../../../../Core/store/products/products.actions';
+import { selectFilteredProducts, selectLoading } from '../../../../../Core/store/products/products.selectors';
 import { SkeletonListComponent } from "../skeleton-list/skeletonList.component";
 import { AsyncPipe } from '@angular/common';
-
-
+import { DrawerModule } from 'primeng/drawer';
+import { ButtonModule } from 'primeng/button';
 
 
 @Component({
   selector: 'app-products',
-  imports: [ProductListComponent, PaginatorModule, ProductFiltersComponent, SkeletonListComponent, AsyncPipe],
+  imports: [ProductListComponent, PaginatorModule, ProductFiltersComponent, SkeletonListComponent, AsyncPipe, DrawerModule, ButtonModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -30,6 +30,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   categories = signal<Category[]>([]);
   occasions = signal<Occasion[]>([]);
   products = signal<Product[]>([]);
+  visibleFilters = signal(false);
 
   getHomeDetailsSub!: Subscription;
   getProductsSub!: Subscription;
@@ -40,10 +41,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
   // displayedProduct=>current products page
   displayedProducts = signal<Product[]>([]);
   // 'first':first product index
-  first: number = 0;
+  first = 0;
   // 'rows': number of current products page 
-  rows: number = 10;
-  totalRecords: number = 0; // totalItems from API
+  rows = 10;
+  totalRecords = 0; // totalItems from API
 
 
 
@@ -72,9 +73,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this._store.dispatch(setLoading({ Loading: false }));
           this.products.set(res);
-        },2000)
+        }, 2000)
         this.fullProducts.set(res);
         this.totalRecords = res.length;
+        this.first = 0; // Reset to first page on filter/sort change
         this.paginateProducts(this.first, this.rows);
       }
     });
@@ -89,8 +91,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.displayedProducts.set(productsOnPage);
   }
   onPageChange(event: PaginatorState) {
-    this.first = event.first!;
-    this.rows = event.rows!;
+    this.first = event.first ?? 0;
+    this.rows = event.rows ?? 10;
 
     this.paginateProducts(this.first, this.rows);
   }

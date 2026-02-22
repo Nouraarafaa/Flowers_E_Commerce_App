@@ -1,0 +1,252 @@
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sarabun&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+@font-face {
+  src: url(../public/fonts/edwardianscriptitc.ttf);
+  font-family: 'Edwardian Script';
+}
+
+@import 'primeicons/primeicons.css';
+:root {
+  --maroon-800: #501419;
+  --maroon-700: #741c21;
+  --maroon-600: #a6252a;
+  --maroon-500: #cd2e33;
+  --maroon-50: #fbeaea;
+  --zinc-800: #27272a;
+  --zinc-700: #3f3f46;
+  --zinc-600: #52525b;
+  --zinc-500: #71717a;
+  --zinc-400: #a1a1aa;
+  --zinc-300: #d4d4d8;
+  --zinc-200: #e4e4e7;
+  --zinc-100: #f4f4f5;
+  --zinc-50: #fafafa;
+  --soft-pink-500: #ff668b;
+  --soft-pink-500: #ff668b;
+  --soft-pink-300: #ffa3b9;
+  --soft-pink-200: #ffc2d0;
+  --soft-pink-50: #fff1f5;
+  --red-600: #dc2626;
+  --red-500: #ef4444;
+  --blue-600: #155dfc;
+  --blue-500: #2b7fff;
+  --blue-400: #50a2ff;
+  --yellow-star: #fba707;
+  --yellow-600: #ca8a04;
+  --emerald-500: #00bc7d;
+  --inter: 'Inter', sans-serif;
+  --zain: 'Zain', sans-serif;
+  --mulish: 'Mulish', sans-serif;
+  --open-sans: 'Open Sans', sans-serif;
+  --Edwardian: 'Edwardian Script';
+  --Sarabun: 'Sarabun', sans-serif;
+  --Nunito: "Nunito Sans", sans-serif;
+  --p-rating-icon-hover-color: #fba707 !important;
+  --p-rating-icon-active-color: #fba707 !important;
+  --p-tooltip-background: #741c21 !important;
+  --p-tooltip-text-color: #fbeaea !important;
+
+  --13px: 13px;
+  --16px: 16px;
+  --title-line: #ffe0e7;
+  --phone-icon-color:white;
+  --p-dialog-header-padding: 0 !important;
+  
+}
+
+@theme {
+  --color-maroon-500: var(--maroon-500);
+  --color-maroon-600: var(--maroon-600);
+  --color-maroon-700: var(--maroon-700);
+  --color-maroon-800: var(--maroon-800);
+  --color-maroon-50: var(--maroon-50);
+  --color-zinc-800: var(--zinc-800);
+  --color-zinc-700: var(--zinc-700);
+  --color-zinc-600: var(--zinc-600);
+  --color-zinc-500: var(--zinc-500);
+  --color-zinc-400: var(--zinc-400);
+  --color-zinc-300: var(--zinc-300);
+  --color-zinc-200: var(--zinc-200);
+  --color-zinc-100: var(--zinc-100);
+  --color-zinc-50: var(--zinc-50);
+  --color-soft-pink-500: var(--soft-pink-500);
+  --color-soft-pink-300: var(--soft-pink-300);
+  --color-soft-pink-200: var(--soft-pink-200);
+  --color-soft-pink-50: var(--soft-pink-50);
+  --color-red-600: var(--red-600);
+  --color-red-500: var(--red-500);
+  --color-blue-600: var(--blue-600);
+  --color-blue-500: var(--blue-500);
+  --color-blue-400: var(--blue-400);
+  --color-yellow-star: var(--yellow-star);
+  --color-yellow-600: var(--yellow-600);
+  --color-emerald-500: var(--emerald-500);
+
+  --font-inter: var(--inter);
+  --font-zain: var(--zain);
+  --font-mulish: var(--mulish);
+  --font-open-sans: var(--open-sans);
+  --font-Edwardian: var(--Edwardian);
+  --font-Sarabun: var(--Sarabun);
+  --font-Primary: var(--Sarabun);
+  --font-Nunito: var(--Nunito);
+
+  --text-13px: var(--13px);
+  --text-16px: var(--16px);
+  
+}
+body {
+  font-family: var(--font-Sarabun);
+}
+html.dark {
+  --title-line: #3f3f46;
+  --phone-icon-color:white;
+  body {
+  @apply bg-zinc-800 ;
+}
+}
+
+
+
+
+.nav-icon {
+  @apply absolute text-white text-[10px] text-center font-medium top-[-5px] end-[-5px]  w-3.5 h-3.5 rounded-full bg-red-600;
+}
+.hover-side-bar {
+  @apply hover:bg-maroon-50 duration-300 hover:m-2.5 rounded-lg;
+}
+.side-bar-link {
+  @apply flex items-center cursor-pointer p-4;
+}
+.price-filter-input {
+  @apply w-full focus:border-maroon-500 focus:border-2 outline-0 text-maroon-700 rounded-[10px] border border-zinc-300 p-4 mt-1.5 placeholder:text-zinc-400 placeholder:font-inter placeholder:text-sm dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-100;
+}
+.reset-button-filter {
+  @apply disabled:bg-zinc-200 disabled:text-zinc-800 disabled:cursor-not-allowed cursor-pointer hover:bg-maroon-50/55 duration-300 py-2.5 px-4 bg-maroon-50 text-maroon-600 font-semibold font-mulish text-sm w-full rounded-[10px] flex items-center justify-center gap-2.5;
+}
+.wishlist-and-cart-title{
+  @apply font-bold text-5xl text-zinc-800 text-nowrap dark:text-white;
+}
+.products-num-wishlist-and-cart {
+  @apply font-medium text-base text-zinc-400;
+}
+.minus-plus-btn{
+  @apply p-3.5 cursor-pointer rounded-[10px] bg-maroon-50 text-maroon-600  hover:bg-maroon-50/50 transition-all duration-300;
+}
+.wishlist-and-cart-title{
+  @apply font-bold text-5xl text-zinc-800 text-nowrap dark:text-white;
+}
+.products-num-wishlist-and-cart {
+  @apply font-medium text-base text-zinc-400;
+}
+.minus-plus-btn{
+  @apply p-3.5 cursor-pointer rounded-[10px] bg-maroon-50 text-maroon-600  hover:bg-maroon-50/50 transition-all duration-300;
+}
+.location-text::before {
+  content: 'Deliver to:';
+  color: var(--color-zinc-500);
+  font-size: 14px;
+  position: absolute;
+  top: -17px;
+}
+.p-dialog-mask {
+  z-index: 10000 !important;
+}
+
+// Global dark mode button styles
+html.dark {
+  // PrimeNG buttons
+  .p-button {
+    background-color: var(--color-soft-pink-300) !important;
+    color: var(--color-zinc-900) !important;
+    border-color: var(--color-soft-pink-300) !important;
+    font-weight: 500;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--color-soft-pink-200) !important;
+      border-color: var(--color-soft-pink-200) !important;
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(255, 102, 139, 0.25) !important;
+    }
+  }
+  
+  // Secondary/outlined buttons in dark mode
+  .p-button-outlined {
+    background-color: transparent !important;
+    color: var(--color-soft-pink-300) !important;
+    border-color: var(--color-soft-pink-300) !important;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--color-soft-pink-300) !important;
+      color: var(--color-zinc-900) !important;
+    }
+  }
+  
+  // Text buttons in dark mode
+  .p-button-text {
+    background-color: transparent !important;
+    color: var(--color-soft-pink-300) !important;
+    
+    &:hover:not(:disabled) {
+      background-color: rgba(255, 163, 185, 0.1) !important;
+    }
+  }
+  
+  // Custom button classes
+  button:not(.p-button) {
+    &.bg-maroon-600,
+    &.bg-maroon-700,
+    &.bg-maroon-500 {
+      background-color: var(--color-soft-pink-300) !important;
+      color: var(--color-zinc-900) !important;
+      
+      &:hover:not(:disabled) {
+        background-color: var(--color-soft-pink-200) !important;
+      }
+    }
+  }
+  
+  // Reset button filter dark mode
+  .reset-button-filter {
+    background-color: var(--color-soft-pink-300) !important;
+    color: var(--color-zinc-900) !important;
+    
+    &:hover:not(:disabled) {
+      background-color: var(--color-soft-pink-200) !important;
+    }
+    
+    &:disabled {
+      background-color: var(--color-zinc-700) !important;
+      color: var(--color-zinc-500) !important;
+    }
+  }
+
+  // PrimeNG Select Overlay Dark Mode
+  .p-select-overlay {
+    background-color: var(--zinc-800) !important;
+    border-color: var(--zinc-700) !important;
+    color: var(--zinc-100) !important;
+    
+    .p-select-option {
+      color: var(--zinc-100) !important;
+      
+      &:hover {
+        background-color: var(--zinc-700) !important;
+      }
+      
+      &.p-select-option-selected {
+        background-color: var(--maroon-700) !important;
+        color: white !important;
+      }
+    }
+
+    .p-select-list-container {
+        background-color: var(--zinc-800) !important;
+    }
+  }
+}
+
+

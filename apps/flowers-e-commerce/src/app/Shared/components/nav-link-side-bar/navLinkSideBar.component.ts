@@ -2,6 +2,7 @@ import { Component, EventEmitter, input, Output} from '@angular/core';
 import { Ripple } from 'primeng/ripple';
 import { NavIconComponent } from "../nav-icon/navIcon.component";
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../Core/environments/environment';
 
 @Component({
   selector: 'app-nav-link-side-bar',
@@ -16,6 +17,7 @@ export class NavLinkSideBarComponent {
   itemsCheckSideBar=input<number>();
   navLinkName=input.required<string>();
   userStatusSidebar=input<string>();
+  dashboardUrl = environment.dashboardUrl;
   @Output() clicked = new EventEmitter<void>();
 
   onClick() {

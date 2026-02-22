@@ -28,6 +28,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   lastName: string = '';
   userPhoto: string = '';
   userCity: string = '';
+  userRole: string = '';
   wihlistItems: number = 0;
   cartItems: number = 0;
   notificationNum: number = 0;
@@ -73,6 +74,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
         this.firstName = res.user.firstName;
         this.lastName = res.user.lastName;
         this.userPhoto = res.user.photo;
+        this.userRole = res.user.role;
 
       }
     })
