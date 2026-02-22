@@ -1,3 +1,15 @@
 <div class="confirmDialog">
-    <p-confirmDialog></p-confirmDialog>
+    <p-confirmDialog key="globalConfirm">
+        <ng-template pTemplate="message" let-message>
+            <div class="text-center flex flex-col items-center">
+                <img src="/Images/delete-Icon.png" alt="delete-Icon" class="my-3">
+                <p class="text-lg font-semibold">
+                    {{ message.message.main }}
+                </p>
+                <p class="text-red-500 text-sm mt-2">
+                    {{ message.message.sub }}
+                </p>
+            </div>
+        </ng-template>
+    </p-confirmDialog>
 </div>

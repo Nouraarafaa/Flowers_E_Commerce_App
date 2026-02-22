@@ -30,7 +30,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   private destroy$ = new Subject<void>();
   private readonly _router = inject(Router);
-  private  _confirmDialogService = inject(ConfirmDialogService);
+  private readonly _confirmDialogService = inject(ConfirmDialogService);
 
   userPhoto!: string;
   selectedFile!: File;
@@ -161,9 +161,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   }
   
 
-
-  deleteAccount(): void {
-
+  private deleteAccount(): void {
     this.errorMsg.set("");
     this._authService.deleteMyAccount()
     .pipe(takeUntil(this.destroy$),

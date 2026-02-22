@@ -10,21 +10,23 @@ export class ConfirmDialogService {
 
   private readonly confirmationService = inject(ConfirmationService);
 
-
-    confirm(options: {
+  confirm(options: {
     message: string;
     subMessage?: string;
-    onAccept: () => void;
     acceptLabel?: string;
     rejectLabel?: string;
+    onAccept: () => void;
   }): void {
     this.confirmationService.confirm({
-      message: options.message, 
+      key: 'globalConfirm',
+      message: {
+        main: options.message,
+        sub: options.subMessage
+      } as any,
       header: '',
-      icon: 'pi pi-trash',
       closable: true,
       closeOnEscape: true,
-      dismissableMask: false,
+      dismissableMask: true,
       rejectButtonProps: {
         label: options.rejectLabel || 'Cancel',
         severity: 'secondary',
@@ -37,6 +39,5 @@ export class ConfirmDialogService {
       accept: options.onAccept
     });
   }
-
 
 }
