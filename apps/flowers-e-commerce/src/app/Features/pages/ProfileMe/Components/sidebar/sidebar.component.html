@@ -1,20 +1,21 @@
-<div class="bg-zinc-50 dark:bg-zinc-800 rounded-2xl p-4 h-[600px] flex flex-col justify-between border border-zinc-100 dark:border-zinc-700">
-    <div class="flex flex-col gap-2">
-        <a routerLink="update-profile" routerLinkActive="bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900" 
-           class="flex items-center gap-3 py-3.5 px-5 rounded-xl text-zinc-600 dark:text-zinc-400 font-medium transition-all hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-200">
-            <i class="pi pi-user text-lg"></i>
-            <span>My Account</span>
-        </a>
+<section>
+    <h2 class="font-bold text-3xl">Update Profile</h2>
+
+    <div class="flex flex-col justify-between h-screen mt-10 p-4 rounded-lg bg-zinc-100">
+
+        <div class="flex flex-col gap-3">
+            <a routerLink="update-profile" routerLinkActive="bg-zinc-800 text-white" class="cursor-pointer py-3 px-4 rounded-xl gap-2.5">
+                My Account
+            </a>
+            
+            <a routerLink="change-password" routerLinkActive="bg-zinc-800 text-white" class="cursor-pointer py-3 px-4 rounded-xl gap-2.5">
+                Change Password
+            </a>
+        </div>
         
-        <a routerLink="change-password" routerLinkActive="bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900" 
-           class="flex items-center gap-3 py-3.5 px-5 rounded-xl text-zinc-600 dark:text-zinc-400 font-medium transition-all hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-200">
-            <i class="pi pi-lock text-lg"></i>
-            <span>Change Password</span>
-        </a>
+        <a class="text-maroon-500 cursor-pointer" (click)="onClick()">Logout</a>
+        
     </div>
-    
-    <button (click)="onClick()" class="flex items-center gap-3 py-3.5 px-5 rounded-xl text-red-500 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 transition-all font-medium w-full mt-auto">
-        <i class="pi pi-sign-out text-lg"></i>
-        <span>Logout</span>
-    </button>
-</div>
+
+
+</section>
