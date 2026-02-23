@@ -11,10 +11,11 @@ import {
 import { AuthService } from '@elevate-workspace/auth';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMessageComponent } from '../../../../Shared/components/ui/error-message/error-message.component';
-import { finalize, Subject, switchMap, takeUntil } from 'rxjs';
+import { delay, finalize, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { AuthStatusComponent } from "../../../../Shared/components/ui/auth-status/auth-status.component";
 import { ProfileData } from '../../../../Core/interfaces/profileData/profile-data';
-
+import { Router } from '@angular/router';
+import { ConfirmDialogService } from '../../../../Shared/services/confirmDialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-update-profile',
@@ -28,6 +29,9 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   private readonly _authService = inject(AuthService);
   private readonly _formBuilder = inject(FormBuilder);
   private destroy$ = new Subject<void>();
+  private readonly _router = inject(Router);
+  private readonly _confirmDialogService = inject(ConfirmDialogService);
+
 
   userPhoto!: string;
   selectedFile!: File;
@@ -64,7 +68,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   }
 
 
-  loadProfile() {
+  loadProfile(): void {
     this._authService.getLoggedUserData().pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
         const user = res.user;
@@ -91,8 +95,9 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     return JSON.stringify(currentValues) === JSON.stringify(this.originalUserData());
   }
   
+  
+  onFileSelected(event: Event): void {
 
-  onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
 
     if (!input.files || input.files.length === 0) return;
@@ -137,7 +142,8 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
             this.success.set("");
           },1000)
         }
-      },error: (err:HttpErrorResponse) => {
+      },
+      error: (err:HttpErrorResponse) => {
         if (err.error.error) {
           console.log(err);
           
@@ -147,17 +153,58 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     });
   }
 
-  afterSuccess() {
+  afterSuccess(): void {
     this.registerForm.markAsPristine();
     this.imageChanged.set(false);
   
     this.originalUserData.set(this.registerForm.getRawValue());
   }
   
+
+  private deleteAccount(): void {
+    this.errorMsg.set("");
+    this._authService.deleteMyAccount()
+    .pipe(takeUntil(this.destroy$),
+      tap((res) => {
+        if (res.message === "success") {
+          this.success.set(res.message);
+        }
+      }),
+      delay(1000)
+    ).subscribe({
+      next:(res) => {
+        console.log(res);
+        if (res.message === "success") {
+          localStorage.clear();
+          this._router.navigate(['/home']).then(() => {
+            window.location.reload();
+          })
+        }
+      },
+      error:(err:HttpErrorResponse) => {
+        console.log(err);
+        if (err.error.error) {
+          this.errorMsg.set(err.error.error);
+        }
+      }
+    })
+  }
+
+  confirmDelete(): void{
+    this._confirmDialogService.confirm({
+      message: 'Are you sure you want to delete your account?',
+      subMessage: 'This action is permanent and cannot be undone.',
+      acceptLabel: 'Yes, delete',
+      rejectLabel: 'Nope, not doing it',
+      onAccept: ()=> {
+        this.deleteAccount();
+      }
+    })
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  
 
 }
