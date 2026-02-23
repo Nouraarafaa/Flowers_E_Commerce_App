@@ -10,6 +10,7 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './button.component.scss',
 })
 export class ButtonComponent {
+  disabledFlag=input<boolean>(false);
   label = input<string>('');
   icon = input<string | null>(null);
   iconPosition = input<'right'|'left'>('left');

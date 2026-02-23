@@ -1,33 +1,28 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { FormInputComponent } from "../../../..//Shared/components/ui/form-input/form-input.component";
 import { DropdownModule } from 'primeng/dropdown';
-import { ButtonComponent } from "../../../../Shared/components/ui/button/button.component";
 import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@elevate-workspace/auth';
-import { ErrorMessageComponent } from "../../../../Shared/components/ui/error-message/error-message.component";
+import { FormInputComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/form-input/form-input.component';
+import { ButtonComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/button/button.component';
+import { ErrorMessageComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/error-message/error-message.component';
 import { Subject, takeUntil } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
-  selector: 'app-update-profile',
+  selector: 'lib-profile-feature',
   imports: [FormInputComponent, DropdownModule, ButtonComponent, ɵInternalFormsSharedModule, ReactiveFormsModule, ErrorMessageComponent],
-  templateUrl: './update-profile.component.html',
-  styleUrl: './update-profile.component.scss',
+  templateUrl: './profile-feature.component.html',
+  styleUrl: './profile-feature.component.scss',
 })
-export class UpdateProfileComponent implements OnInit, OnDestroy {
+export class ProfileFeatureComponent implements OnInit, OnDestroy {
   updateForm!: FormGroup;
   private readonly _authService = inject(AuthService);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _toastrService = inject(ToastrService);
   private destroy$ = new Subject<void>();
-  firstName: string = '';
-  lastName: string = '';
-  userEmail: string = '';
-  userPhoto: string = '';
-  userGender: string = '';
-  userPhone: string = '';
 
+
+  user = this._authService.currentUser;
 
 
   ngOnInit(): void {
@@ -51,19 +46,14 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     let data;
     this._authService.getLoggedUserData().pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
-        this.firstName = res.user.firstName;
-        this.lastName = res.user.lastName;
-        this.userEmail = res.user.email;
-        this.userPhoto = res.user.photo;
-        this.userGender = res.user.gender;
-        this.userPhone = res.user.phone;
+        this._authService.currentUser.update(() => res.user);
 
         data = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.userEmail,
-          phone: this.userPhone.replace('+2', ''),
-          gender: this.userGender
+          firstName: this.user().firstName,
+          lastName: this.user().lastName,
+          email: this.user().email,
+          phone: this.user().phone.replace('+2', ''),
+          gender: this.user().gender
         }
 
         this.updateForm.patchValue(data);
@@ -89,6 +79,13 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     this._authService.editProflie(payload).pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
         this._toastrService.success(res.message);
+        this._authService.currentUser.update(user => ({
+            ...user,
+            firstName: this.updateForm.value.firstName, 
+            lastName: this.updateForm.value.lastName, 
+            email: this.updateForm.value.email, 
+            phone: this.updateForm.value.phone 
+          }));
       }
     })
   }
@@ -112,17 +109,21 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
 
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      this.userPhoto = e.target.result; //  preview image to the uploaded file
+      this.user().photo = e.target.result; //  preview image to the uploaded file
     };
     reader.readAsDataURL(file);
 
-    if (file === this.userPhoto) {
+    if (file === this.user().photo) {
       this.updateForm.markAsPristine();
     } else {
       this.updateForm.markAsDirty();
       this._authService.uploadProfilePhoto(file).pipe(takeUntil(this.destroy$)).subscribe({
         next: () => {
           this._toastrService.success('Profile photo updated successfully');
+          this._authService.currentUser.update(user => ({
+            ...user,
+            photo: this.user().photo
+          }));
           this.updateForm.markAsPristine();
         },
         error: () => {
