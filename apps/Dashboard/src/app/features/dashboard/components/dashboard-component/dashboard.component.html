@@ -1,1 +1,152 @@
-<p>dashboard works!</p>
+<div class="p-8 bg-[#F8F9FA] min-h-screen font-inter text-zinc-800">
+  <header class="mb-6">
+    <h1 class="text-xs font-semibold text-zinc-400">Dashboard</h1>
+  </header>
+
+  <div class="flex flex-col gap-6">
+    
+    <!-- Top Row: Stats (2x2) and Categories -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Stats 2x2 Grid -->
+      <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+        @for (stat of stats; track stat.label) {
+        <div class="bg-white p-6 rounded-2xl shadow-sm flex items-center gap-5 border border-transparent hover:border-zinc-100 transition-all">
+          <div class="size-16 rounded-2xl flex items-center justify-center" [ngClass]="stat.bgColor">
+            <i [class]="stat.icon" [ngClass]="stat.iconColor" class="text-2xl"></i>
+          </div>
+          <div>
+            <div class="text-3xl font-black tracking-tight" [ngClass]="stat.color">
+              {{ stat.value }}
+              @if (stat.suffix) {
+                <span class="text-xs font-bold ml-0.5 opacity-80">{{ stat.suffix }}</span>
+              }
+            </div>
+            <div class="text-[14px] text-zinc-400 font-bold mt-1">{{ stat.label }}</div>
+          </div>
+        </div>
+        }
+      </div>
+
+      <!-- All Categories -->
+      <div class="bg-white p-8 rounded-2xl shadow-sm border border-transparent flex flex-col h-full max-h-[360px] lg:max-h-full">
+        <h2 class="text-lg font-black text-zinc-900 mb-6">All Categories</h2>
+        <div class="flex-1 overflow-y-auto space-y-1.5 pr-2 custom-scrollbar">
+          @for (cat of categories; track $index) {
+          <div class="flex justify-between items-center py-3.5 px-4 rounded-xl hover:bg-zinc-50 transition-colors cursor-pointer group">
+            <span class="text-zinc-700 font-bold text-sm tracking-tight capitalize">{{ cat.name }}</span>
+            <p-tag [value]="cat.productsCount + ' Products'" severity="secondary" styleClass="text-[10px] font-black px-4 py-1.5 bg-zinc-100 text-zinc-500 rounded-lg border-0"></p-tag>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle Row: Orders Status and Revenue -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Orders Status -->
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-transparent lg:col-span-1 flex flex-col overflow-hidden">
+        <h2 class="text-2xl font-black text-zinc-900 text-center mb-8">Orders Status</h2>
+        
+        <div class="flex items-center justify-center relative my-4 h-60">
+           <p-chart type="doughnut" [data]="doughnutData" [options]="doughnutOptions" styleClass="w-60 h-60"></p-chart>
+           
+           <!-- Floating Percentage Labels on Chart -->
+           <div class="absolute inset-0 pointer-events-none">
+              @for (status of orderStatus; track status.label) {
+                @if (status.value > 0) {
+                  <div class="absolute size-10 bg-white/90 rounded-full shadow-md flex items-center justify-center text-[10px] font-black text-zinc-800 border border-zinc-50 transition-all duration-700"
+                       [ngClass]="{
+                         'top-[20%] left-[20%]': status.label === 'Completed',
+                         'bottom-[20%] left-[22%]': status.label === 'In progress',
+                         'top-[22%] right-[20%]': status.label === 'Canceled'
+                       }">
+                    {{ status.percentage }}
+                  </div>
+                }
+              }
+           </div>
+        </div>
+        
+        <div class="space-y-4 px-2 mt-8">
+           @for (status of orderStatus; track status.label) {
+           <div class="flex justify-between items-center text-sm">
+              <span class="flex items-center gap-3 text-zinc-500 font-bold">
+                <span class="size-3 rounded-full" [ngClass]="status.color"></span> 
+                {{ status.label }}
+              </span>
+              <span class="font-bold text-zinc-800">{{ status.value }} ({{ status.percentage }})</span>
+           </div>
+           }
+        </div>
+      </div>
+
+      <!-- Revenue -->
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-transparent lg:col-span-2 overflow-hidden">
+        <div class="flex justify-between items-center mb-10">
+           <h2 class="text-xl font-black text-zinc-800">Revenue</h2>
+           <div class="flex gap-4 items-center">
+             <button (click)="setRevenueView('Monthly')" [ngClass]="revenueView === 'Monthly' ? 'text-maroon-600 border-b-2 border-maroon-600' : 'text-zinc-300'" class="text-xs font-black pb-1 cursor-pointer transition-all border-0 bg-transparent focus:outline-none">Monthly</button>
+             <button (click)="setRevenueView('Weekly')" [ngClass]="revenueView === 'Weekly' ? 'text-maroon-600 border-b-2 border-maroon-600' : 'text-zinc-300'" class="text-xs font-bold pb-1 cursor-pointer hover:text-zinc-600 transition-all border-0 bg-transparent focus:outline-none uppercase">Last Week</button>
+           </div>
+        </div>
+        
+        <div class="h-[320px] w-full px-2 relative">
+           <p-chart type="line" [data]="chartData" [options]="chartOptions" styleClass="h-full w-full"></p-chart>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Row: Products -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-8">
+      
+      <!-- Top Selling -->
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-transparent flex flex-col h-[520px]">
+        <h2 class="text-xl font-black text-zinc-800 mb-8">Top Selling Products</h2>
+        <div class="space-y-3 overflow-y-auto pr-2 custom-scrollbar">
+          @for (prod of topSellingProducts; track $index) {
+          <div class="flex justify-between items-center p-4 rounded-xl transition-all hover:translate-x-1" 
+               [ngClass]="{
+                 'bg-amber-50/50 border border-amber-100/50': $index === 0,
+                 'bg-slate-50/50 border border-slate-200/50': $index === 1,
+                 'bg-orange-50/50 border border-orange-100/50': $index === 2,
+                 'bg-zinc-50 border border-zinc-100/50': $index > 2
+               }">
+             <div class="flex items-center gap-2 overflow-hidden">
+                <span class="font-bold text-zinc-800 text-sm whitespace-nowrap overflow-hidden text-ellipsis">{{ prod.title }}</span>
+                <span class="text-[11px] text-zinc-400 font-bold whitespace-nowrap">({{ prod.price | number }} EGP)</span>
+             </div>
+             <div class="text-right flex items-center gap-1.5 ml-4">
+                <span class="font-black text-zinc-900 text-base">{{ prod.sold | number }}</span>
+                <span class="text-xs text-zinc-400 font-bold">Sales</span>
+             </div>
+          </div>
+          } @empty {
+            <div class="py-12 text-center text-zinc-400 font-bold italic">No data.</div>
+          }
+        </div>
+      </div>
+
+      <!-- Low Stock -->
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-transparent flex flex-col h-[520px]">
+        <h2 class="text-xl font-black text-zinc-800 mb-8">Low Stock Products</h2>
+        <div class="space-y-2 overflow-y-auto pr-2 custom-scrollbar">
+            @for (prod of lowStockProducts; track $index) {
+            <div class="flex justify-between items-center p-4 border-b border-zinc-50 last:border-0 hover:bg-zinc-50 rounded-2xl transition-all cursor-pointer">
+              <span class="text-zinc-600 font-bold text-sm tracking-tight">{{ prod.name }}</span>
+              <span class="font-black text-sm" [ngClass]="prod.quantity < 5 ? 'text-red-500' : 'text-zinc-800'">
+                {{ prod.quantity }} Products
+              </span>
+            </div>
+            } @empty {
+              <div class="flex flex-col items-center justify-center py-12 gap-3 opacity-60">
+                <i class="pi pi-check-circle text-emerald-500 text-3xl"></i>
+                <span class="text-zinc-500 font-bold text-sm">All products in stock!</span>
+              </div>
+            }
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
