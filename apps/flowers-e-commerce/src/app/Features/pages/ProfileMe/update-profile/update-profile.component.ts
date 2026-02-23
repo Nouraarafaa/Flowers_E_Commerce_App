@@ -32,6 +32,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   private readonly _router = inject(Router);
   private readonly _confirmDialogService = inject(ConfirmDialogService);
 
+
   userPhoto!: string;
   selectedFile!: File;
   imageChanged = signal<boolean>(false);
@@ -40,8 +41,6 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   errorMsg = signal<string>("");
 
   originalUserData = signal<ProfileData | null>(null);
-
-
 
   ngOnInit(): void {
     this.initForm();
@@ -96,8 +95,9 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     return JSON.stringify(currentValues) === JSON.stringify(this.originalUserData());
   }
   
-
+  
   onFileSelected(event: Event): void {
+
     const input = event.target as HTMLInputElement;
 
     if (!input.files || input.files.length === 0) return;
