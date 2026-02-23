@@ -5,6 +5,7 @@ import { Endpoints } from '../../../Core/enums/endpoints';
 import { Product } from '../../interfaces/HomeResponse/home-response';
 import { Review } from '../../interfaces/review';
 import { Observable } from 'rxjs';
+import {  RelatedProductsResponse } from '../../interfaces/related-products/related-products';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,11 @@ export class ProductsService {
     return this._httpClient.get<{ message: string, product: Product }>(`${this._BASE_URL}${Endpoints.products}/${id}`);
   }
 
+  getRelatedProductsByCategory (categoryId: string): Observable<RelatedProductsResponse> {
+    return this._httpClient.get<RelatedProductsResponse>(`${this._BASE_URL}${Endpoints.relatedProducts}/${categoryId}`)
+  }
+
+
   getProductReviews(id: string): Observable<{ message: string, reviews: Review[] }> {
     return this._httpClient.get<{ message: string, reviews: Review[] }>(`${this._BASE_URL}${Endpoints.reviews}/${id}`);
   }
@@ -24,4 +30,10 @@ export class ProductsService {
   addProductReview(review: { product: string, rating: number, title: string, comment: string }): Observable<unknown> {
     return this._httpClient.post(`${this._BASE_URL}${Endpoints.reviews}`, review);
   }
+
+
+
+
+
+
 }

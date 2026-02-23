@@ -1,10 +1,9 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ProductListComponent } from "../product-list/productList.component";
-import { Product } from '../../../../../Shared/interfaces/product';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { ProductFiltersComponent } from "../product-filters-section/productFilters.component";
 import { HomeService } from '../../../../../Shared/services/home/home.service';
-import { Category, Occasion } from '../../../../../Shared/interfaces/HomeResponse/home-response';
+import { Category, Occasion, Product } from '../../../../../Shared/interfaces/HomeResponse/home-response';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { loadProducts, setLoading } from '../../../../../Core/store/products/products.actions';

@@ -4,17 +4,18 @@ import { addToWishlist, removeFromWishlist } from '../../../../Core/store/wishli
 import { selectWishlistIds } from '../../../../Core/store/wishlist/wishlist.selectors';
 import { Product } from '../../../interfaces/HomeResponse/home-response';
 import { AsyncPipe, SlicePipe } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [SlicePipe, AsyncPipe, RouterLink],
+  imports: [SlicePipe, AsyncPipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
+  
   product = input.required<Product>();
   private readonly store = inject(Store);
   private readonly router = inject(Router);
@@ -29,7 +30,6 @@ export class ProductCardComponent {
       event.stopPropagation();
     }
     const id = this.product()._id;
-    console.log('Navigating to product details with ID:', id);
     this.router.navigate(['/products', id]);
   }
 
