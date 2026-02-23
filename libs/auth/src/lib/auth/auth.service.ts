@@ -8,6 +8,7 @@ import { AuthAPI } from './base/AuthAPI';
 import { AuthModel } from './interfaces/auth-model';
 import { AuthResponse, ForgotPasswordResponse, LoggedUserDataResponse, MessageResponse, ResetOrChangePasswordResponse, User, VerifyCodeResponse } from './interfaces/auth-response';
 import { AuthEndPoint } from './enums/AuthEndPoint';
+import Cookies from 'js-cookie';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,20 @@ export class AuthService implements AuthAPI {
   private readonly _BASEURL = inject(BASE_URL);
 
   currentUser = signal<User>({} as User);
+   AUTH_COOKIE_NAME = 'flowersEcommerceToken';
+
+  saveToken(token: string) {
+    Cookies.set(this.AUTH_COOKIE_NAME, token, {
+      expires: 7,
+      path: '/',
+      sameSite: 'Lax',
+      secure: false
+    });
+  }
+
+  getToken(): string | undefined {
+    return Cookies.get(this.AUTH_COOKIE_NAME);
+  }
 
   updateUserSignal(data: User) {
     this.currentUser.set(data);
@@ -76,6 +91,10 @@ export class AuthService implements AuthAPI {
 
   logout(): Observable<MessageResponse> {
     return this._httpClient.get<MessageResponse>(this._BASEURL + AuthEndPoint.Logout);
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();
   }
 
 }

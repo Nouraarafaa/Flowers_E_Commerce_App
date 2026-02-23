@@ -12,6 +12,7 @@ import { ButtonComponent } from "../../../Shared/components/ui/button/button.com
 import { TranslatePipe } from '@ngx-translate/core';
 // import { OtherAuthApis } from '../../base/otherAuthApis';
 
+
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, ɵInternalFormsSharedModule, RouterLink, AuthStatusComponent, ButtonComponent, TranslatePipe],
@@ -53,7 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           next:(res)=>{
             if (res.message === "success") {
               timer(1000).pipe(takeUntil(this.destroy$)).subscribe(()=>{
-                localStorage.setItem("flowersEcommerceToken", res.token);
+                 this._authService.saveToken(res.token);
                 this._otherAuthService.saveUserData();
                 this._router.navigate(['/home']);
               })
