@@ -12,13 +12,27 @@
     <span class="font-medium">{{navLinkName()}}</span>
 </a>
 }@else if (type()==='normal') {
-<a pRipple [routerLink]="pageNameSideBar()" (click)="onClick()"
-    class="side-bar-link">
-    <i class="pi mr-2" [class]="iconNameSideBar()"></i>
-    <span class="font-medium text-nowrap">{{navLinkName()}}</span>
-</a>
+
+  @if (pageNameSideBar() === '/dashboard') {
+    <a pRipple 
+       [href]="dashboardUrl" 
+       target="_blank"
+       class="side-bar-link">
+        <i class="pi mr-2" [class]="iconNameSideBar()"></i>
+        <span class="font-medium text-nowrap">{{navLinkName()}}</span>
+    </a>
+  } @else {
+    <a pRipple 
+       [routerLink]="pageNameSideBar()" 
+       (click)="onClick()"
+       class="side-bar-link">
+        <i class="pi mr-2" [class]="iconNameSideBar()"></i>
+        <span class="font-medium text-nowrap">{{navLinkName()}}</span>
+    </a>
+  }
+
 }@else if (type()==='nav-icon') {
-<a pRipple
+<a pRipple 
     class="side-bar-link">
     <app-nav-icon [userStatus]="userStatusSidebar()!" [pageName]="pageNameSideBar()!" [iconName]="iconNameSideBar()!"
         [itemsCheck]="itemsCheckSideBar()!"></app-nav-icon>

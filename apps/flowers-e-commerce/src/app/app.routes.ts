@@ -8,13 +8,15 @@ export const appRoutes: Route[] = [
         path: "", loadComponent: () => import('./Core/layouts/main-layout/main-layout.component').then((c) => c.MainLayoutComponent), children: [
             { path: "", redirectTo: "home", pathMatch: "full" },
             { path: "home", loadComponent: () => import('./Features/pages/home/home.component').then((c) => c.HomeComponent), title: "Home" },
-            { path: "products", loadComponent: () => import('./Features/pages/products/components/products/products.component').then((c) => c.ProductsComponent), title: "Products" },
+            { path: "products/:id", loadComponent: () => import('./Features/pages/products/components/product-details/product-details.component').then((c) => c.ProductDetailsComponent), title: "Product Details" },
+            { path: "products", loadComponent: () => import('./Features/pages/products/components/products/products.component').then((c) => c.ProductsComponent), title: "Products", pathMatch: 'full' },
             { path: "categories", loadComponent: () => import('./Features/pages/categories/categories.component').then((c) => c.CategoriesComponent), title: "Categories" },
             { path: "occasions", loadComponent: () => import('./Features/pages/occasions/occasions.component').then((c) => c.OccasionsComponent), title: "Occasions" },
             { path: "contact", loadComponent: () => import('./Features/pages/contact/contact.component').then((c) => c.ContactComponent), title: "Contact" },
             { path: "about", loadComponent: () => import('./Features/pages/about/about.component').then((c) => c.AboutComponent), title: "About" },
             { path: "wishlist", canActivate: [authGuard], loadComponent: () => import('./Features/pages/wishlist/components/wishlist-component/wishlist.component').then((c) => c.WishlistComponent), title: "Wishlist" },
             { path: "cart", canActivate: [authGuard], loadComponent: () => import('./Features/pages/cart/components/cart-component/cart.component').then((c) => c.CartComponent), title: "Cart" },
+            { path: "allOrders", canActivate: [authGuard], loadComponent: () => import('./Features/pages/user-orders/components/orders/userOrders.component').then((c) => c.UserOrdersComponent), title: "My Orders" },
             { path:"profile", canActivate: [authGuard], loadComponent: () => import('./Features/pages/ProfileMe/profile/profile.component').then((c) => c.ProfileComponent), children: [
                 { path: "", redirectTo: "update-profile", pathMatch: "full" },
                 { path:"update-profile", loadComponent: () => import('./Features/pages/ProfileMe/update-profile/update-profile.component').then((c) => c.UpdateProfileComponent), title:"Update Profile" },

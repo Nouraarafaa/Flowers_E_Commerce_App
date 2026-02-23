@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@elevate-workspace/auth": ["libs/auth/src/index.ts"]
+      "@elevate-workspace/auth": ["libs/auth/src/index.ts"],
+      "@elevate/profile": ["libs/profile/profile-feature/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

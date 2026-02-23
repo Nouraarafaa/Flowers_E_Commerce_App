@@ -1,18 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
+import { Component ,inject, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { AuthService } from '@elevate-workspace/auth';
 import { AuthStatusComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/auth-status/auth-status.component';
 import { ButtonComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/button/button.component';
 import { ErrorMessageComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/error-message/error-message.component';
 import { FormInputComponent } from 'apps/flowers-e-commerce/src/app/Shared/components/ui/form-input/form-input.component';
-import { InputOtp } from 'primeng/inputotp';
 import { finalize, Subject, takeUntil, timer } from 'rxjs';
 
 @Component({
   selector: 'app-change-password',
-  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, RouterLink, AuthStatusComponent, ButtonComponent],
+  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, AuthStatusComponent, ButtonComponent],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss',
 })

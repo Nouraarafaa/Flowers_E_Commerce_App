@@ -1,14 +1,12 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { UserAddressesService } from '../../services/user-addresses-service/user-addresses.service';
 import { Address } from '../../interfaces/address';
-import { ButtonComponent } from "apps/flowers-e-commerce/src/app/Shared/components/ui/button/button.component";
 
 
 @Component({
   selector: 'app-shipping-addresses',
-  imports: [AsyncPipe, ButtonComponent],
+  imports: [AsyncPipe],
   templateUrl: './shippingAddresses.component.html',
   styleUrl: './shippingAddresses.component.scss',
 })
@@ -16,17 +14,20 @@ export class ShippingAddressesComponent{
 
   userAddressesInput$=input<Observable<Address[]>>(of([]));
   userSelectedAddressflag=output<boolean>();
+  OnAddNewAddress=output<void>();
+  addressSelectedObject=output<Address>();
 
   // Define a variable to track selection
   selectedAddressId: string | null = null;
 
   // Method to handle the click
-  selectAddress(addressId: string) {
-    this.selectedAddressId = addressId;
+  selectAddress(address:Address) {
+    this.selectedAddressId = address._id;
+    this.addressSelectedObject.emit(address);
     this.userSelectedAddressflag.emit(false);
   }
 
   addNewAddress() {
-    // Implementation for adding a new address
+    this.OnAddNewAddress.emit();
   }
 }

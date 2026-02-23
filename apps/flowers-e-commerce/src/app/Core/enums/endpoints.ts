@@ -1,3 +1,5 @@
 export enum Endpoints {
-    home = `/home`
+    home = `/home`,
+    products = `/products`,
+    reviews = `/reviews`
 }
