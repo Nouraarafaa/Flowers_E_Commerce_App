@@ -41,8 +41,6 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
 
   originalUserData = signal<ProfileData | null>(null);
 
-
-
   ngOnInit(): void {
     this.initForm();
     this.loadProfile();
@@ -96,8 +94,9 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     return JSON.stringify(currentValues) === JSON.stringify(this.originalUserData());
   }
   
-
+  
   onFileSelected(event: Event): void {
+
     const input = event.target as HTMLInputElement;
 
     if (!input.files || input.files.length === 0) return;
@@ -160,7 +159,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     this.originalUserData.set(this.registerForm.getRawValue());
   }
   
-
+  
   private deleteAccount(): void {
     this.errorMsg.set("");
     this._authService.deleteMyAccount()
