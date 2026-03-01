@@ -1,138 +1,206 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { FormInputComponent } from "../../../..//Shared/components/ui/form-input/form-input.component";
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { FormInputComponent } from '../../../..//Shared/components/ui/form-input/form-input.component';
 import { DropdownModule } from 'primeng/dropdown';
-import { ButtonComponent } from "../../../../Shared/components/ui/button/button.component";
-import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonComponent } from '../../../../Shared/components/ui/button/button.component';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { AuthService } from '@elevate-workspace/auth';
-import { ErrorMessageComponent } from "../../../../Shared/components/ui/error-message/error-message.component";
-import { Subject, takeUntil } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorMessageComponent } from '../../../../Shared/components/ui/error-message/error-message.component';
+import { delay, finalize, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { AuthStatusComponent } from "../../../../Shared/components/ui/auth-status/auth-status.component";
+import { ProfileData } from '../../../../Core/interfaces/profileData/profile-data';
+import { Router } from '@angular/router';
+import { ConfirmDialogService } from '../../../../Shared/services/confirmDialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-update-profile',
-  imports: [FormInputComponent, DropdownModule, ButtonComponent, ɵInternalFormsSharedModule, ReactiveFormsModule, ErrorMessageComponent],
+  imports: [FormInputComponent, DropdownModule, ButtonComponent, ReactiveFormsModule, ErrorMessageComponent, AuthStatusComponent],
   templateUrl: './update-profile.component.html',
   styleUrl: './update-profile.component.scss',
 })
 export class UpdateProfileComponent implements OnInit, OnDestroy {
-  updateForm!: FormGroup;
+  
+  registerForm!: FormGroup;
   private readonly _authService = inject(AuthService);
   private readonly _formBuilder = inject(FormBuilder);
-  private readonly _toastrService = inject(ToastrService);
   private destroy$ = new Subject<void>();
-  firstName: string = '';
-  lastName: string = '';
-  userEmail: string = '';
-  userPhoto: string = '';
-  userGender: string = '';
-  userPhone: string = '';
+  private readonly _router = inject(Router);
+  private readonly _confirmDialogService = inject(ConfirmDialogService);
 
 
+  userPhoto!: string;
+  selectedFile!: File;
+  imageChanged = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
+  success = signal<string>("");
+  errorMsg = signal<string>("");
+
+  originalUserData = signal<ProfileData | null>(null);
 
   ngOnInit(): void {
     this.initForm();
-    this.getUserData();
+    this.loadProfile();
   }
 
   initForm(): void {
+    this.registerForm = this._formBuilder.group({
+      firstName: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      lastName: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      email: [null, [Validators.required, Validators.email]],
+      phone: [null, [Validators.required, Validators.pattern(/^1[0125][0-9]{8}$/)]],
+      gender: [{ value: null, disabled: true }],
+    });
+  }
 
-    this.updateForm = this._formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-      lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]],
-      gender: ['', [Validators.required]],
-    })
+  genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ];
+  
+  getGenderLabel(value: string) {
+    const option = this.genderOptions.find(opt => opt.value === value);
+    return option ? option.label : 'Not Specified';
   }
 
 
-  getUserData(): void {
-    let data;
+  loadProfile(): void {
     this._authService.getLoggedUserData().pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
-        this.firstName = res.user.firstName;
-        this.lastName = res.user.lastName;
-        this.userEmail = res.user.email;
-        this.userPhoto = res.user.photo;
-        this.userGender = res.user.gender;
-        this.userPhone = res.user.phone;
-
-        data = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.userEmail,
-          phone: this.userPhone.replace('+2', ''),
-          gender: this.userGender
+        const user = res.user;
+        this.userPhoto = user.photo;
+        
+        const data = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          phone: user.phone.replace('+20', ''),
+          gender: user.gender,
         }
-
-        this.updateForm.patchValue(data);
-      }
-    })
+        this.originalUserData.set(data); 
+        this.registerForm.patchValue(data);
+        this.registerForm.markAsPristine();
+      },
+    });
+    
   }
-
-  updateUserData(): void {
-    if (this.updateForm.valid) {
-      this.editProfile();
-      this.updateForm.markAsPristine();
-
-    }
+  
+  isFormUnchanged(): boolean {
+    if (!this.originalUserData()) return true;  
+    const currentValues = this.registerForm.getRawValue();
+    return JSON.stringify(currentValues) === JSON.stringify(this.originalUserData());
   }
+  
+  
+  onFileSelected(event: Event): void {
 
-  editProfile(): void {
-    const payload = {
-      firstName: this.updateForm.value.firstName,
-      lastName: this.updateForm.value.lastName,
-      email: this.updateForm.value.email,
-      phone: '+2' + this.updateForm.value.phone,
-    }
-    this._authService.editProflie(payload).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (res) => {
-        this._toastrService.success(res.message);
-      }
-    })
-  }
+    const input = event.target as HTMLInputElement;
 
+    if (!input.files || input.files.length === 0) return;
 
-  updateUserPhoto(event: any): void {
-    const maxSizeInBytes = 4 * 1024 * 1024; // 4MB muximum size from backend
-    const file = event.target.files[0];
-    console.log(file);
+    const file = input.files[0];
 
-    if (!file) return; //if the user canceled the file selection
-
-    if (file.size > maxSizeInBytes) {
-
-      this._toastrService.error('The image size is too large! The maximum size is 4 MB');
-
-      // Reset the input to prevent sending the same incorrect file
-      event.target.value = '';
-      return;
-    }
+    this.selectedFile = file;
+    this.imageChanged.set(true);
 
     const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.userPhoto = e.target.result; //  preview image to the uploaded file
+
+    reader.onload = () => {
+      this.userPhoto = reader.result as string;
     };
+
     reader.readAsDataURL(file);
-
-    if (file === this.userPhoto) {
-      this.updateForm.markAsPristine();
-    } else {
-      this.updateForm.markAsDirty();
-      this._authService.uploadProfilePhoto(file).pipe(takeUntil(this.destroy$)).subscribe({
-        next: () => {
-          this._toastrService.success('Profile photo updated successfully');
-          this.updateForm.markAsPristine();
-        },
-        error: () => {
-          this._toastrService.error('Failed to update profile photo');
-        }
-      });
-    }
-
   }
 
+  onSubmit(): void {
+    if (!this.registerForm.dirty && !this.imageChanged()) return;
+    const formValue = this.registerForm.getRawValue();
+    const body = {
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      email: formValue.email,
+      phone: '+20' + formValue.phone,
+    };
+
+    const request$ = this.imageChanged() && this.selectedFile ? this._authService.uploadProfilePhoto(this.selectedFile).pipe(
+      switchMap(() => this._authService.editProflie(body))
+    ) : this._authService.editProflie(body);
+
+    this.errorMsg.set("");
+    this.isLoading.set(true);
+
+    request$.pipe(takeUntil(this.destroy$), finalize(() => this.isLoading.set(false))).subscribe({
+      next: (res) => {
+        this.afterSuccess();
+        if (res.message === "success") {
+          this.success.set(res.message);
+          setTimeout( ()=> {
+            this.success.set("");
+          },1000)
+        }
+      },
+      error: (err:HttpErrorResponse) => {
+        if (err.error.error) {
+          console.log(err);
+          
+          this.errorMsg.set(err.error.error);
+        }
+      }
+    });
+  }
+
+  afterSuccess(): void {
+    this.registerForm.markAsPristine();
+    this.imageChanged.set(false);
+  
+    this.originalUserData.set(this.registerForm.getRawValue());
+  }
+  
+
+  private deleteAccount(): void {
+    this.errorMsg.set("");
+    this._authService.deleteMyAccount()
+    .pipe(takeUntil(this.destroy$),
+      tap((res) => {
+        if (res.message === "success") {
+          this.success.set(res.message);
+        }
+      }),
+      delay(1000)
+    ).subscribe({
+      next:(res) => {
+        console.log(res);
+        if (res.message === "success") {
+          localStorage.clear();
+          this._router.navigate(['/home']).then(() => {
+            window.location.reload();
+          })
+        }
+      },
+      error:(err:HttpErrorResponse) => {
+        console.log(err);
+        if (err.error.error) {
+          this.errorMsg.set(err.error.error);
+        }
+      }
+    })
+  }
+
+  confirmDelete(): void{
+    this._confirmDialogService.confirm({
+      message: 'Are you sure you want to delete your account?',
+      subMessage: 'This action is permanent and cannot be undone.',
+      acceptLabel: 'Yes, delete',
+      rejectLabel: 'Nope, not doing it',
+      onAccept: ()=> {
+        this.deleteAccount();
+      }
+    })
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();

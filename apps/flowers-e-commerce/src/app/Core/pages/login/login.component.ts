@@ -4,13 +4,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ɵInternalForm
 import { AuthService } from '@elevate-workspace/auth';
 import { Router, RouterLink } from '@angular/router';
 import { finalize, Subject, takeUntil, timer } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
+import { HttpErrorResponse } from '@angular/common/http';
 import { FormInputComponent } from "../../../Shared/components/ui/form-input/form-input.component";
 import { ErrorMessageComponent } from "../../../Shared/components/ui/error-message/error-message.component";
 import { AuthStatusComponent } from "../../../Shared/components/ui/auth-status/auth-status.component";
 import { ButtonComponent } from "../../../Shared/components/ui/button/button.component";
 import { TranslatePipe } from '@ngx-translate/core';
-// import { OtherAuthApis } from '../../base/otherAuthApis';
 
 
 @Component({

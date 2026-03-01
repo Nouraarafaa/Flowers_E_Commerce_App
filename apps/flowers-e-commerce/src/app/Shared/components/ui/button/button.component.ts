@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 
@@ -15,6 +15,7 @@ export class ButtonComponent {
   icon = input<string | null>(null);
   iconPosition = input<'right'|'left'>('left');
   loading = input<boolean>(false);
+  disabled = input<boolean>(false);
   type = input<'button' | 'submit' | 'reset'>('button');
   styleClass = input<string>('');
   parentForm = input<FormGroup>();

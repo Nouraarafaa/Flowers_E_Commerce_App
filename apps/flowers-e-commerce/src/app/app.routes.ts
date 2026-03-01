@@ -10,7 +10,6 @@ export const appRoutes: Route[] = [
             { path: "home", loadComponent: () => import('./Features/pages/home/home.component').then((c) => c.HomeComponent), title: "Home" },
             { path: "products/:id", loadComponent: () => import('./Features/pages/products/components/product-details/product-details.component').then((c) => c.ProductDetailsComponent), title: "Product Details" },
             { path: "products", loadComponent: () => import('./Features/pages/products/components/products/products.component').then((c) => c.ProductsComponent), title: "Products", pathMatch: 'full' },
-
             { path: "categories", loadComponent: () => import('./Features/pages/categories/categories.component').then((c) => c.CategoriesComponent), title: "Categories" },
             { path: "occasions", loadComponent: () => import('./Features/pages/occasions/occasions.component').then((c) => c.OccasionsComponent), title: "Occasions" },
             { path: "contact", loadComponent: () => import('./Features/pages/contact/contact.component').then((c) => c.ContactComponent), title: "Contact" },
@@ -33,7 +32,6 @@ export const appRoutes: Route[] = [
             { path: "forgot-password", loadComponent: () => import('./Core/pages/forgot-password/forgot-password.component').then((c) => c.ForgotPasswordComponent), title: "Forgot Password" }
         ]
     }
-
 
 ];
 

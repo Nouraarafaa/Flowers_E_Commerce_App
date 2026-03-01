@@ -1,19 +1,18 @@
 <section>
-    <h1 class="text-3xl font-bold mb-6 text-zinc-900 dark:text-zinc-100 hidden lg:block">Update Profile</h1>
-    <form [formGroup]="updateForm" class="flex flex-col gap-2.5" (ngSubmit)="updateUserData()">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-2.5">
 
         <div class="flex items-center gap-4">
-            <div class="relative rounded-full">
-                <img class="size-30 rounded-full border border-[#E4E4E7]" [src]="userPhoto" alt="user photo">
-               <i (click)="fileInput.click()" 
-       class="pi pi-cloud-upload absolute bottom-1 end-1 text-lg bg-zinc-50 border border-zinc-200 p-2 rounded-full cursor-pointer shadow-sm hover:bg-zinc-100">
-    </i>
 
-    <input #fileInput type="file" (change)="updateUserPhoto($event)" accept="image/*" style="display: none;"/>
+            <label class="cursor-pointer relative inline-block">
+                <img [src]="userPhoto" alt="User Photo"class="w-[120px] h-[120px] rounded-full object-cover border">
                 
-               
-            </div>
-
+                <div class="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow-md border border-gray-200 flex items-center justify-center w-10 h-10 transform translate-x-1 translate-y-1 transition-transform hover:scale-110 active:scale-95">
+                    <img src="/Images/cloud-upload.png" alt="cloud-upload icon" class="w-8 h-8 object-contain">
+                </div>
+                
+                <input type="file" (change)="onFileSelected($event)"  accept="image/png, image/jpeg, image/gif" class="hidden">
+            </label>
+    
             <div class="flex flex-col gap-4">
                 <h3 class="text-zinc-800 text-xl font-semibold">Upload Photo</h3>
                 <p class="text-zinc-500 text-16px font-normal">You can upload a .jpg, .png, or .gif photo with max size
@@ -22,52 +21,66 @@
         </div>
 
         <div class="userName flex gap-5">
-            <div class="firstName flex-1">
-                @let firstNameControl = updateForm.get("firstName");
+            <div class="firstName flex-1"> 
+                @let firstNameControl = registerForm.get("firstName");
                 <label for="firstName" class="text-black text-[14px] font-inter font-medium">First Name</label>
-                <app-form-input formControlName="firstName" [id]="'firstName'" [type]="'text'" [nameControl]=""
-                    [placeholder]="'First Name...'"></app-form-input>
+                <app-form-input formControlName="firstName" [id]="'firstName'" [type]="'text'" [nameControl]="firstNameControl" [placeholder]="'First Name...'" ></app-form-input>
                 <app-error-message [nameControl]="firstNameControl"></app-error-message>
-            </div>
-            <div class="lastName flex-1">
-                @let lastNameControl = updateForm.get("lastName");
+            </div> 
+            <div class="lastName flex-1"> 
+                @let lastNameControl = registerForm.get("lastName");
                 <label for="lastName" class="text-black text-[14px] font-inter font-medium">Last Name</label>
-                <app-form-input formControlName="lastName" [id]="'lastName'" [type]="'text'" [nameControl]=""
-                    [placeholder]="'Last Name...'"></app-form-input>
+                <app-form-input formControlName="lastName" [id]="'lastName'" [type]="'text'" [nameControl]="lastNameControl" [placeholder]="'Last Name...'" ></app-form-input>
                 <app-error-message [nameControl]="lastNameControl"></app-error-message>
-            </div>
+            </div> 
         </div>
-        <div class="email">
-            @let emailControl = updateForm.get("email");
+        <div class="email"> 
+            @let emailControl = registerForm.get("email");
             <label for="email" class="text-black text-[14px] font-inter font-medium">Email</label>
-            <app-form-input formControlName="email" [id]="'email'" [type]="'email'" [nameControl]=""
-                [placeholder]="'Email...'"></app-form-input>
+            <app-form-input formControlName="email" [id]="'email'" [type]="'email'" [nameControl]="emailControl" [placeholder]="'Email...'"></app-form-input>
             <app-error-message [nameControl]="emailControl"></app-error-message>
         </div>
-        <div class="phone">
-            @let phoneControl = updateForm.get("phone");
+        <div class="phone"> 
+            @let phoneControl = registerForm.get("phone");
             <label for="phone" class="text-black text-[14px] font-inter font-medium">Phone</label>
             <div class="relative mt-3">
                 <div class="absolute inset-y-0 left-0 flex items-center gap-2 pl-3 pointer-events-none">
-                    <img src="./Images/flag.png" alt="EG" class="rounded-[50%]" />
+                    <img src="./Images/flag.png" alt="EG" class="rounded-[50%]"/>
                     <span class="text-gray-700 font-medium">EG (+20)</span>
                 </div>
-                <input id="phone" type="tel" formControlName="phone" placeholder="Phone..."
-                    class="w-full h-12.5 px-4 py-3 pe-8 pl-30 rounded-[10px] border border-[#D4D4D8] bg-white text-[#111] placeholder:text-[#A1A1AA] text-sm outline-none transition-all duration-200 focus:border-[#7A1D1D] focus:ring-2 focus:ring-[#7A1D1D]/20" />
+                <input id="phone" type="tel" formControlName="phone" placeholder="Phone..." class="w-full h-[49px] px-4 py-[12px] pe-8 pl-30 rounded-[10px] border border-[#D4D4D8] bg-white text-[#111] placeholder:text-[#A1A1AA] text-sm outline-none transition-all duration-200 focus:border-[#7A1D1D] focus:ring-2 focus:ring-[#7A1D1D]/20"/>
             </div>
             <app-error-message [nameControl]="phoneControl"></app-error-message>
         </div>
-        <div class="gender">
-            <label for="gender" class="text-zinc-400 text-[14px] font-inter font-medium">Gender</label>
-            <app-form-input [disabledFlag]="true" formControlName="gender" [id]="'gender'" [type]="'text'"
-                [nameControl]="" [placeholder]="''"></app-form-input>
-        </div>
+        <div class="gender"> 
+            <label for="gender" class="text-black text-[14px] font-inter font-medium">gender</label>
 
-        <div class="flex justify-between items-center pt-15">
-            <a class="text-maroon-500 text-16px font-medium cursor-pointer">Delete My Account</a>
-            <app-button type="submit" [label]="'Save Changes'"
-                [disabledFlag]="updateForm.pristine || updateForm.invalid "></app-button>
+            <input 
+                id="gender" 
+                type="text" 
+                [value]="getGenderLabel(registerForm.get('gender')?.value)"
+                disabled
+                class="w-full h-[49px] px-3 rounded-[10px] border border-[#D4D4D8] bg-gray-50 text-[#111] text-sm font-inter font-medium"
+            />
+        </div> 
+
+
+        @if (success()) {
+            <app-auth-status [type]="'success'" [message]="success()" ></app-auth-status>
+        }
+        @else if (errorMsg()) { 
+            <app-auth-status [type]="'error'" [message]="errorMsg()" ></app-auth-status>
+        }
+        
+
+        <div class="flex justify-between items-center pt-15"> 
+            <a (click)="confirmDelete()" class="text-maroon-500 active:text-maroon-600 active:scale-90 transition-all duration-300 text-16px font-medium cursor-pointer">Delete My Account</a>
+
+            <div class="flex justify-between items-center pt-15">
+                <app-button [type]="'submit'" [label]="'Save Changes'" [loading]="isLoading()"  [disabled]="(isFormUnchanged() && !imageChanged()) || registerForm.invalid"></app-button>
+            </div>
         </div>
 
     </form>
+
 </section>

@@ -63,17 +63,19 @@ export class AuthService implements AuthAPI {
     return this._httpClient.patch<ResetOrChangePasswordResponse>(this._BASEURL + AuthEndPoint.ChangePassword, data);
   }
 
-  uploadProfilePhoto(file: File): Observable<MessageResponse> {
-    const formData = new FormData();
-    formData.append('photo', file);
-    return this._httpClient.put<MessageResponse>(this._BASEURL + AuthEndPoint.UploadProfilePhoto, formData);
-  }
-
   getLoggedUserData(): Observable<LoggedUserDataResponse> {
     return this._httpClient.get<LoggedUserDataResponse>(this._BASEURL + AuthEndPoint.GetInfo).pipe(
       tap(res => this.currentUser.set(res.user))
     );
   }
+
+  uploadProfilePhoto(file: File): Observable<MessageResponse> {
+    const formData = new FormData();
+    formData.append('photo', file);
+
+    return this._httpClient.put<MessageResponse>(this._BASEURL + AuthEndPoint.UploadProfilePhoto,formData) 
+  }
+
 
   editProflie(data: EditProfliePayload): Observable<LoggedUserDataResponse> {
     return this._httpClient.put<LoggedUserDataResponse>(

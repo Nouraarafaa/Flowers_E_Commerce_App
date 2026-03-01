@@ -20,39 +20,41 @@ import { cartReducer } from './Core/store/cart/cart.reducer';
 import { CartEffects } from './Core/store/cart/cart.effects';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { provideToastr } from 'ngx-toastr';
+import { ConfirmationService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
     providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top" }), withViewTransitions()),
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
-    importProvidersFrom(GoogleMapsModule),
-    provideAnimationsAsync(),
-
-    provideTranslateService({
-        lang: 'en',
-        fallbackLang: 'en',
-        loader: provideTranslateHttpLoader({
-            prefix: '/i18n/',
-            suffix: '.json'
-        })
-    }),
-
-    providePrimeNG({
-        theme: {
-            preset: Aura,
-        },
-    }),
-    {
-        provide: BASE_URL,
-        useValue: environment.BaseUrl
-    },
-        provideStore({
-            products: productsReducer,
-            wishlist: wishlistReducer,
-            cart:cartReducer
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top" }), withViewTransitions()),
+        provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
+        importProvidersFrom(GoogleMapsModule),
+        provideAnimationsAsync(),
+        ConfirmationService,
+        provideTranslateService({
+            lang: 'en',
+            fallbackLang: 'en',
+            loader: provideTranslateHttpLoader({
+                prefix: '/i18n/',
+                suffix: '.json'
+            })
         }),
-    provideEffects([productsEffects, WishlistEffects,CartEffects]),
-    provideToastr()
-],
+
+        providePrimeNG({
+            theme: {
+                preset: Aura,
+            },
+        }),
+        {
+            provide: BASE_URL,
+            useValue: environment.BaseUrl
+        },
+            provideStore({
+                products: productsReducer,
+                wishlist: wishlistReducer,
+                cart:cartReducer
+            }),
+        provideEffects([productsEffects, WishlistEffects,CartEffects]),
+        provideToastr()
+    ],
+
 };

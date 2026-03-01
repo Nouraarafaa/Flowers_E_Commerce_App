@@ -22,6 +22,8 @@
         type="text"
         pInputText
         placeholder="What awesome gift are you looking for?"
+        [ngModel]="_searchService.searchTerm()"
+        (ngModelChange)="_searchService.setSearchTerm($event)"
       />
     </p-iconfield>
   </ng-template>
