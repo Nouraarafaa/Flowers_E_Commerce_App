@@ -32,7 +32,6 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   private readonly _router = inject(Router);
   private readonly _confirmDialogService = inject(ConfirmDialogService);
 
-
   userPhoto!: string;
   selectedFile!: File;
   imageChanged = signal<boolean>(false);
@@ -160,7 +159,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
     this.originalUserData.set(this.registerForm.getRawValue());
   }
   
-
+  
   private deleteAccount(): void {
     this.errorMsg.set("");
     this._authService.deleteMyAccount()

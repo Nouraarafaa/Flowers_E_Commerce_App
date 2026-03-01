@@ -30,7 +30,7 @@ export interface ResetPasswordPayload {
 export interface EditProfliePayload {
   firstName: string;
   lastName: string;
-  email: string;
+  email:string;
   phone: string;
 }
 

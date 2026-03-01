@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthAPIAdaptorService } from './adaptor/auth-api.adapter';
 import { BASE_URL } from './base-url';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ChangePasswordPayload, EditProfliePayload, ForgotPasswordPayload, LoginPayload, RegisterPayload, ResetPasswordPayload, VerifyCodePayload } from './interfaces/auth-payload';
 import { AuthAPI } from './base/AuthAPI';
 import { AuthModel } from './interfaces/auth-model';
@@ -68,6 +68,7 @@ export class AuthService implements AuthAPI {
       tap(res => this.currentUser.set(res.user))
     );
   }
+
 
   uploadProfilePhoto(file: File): Observable<MessageResponse> {
     const formData = new FormData();
