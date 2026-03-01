@@ -3,12 +3,13 @@ import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { inject, PLATFORM_ID } from '@angular/core';
+import Cookies from 'js-cookie'; 
 
 export const adminGuard: CanActivateFn = (route, state) => {
   const platformId = inject(PLATFORM_ID);
   
   if (isPlatformBrowser(platformId)) {
-   const token = localStorage.getItem('flowersEcommerceToken');
+   const token = Cookies.get('flowersEcommerceToken');
 
   if (token) {
     try {
