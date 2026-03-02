@@ -20,7 +20,7 @@ export class AuthService implements AuthAPI {
   private readonly _BASEURL = inject(BASE_URL);
 
   currentUser = signal<User>({} as User);
-   AUTH_COOKIE_NAME = 'flowersEcommerceToken';
+  AUTH_COOKIE_NAME = 'flowersEcommerceToken';
 
   saveToken(token: string) {
     Cookies.set(this.AUTH_COOKIE_NAME, token, {
@@ -64,11 +64,8 @@ export class AuthService implements AuthAPI {
   }
 
   getLoggedUserData(): Observable<LoggedUserDataResponse> {
-    return this._httpClient.get<LoggedUserDataResponse>(this._BASEURL + AuthEndPoint.GetInfo).pipe(
-      tap(res => this.currentUser.set(res.user))
-    );
+    return this._httpClient.get<LoggedUserDataResponse>(this._BASEURL + AuthEndPoint.GetInfo);
   }
-
 
   uploadProfilePhoto(file: File): Observable<MessageResponse> {
     const formData = new FormData();
@@ -90,7 +87,6 @@ export class AuthService implements AuthAPI {
       this._BASEURL + AuthEndPoint.DeleteAccount
     );
   }
-
 
   logout(): Observable<MessageResponse> {
     return this._httpClient.get<MessageResponse>(this._BASEURL + AuthEndPoint.Logout);
