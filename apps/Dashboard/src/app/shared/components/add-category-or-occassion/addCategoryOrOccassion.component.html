@@ -1,0 +1,30 @@
+<h1 class="font-inter font-semibold text-2xl text-zinc-800 mb-6">{{title()}}</h1>
+<form #form="ngForm" class="bg-white p-6 rounded-2xl">
+    <div class="w-3/4">
+        <label for="catName" class="text-black text-[14px] font-inter font-medium"> Name <span
+                class="text-red-500">*</span></label>
+        <app-form-input type="text" id="catName" name="catName" #nameModel="ngModel" [placeholder]="placeholderNameFiled()!" [(ngModel)]="categoryOrOccasion.name"
+            required>
+        </app-form-input>
+        
+    </div>
+    <div class="mt-4.5 w-3/4">
+        <label for="image" class="text-black text-[14px] font-inter font-medium"> {{imagelabel()}} <span
+                class="text-red-500">*</span>
+            <div class="p-4 border border-zinc-300 rounded-[10px] text-maroon-500 font-inter text-sm text-end cursor-pointer">
+                <div class=" flex items-center gap-2 justify-between">
+                    <span class="text-zinc-800">{{categoryOrOccasion.image?.name}}</span>
+                    <span><i class="pi pi-upload"></i> <span> Upload file</span></span>
+                </div>
+            <input required id="image" type="file" accept="image/png, image/jpeg, image/jpg, image/webp" placeholder="Upload file" (change)="onFileSelected($event)" class="hidden" />
+        </div>
+            </label>
+            @if(imageErrorMessage) {
+                <span class="text-red-500 text-sm mt-1">{{ imageErrorMessage }}</span>
+            }
+               
+    </div>
+    <button type="submit"
+        class="w-3/4 text-white font-mulish text-sm font-semibold px-4 py-2.5 rounded-[10px] mt-32 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 bg-maroon-600" 
+        [disabled]="form.invalid || !categoryOrOccasion.image" (click)="onSubmit()">{{buttonName()}}</button>
+</form>
