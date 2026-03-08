@@ -45,15 +45,29 @@ export class UpsertCategoryAndOccassionComponent implements OnInit {
   }
 
   gitCategoryOrOccasionData() {
-    // 1- get category by id
-    this._categoriesService.getCategory(this.categoryOrOccasionId()!).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (res) => {
-        // 2- patch the form with the retrieved data
-        this.checklabel = res.category.name;
-        this.categoryOrOccasion.name = res.category.name;
-        this.categoryOrOccasion.image = res.category.image;
-      }
-    })
+    if (this.functionType() === 'Edit Category') {
+      // 1- get category by id
+      this._categoriesService.getCategory(this.categoryOrOccasionId()!).pipe(takeUntil(this.destroy$)).subscribe({
+        next: (res) => {
+          // 2- patch the form with the retrieved data
+          this.checklabel = res.category.name;
+          this.categoryOrOccasion.name = res.category.name;
+          this.categoryOrOccasion.image = res.category.image;
+        }
+      })
+
+    }
+    if (this.functionType() === 'Edit Occassion') {
+         // 1- get category by id
+      this._occassionService.getOccassion(this.categoryOrOccasionId()!).pipe(takeUntil(this.destroy$)).subscribe({
+        next: (res) => {
+          // 2- patch the form with the retrieved data
+          this.checklabel = res.occasion.name;
+          this.categoryOrOccasion.name = res.occasion.name;
+          this.categoryOrOccasion.image = res.occasion.image;
+        }
+      })
+    }
 
   }
 
@@ -120,7 +134,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit {
         }
 
         if (this.functionType() === 'Add Occassion') {
-         console.log('Add Occasion :', this.categoryOrOccasion);
+          console.log('Add Occasion :', this.categoryOrOccasion);
           this._occassionService.addOccassion(this.categoryOrOccasion.name, this.categoryOrOccasion.image).pipe(takeUntil(this.destroy$)).subscribe({
             next: (res) => {
               console.log(res.message);
@@ -152,7 +166,17 @@ export class UpsertCategoryAndOccassionComponent implements OnInit {
         })
       }
       if (this.functionType() === 'Edit Occassion') {
-
+        this._occassionService.updateOccassion(this.categoryOrOccasionId()!, this.categoryOrOccasion.name, typeof (this.categoryOrOccasion.image) !== 'string' ? this.categoryOrOccasion.image : undefined).pipe(takeUntil(this.destroy$)).subscribe({
+          next: (res) => {
+            console.log(res.message);
+            this._toastrService.success('Occasion updated successfully');
+            this.checklabel = this.categoryOrOccasion.name;
+            this.dataCheckChange();
+          },
+          error: (err) => {
+            this._toastrService.error(err.error.error);
+          }
+        })
       }
     }
   }
