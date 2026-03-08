@@ -13,7 +13,6 @@ import { Product } from '../../../../core/interfaces/products/products.interface
 
 import { ChartData, ChartOptions, ScriptableContext, TooltipItem } from 'chart.js';
 import { Category } from '../../../categories/interfaces/categories-response';
-import { AddCategoryOrOccassionComponent } from "apps/Dashboard/src/app/shared/components/add-category-or-occassion/addCategoryOrOccassion.component";
 
 interface OrderStatus {
   label: string;
@@ -27,7 +26,7 @@ interface OrderStatus {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, CardModule, TagModule, ButtonModule, ChartModule, AddCategoryOrOccassionComponent],
+  imports: [CommonModule, CardModule, TagModule, ButtonModule, ChartModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

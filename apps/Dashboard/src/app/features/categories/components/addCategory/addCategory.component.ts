@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AddCategoryOrOccassionComponent } from "apps/Dashboard/src/app/shared/components/add-category-or-occassion/addCategoryOrOccassion.component";
+import { UpsertCategoryAndOccassionComponent } from "apps/Dashboard/src/app/shared/components/upsert-category-occassion/upsertCategoryAndOccassion.component";
 
 @Component({
   selector: 'app-add-category',
-  imports: [AddCategoryOrOccassionComponent],
+  imports: [UpsertCategoryAndOccassionComponent],
   templateUrl: './addCategory.component.html',
   styleUrl: './addCategory.component.scss',
 })

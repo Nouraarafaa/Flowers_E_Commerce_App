@@ -6,15 +6,13 @@ import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 
-
-
 @Component({
-  selector: 'app-add-category-or-occassion',
+  selector: 'app-upsert-category-and-occassion',
   imports: [FormsModule, FormInputComponent],
-  templateUrl: './addCategoryOrOccassion.component.html',
-  styleUrl: './addCategoryOrOccassion.component.scss',
+  templateUrl: './upsertCategoryAndOccassion.component.html',
+  styleUrl: './upsertCategoryAndOccassion.component.scss',
 })
-export class AddCategoryOrOccassionComponent implements OnDestroy {
+export class UpsertCategoryAndOccassionComponent {
   title = input<string>();
   placeholderNameFiled = input<string>();
   imagelabel = input<string>();
@@ -51,32 +49,40 @@ export class AddCategoryOrOccassionComponent implements OnDestroy {
           }
         })
       }
+      if (this.functionType() === 'Add Occasion') {
+
+      }
+      if (this.functionType() === 'Edit Category') {
+        
+      }
+      if (this.functionType() === 'Edit Occasion') {
+        
+      }
     }
   }
 
-  onFileSelected(event: any) {
-    const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
-    const file: File = event.target.files[0];
-    if (file) {
-      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
-      if (!allowedTypes.includes(file.type)) {
-        this.imageErrorMessage = 'Sorry, only images of the following types are allowed: (PNG, JPG, WEBP)';
-        this.categoryOrOccasion.image = null;
-        return;
-      }
-      if (file.size > maxSizeInBytes) {
-        this.imageErrorMessage = 'Sorry, the maximum allowed file size is 2MB.';
-        return;
-      }
-      this.imageErrorMessage = '';
-      this.categoryOrOccasion.image = file;
+    onFileSelected(event: any) {
+      const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+      const file: File = event.target.files[0];
+      if (file) {
+        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+        if (!allowedTypes.includes(file.type)) {
+          this.imageErrorMessage = 'Sorry, only images of the following types are allowed: (PNG, JPG, WEBP)';
+          this.categoryOrOccasion.image = null;
+          return;
+        }
+        if (file.size > maxSizeInBytes) {
+          this.imageErrorMessage = 'Sorry, the maximum allowed file size is 2MB.';
+          return;
+        }
+        this.imageErrorMessage = '';
+        this.categoryOrOccasion.image = file;
 
+      }
+    }
+
+    ngOnDestroy(): void {
+      this.destroy$.next();
+      this.destroy$.complete();
     }
   }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-}
