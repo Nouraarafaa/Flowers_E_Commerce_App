@@ -11,6 +11,7 @@ export const appRoutes: Route[] = [
             { path: "occasions", loadComponent: () => import('./features/occassions/components/occasions-component/occassions.component').then((c) => c.OccassionsComponent), title: "Occasions" },
             { path: "update-profile", loadComponent: () => import('@elevate/profile').then((c) => c.ProfileFeatureComponent), title: "Update Profile" },
             { path: "addCategory", loadComponent: () => import('./features/categories/components/addCategory/addCategory.component').then((c) => c.AddCategoryComponent), title: "Add Category" },
+            { path: "updateCategory", loadComponent: () => import('./features/categories/components/updateCategory/updateCategory.component').then((c) => c.UpdateCategoryComponent), title: "Update Category" },
 
         ]
     }

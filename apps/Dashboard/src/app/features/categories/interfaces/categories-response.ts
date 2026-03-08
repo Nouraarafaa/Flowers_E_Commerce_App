@@ -17,12 +17,12 @@ export interface Category {
   productsCount?: number;
 }
 
-export interface AddCategoryResponse {
+export interface CategoryResponse {
   message: string;
-  category: AddCategory;
+  category: CategoryData;
 }
 
-export interface AddCategory {
+export interface CategoryData {
   name: string;
   slug: string;
   image: string;
