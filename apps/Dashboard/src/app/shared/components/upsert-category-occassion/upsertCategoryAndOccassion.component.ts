@@ -5,12 +5,13 @@ import { CategoriesService } from '../../../features/categories/services/categor
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Dialog } from 'primeng/dialog';
+import { OccassionService } from '../../../features/occassions/services/occassion.service';
 
 
 
 @Component({
   selector: 'app-upsert-category-and-occassion',
-  imports: [FormsModule, FormInputComponent,Dialog],
+  imports: [FormsModule, FormInputComponent, Dialog],
   templateUrl: './upsertCategoryAndOccassion.component.html',
   styleUrl: './upsertCategoryAndOccassion.component.scss',
 })
@@ -23,6 +24,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit {
   categoryOrOccasionId = input<string>();
 
   private readonly _categoriesService = inject(CategoriesService);
+  private readonly _occassionService = inject(OccassionService);
   private readonly _toastrService = inject(ToastrService);
   private destroy$ = new Subject<void>();
 
@@ -55,12 +57,15 @@ export class UpsertCategoryAndOccassionComponent implements OnInit {
 
   }
 
+  // to print current image in edit mode if the user didn't change the image and to print the new image name if the user uploaded new image
   getFileName(): string {
     const img = this.categoryOrOccasion.image;
     if (!img) return '';
     if (typeof img === 'string') return 'Current Image';
     return img.name;
   }
+
+
   // check if there is any change in the form data to enable the submit button in edit mode
   dataCheckChange(): boolean {
     if (this.functionType()?.includes('Add')) {
@@ -72,7 +77,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit {
     if (this.categoryOrOccasion.image instanceof File) {
       // Extract the file name from the old link (coming from the server)
       const oldImageName = this.categoryOrOccasion.image.name;
-      console.log('this.categoryOrOccasion.image',this.categoryOrOccasion.image);
+      console.log('this.categoryOrOccasion.image', this.categoryOrOccasion.image);
       console.log('oldImageName :', oldImageName);
 
       // If the uploaded file name differs from the current image name (in case the user changes the image), this condition is met and the refresh button is activated.        
@@ -86,34 +91,53 @@ export class UpsertCategoryAndOccassionComponent implements OnInit {
     return false;
   }
 
+  // pop up to show the current image in edit mode
+  showImage() {
+    this.visible = true;
+  }
 
-    showImage() {
-        this.visible = true;
-    }
 
   onSubmit() {
     if (this.categoryOrOccasion.name && this.categoryOrOccasion.image) {
       console.log('object data :', this.categoryOrOccasion);
 
       // we can use the same component to add category or occasion by checking the functionType input value
-      if (this.functionType() === 'Add Category' && typeof this.categoryOrOccasion.image !== 'string') {
-        this._categoriesService.addCategory(this.categoryOrOccasion.name, this.categoryOrOccasion.image).pipe(takeUntil(this.destroy$)).subscribe({
-          next: (res) => {
-            console.log(res.message);
-            this._toastrService.success('Category added successfully');
-            this.categoryOrOccasion = {
-              name: '',
-              image: null
-            };
-          },
-          error: (err) => {
-            this._toastrService.error(err.error.error);
-          }
-        })
-      }
-      if (this.functionType() === 'Add Occasion') {
+      if (typeof this.categoryOrOccasion.image !== 'string') {
+        if (this.functionType() === 'Add Category') {
+          this._categoriesService.addCategory(this.categoryOrOccasion.name, this.categoryOrOccasion.image).pipe(takeUntil(this.destroy$)).subscribe({
+            next: (res) => {
+              console.log(res.message);
+              this._toastrService.success('Category added successfully');
+              this.categoryOrOccasion = {
+                name: '',
+                image: null
+              };
+            },
+            error: (err) => {
+              this._toastrService.error(err.error.error);
+            }
+          })
+        }
 
+        if (this.functionType() === 'Add Occassion') {
+         console.log('Add Occasion :', this.categoryOrOccasion);
+          this._occassionService.addOccassion(this.categoryOrOccasion.name, this.categoryOrOccasion.image).pipe(takeUntil(this.destroy$)).subscribe({
+            next: (res) => {
+              console.log(res.message);
+
+              this._toastrService.success('Occasion added successfully');
+              this.categoryOrOccasion = {
+                name: '',
+                image: null
+              };
+            },
+            error: (err) => {
+              this._toastrService.error(err.error.error);
+            }
+          })
+        }
       }
+
       if (this.functionType() === 'Edit Category') {
         this._categoriesService.updateCategory(this.categoryOrOccasionId()!, this.categoryOrOccasion.name, typeof (this.categoryOrOccasion.image) !== 'string' ? this.categoryOrOccasion.image : undefined).pipe(takeUntil(this.destroy$)).subscribe({
           next: (res) => {
@@ -127,12 +151,13 @@ export class UpsertCategoryAndOccassionComponent implements OnInit {
           }
         })
       }
-      if (this.functionType() === 'Edit Occasion') {
+      if (this.functionType() === 'Edit Occassion') {
 
       }
     }
   }
 
+  //to set the categoryOrOccasion image property with the uploaded file if it's valid and to validate the uploaded image file and to set the image error message if the file is not valid.
   onFileSelected(event: any) {
     const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
     const file: File = event.target.files[0];
