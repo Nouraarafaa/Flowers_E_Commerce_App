@@ -8,12 +8,16 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/Dashboard",
         "index": "apps/Dashboard/src/index.html",
         "browser": "apps/Dashboard/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/Dashboard/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -22,7 +26,10 @@
             "input": "apps/Dashboard/public"
           }
         ],
-        "styles": ["apps/Dashboard/src/styles.scss"],
+        "styles": [
+          "apps/Dashboard/src/styles.scss",
+          "node_modules/ngx-toastr/toastr.css"
+        ],
         "server": "apps/Dashboard/src/main.server.ts",
         "ssr": {
           "entry": "apps/Dashboard/src/server.ts"
@@ -77,7 +84,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/Dashboard/jest.config.ts"
       }

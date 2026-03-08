@@ -13,6 +13,8 @@ import { FooterComponent } from "../../pages/footer/footer.component";
 import { Store } from '@ngrx/store';
 import { selectWishlistProducts } from '../../store/wishlist/wishlist.selectors';
 import { loadWishlist } from '../../store/wishlist/wishlist.actions';
+import Cookies from 'js-cookie';
+
 
 
 @Component({
@@ -28,6 +30,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   lastName: string = '';
   userPhoto: string = '';
   userCity: string = '';
+  userRole: string = '';
   wihlistItems: number = 0;
   cartItems: number = 0;
   notificationNum: number = 0;
@@ -54,7 +57,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     this._store.select(selectWishlistProducts).subscribe({
       next: (res) => {
         this.wihlistItems = res.length;
-        console.log(this.wihlistItems);
+        // console.log(this.wihlistItems);
         
       }
     })
@@ -62,7 +65,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   getUserStatus() {
-    if (localStorage.getItem('flowersEcommerceToken')) {
+    if (this._authService.isAuthenticated()) {
       this.userLogged = true;
       this.getUserNameAndPhoto();
     }
@@ -70,9 +73,12 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   getUserNameAndPhoto(): void {
     this.getLoggedUserDataSubs = this._authService.getLoggedUserData().subscribe({
       next: (res) => {
+        console.log(res);
+        
         this.firstName = res.user.firstName;
         this.lastName = res.user.lastName;
         this.userPhoto = res.user.photo;
+        this.userRole = res.user.role;
 
       }
     })
@@ -109,7 +115,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     this.logoutSubs = this._authService.logout().subscribe({
       next: (res) => {
         if (res.message == 'success') {
-          localStorage.removeItem('flowersEcommerceToken')
+          Cookies.remove('flowersEcommerceToken', { path: '/' });
           window.location.reload();
 
         }

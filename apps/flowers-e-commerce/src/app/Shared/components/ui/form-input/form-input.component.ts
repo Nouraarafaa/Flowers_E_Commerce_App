@@ -21,6 +21,7 @@ export class FormInputComponent implements ControlValueAccessor {
   value = signal<string>('');
   id = input<string>('');
   type = input<string>('');
+  disabledFlag = input<boolean>(false);
   placeholder = input<string>('');
   nameControl = input<AbstractControl | null>();
 

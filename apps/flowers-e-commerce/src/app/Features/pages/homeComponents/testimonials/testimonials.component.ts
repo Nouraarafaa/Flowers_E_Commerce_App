@@ -24,7 +24,7 @@ export class TestimonialsComponent implements OnInit {
     this._homeService.getTestimonials().subscribe({
       next: (res) => {
         this.testimonials.set(res.testimonials);
-        console.log(this.testimonials());
+        // console.log(this.testimonials());
       },
       error: (err) => {
         console.error('Failed to load testimonials:', err);

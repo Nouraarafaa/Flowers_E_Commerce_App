@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, input, output, signal } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, computed, inject, input, output, signal } from '@angular/core';
 import { Toolbar } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,13 +7,14 @@ import { InputIcon } from 'primeng/inputicon';
 import { Router, RouterLink } from "@angular/router";
 import { MenuItem } from 'primeng/api';
 import { Menu } from 'primeng/menu';
-import { NgIf } from '@angular/common';
+import { isPlatformBrowser, NgIf } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { NavIconComponent } from '../nav-icon/navIcon.component';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from '../../services/search/search.service';
 import { ToggleButton } from 'primeng/togglebutton';
 import { TranslationMyAppService } from '../../../Core/services/TranslationMyApp/translation-my-app.service';
+import { environment } from '../../../Core/environments/environment';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class NavbarComponent implements OnInit {
 
   userLoggedNavBar = input.required<boolean>();
   firstNameNavBar = input.required<string>();
+  userRoleNavBar = input.required<string>();
   lastNameNavBar = input.required<string>();
   userCityNavBar = input.required<string>();
   wihlistItemsNavBar = input.required<number>();
@@ -50,13 +52,12 @@ export class NavbarComponent implements OnInit {
 
   isDarkMode = false;
 
-  items: MenuItem[] | undefined;
-
-  ngOnInit() {
-    this.isDarkMode = localStorage.getItem('darkMode') === 'true';
-    this.updateDarkClass();
-    this.items = [
-      {
+ 
+  private readonly _PLATFORM_ID = inject(PLATFORM_ID);
+  items = computed<MenuItem[]>(() => {
+  
+  return[
+    {
         separator: true
       },
       {
@@ -84,7 +85,8 @@ export class NavbarComponent implements OnInit {
           {
             label: 'Dashboard',
             icon: 'pi pi-cog',
-
+            visible: this.userRoleNavBar() === 'admin',
+          command: () => { window.open(environment.dashboardUrl, '_blank'); }
           },
           {
             label: 'Log out',
@@ -97,7 +99,14 @@ export class NavbarComponent implements OnInit {
         ]
       }
     ];
+    });
 
+  ngOnInit() {
+    if (isPlatformBrowser(this._PLATFORM_ID)) {
+    this.isDarkMode = localStorage.getItem('darkMode') === 'true';
+    this.updateDarkClass();
+  }
+    
   }
 
 

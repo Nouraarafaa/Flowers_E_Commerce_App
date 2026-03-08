@@ -7,11 +7,10 @@ import {
 import { SectionTitleComponent } from '../../../../../Shared/components/section-title/sectionTitle.component';
 import { SearchService } from '../../../../../Shared/services/search/search.service';
 import { SearchPipe } from './../../../../../Shared/pipes/search/search.pipe';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-popular-products',
-  imports: [ProductCardComponent, SectionTitleComponent, SearchPipe, FormsModule],
+  imports: [ProductCardComponent, SectionTitleComponent, SearchPipe],
   templateUrl: './popular-products.component.html',
   styleUrl: './popular-products.component.scss',
 })

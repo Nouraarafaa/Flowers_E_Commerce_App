@@ -1,0 +1,23 @@
+<section>
+
+    <div class="card">
+        <p-carousel 
+            [value]="relatedProducts()" 
+            [numVisible]="4"
+            [numScroll]="1"
+            [circular]="true"
+            [showIndicators]="false"
+            [responsiveOptions]="responsiveOptions"
+            [autoplayInterval]="3000"
+        >
+
+            <ng-template pTemplate="item" let-product>
+                <div class="rounded p-2.5">
+                    <app-product-card [product]="product"></app-product-card>
+                </div>
+            </ng-template>
+
+        </p-carousel>
+    </div>
+
+</section>
