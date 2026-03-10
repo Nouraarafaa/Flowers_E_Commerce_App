@@ -81,9 +81,9 @@
                                             <i class="pi pi-pencil text-sm!"></i>
                                             Edit
                                         </button>
-    
+
                                         <button
-                                            (click)="onDelete(row.id)"
+                                            (click)="$event.stopPropagation(); confirmDelete($event, row.id)"
                                             class="py-1 px-2 text-[12px] font-medium text-nowrap bg-[#FF00001A] hover:bg-[#FF0000]/20 active:scale-95 transition-all duration-300 rounded-md text-red-600 cursor-pointer">
                                             <i class="pi pi-trash text-16px!"></i>
                                             Delete
@@ -108,7 +108,7 @@
                                             </button>
 
                                             <button 
-                                                (click)="onDelete(row.id); op.hide()" 
+                                                (click)="$event.stopPropagation(); confirmDelete($event, row.id); op.hide()" 
                                                 class="flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 transition-colors text-sm font-semibold cursor-pointer">
                                                 <i class="pi pi-trash"></i>
                                                 Delete
@@ -131,5 +131,19 @@
         </ng-template>
 
     </p-table>
+
+    <!-- confirm Delete -->
+    <div class="confirmDialog">
+        <p-confirmDialog key="globalConfirm">
+            <ng-template pTemplate="message" let-message>
+                <div class="text-center flex flex-col items-center w-full max-w-[90vw] md:max-w-[474px] p-4 md:p-6">
+                    <img src="/Images/delete-Icon.png" alt="delete-Icon" class="my-2 sm:my-3 w-20 h-20 md:w-28 sm:h-28 object-contain">
+                    <p class="text-zinc-800 text-base md:text-lg font-semibold font-inter align-middle leading-relaxed">
+                        {{ message.message }}
+                    </p>
+                </div>
+            </ng-template>
+        </p-confirmDialog>
+    </div>
 
 </section>

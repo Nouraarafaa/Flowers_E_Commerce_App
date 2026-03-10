@@ -17,8 +17,8 @@ import { ProductTableModel } from '../interfaces/product-table-model/product-tab
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 
-  private readonly _getProductsService = inject(GetProductsService);
-  private _productAdaptorService = inject(productAdaptorService);
+  private _getProductsService = inject(GetProductsService);
+  private readonly _productAdaptorService = inject(productAdaptorService);
   private readonly _router = inject(Router);
 
   products = signal<ProductTableModel[]>([]);
