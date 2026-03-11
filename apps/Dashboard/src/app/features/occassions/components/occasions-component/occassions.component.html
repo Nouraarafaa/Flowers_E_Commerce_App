@@ -1,1 +1,6 @@
-<p>occassions works!</p>
+<div class="all-occasions h-full flex flex-col gap-6 ">
+    <app-page-header (add)="onAdd()" [title]="'All Occasions'" [featureName]="'Add a new occasion'"></app-page-header>
+    <div class="bg-white rounded-[20px] p-6 h-full ">
+        <app-dynamic-table (edit)="onEdit($event)" (delete)="onDelete($event)" [data]="occasions" [columns]="columns"></app-dynamic-table>
+    </div>
+</div>

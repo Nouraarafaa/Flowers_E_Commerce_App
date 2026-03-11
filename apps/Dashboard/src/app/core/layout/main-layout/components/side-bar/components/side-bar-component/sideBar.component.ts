@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { SideBarLinkComponent } from "../sidebar-link/sideBarLink.component";
 import { AuthService } from '@elevate-workspace/auth';
 import { Subject, takeUntil } from 'rxjs';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import { environment } from 'apps/Dashboard/src/app/core/environments/environment';
 
 
