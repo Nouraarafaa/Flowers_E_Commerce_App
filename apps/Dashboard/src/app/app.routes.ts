@@ -11,6 +11,7 @@ export const appRoutes: Route[] = [
             { path: "products/add", loadComponent: () => import('./features/products/components/add-product/add-product.component').then( (c)=> c.AddProductComponent ), title:"Add Product"},
             { path: "occasions", loadComponent: () => import('./features/occassions/components/occasions-component/occassions.component').then((c) => c.OccassionsComponent), title: "Occasions" },
             { path: "update-profile", loadComponent: () => import('@elevate/profile').then((c) => c.ProfileFeatureComponent), title: "Update Profile" },
+            { path: "**", loadComponent: () => import('./features/not-found/not-found.component').then((c) => c.NotFoundComponent), title: "Not Found" },
         ]
     }
 ];
