@@ -16,6 +16,7 @@ export class CategoriesComponent {
   
     destroy$ = new Subject<void>();
     
+    
     deleteCategory(id:string){
       this._categoriesService.deleteCategory(id).pipe(takeUntil(this.destroy$)).subscribe({
         next:()=>{
