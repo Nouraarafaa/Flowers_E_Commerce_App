@@ -28,7 +28,7 @@
         ],
         "styles": [
           "apps/Dashboard/src/styles.scss",
-          "node_modules/ngx-toastr/toastr.css"
+          "node_modules/ngx-toastr/toastr.css"   
         ],
         "server": "apps/Dashboard/src/main.server.ts",
         "ssr": {

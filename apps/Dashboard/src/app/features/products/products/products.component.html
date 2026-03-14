@@ -1,0 +1,21 @@
+<section class="w-full h-234.5 flex flex-col gap-4.5 p-3 rounded-2xl bg-white">
+  
+  <!-- header -->
+  <app-page-header
+    [title]="title()"
+    [featureName]="featureName()"
+
+    (add)="addNewProduct()"
+  ></app-page-header>
+
+  <!-- table -->
+  <app-dynamic-table
+    [data]="products()"
+    [columns]="productsColumns"
+
+    (edit)="updateProduct($event)"
+    (delete)="deleteProduct($event)"
+    > 
+  </app-dynamic-table>
+
+</section>
