@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       firstName: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       lastName: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       email: [null, [Validators.required, Validators.email]],
-      phone: [null, [Validators.required, Validators.pattern(/^01[0125][0-9]{8}$/)]],
+      phone: [null, [Validators.required, Validators.pattern(/^1[0125][0-9]{8}$/)]],
       gender: [null, [ Validators.required ]],
       password: [null, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]],
       rePassword: [null, [Validators.required]]
@@ -62,8 +62,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.errorMsg.set("");
       if (!this.isCallingAPI()) {
         this.isCallingAPI.set(true);
-        const phoneValue = this.registerForm.get('phone')?.value?.replace(/^0/, '+20');
-        const formData = { ...this.registerForm.value, phone: phoneValue };
+        const phoneValue = this.registerForm.get('phone')?.value?.replace('+20', '');
+        const formData = { ...this.registerForm.value, phone: '+20' + phoneValue };
         this._authService.register(formData)
         .pipe(takeUntil(this.destroy$), finalize(()=> this.isCallingAPI.set(false))).subscribe({
           next:(res)=>{
