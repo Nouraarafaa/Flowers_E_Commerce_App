@@ -1,0 +1,52 @@
+:host ::ng-deep {
+
+    .p-button-text.p-button-secondary {
+        background: var(--color-maroon-600);
+        border-color: transparent;
+        color: var(--color-maroon-50);
+
+        &:not(:disabled):hover {
+        background: var(--color-maroon-700);
+        border-color: transparent;
+        color: var(--color-maroon-50);
+        }
+    }
+
+
+    .p-carousel-prev-button,
+    .p-carousel-next-button {
+        background: var(--color-maroon-600) !important;
+        color: #fff !important;
+        border-radius: 50% !important;
+        width: 42px !important;
+        height: 42px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border: none !important;
+        z-index: 10;
+    }
+
+    .p-carousel-prev-button:hover,
+    .p-carousel-next-button:hover {
+        background: var(--color-maroon-700) !important;
+    }
+
+    .p-carousel-prev-button {
+        margin-right: -20px;
+    }
+
+    .p-carousel-next-button {
+        margin-left: -20px;
+    }
+
+    .p-carousel-content {
+        gap: 0 !important;
+    }
+
+    .p-carousel-viewport {
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+}
