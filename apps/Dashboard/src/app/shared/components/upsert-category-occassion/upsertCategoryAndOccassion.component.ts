@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Dialog } from 'primeng/dialog';
 import { OccassionService } from '../../../features/occassions/services/occassion.service';
 import { ActivatedRoute } from '@angular/router';
+import { UpsertConfiguration } from '../../interfaces/upsertConfiguration/upsert-configuration';
 
 
 
@@ -17,11 +18,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './upsertCategoryAndOccassion.component.scss',
 })
 export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
-  title = input<string>();
-  placeholderNameFiled = input<string>();
-  imagelabel = input<string>();
-  buttonName = input<string>();
-  functionType = input<string>();
+  config = input.required<UpsertConfiguration>();
   categoryOrOccasionId = signal<string>("");
 
   private readonly _categoriesService = inject(CategoriesService);
@@ -43,7 +40,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     const id = this._activatedRoute.snapshot.paramMap.get('id');
     this.categoryOrOccasionId.set(id!);
-    if (this.functionType()?.includes('Edit')) {
+    if (this.config().functionType?.includes('Edit')) {
       this.gitCategoryOrOccasionData();
     }
   }
@@ -51,7 +48,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
   gitCategoryOrOccasionData() {
     console.log(this.categoryOrOccasionId());
     
-    if (this.functionType() === 'Edit Category') {
+    if (this.config().functionType === 'Edit Category') {
       // 1- get category by id
       this._categoriesService.getCategory(this.categoryOrOccasionId()!).pipe(takeUntil(this.destroy$)).subscribe({
         next: (res) => {
@@ -63,7 +60,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
       })
 
     }
-    if (this.functionType() === 'Edit Occassion') {
+    if (this.config().functionType === 'Edit Occasion') {
          // 1- get category by id
       this._occassionService.getOccassion(this.categoryOrOccasionId()!).pipe(takeUntil(this.destroy$)).subscribe({
         next: (res) => {
@@ -88,7 +85,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
 
   // check if there is any change in the form data to enable the submit button in edit mode
   dataCheckChange(): boolean {
-    if (this.functionType()?.includes('Add')) {
+    if (this.config().functionType?.includes('Add')) {
       return true;
     }
     const nameChanged = this.categoryOrOccasion.name !== this.checklabel;
@@ -123,7 +120,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
 
       // we can use the same component to add category or occasion by checking the functionType input value
       if (typeof this.categoryOrOccasion.image !== 'string') {
-        if (this.functionType() === 'Add Category') {
+        if (this.config().functionType === 'Add Category') {
           this._categoriesService.addCategory(this.categoryOrOccasion.name, this.categoryOrOccasion.image).pipe(takeUntil(this.destroy$)).subscribe({
             next: (res) => {
               console.log(res.message);
@@ -139,7 +136,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
           })
         }
 
-        if (this.functionType() === 'Add Occassion') {
+        if (this.config().functionType === 'Add Occasion') {
           console.log('Add Occasion :', this.categoryOrOccasion);
           this._occassionService.addOccassion(this.categoryOrOccasion.name, this.categoryOrOccasion.image).pipe(takeUntil(this.destroy$)).subscribe({
             next: (res) => {
@@ -158,7 +155,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
         }
       }
 
-      if (this.functionType() === 'Edit Category') {
+      if (this.config().functionType === 'Edit Category') {
         this._categoriesService.updateCategory(this.categoryOrOccasionId()!, this.categoryOrOccasion.name, typeof (this.categoryOrOccasion.image) !== 'string' ? this.categoryOrOccasion.image : undefined).pipe(takeUntil(this.destroy$)).subscribe({
           next: (res) => {
             console.log(res.message);
@@ -171,7 +168,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
           }
         })
       }
-      if (this.functionType() === 'Edit Occassion') {
+      if (this.config().functionType === 'Edit Occasion') {
         this._occassionService.updateOccassion(this.categoryOrOccasionId()!, this.categoryOrOccasion.name, typeof (this.categoryOrOccasion.image) !== 'string' ? this.categoryOrOccasion.image : undefined).pipe(takeUntil(this.destroy$)).subscribe({
           next: (res) => {
             console.log(res.message);
