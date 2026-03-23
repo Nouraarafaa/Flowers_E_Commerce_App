@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@elevate-workspace/auth": ["libs/auth/src/index.ts"],
+      "@elevate-workspace/input-form": [
+        "libs/ui/shared/input-form/src/index.ts"
+      ],
       "@elevate/profile": ["libs/profile/profile-feature/src/index.ts"]
     }
   },

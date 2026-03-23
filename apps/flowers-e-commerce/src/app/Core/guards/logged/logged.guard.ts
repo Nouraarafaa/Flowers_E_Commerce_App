@@ -11,9 +11,9 @@ export const loggedGuard: CanActivateFn = (route, state) => {
     if (Cookies.get('flowersEcommerceToken')) {
       _router.navigate(['/home']);
       return false;
-    } else {
-      return true;
     }
+      return true;
+    
   } else {
     return false;
   }
