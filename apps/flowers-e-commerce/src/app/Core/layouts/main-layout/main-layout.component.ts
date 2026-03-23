@@ -57,7 +57,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     this._store.select(selectWishlistProducts).subscribe({
       next: (res) => {
         this.wihlistItems = res.length;
-        console.log(this.wihlistItems);
+        // console.log(this.wihlistItems);
         
       }
     })

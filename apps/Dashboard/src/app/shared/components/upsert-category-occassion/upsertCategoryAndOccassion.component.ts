@@ -1,4 +1,4 @@
-import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FormInputComponent } from '@elevate-workspace/input-form';
 import { CategoriesService } from '../../../features/categories/services/categories/categories.service';
@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Dialog } from 'primeng/dialog';
 import { OccassionService } from '../../../features/occassions/services/occassion.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -15,17 +16,18 @@ import { OccassionService } from '../../../features/occassions/services/occassio
   templateUrl: './upsertCategoryAndOccassion.component.html',
   styleUrl: './upsertCategoryAndOccassion.component.scss',
 })
-export class UpsertCategoryAndOccassionComponent implements OnInit {
+export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
   title = input<string>();
   placeholderNameFiled = input<string>();
   imagelabel = input<string>();
   buttonName = input<string>();
   functionType = input<string>();
-  categoryOrOccasionId = input<string>();
+  categoryOrOccasionId = signal<string>("");
 
   private readonly _categoriesService = inject(CategoriesService);
   private readonly _occassionService = inject(OccassionService);
   private readonly _toastrService = inject(ToastrService);
+  private _activatedRoute = inject(ActivatedRoute);
   private destroy$ = new Subject<void>();
 
   categoryOrOccasion: { name: string; image: string | File | null } = {
@@ -39,12 +41,16 @@ export class UpsertCategoryAndOccassionComponent implements OnInit {
 
 
   ngOnInit(): void {
+    const id = this._activatedRoute.snapshot.paramMap.get('id');
+    this.categoryOrOccasionId.set(id!);
     if (this.functionType()?.includes('Edit')) {
       this.gitCategoryOrOccasionData();
     }
   }
 
   gitCategoryOrOccasionData() {
+    console.log(this.categoryOrOccasionId());
+    
     if (this.functionType() === 'Edit Category') {
       // 1- get category by id
       this._categoriesService.getCategory(this.categoryOrOccasionId()!).pipe(takeUntil(this.destroy$)).subscribe({

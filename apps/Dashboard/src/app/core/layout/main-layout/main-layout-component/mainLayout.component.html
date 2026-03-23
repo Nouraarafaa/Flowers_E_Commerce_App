@@ -3,8 +3,24 @@
     <div class="hidden md:block w-75 ">
         <app-side-bar></app-side-bar>
     </div>
+
+    <!-- Mobile Navbar -->
     <div class="md:hidden">
-   <!-- navbar here -->
+        <nav class="flex justify-between items-center min-w-[430px] h-[70px] border-b border-[var(--color-black-8,#00000014)] px-4">
+            <div class="flex items-center">
+                <img src="/Images/flower-logo.png" alt="flower-logo" class="w-[60px] h-[57px]">
+                <!-- <h2>Breadcrumb Navigation</h2> -->
+            </div>
+
+            <div class="flex items-center gap-2.5">
+                <!-- <img src="" alt="User image" class="w-[40px] h-[40px] rounded-[40%]"> -->
+
+                <div class="card flex justify-center"> 
+                    <p-menu #menu [model]="items" [popup]="true" />
+                    <p-button (click)="menu.toggle($event)" icon="pi pi-bars" styleClass="p-button-text !bg-transparent !border-0 !text-black"/>
+                </div>
+            </div>
+        </nav>
     </div>
 
     <div class="flex-1 w-full bg-[#F8F9FA]">
@@ -14,3 +30,4 @@
     </div>
 
 </section>
+

@@ -5,16 +5,16 @@ import { ProductsService } from '../../../../../Shared/services/products/product
 import { Product } from '../../../../../Shared/interfaces/HomeResponse/home-response';
 import { Review } from '../../../../../Shared/interfaces/review';
 import { Rating } from 'primeng/rating';
-import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { InputTextarea } from 'primeng/inputtextarea';
 import { InputText } from 'primeng/inputtext';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
+import { RelatedProductsComponent } from "../related-products/related-products.component";
+import { SectionTitleComponent } from "../../../../../Shared/components/section-title/sectionTitle.component";
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, Rating, Button, FormsModule, RouterLink, DatePipe, InputTextarea, InputText],
+  imports: [CommonModule, Rating, FormsModule, RouterLink, DatePipe, InputText, RelatedProductsComponent, SectionTitleComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })
@@ -25,6 +25,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   product = signal<Product | null>(null);
+  categoryID = signal<string | null>(null);
   selectedImage = signal<string>('');
   isLoading = signal<boolean>(true);
   
@@ -37,34 +38,38 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   reviewText = '';
 
   ngOnInit(): void {
+    this.getId();
+  }
+
+  getId(): void {
     // Subscribe to param changes
     this._activatedRoute.paramMap
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(params => {
-        const id = params.get('id');
-        if(id) {
-          this.loadProductDetails(id);
-          this.loadProductReviews(id);
-        }
-      });
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(params => {
+      const id = params.get('id');
+      if(id) {
+        this.loadProductDetails(id);
+        this.loadProductReviews(id);
+      }
+    });
   }
 
   loadProductDetails(id: string): void {
     this.isLoading.set(true);
     this._productsService.getProductById(id)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this.destroy$), finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (res) => {
           this.product.set(res.product);
+          this.categoryID.set(res.product._id);
           this.selectedImage.set(res.product.imgCover);
-          this.isLoading.set(false);
         },
         error: (err) => {
-          console.error('Error loading product details:', err);
-          this.isLoading.set(false);
+          // console.error('Error loading product details:', err);
         }
       });
   }
+
 
   loadProductReviews(id: string): void {
     this.isLoadingReviews.set(true);

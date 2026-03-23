@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_URL } from '@elevate-workspace/auth';
 import { Observable } from 'rxjs';
-import { CategoryResponse, CategoriesResponse } from '../../interfaces/categories-response';
+import { CategoryResponse, CategoriesResponse, DeleteCategoryResponse } from '../../interfaces/categories-response';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +34,10 @@ export class CategoriesService {
     }
     return this._httpClient.put<CategoryResponse>(`${this._BASE_URL}/categories/${categoryId}`, formData);
   }
-
+  
+  deleteCategory(categoryId:string): Observable<DeleteCategoryResponse> { 
+    return this._httpClient.delete<DeleteCategoryResponse>(`${this._BASE_URL}/categories/${categoryId}`);
+  }
  
 
 
