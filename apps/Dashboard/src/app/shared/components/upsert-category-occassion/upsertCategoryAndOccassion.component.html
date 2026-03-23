@@ -1,5 +1,5 @@
 <h1 class="font-inter font-semibold text-2xl text-zinc-800 mb-6">
-    {{title()}}{{functionType()?.includes('Edit')?categoryOrOccasion.name:''}}</h1>
+    {{config().title}}{{config().functionType.includes('Edit')?categoryOrOccasion.name:''}}</h1>
 <div class="bg-white">
     <form #form="ngForm" class=" p-6 rounded-2xl md:w-3/4">
         <!-- Name input -->
@@ -7,13 +7,13 @@
             <label for="catName" class="text-black text-[14px] font-inter font-medium"> Name <span
                     class="text-red-500">*</span></label>
             <app-form-input type="text" id="catName" name="catName" #nameModel="ngModel"
-                [placeholder]="placeholderNameFiled()!" [(ngModel)]="categoryOrOccasion.name" required>
+                [placeholder]="config().placeholderName!" [(ngModel)]="categoryOrOccasion.name" required>
             </app-form-input>
 
         </div>
         <!-- Image Input -->
         <div class="mt-4.5 ">
-            <label for="image" class="text-black text-[14px] font-inter font-medium"> {{imagelabel()}} <span
+            <label for="image" class="text-black text-[14px] font-inter font-medium"> {{config().imageLabel}} <span
                     class="text-red-500">*</span>
                 <div
                     class="p-4 border border-zinc-300 rounded-[10px] text-maroon-500 font-inter text-sm text-end cursor-pointer">
@@ -31,7 +31,7 @@
 
         </div>
 
-        @if (functionType()?.includes('Edit')) {
+        @if (config().functionType.includes('Edit')) {
         <a class="cursor-pointer mt-4.5 ms-auto flex items-center justify-center gap-1.5 w-fit border border-[#00000014] p-2.5 rounded-[10px] text-blue-600 font-inter text-sm"
             (click)="showImage()">
             <i class="pi pi-image"></i> <span>View category image</span>
@@ -41,7 +41,7 @@
         <button type="submit"
             class="w-full  text-white font-mulish text-sm font-semibold px-4 py-2.5 rounded-[10px] mt-32 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 bg-maroon-600"
             [disabled]="form.invalid || !categoryOrOccasion.image || !dataCheckChange()"
-            (click)="onSubmit()">{{buttonName()}}</button>
+            (click)="onSubmit()">{{config().buttonName}}</button>
     </form>
 
 </div>

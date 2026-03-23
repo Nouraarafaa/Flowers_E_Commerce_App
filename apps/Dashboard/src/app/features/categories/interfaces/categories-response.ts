@@ -31,3 +31,17 @@ export interface CategoryData {
   createdAt: string;
   updatedAt: string;
 }
+export interface DeleteCategoryResponse {
+  message: string;
+  document: Document;
+}
+
+export interface Document {
+  _id: string;
+  name: string;
+  slug: string;
+  image: string;
+  isSuperAdmin: boolean;
+  createdAt: string;
+  updatedAt: string;
+}

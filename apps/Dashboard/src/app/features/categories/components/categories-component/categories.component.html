@@ -1,6 +1,9 @@
 <button routerLink='/addCategory' class="border border-maroon-700">
   Add category
 </button>
-<button routerLink='/updateCategory' class="border border-maroon-700">
+<button [routerLink]="['/updateCategory', '69c19265e364ef614064b340']" class="border border-maroon-700">
   Update category
+</button>
+<button (click)="deleteCategory('69c19265e364ef614064b340')" class="border border-maroon-700">
+  Delete Category
 </button>
