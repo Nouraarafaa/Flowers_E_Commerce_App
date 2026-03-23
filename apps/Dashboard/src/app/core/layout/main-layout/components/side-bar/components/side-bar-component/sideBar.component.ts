@@ -15,14 +15,14 @@ import { environment } from 'apps/Dashboard/src/app/core/environments/environmen
   templateUrl: './sideBar.component.html',
   styleUrl: './sideBar.component.scss',
 })
-export class SideBarComponent implements OnInit,OnDestroy {
+export class SideBarComponent implements OnInit, OnDestroy {
 
   private readonly _router = inject(Router);
   private readonly _authService = inject(AuthService);
   websiteUrl = environment.websiteUrl;
 
   items: MenuItem[] | undefined;
-  
+
   user = this._authService.currentUser;
   private destroy$ = new Subject<void>();
 
@@ -54,9 +54,14 @@ export class SideBarComponent implements OnInit,OnDestroy {
 
 
   ngOnInit() {
-    if (!this.user()) {
-      this._authService.getLoggedUserData().pipe(takeUntil(this.destroy$)).subscribe();
-    }
+
+    this._authService.getLoggedUserData().pipe(takeUntil(this.destroy$)).subscribe({
+      next: (res) => {
+        this._authService.updateUserSignal(res.user);
+        console.log(res);
+      }
+    });
+
     this.items = [
       {
         separator: true
@@ -80,10 +85,10 @@ export class SideBarComponent implements OnInit,OnDestroy {
         ]
       }
     ];
-   
+
   }
 
- 
+
 
   onClick() {
     console.log("Logout");

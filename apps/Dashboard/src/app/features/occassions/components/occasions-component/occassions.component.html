@@ -1,1 +1,9 @@
-<p>occassions works!</p>
+<button routerLink='/addOccasion' class="border border-maroon-700">
+  Add Occassion
+</button>
+<button [routerLink]="['/updateOccassion', '69adf150e364ef614060796d']" class="border border-maroon-700">
+  Update Occassion
+</button>
+<button (click)="deleteOccasion('69ae3901e364ef614060fbcd')" class="border border-maroon-700">
+  Delete Occassion
+</button>
