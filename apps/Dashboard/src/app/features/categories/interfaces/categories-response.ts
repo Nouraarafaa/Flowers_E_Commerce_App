@@ -17,17 +17,31 @@ export interface Category {
   productsCount?: number;
 }
 
-export interface AddCategoryResponse {
+export interface CategoryResponse {
   message: string;
-  category: AddCategory;
+  category: CategoryData;
 }
 
-export interface AddCategory {
+export interface CategoryData {
   name: string;
   slug: string;
   image: string;
   isSuperAdmin: boolean;
   _id: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface DeleteCategoryResponse {
+  message: string;
+  document: Document;
+}
+
+export interface Document {
+  _id: string;
+  name: string;
+  slug: string;
+  image: string;
+  isSuperAdmin: boolean;
   createdAt: string;
   updatedAt: string;
 }

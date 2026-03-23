@@ -7,11 +7,10 @@ import { ChartModule } from 'primeng/chart';
 import { Router } from '@angular/router';
 import { CategoriesService} from '../../../categories/services/categories/categories.service';
 import { InventoryService, LowStockProduct } from '../../../../core/services/inventory/inventory.service';
-import { ProductsService } from '../../../../core/services/products/products.service';
 import { StatisticsService } from '../../../../core/services/statistics/statistics.service';
-import { Product } from '../../../../core/interfaces/products/products.interface';
-
 import { ChartData, ChartOptions, ScriptableContext, TooltipItem } from 'chart.js';
+import { GetProductsService } from '../../../products/services/getProducts/get-products.service';
+import { Product } from '../../../products/interfaces/get-products/get-products';
 import { Category } from '../../../categories/interfaces/categories-response';
 
 interface OrderStatus {
@@ -34,7 +33,7 @@ export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly categoriesService = inject(CategoriesService);
   private readonly inventoryService = inject(InventoryService);
-  private readonly productsService = inject(ProductsService);
+  private readonly GetProductsService = inject(GetProductsService);
   private readonly statisticsService = inject(StatisticsService);
 
   revenueView: 'Monthly' | 'Weekly' = 'Monthly';
@@ -97,7 +96,7 @@ export class DashboardComponent implements OnInit {
     });
 
     // Fetch Products (Top Selling)
-    this.productsService.getProducts().subscribe({
+    this.GetProductsService.getProducts().subscribe({
       next: (res) => {
         this.topSellingProducts = res.products
           .map(p => ({

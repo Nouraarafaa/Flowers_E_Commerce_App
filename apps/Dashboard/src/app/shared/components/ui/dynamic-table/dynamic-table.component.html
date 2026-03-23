@@ -1,0 +1,149 @@
+<section>
+
+    <p-table
+        [value]="data()"
+        [paginator]="true"
+        [rows]="12"
+    >
+
+        <!-- search -->
+        <ng-template #caption>
+            <div class="flex w-full justify-center">
+                <p-iconfield iconPosition="left" class="w-full">
+                    <p-inputicon>
+                        <i class="pi pi-search"></i>
+                    </p-inputicon>
+                    <input pInputText type="text" (input)="''" placeholder="Search..." class="w-full !h-[50px] bg-white border border-[#D4D4D8] rounded-[10px] px-4 flex items-center gap-2 focus:!border-maroon-600" />
+                </p-iconfield>
+            </div>
+        </ng-template>
+
+        <!-- Header -->
+        <ng-template #header>
+            <tr>
+                @for (col of columns(); track col.field) {
+                    <th class="text-zinc-900 font-inter lg:table-cell"
+                    [class.hidden]="col.field === 'sales' || col.field === 'rating'"
+                    >
+                        {{ col.header }}
+                    </th>
+                }
+            </tr>
+        </ng-template>
+
+        <!-- Body -->
+        <ng-template #body let-row>
+            <tr>
+                @for (col of columns(); track col.field) {
+                    <td class="w-[15%] lg:table-cell"
+                    [class.hidden]="col.field === 'sales' || col.field === 'rating'"
+                    >
+                        @switch (col.field) {
+
+                            @case ('name') {
+                                <span class="text-sm text-zinc-800 font-inter font-semibold align-middle  block truncate max-w-[150px]" [title]="row[col.field]">
+                                    {{ row[col.field] }}
+                                </span>
+                            }
+
+                            @case ('price') {
+                                <div class="flex items-center gap-1 text-zinc-800 text-sm font-inter font-normal align-middle">
+                                    <span>{{ row[col.field] }}</span>
+                                    <span>EGP</span>
+                                </div>
+                            }
+
+                            @case ('stock') {
+                                <span class="text-sm font-inter font-normal align-middle" [class]="row[col.field] < 10 ? 'text-red-600 font-bold' : 'text-zinc-800'">
+                                    {{ row[col.field] | number }}
+                                </span>
+                            }
+
+                            @case ('sales') {
+                                <span class="text-zinc-800 text-sm font-inter font-normal align-middle">
+                                    {{ row[col.field] | number }}
+                                </span>
+                            }
+
+                            @case ('rating') {
+                                <div class="flex items-center gap-1">
+                                    <span class="font-bold text-gray-800">{{ row[col.field] }}</span>
+                                    <span class="text-gray-400 text-xs">( {{ row.rateCount }} )</span>
+                                </div>
+                            }
+
+                            @case ('actions') {
+                                <div class="hidden lg:table-cell">
+                                    <div class="flex gap-2">
+                                        <button
+                                            (click)="onEdit(row.id)"
+                                            class="py-1 px-2 text-[12px] font-medium text-nowrap bg-[#0063D01A] hover:bg-[#0063D033] active:scale-95 transition-all duration-300 rounded-md text-blue-600 cursor-pointer">
+                                            <i class="pi pi-pencil text-sm!"></i>
+                                            Edit
+                                        </button>
+
+                                        <button
+                                            (click)="$event.stopPropagation(); confirmDelete($event, row.id)"
+                                            class="py-1 px-2 text-[12px] font-medium text-nowrap bg-[#FF00001A] hover:bg-[#FF0000]/20 active:scale-95 transition-all duration-300 rounded-md text-red-600 cursor-pointer">
+                                            <i class="pi pi-trash text-16px!"></i>
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="table-cell lg:hidden">
+                                    <button 
+                                        type="button" 
+                                        (click)="op.toggle($event)" 
+                                        class="flex items-center justify-center w-8 h-8 rounded-md border border-gray-200 hover:bg-gray-50 transition-all cursor-pointer">
+                                        <i class="pi pi-ellipsis-v text-gray-500 text-sm"></i>
+                                    </button>
+                                    <p-popover #op>
+                                        <div class="flex flex-col min-w-[140px] bg-white overflow-hidden">
+                                            <button 
+                                                (click)="onEdit(row.id); op.hide()" 
+                                                class="flex items-center gap-3 p-3 text-blue-600 hover:bg-blue-50 transition-colors text-sm font-semibold cursor-pointer">
+                                                <i class="pi pi-pencil"></i>
+                                                Edit
+                                            </button>
+
+                                            <button 
+                                                (click)="$event.stopPropagation(); confirmDelete($event, row.id); op.hide()" 
+                                                class="flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 transition-colors text-sm font-semibold cursor-pointer">
+                                                <i class="pi pi-trash"></i>
+                                                Delete
+                                            </button>                                            
+                                        </div>
+                                    </p-popover>
+                                </div>
+                            }
+
+                            @default {
+                                <span>
+                                    {{ row[col.field] }}
+                                </span>
+                            }
+
+                        }
+                    </td>
+                }
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+    <!-- confirm Delete -->
+    <div class="confirmDialog">
+        <p-confirmDialog key="globalConfirm">
+            <ng-template pTemplate="message" let-message>
+                <div class="text-center flex flex-col items-center w-full max-w-[90vw] md:max-w-[474px] p-4 md:p-6">
+                    <img src="/Images/delete-Icon.png" alt="delete-Icon" class="my-2 sm:my-3 w-20 h-20 md:w-28 sm:h-28 object-contain">
+                    <p class="text-zinc-800 text-base md:text-lg font-semibold font-inter align-middle leading-relaxed">
+                        {{ message.message }}
+                    </p>
+                </div>
+            </ng-template>
+        </p-confirmDialog>
+    </div>
+
+</section>
