@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../core/environments/environment';
 import { Observable } from 'rxjs';
-import { OccassionResponse } from '../interfaces/occassion-response';
+import { DeleteOccassionResponse, OccassionResponse } from '../interfaces/occassion-response';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +31,9 @@ private readonly _httpClient = inject(HttpClient);
       formData.append('image', imageFile);
     }
     return this._httpClient.put<OccassionResponse>(`${environment.BaseUrl}/occasions/${occassionId}`, formData);
+  }
+
+  deleteOccassion(occassionId:string): Observable<DeleteOccassionResponse> { 
+    return this._httpClient.delete<DeleteOccassionResponse>(`${environment.BaseUrl}/occasions/${occassionId}`);
   }
 }

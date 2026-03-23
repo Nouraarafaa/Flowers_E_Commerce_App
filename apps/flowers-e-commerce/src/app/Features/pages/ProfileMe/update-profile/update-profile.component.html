@@ -12,6 +12,7 @@
                 
                 <input type="file" (change)="onFileSelected($event)"  accept="image/png, image/jpeg, image/gif" class="hidden">
             </label>
+
     
             <div class="flex flex-col gap-4">
                 <h3 class="text-zinc-800 text-xl font-semibold">Upload Photo</h3>
@@ -75,10 +76,7 @@
 
         <div class="flex justify-between items-center pt-15"> 
             <a (click)="confirmDelete()" class="text-maroon-500 active:text-maroon-600 active:scale-90 transition-all duration-300 text-16px font-medium cursor-pointer">Delete My Account</a>
-
-            <div class="flex justify-between items-center pt-15">
-                <app-button [type]="'submit'" [label]="'Save Changes'" [loading]="isLoading()"  [disabled]="(isFormUnchanged() && !imageChanged()) || registerForm.invalid"></app-button>
-            </div>
+            <app-button [type]="'submit'" [label]="'Save Changes'" [loading]="isLoading()"  [disabled]="(isFormUnchanged() && !imageChanged()) || registerForm.invalid"></app-button>
         </div>
 
     </form>

@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, of, switchMap, tap } from "rxjs";
 import { HomeService } from "../../../Shared/services/home/home.service";
 import { loadProducts, loadProductsFailure, setProducts } from "./products.actions";
-import { Product } from "../../../Shared/interfaces/product";
+import { Product } from "../../../Shared/interfaces/HomeResponse/home-response";
 
 
 

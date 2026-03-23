@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 export const authGuard: CanActivateFn = (route, state) => {
 
   const _PLATFORM_ID = inject(PLATFORM_ID);
-    const _router = inject(Router);
+  const _router = inject(Router);
 
   if (isPlatformBrowser(_PLATFORM_ID)) {
     if (Cookies.get('flowersEcommerceToken')) {
