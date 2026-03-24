@@ -4,14 +4,19 @@ import { Router, RouterModule } from "@angular/router";
 import { MenuItem } from 'primeng/api';
 import { Menu } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
+import { UiErrorService, ErrorState } from '../../../services/ui-error/ui-error.service';
+import { UnauthorizedComponent } from '../../../../features/unauthorized/unauthorized.component';
+import { ServerErrorComponent } from '../../../../features/server-error/server-error.component';
+
 @Component({
   selector: 'app-main-layout',
-  imports: [SideBarComponent, RouterModule, Menu, ButtonModule],
+  imports: [SideBarComponent, RouterModule, Menu, ButtonModule, UnauthorizedComponent, ServerErrorComponent],
   templateUrl: './mainLayout.component.html',
   styleUrl: './mainLayout.component.scss',
 })
 export class MainLayoutComponent implements OnInit {
-
+  public readonly uiErrorService = inject(UiErrorService);
+  public readonly ErrorState = ErrorState;
   private readonly _router = inject(Router);
 
     items: MenuItem[] | undefined;

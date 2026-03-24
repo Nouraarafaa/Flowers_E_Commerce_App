@@ -1,0 +1,43 @@
+<div class="h-full bg-[#F8F9FA] flex flex-col p-4 animate-fade-in">
+    <!-- Breadcrumb-style Header -->
+    <header class="mb-4">
+        <div class="flex items-center gap-2 text-[13px] font-bold">
+            <span class="text-zinc-400">Dashboard</span>
+            <span class="text-zinc-300">
+                <i class="pi pi-angle-right text-[10px] mt-0.5"></i>
+            </span>
+            <span class="text-rose-500">Error State</span>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="flex-1 flex flex-col items-center justify-center">
+        <div class="relative group select-none">
+            <!-- Decorative Glow -->
+            <div class="absolute inset-0 bg-rose-200/10 blur-[100px] rounded-full group-hover:bg-rose-300/20 transition-all duration-700"></div>
+            
+            <img src="/Images/server-down.png" 
+                 alt="Something went wrong" 
+                 class="relative w-full max-w-[500px] h-auto object-contain drop-shadow-xl animate-float-slow"
+            />
+        </div>
+
+        <div class="text-center mt-12 space-y-4 max-w-2xl animate-slide-up">
+            <h1 class="text-3xl md:text-[40px] font-black text-zinc-900 tracking-tighter leading-tight">
+                Oops, something went wrong!
+            </h1>
+            
+            <p class="text-zinc-400 font-bold text-sm md:text-base px-6 leading-relaxed opacity-80">
+                Something unexpected happened, please refresh the page or try again shortly.
+            </p>
+
+            <div class="pt-8">
+                <button (click)="refreshPage()" 
+                   class="inline-flex items-center gap-2 px-10 py-4 bg-maroon-600 hover:bg-maroon-700 text-white font-bold rounded-2xl shadow-lg shadow-maroon-200 hover:shadow-maroon-300 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 cursor-pointer">
+                    <i class="pi pi-refresh"></i>
+                    Refresh Page
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

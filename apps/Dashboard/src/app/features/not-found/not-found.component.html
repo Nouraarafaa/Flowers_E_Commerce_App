@@ -1,0 +1,35 @@
+<div class="h-full bg-[#F8F9FA] flex flex-col p-4 animate-fade-in">
+    <!-- Breadcrumb-style Header -->
+    <header class="mb-4">
+        <div class="flex items-center gap-2 text-[13px] font-bold">
+            <span class="text-zinc-400">Dashboard</span>
+            <span class="text-zinc-300">
+                <i class="pi pi-angle-right text-[10px] mt-0.5"></i>
+            </span>
+            <span class="text-rose-500">Not Found</span>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="flex-1 flex flex-col items-center justify-center">
+        <div class="relative group select-none">
+            <!-- Decorative Glow -->
+            <div class="absolute inset-0 bg-rose-200/20 blur-[100px] rounded-full group-hover:bg-rose-300/30 transition-all duration-700"></div>
+            
+            <img src="/Images/not-found.svg" 
+                 alt="Page Not Found" 
+                 class="relative w-full max-w-[580px] h-auto object-contain drop-shadow-2xl animate-float"
+            />
+        </div>
+
+        <div class="text-center mt-8 space-y-4 max-w-xl animate-slide-up">
+            <h1 class="text-3xl md:text-[40px] font-black text-zinc-900 tracking-tighter leading-tight">
+                This page does not exist.
+            </h1>
+            
+            <p class="text-zinc-400 font-bold text-sm md:text-base px-6 leading-relaxed opacity-80">
+                We couldn't find the page your are looking for, please make sure you are in the right path.
+            </p>
+        </div>
+    </div>
+</div>
