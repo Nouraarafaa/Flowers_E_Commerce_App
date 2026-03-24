@@ -8,7 +8,6 @@ export interface CategoriesResponse {
   };
   categories: Category[];
 }
-
 export interface Category {
   _id: string;
   name: string;
@@ -21,7 +20,6 @@ export interface CategoryResponse {
   message: string;
   category: CategoryData;
 }
-
 export interface CategoryData {
   name: string;
   slug: string;
@@ -31,11 +29,11 @@ export interface CategoryData {
   createdAt: string;
   updatedAt: string;
 }
+
 export interface DeleteCategoryResponse {
   message: string;
   document: Document;
 }
-
 export interface Document {
   _id: string;
   name: string;

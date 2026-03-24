@@ -1,19 +1,19 @@
 <section class="max-w-250 min-h-244.5 flex flex-col gap-6">
     <h1 class="text-zinc-800 text-2xl font-inter font-semibold">Add a New Product</h1>
         
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="bg-white min-h-231 p-6 rounded-2xl flex flex-col gap-10">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="bg-white min-h-231 p-6 rounded-2xl flex flex-col gap-10">
         
         <div class="w-full min-h-178.5 flex flex-col gap-4.5 rounded-2xl">
 
             <div class="title">
-                @let titleControl = registerForm.get('title');
+                @let titleControl = productForm.get('title');
                 <label for="title" class="text-sm font-medium font-inter text-zinc-800">title <span class="text-sm font-medium font-inter text-red-600">*</span></label>
                 <app-form-input  formControlName="title" [id]="'title'" [type]="'text'" [nameControl]="titleControl" [placeholder]="'Enter product title'"></app-form-input>
                 <app-error-message [nameControl]="titleControl"></app-error-message>
             </div>
 
             <div class="description">
-                @let descriptionControl = registerForm.get('description');
+                @let descriptionControl = productForm.get('description');
                 <label for="description" class="text-sm font-medium font-inter text-zinc-800">Description <span class="text-sm font-medium font-inter text-red-600">*</span></label>
                 <textarea class="w-full min-h-[150px] rounded-[10px] p-4 resize-none text-[#111] bg-white disabled:bg-zinc-100 disabled:text-zinc-400  border border-[#D4D4D8] placeholder:text-[#A1A1AA] text-sm outline-none transition-all duration-200 focus:border-[#7A1D1D] focus:ring-2 focus:ring-[#7A1D1D]/20" formControlName="description" id="description" placeholder="Enter product description" 
                     [ngClass]="{
@@ -26,19 +26,19 @@
             
             <!-- price & discount & priceAfterDiscount -->
             <div class="lg:flex gap-2.5">
-                <div class="price flex-1">
-                    @let priceControl = registerForm.get('price');
+                <div class="price flex-1 py-[12px] lg:py-0">
+                    @let priceControl = productForm.get('price');
                     <label for="price" class="text-sm font-medium font-inter text-zinc-800">Price <span class="text-sm font-medium font-inter text-red-600">*</span></label>
                     <app-form-input  formControlName="price" [id]="'price'" [type]="'number'" [nameControl]="priceControl" [placeholder]="'Enter price'"></app-form-input>
                     <app-error-message [nameControl]="priceControl"></app-error-message>
                 </div>
 
-                <div class="discount flex-1">
-                    @let discountControl = registerForm.get('discount');
+                <div class="discount flex-1 py-[12px] lg:py-0">
+                    @let discountControl = productForm.get('discount');
                     <label for="discount" class="text-sm font-medium font-inter text-zinc-800">Discount <span class="text-sm font-medium font-inter text-red-600">*</span></label>
                     <app-form-input  formControlName="discount" [id]="'discount'" [type]="'number'" [nameControl]="discountControl" [placeholder]="'Enter discount'"></app-form-input>
                     <app-error-message [nameControl]="discountControl"></app-error-message>
-                    @if (registerForm.errors?.['discountGreater']) {
+                    @if (productForm.errors?.['discountGreater']) {
                         <div class="flex items-start gap-2 mt-1 mb-3 p-2 rounded-xl border border-red-200 bg-red-50 text-red-700 shadow-sm transition-all duration-300"role="alert">
                             <svg
                                 class="w-5 h-5 mt-[2px] flex-shrink-0 text-red-500"
@@ -62,8 +62,8 @@
                     }
                 </div>
                 
-                <div class="priceAfterDiscount flex-1">
-                    @let priceAfterDiscountControl = registerForm.get('priceAfterDiscount');
+                <div class="priceAfterDiscount flex-1 py-[12px] lg:py-0">
+                    @let priceAfterDiscountControl = productForm.get('priceAfterDiscount');
                     <label for="priceAfterDiscount" class="text-sm font-medium font-inter text-zinc-800">Price after discount <span class="text-sm font-medium font-inter text-red-600">*</span></label>
                     <app-form-input formControlName="priceAfterDiscount" [id]="'priceAfterDiscount'" [type]="'number'" [readonly]="true"  [nameControl]="priceAfterDiscountControl"></app-form-input>
                     <app-error-message [nameControl]="priceAfterDiscountControl"></app-error-message>
@@ -71,7 +71,7 @@
             </div>
 
             <div class="quantity">
-                @let quantityControl = registerForm.get('quantity');
+                @let quantityControl = productForm.get('quantity');
                 <label for="quantity" class="text-sm font-medium font-inter text-zinc-800">Quantity <span class="text-sm font-medium font-inter text-red-600">*</span></label>
                 <app-form-input  formControlName="quantity" [id]="'quantity'" [type]="'number'" [nameControl]="quantityControl" [placeholder]="'Enter quantity'"></app-form-input>
                 <app-error-message [nameControl]="quantityControl"></app-error-message>
@@ -80,8 +80,8 @@
             <!-- Product image & Product gallery -->
             <div class="lg:flex gap-2.5">
 
-                <div class="Product image flex-1">
-                    @let imgCoverControl = registerForm.get('imgCover');
+                <div class="Product image flex-1 py-[12px] lg:py-0">
+                    @let imgCoverControl = productForm.get('imgCover');
                     <label for="imgCover" class="text-sm font-medium font-inter text-zinc-800">Product cover image 
                     <span class="text-sm font-medium font-inter text-red-600">*</span>
                     </label>
@@ -102,8 +102,8 @@
                     <app-error-message [nameControl]="imgCoverControl"></app-error-message>
                 </div>
 
-                <div class="Product gallery flex-1">
-                    @let imagesControl = registerForm.get('images');
+                <div class="Product gallery flex-1 py-[12px] lg:py-0">
+                    @let imagesControl = productForm.get('images');
                     <label for="images" class="text-sm font-medium font-inter text-zinc-800">Product gallery
                         <span class="text-sm font-medium font-inter text-red-600">*</span>
                     </label>
@@ -128,16 +128,47 @@
             </div>
 
             <div class="Category">
-                @let categoryControl = registerForm.get('category');
+                @let categoryControl = productForm.get('category');
                 <label for="category" class="text-sm font-medium font-inter text-zinc-800">Category <span class="text-sm font-medium font-inter text-red-600">*</span></label>
-                <app-form-input  formControlName="category" [id]="'category'" [type]="'text'" [nameControl]="categoryControl" [placeholder]="'Select an option'"></app-form-input>
+                <p-dropdown
+                    id="category"
+                    [options]="categories()"
+                    optionLabel="name"
+                    optionValue="_id"
+                    formControlName="category"
+                    placeholder="Select an option"
+                    [loading]="categoriesLoading()"
+                    [ngClass]="{
+                    'ng-invalid ng-dirty':
+                    categoryControl?.invalid &&
+                    categoryControl?.touched
+                    }"
+                    styleClass="w-full! h-12.25! p-1 rounded-[10px]! border border-[#D4D4D8]! focus:border-[#7A1D1D]! focus:ring-2! focus:ring-[#7A1D1D]/20!"
+                >
+                </p-dropdown>
                 <app-error-message [nameControl]="categoryControl"></app-error-message>
             </div>
 
             <div class="Occasion">
-                @let occasionControl = registerForm.get('occasion');
-                <label for="occasion" class="text-sm font-medium font-inter text-zinc-800">Occasion <span class="text-sm font-medium font-inter text-red-600">*</span></label>
-                <app-form-input  formControlName="occasion" [id]="'occasion'" [type]="'text'" [nameControl]="occasionControl" [placeholder]="'Select an option'"></app-form-input>
+                @let occasionControl = productForm.get('occasion');
+                <label for="occasion" class="text-sm font-medium font-inter text-zinc-800">Occasion <span class="text-sm font-medium font-inter text-red-600">*</span></label>                
+                
+                <p-dropdown
+                    id="occasion"
+                    [options]="occasions()"
+                    optionLabel="name"
+                    optionValue="_id"
+                    formControlName="occasion"
+                    placeholder="Select an option"
+                    [loading]="occasionsLoading()"
+                    [ngClass]="{
+                    'ng-invalid ng-dirty':
+                    occasionControl?.invalid &&
+                    occasionControl?.touched
+                    }"
+                    styleClass="w-full! h-12.25! p-1 rounded-[10px]! border border-[#D4D4D8]! focus:border-[#7A1D1D]! focus:ring-2! focus:ring-[#7A1D1D]/20!"
+                >
+                </p-dropdown>
                 <app-error-message [nameControl]="occasionControl"></app-error-message>
             </div>
             
@@ -150,7 +181,7 @@
             <app-auth-status [type]="'error'" [message]="errorMsg()" ></app-auth-status>
         }
         
-        <app-button [label]="'Add Product'" [type]="'submit'" [loading]="isLoading()" [disabled]="registerForm.invalid" ></app-button>    
+        <app-button [label]="'Add Product'" [type]="'submit'" [loading]="isLoading()" [disabled]="productForm.invalid" ></app-button>    
 
 
     </form>

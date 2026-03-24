@@ -9,9 +9,9 @@ import { CategoriesService} from '../../../categories/services/categories/catego
 import { InventoryService, LowStockProduct } from '../../../../core/services/inventory/inventory.service';
 import { StatisticsService } from '../../../../core/services/statistics/statistics.service';
 import { ChartData, ChartOptions, ScriptableContext, TooltipItem } from 'chart.js';
-import { GetProductsService } from '../../../products/services/getProducts/get-products.service';
 import { Product } from '../../../products/interfaces/get-products/get-products';
 import { Category } from '../../../categories/interfaces/categories-response';
+import { ProductService } from '../../../products/services/product/product.service';
 
 interface OrderStatus {
   label: string;
@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly categoriesService = inject(CategoriesService);
   private readonly inventoryService = inject(InventoryService);
-  private readonly GetProductsService = inject(GetProductsService);
+  private readonly ProductService = inject(ProductService);
   private readonly statisticsService = inject(StatisticsService);
 
   revenueView: 'Monthly' | 'Weekly' = 'Monthly';
@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
     });
 
     // Fetch Products (Top Selling)
-    this.GetProductsService.getProducts().subscribe({
+    this.ProductService.getProducts().subscribe({
       next: (res) => {
         this.topSellingProducts = res.products
           .map(p => ({

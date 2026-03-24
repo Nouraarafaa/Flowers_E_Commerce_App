@@ -9,29 +9,43 @@ import { ButtonComponent } from "../../../../shared/components/ui/button/button.
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthStatusComponent } from "../../../../shared/components/ui/auth-status/auth-status.component";
 import { AddProduct } from '../../interfaces/add-product/add-product';
+import { DropdownModule } from "primeng/dropdown";
+import { CategoriesService } from '../../../categories/services/categories/categories.service';
+import { Category } from '../../../categories/interfaces/categories-response';
+import { OccassionService } from '../../../occassions/services/occassion.service';
+import { Occasion } from '../../../occassions/interfaces/occassion-response';
 
 @Component({
   selector: 'app-add-product',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, NgClass, ButtonComponent, AuthStatusComponent],
+  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, NgClass, ButtonComponent, AuthStatusComponent, DropdownModule],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss',
 })
 export class AddProductComponent implements OnInit, OnDestroy {
-  registerForm!: FormGroup;
+  productForm!: FormGroup;
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _productService = inject(ProductService);
-  destroy$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   isLoading = signal<boolean>(false);
   success = signal<string>("");
   errorMsg = signal<string>("");
 
+  private readonly _categoriesService = inject(CategoriesService);
+  categories = signal<Category[]>([]);
+  private readonly  _occassionService = inject(OccassionService);
+  occasions = signal<Occasion[]>([]);
+  categoriesLoading = signal<boolean>(false);
+  occasionsLoading = signal<boolean>(false);
+
   ngOnInit(): void {
     this.initForm();
     this.listenToPriceChanges();
+    this.loadCategories();
+    this.loadOccasions();
   }
 
   initForm(): void {
-    this.registerForm = this._formBuilder.group({
+    this.productForm = this._formBuilder.group({
       title: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       description: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
       price: [null, [Validators.required, Validators.min(1)]],
@@ -45,18 +59,18 @@ export class AddProductComponent implements OnInit, OnDestroy {
     }, { validators: this.discountLessThanPriceValidator.bind(this) });
   }
 
-  // get images
+  // get cover image & images
   onCoverChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if(!input.files || input.files.length === 0) return;
 
     const file = input.files[0];
 
-    this.registerForm.patchValue({
+    this.productForm.patchValue({
       imgCover: file
     })
 
-    this.registerForm.get('imgCover')?.updateValueAndValidity();
+    this.productForm.get('imgCover')?.updateValueAndValidity();
   }
   onImagesChange(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -64,17 +78,17 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
     const files: File[] = Array.from(input.files);
 
-    this.registerForm.patchValue({
+    this.productForm.patchValue({
       images: files
     })
 
-    this.registerForm.get('images')?.updateValueAndValidity();
+    this.productForm.get('images')?.updateValueAndValidity();
   }
 
   // Calculate price after discount
   listenToPriceChanges(): void {
-    const priceControl = this.registerForm.get('price');
-    const discountControl = this.registerForm.get('discount');
+    const priceControl = this.productForm.get('price');
+    const discountControl = this.productForm.get('discount');
 
     priceControl?.valueChanges
       .pipe(takeUntil(this.destroy$))
@@ -89,15 +103,15 @@ export class AddProductComponent implements OnInit, OnDestroy {
     });
   }
   calculatePrice(): void {
-    const price = this.registerForm.get('price')?.value;
-    const discount = this.registerForm.get('discount')?.value;
+    const price = Number(this.productForm.get('price')?.value);
+    const discount = Number(this.productForm.get('discount')?.value);
 
     if (price === null || discount === null) return;
 
-    // const result = price - (price * discount) / 100;
     const result = price - discount;
+    // const result = price - (price * discount) / 100;   //-> %
 
-    this.registerForm.patchValue(
+    this.productForm.patchValue(
       {
         priceAfterDiscount: result,
       },
@@ -118,17 +132,42 @@ export class AddProductComponent implements OnInit, OnDestroy {
       return null;
     }
 
-    if (discount > price) {
+    if (discount >= price) {
       return { discountGreater: true };
     }
 
     return null;
   }
 
+  // loadCategories & loadOccasions  
+  loadCategories() {
+    this.categoriesLoading.set(true);
+    
+    this._categoriesService.getCategories()
+    .pipe(takeUntil(this.destroy$), finalize(()=> this.categoriesLoading.set(false))).subscribe({
+      next:(res) => {
+        // console.log(res);
+        this.categories.set(res.categories);
+      }
+    })
+  }
+  loadOccasions() {
+    this.occasionsLoading.set(true);
+    
+    this._occassionService.getOccassions()
+    .pipe(takeUntil(this.destroy$), finalize(()=> this.occasionsLoading.set(false))).subscribe({
+      next:(res) => {
+        console.log(res);
+        this.occasions.set(res.occasions)
+      }
+    })
+  }
+
+  // Submit product form
   onSubmit(): void {
 
-    if(this.registerForm .invalid) {
-      this.registerForm.markAllAsTouched();
+    if(this.productForm .invalid) {
+      this.productForm.markAllAsTouched();
       return;
     }
 
@@ -137,7 +176,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this.success.set("");
 
     const formData = new FormData();
-    const formValue: AddProduct = this.registerForm.value;
+    const formValue: AddProduct = this.productForm.value;
 
     formData.append('title', formValue.title);
     formData.append('description', formValue.description);
@@ -160,7 +199,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
         console.log(res);
         if(res.message === "success" ) {
           this.success.set("Product added successfully");
-          this.registerForm.reset();
+          this.productForm.reset();
           setTimeout( ()=> {
             this.success.set("");
           },1000)
@@ -176,7 +215,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
     })
 
   }
-
 
   ngOnDestroy(): void {
     this.destroy$.next();
