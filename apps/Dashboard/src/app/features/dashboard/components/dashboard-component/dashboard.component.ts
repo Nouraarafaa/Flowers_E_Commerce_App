@@ -5,12 +5,13 @@ import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
 import { Router } from '@angular/router';
-import { CategoriesService, Category } from '../../../../core/services/categories/categories.service';
+import { CategoriesService} from '../../../categories/services/categories/categories.service';
 import { InventoryService, LowStockProduct } from '../../../../core/services/inventory/inventory.service';
 import { StatisticsService } from '../../../../core/services/statistics/statistics.service';
 import { ChartData, ChartOptions, ScriptableContext, TooltipItem } from 'chart.js';
 import { GetProductsService } from '../../../products/services/getProducts/get-products.service';
 import { Product } from '../../../products/interfaces/get-products/get-products';
+import { Category } from '../../../categories/interfaces/categories-response';
 
 interface OrderStatus {
   label: string;

@@ -1,56 +1,31 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { OccasionsService, Occasion } from '../../../../core/services/occasions/occasions.service';
-import { TableColumn } from '../../../../shared/interfaces/tableColumn/table-column';
-import { PageHeaderComponent } from '../../../../shared/components/ui/page-header/page-header.component';
-import { DynamicTableComponent } from '../../../../shared/components/ui/dynamic-table/dynamic-table.component';
-
-interface OccasionUI extends Occasion {
-  id: string;
-  products: string;
-}
+import { Component, inject, OnDestroy } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { OccassionService } from '../../services/occassion.service';
+import { Subject, takeUntil } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-occassions',
-  imports: [PageHeaderComponent, DynamicTableComponent],
+  imports: [RouterLink],
   templateUrl: './occassions.component.html',
   styleUrl: './occassions.component.scss',
 })
-export class OccassionsComponent implements OnInit {
-  private readonly _occasionsService = inject(OccasionsService);
+export class OccassionsComponent implements OnDestroy{
+  private readonly _occassionService=inject(OccassionService);
+  private readonly _toastrService=inject(ToastrService);
 
-  occasions: OccasionUI[] = [];
-  columns: TableColumn[] = [
-    { field: 'name', header: 'Name' },
-    { field: 'products', header: 'Products' },
-    { field: 'actions', header: '', type: 'actions' }
-  ];
-
-  ngOnInit(): void {
-    this.loadOccasions();
-  }
-
-  loadOccasions(): void {
-    this._occasionsService.getOccasions().subscribe({
-      next: (res) => {
-        this.occasions = res.occasions.map(occasion => ({
-          ...occasion,
-          id: occasion._id,
-          products: `${occasion.productsCount || 0} products`
-        }));
+  destroy$ = new Subject<void>();
+  
+  deleteOccasion(id:string){
+    this._occassionService.deleteOccassion(id).pipe(takeUntil(this.destroy$)).subscribe({
+      next:()=>{
+        this._toastrService.success('Occasion deleted successfully');
       }
-    });
+    })
   }
 
-  onAdd(): void {
-    console.log('Add occasion');
-  }
-
-  onEdit(id: string): void {
-    console.log('Edit occasion', id);
-  }
-
-  onDelete(id: string): void {
-    console.log('Delete occasion', id);
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete(); 
   }
 }
-

@@ -2,25 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_URL } from '@elevate-workspace/auth';
 import { Observable } from 'rxjs';
-
-export interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
-  productsCount?: number;
-}
-
-export interface CategoriesResponse {
-  message: string;
-  metadata: {
-    currentPage: number;
-    totalPages: number;
-    limit: number;
-    totalItems: number;
-  };
-  categories: Category[];
-}
+import { AddCategoryResponse, CategoriesResponse } from '../../interfaces/categories-response';
 
 @Injectable({
   providedIn: 'root',
@@ -32,4 +14,13 @@ export class CategoriesService {
   getCategories(): Observable<CategoriesResponse> {
     return this._httpClient.get<CategoriesResponse>(`${this._BASE_URL}/categories`);
   }
+
+  addCategory(name: string, imageFile: File): Observable<AddCategoryResponse> {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('image', imageFile);
+    return this._httpClient.post<AddCategoryResponse>(`${this._BASE_URL}/categories`, formData);
+  }
+
+
 }

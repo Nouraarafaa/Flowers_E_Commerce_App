@@ -1,6 +1,9 @@
-<div class="all-categories h-full flex flex-col gap-6 ">
-    <app-page-header (add)="onAdd()" [title]="'All Categories'" [featureName]="'Add a new category'"></app-page-header>
-    <div class="bg-white rounded-[20px] p-6 h-full ">
-        <app-dynamic-table (edit)="onEdit($event)" (delete)="onDelete($event)" [data]="categories" [columns]="columns"></app-dynamic-table>
-    </div>
-</div>
+<button routerLink='/addCategory' class="border border-maroon-700">
+  Add category
+</button>
+<button [routerLink]="['/updateCategory', '69c19265e364ef614064b340']" class="border border-maroon-700">
+  Update category
+</button>
+<button (click)="deleteCategory('69c19265e364ef614064b340')" class="border border-maroon-700">
+  Delete Category
+</button>
