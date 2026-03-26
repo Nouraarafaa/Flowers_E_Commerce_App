@@ -16,30 +16,12 @@ export class CategoriesService {
     return this._httpClient.get<CategoriesResponse>(`${this._BASE_URL}/categories`);
   }
 
-   getCategory(categoryId:string): Observable<CategoryResponse> { 
-    return this._httpClient.get<CategoryResponse>(`${this._BASE_URL}/categories/${categoryId}`);
-  }
-
-  addCategory(name: string, imageFile: File): Observable<CategoryResponse> {
+  addCategory(name: string, imageFile: File): Observable<AddCategoryResponse> {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('image', imageFile);
-    return this._httpClient.post<CategoryResponse>(`${this._BASE_URL}/categories`, formData);
+    return this._httpClient.post<AddCategoryResponse>(`${this._BASE_URL}/categories`, formData);
   }
-
-  updateCategory(categoryId: string, name: string, imageFile?: File): Observable<CategoryResponse> {
-    const formData = new FormData();
-    formData.append('name', name);
-    if (imageFile && typeof imageFile !== 'string') {
-      formData.append('image', imageFile);
-    }
-    return this._httpClient.put<CategoryResponse>(`${this._BASE_URL}/categories/${categoryId}`, formData);
-  }
-  
-  deleteCategory(categoryId:string): Observable<DeleteCategoryResponse> { 
-    return this._httpClient.delete<DeleteCategoryResponse>(`${this._BASE_URL}/categories/${categoryId}`);
-  }
- 
 
 
 }

@@ -24,8 +24,18 @@
     </div>
 
     <div class="flex-1 w-full bg-[#F8F9FA]">
-        <div class="p-4 ">
-            <router-outlet></router-outlet>
+        <div class="p-4 h-full">
+            @switch (uiErrorService.errorState()) {
+                @case (ErrorState.Unauthorized) {
+                    <app-unauthorized></app-unauthorized>
+                }
+                @case (ErrorState.ServerError) {
+                    <app-server-error></app-server-error>
+                }
+                @default {
+                    <router-outlet></router-outlet>
+                }
+            }
         </div>
     </div>
 
