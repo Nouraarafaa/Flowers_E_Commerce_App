@@ -16,7 +16,10 @@ export const appRoutes: Route[] = [
             { path: "addCategory", loadComponent: () => import('./features/categories/components/addCategory/addCategory.component').then((c) => c.AddCategoryComponent), title: "Add Category" },
             { path: "addOccasion", loadComponent: () => import('./features/occassions/components/addOccassion/addOccassion.component').then((c) => c.AddOccassionComponent), title: "Add Occasion" },
             { path: "updateOccassion/:id", loadComponent: () => import('./features/occassions/components/updateOccassion/updateOccassion.component').then((c) => c.UpdateOccassionComponent), title: "Update Occasion" },
-
         ]
-    }
+    },
+    { path: "not-found", loadComponent: () => import('./core/components/error-pages/not-found/not-found.component').then(c => c.NotFoundComponent), title: "Not Found" },
+    { path: "server-down", loadComponent: () => import('./core/components/error-pages/server-down/server-down.component').then(c => c.ServerDownComponent), title: "Server Down" },
+    // { path: "not-auth", loadComponent: () => import('./core/components/error-pages/not-auth/not-auth.component').then(c => c.NotAuthComponent), title: "Not Authorized" },
+    { path: "**", redirectTo: "not-found" }
 ];
