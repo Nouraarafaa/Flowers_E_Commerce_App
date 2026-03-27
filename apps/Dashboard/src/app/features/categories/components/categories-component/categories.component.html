@@ -1,9 +1,15 @@
-<button routerLink='/addCategory' class="border border-maroon-700">
-  Add category
-</button>
-<button [routerLink]="['/updateCategory', '69c19265e364ef614064b340']" class="border border-maroon-700">
-  Update category
-</button>
-<button (click)="deleteCategory('69c19265e364ef614064b340')" class="border border-maroon-700">
-  Delete Category
-</button>
+<div class="p-4 sm:p-6">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+    <h1 class="text-xl sm:text-2xl font-bold text-gray-800">All Categories</h1>
+    <button routerLink="/addCategory" class="w-full sm:w-auto bg-maroon-700 text-white px-4 py-2 rounded-lg flex items-center justify-center hover:bg-maroon-800 transition-colors">
+      <span class="mr-2">+</span> Add a new category
+    </button>
+  </div>
+
+  <app-dynamic-table 
+    [data]="categories" 
+    [columns]="columns" 
+    (edit)="onEdit($event)" 
+    (delete)="onDelete($event)">
+  </app-dynamic-table>
+</div>
