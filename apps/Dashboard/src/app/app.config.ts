@@ -12,8 +12,8 @@ import Aura from '@primeng/themes/aura';
 import { BASE_URL } from '@elevate-workspace/auth';
 import { environment } from './core/environments/environment.prod';
 import { headerInterceptor } from './core/interceptors/header/header.interceptor';
+import { errorInterceptor } from './core/interceptors/error/error.interceptor';
 import { provideToastr } from 'ngx-toastr';
-
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top" }), withViewTransitions()),
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor, errorInterceptor])),
     providePrimeNG({
       theme: {
         preset: Aura,
