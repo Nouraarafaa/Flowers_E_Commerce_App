@@ -1,4 +1,11 @@
-import { Component, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FormInputComponent } from '@elevate-workspace/input-form';
 import { CategoriesService } from '../../../features/categories/services/categories/categories.service';
@@ -7,9 +14,10 @@ import { ToastrService } from 'ngx-toastr';
 import { Dialog } from 'primeng/dialog';
 import { OccassionService } from '../../../features/occassions/services/occassion.service';
 import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { UpsertConfiguration } from '../../interfaces/upsertConfiguration/upsert-configuration';
-
-
+import { CategoryResponse } from '../../../features/categories/interfaces/categories-response';
+import { OccassionResponse } from '../../../features/occassions/interfaces/occassion-response';
 
 @Component({
   selector: 'app-upsert-category-and-occassion',
@@ -17,9 +25,9 @@ import { UpsertConfiguration } from '../../interfaces/upsertConfiguration/upsert
   templateUrl: './upsertCategoryAndOccassion.component.html',
   styleUrl: './upsertCategoryAndOccassion.component.scss',
 })
-export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
+export class UpsertCategoryAndOccassionComponent implements OnInit, OnDestroy {
   config = input.required<UpsertConfiguration>();
-  categoryOrOccasionId = signal<string>("");
+  categoryOrOccasionId = signal<string>('');
 
   private readonly _categoriesService = inject(CategoriesService);
   private readonly _occassionService = inject(OccassionService);
@@ -29,49 +37,52 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
 
   categoryOrOccasion: { name: string; image: string | File | null } = {
     name: '',
-    image: ''
+    image: '',
   };
 
-  checklabel: string = "";
-  imageErrorMessage: string = ''; // to display error message related to image upload
-  visible: boolean = false;
-
+  checklabel = '';
+  imageErrorMessage = ''; // to display error message related to image upload
+  visible = false;
 
   ngOnInit(): void {
     const id = this._activatedRoute.snapshot.paramMap.get('id');
     this.categoryOrOccasionId.set(id!);
     if (this.config().functionType?.includes('Edit')) {
-      this.gitCategoryOrOccasionData();
+      this.getCategoryOrOccasionData();
     }
   }
 
-  gitCategoryOrOccasionData() {
+  getCategoryOrOccasionData() {
     console.log(this.categoryOrOccasionId());
-    
+
     if (this.config().functionType === 'Edit Category') {
       // 1- get category by id
-      this._categoriesService.getCategory(this.categoryOrOccasionId()!).pipe(takeUntil(this.destroy$)).subscribe({
-        next: (res) => {
-          // 2- patch the form with the retrieved data
-          this.checklabel = res.category.name;
-          this.categoryOrOccasion.name = res.category.name;
-          this.categoryOrOccasion.image = res.category.image;
-        }
-      })
-
+      this._categoriesService
+        .getCategory(this.categoryOrOccasionId()!)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res: CategoryResponse) => {
+            // 2- patch the form with the retrieved data
+            this.checklabel = res.category.name;
+            this.categoryOrOccasion.name = res.category.name;
+            this.categoryOrOccasion.image = res.category.image;
+          },
+        });
     }
     if (this.config().functionType === 'Edit Occasion') {
-         // 1- get category by id
-      this._occassionService.getOccassion(this.categoryOrOccasionId()!).pipe(takeUntil(this.destroy$)).subscribe({
-        next: (res) => {
-          // 2- patch the form with the retrieved data
-          this.checklabel = res.occasion.name;
-          this.categoryOrOccasion.name = res.occasion.name;
-          this.categoryOrOccasion.image = res.occasion.image;
-        }
-      })
+      // 1- get category by id
+      this._occassionService
+        .getOccassion(this.categoryOrOccasionId()!)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res: OccassionResponse) => {
+            // 2- patch the form with the retrieved data
+            this.checklabel = res.occasion.name;
+            this.categoryOrOccasion.name = res.occasion.name;
+            this.categoryOrOccasion.image = res.occasion.image;
+          },
+        });
     }
-
   }
 
   // to print current image in edit mode if the user didn't change the image and to print the new image name if the user uploaded new image
@@ -81,7 +92,6 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
     if (typeof img === 'string') return 'Current Image';
     return img.name;
   }
-
 
   // check if there is any change in the form data to enable the submit button in edit mode
   dataCheckChange(): boolean {
@@ -94,10 +104,13 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
     if (this.categoryOrOccasion.image instanceof File) {
       // Extract the file name from the old link (coming from the server)
       const oldImageName = this.categoryOrOccasion.image.name;
-      console.log('this.categoryOrOccasion.image', this.categoryOrOccasion.image);
+      console.log(
+        'this.categoryOrOccasion.image',
+        this.categoryOrOccasion.image
+      );
       console.log('oldImageName :', oldImageName);
 
-      // If the uploaded file name differs from the current image name (in case the user changes the image), this condition is met and the refresh button is activated.        
+      // If the uploaded file name differs from the current image name (in case the user changes the image), this condition is met and the refresh button is activated.
       if (this.categoryOrOccasion.image.name !== oldImageName) {
         imageChanged = true;
       }
@@ -113,7 +126,6 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
     this.visible = true;
   }
 
-
   onSubmit() {
     if (this.categoryOrOccasion.name && this.categoryOrOccasion.image) {
       console.log('object data :', this.categoryOrOccasion);
@@ -121,65 +133,95 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
       // we can use the same component to add category or occasion by checking the functionType input value
       if (typeof this.categoryOrOccasion.image !== 'string') {
         if (this.config().functionType === 'Add Category') {
-          this._categoriesService.addCategory(this.categoryOrOccasion.name, this.categoryOrOccasion.image).pipe(takeUntil(this.destroy$)).subscribe({
-            next: (res) => {
-              console.log(res.message);
-              this._toastrService.success('Category added successfully');
-              this.categoryOrOccasion = {
-                name: '',
-                image: null
-              };
-            },
-            error: (err) => {
-              this._toastrService.error(err.error.error);
-            }
-          })
+          this._categoriesService
+            .addCategory(
+              this.categoryOrOccasion.name,
+              this.categoryOrOccasion.image
+            )
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+              next: (res: CategoryResponse) => {
+                console.log(res.message);
+                this._toastrService.success('Category added successfully');
+                this.categoryOrOccasion = {
+                  name: '',
+                  image: null,
+                };
+              },
+              error: (err: HttpErrorResponse) => {
+                this._toastrService.error(err.error.error);
+              },
+            });
         }
 
         if (this.config().functionType === 'Add Occasion') {
           console.log('Add Occasion :', this.categoryOrOccasion);
-          this._occassionService.addOccassion(this.categoryOrOccasion.name, this.categoryOrOccasion.image).pipe(takeUntil(this.destroy$)).subscribe({
-            next: (res) => {
-              console.log(res.message);
+          this._occassionService
+            .addOccassion(
+              this.categoryOrOccasion.name,
+              this.categoryOrOccasion.image
+            )
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+              next: (res: OccassionResponse) => {
+                console.log(res.message);
 
-              this._toastrService.success('Occasion added successfully');
-              this.categoryOrOccasion = {
-                name: '',
-                image: null
-              };
-            },
-            error: (err) => {
-              this._toastrService.error(err.error.error);
-            }
-          })
+                this._toastrService.success('Occasion added successfully');
+                this.categoryOrOccasion = {
+                  name: '',
+                  image: null,
+                };
+              },
+              error: (err: HttpErrorResponse) => {
+                this._toastrService.error(err.error.error);
+              },
+            });
         }
       }
 
       if (this.config().functionType === 'Edit Category') {
-        this._categoriesService.updateCategory(this.categoryOrOccasionId()!, this.categoryOrOccasion.name, typeof (this.categoryOrOccasion.image) !== 'string' ? this.categoryOrOccasion.image : undefined).pipe(takeUntil(this.destroy$)).subscribe({
-          next: (res) => {
-            console.log(res.message);
-            this._toastrService.success('Category updated successfully');
-            this.checklabel = this.categoryOrOccasion.name;
-            this.dataCheckChange();
-          },
-          error: (err) => {
-            this._toastrService.error(err.error.error);
-          }
-        })
+        this._categoriesService
+          .updateCategory(
+            this.categoryOrOccasionId()!,
+            this.categoryOrOccasion.name,
+            typeof this.categoryOrOccasion.image !== 'string'
+              ? this.categoryOrOccasion.image
+              : undefined
+          )
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res: CategoryResponse) => {
+              console.log(res.message);
+              this._toastrService.success('Category updated successfully');
+              this.checklabel = this.categoryOrOccasion.name;
+              this.dataCheckChange();
+            },
+            error: (err: HttpErrorResponse) => {
+              this._toastrService.error(err.error.error);
+            },
+          });
       }
       if (this.config().functionType === 'Edit Occasion') {
-        this._occassionService.updateOccassion(this.categoryOrOccasionId()!, this.categoryOrOccasion.name, typeof (this.categoryOrOccasion.image) !== 'string' ? this.categoryOrOccasion.image : undefined).pipe(takeUntil(this.destroy$)).subscribe({
-          next: (res) => {
-            console.log(res.message);
-            this._toastrService.success('Occasion updated successfully');
-            this.checklabel = this.categoryOrOccasion.name;
-            this.dataCheckChange();
-          },
-          error: (err) => {
-            this._toastrService.error(err.error.error);
-          }
-        })
+        this._occassionService
+          .updateOccassion(
+            this.categoryOrOccasionId()!,
+            this.categoryOrOccasion.name,
+            typeof this.categoryOrOccasion.image !== 'string'
+              ? this.categoryOrOccasion.image
+              : undefined
+          )
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (res: OccassionResponse) => {
+              console.log(res.message);
+              this._toastrService.success('Occasion updated successfully');
+              this.checklabel = this.categoryOrOccasion.name;
+              this.dataCheckChange();
+            },
+            error: (err: HttpErrorResponse) => {
+              this._toastrService.error(err.error.error);
+            },
+          });
       }
     }
   }
@@ -189,9 +231,15 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
     const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
     const file: File = event.target.files[0];
     if (file) {
-      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+      const allowedTypes = [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/webp',
+      ];
       if (!allowedTypes.includes(file.type)) {
-        this.imageErrorMessage = 'Sorry, only images of the following types are allowed: (PNG, JPG, WEBP)';
+        this.imageErrorMessage =
+          'Sorry, only images of the following types are allowed: (PNG, JPG, WEBP)';
         this.categoryOrOccasion.image = null;
         return;
       }
@@ -201,7 +249,6 @@ export class UpsertCategoryAndOccassionComponent implements OnInit,OnDestroy {
       }
       this.imageErrorMessage = '';
       this.categoryOrOccasion.image = file;
-
     }
   }
 
