@@ -1,9 +1,15 @@
-<button routerLink='/addOccasion' class="border border-maroon-700">
-  Add Occassion
-</button>
-<button [routerLink]="['/updateOccassion', '69c19307e364ef614064b364']" class="border border-maroon-700">
-  Update Occassion
-</button>
-<button (click)="deleteOccasion('69c19307e364ef614064b364')" class="border border-maroon-700">
-  Delete Occassion
-</button>
+<div class="p-4 sm:p-6">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+    <h1 class="text-xl sm:text-2xl font-bold text-gray-800">All Occasions</h1>
+    <button routerLink="/addOccasion" class="w-full sm:w-auto bg-maroon-700 text-white px-4 py-2 rounded-lg flex items-center justify-center hover:bg-maroon-800 transition-colors">
+      <span class="mr-2">+</span> Add a new occasion
+    </button>
+  </div>
+
+  <app-dynamic-table 
+    [data]="occasions" 
+    [columns]="columns" 
+    (edit)="onEdit($event)" 
+    (delete)="onDelete($event)">
+  </app-dynamic-table>
+</div>
