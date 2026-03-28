@@ -26,8 +26,8 @@ import { ConfirmDialogService } from '../../../../Shared/services/confirmDialog/
 export class UpdateProfileComponent implements OnInit, OnDestroy {
   
   registerForm!: FormGroup;
-  private readonly _authService = inject(AuthService);
   private readonly _formBuilder = inject(FormBuilder);
+  private readonly _authService = inject(AuthService);
   private destroy$ = new Subject<void>();
   private readonly _router = inject(Router);
   private readonly _confirmDialogService = inject(ConfirmDialogService);

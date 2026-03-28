@@ -71,7 +71,7 @@ export class AuthService implements AuthAPI {
     const formData = new FormData();
     formData.append('photo', file);
 
-    return this._httpClient.put<MessageResponse>(this._BASEURL + AuthEndPoint.UploadProfilePhoto,formData) 
+    return this._httpClient.put<MessageResponse>(this._BASEURL + AuthEndPoint.UploadProfilePhoto, formData); 
   }
 
 

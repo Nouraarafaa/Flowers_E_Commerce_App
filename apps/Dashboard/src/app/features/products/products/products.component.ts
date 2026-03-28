@@ -2,11 +2,11 @@ import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { DynamicTableComponent } from "../../../shared/components/ui/dynamic-table/dynamic-table.component";
 import { TableColumn } from '../../../shared/interfaces/tableColumn/table-column';
 import { Router } from '@angular/router';
-import { GetProductsService } from '../services/getProducts/get-products.service';
 import { map, Subject, takeUntil } from 'rxjs';
 import { productAdaptorService } from '../../../core/adaptor/products-adaptor';
 import { PageHeaderComponent } from "../../../shared/components/ui/page-header/page-header.component";
 import { ProductTableModel } from '../interfaces/product-table-model/product-table-model';
+import { ProductService } from '../services/product/product.service';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { ProductTableModel } from '../interfaces/product-table-model/product-tab
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 
-  private _getProductsService = inject(GetProductsService);
+  private readonly _productService = inject(ProductService);
   private readonly _productAdaptorService = inject(productAdaptorService);
   private readonly _router = inject(Router);
 
@@ -41,7 +41,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   getProducts (): void {
-    this._getProductsService.getProducts().pipe(
+    this._productService.getProducts().pipe(
       map((res) => this._productAdaptorService.productAdapt(res.products)),
       takeUntil(this.destroy$)
     ).subscribe({

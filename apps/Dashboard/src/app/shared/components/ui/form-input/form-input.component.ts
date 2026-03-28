@@ -1,6 +1,6 @@
-import { NgClass } from '@angular/common';
 import { Component, forwardRef, input, signal } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NgClass } from "@angular/common";
 
 @Component({
   selector: 'app-form-input',
@@ -14,16 +14,16 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angul
       multi: true,
     },
   ],
-
 })
 export class FormInputComponent implements ControlValueAccessor {
 
   value = signal<string>('');
   id = input<string>('');
   type = input<string>('');
-  nameControl = input<AbstractControl | null>();
-  placeholder = input<string>('');
   disabledFlag = input<boolean>(false);
+  readonly = input<boolean>(false);
+  placeholder = input<string>('');
+  nameControl = input<AbstractControl | null>();
 
 
   onChange: (value: string) => void = () => {/* */};
@@ -46,4 +46,5 @@ export class FormInputComponent implements ControlValueAccessor {
     this.value.set(val);
     this.onChange(val);
   }
+
 }
