@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { Router, RouterLink } from "@angular/router";
+import { Router} from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
 import { CategoriesService } from '../../services/categories/categories.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,7 +9,7 @@ import { PageHeaderComponent } from "apps/Dashboard/src/app/shared/components/ui
 
 @Component({
   selector: 'app-categories',
-  imports: [RouterLink, DynamicTableComponent, PageHeaderComponent],
+  imports: [ DynamicTableComponent, PageHeaderComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
