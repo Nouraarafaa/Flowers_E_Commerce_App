@@ -5,7 +5,10 @@
         [value]="data()"
         [paginator]="true"
         [rows]="12"
-        [globalFilterFields]="['name']"
+        [globalFilterFields]="filterFields()"
+        [scrollable]="true"
+        responsiveLayout="scroll"
+        class="w-full"
     >
 
         <!-- search -->
@@ -15,7 +18,7 @@
                     <p-inputicon>
                         <i class="pi pi-search"></i>
                     </p-inputicon>
-                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search..." class="w-full !h-[50px] bg-white border border-[#D4D4D8] rounded-[10px] px-4 flex items-center gap-2 focus:!border-maroon-600 pl-10!" />
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')" placeholder="Search..." class="w-full !h-[50px] bg-white border border-[#D4D4D8] rounded-[10px] px-4 flex items-center gap-2 focus:!border-maroon-600" />
                 </p-iconfield>
             </div>
         </ng-template>

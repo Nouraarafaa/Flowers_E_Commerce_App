@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, computed } from '@angular/core';
 import { TagModule } from 'primeng/tag';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -26,6 +26,12 @@ export class DynamicTableComponent {
 
   data = input.required<any[]>();
   columns = input.required<TableColumn[]>();
+
+  filterFields = computed(() => 
+    this.columns()
+      .filter(col => col.type === 'text' || !col.type)
+      .map(col => col.field)
+  );
 
   edit = output<string>();
   delete = output<string>();
