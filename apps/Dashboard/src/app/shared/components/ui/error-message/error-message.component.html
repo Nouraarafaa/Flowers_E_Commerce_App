@@ -23,7 +23,7 @@
                 <li>Maximum {{ nameControl()?.getError('maxlength').requiredLength }} characters allowed.</li>
             } @else if (nameControl()?.getError('min')) {
                 @if (nameControl()?.getError('min').min === 1) {
-                    <li>Price must be greater than 0.</li>
+                    <li>must be greater than 0.</li>
                 } @else {
                     <li>Value cannot be less than {{ nameControl()?.getError('min').min }}.</li>
                 }

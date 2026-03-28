@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ProductService } from '../../services/product/product.service';
-import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { FormInputComponent } from "../../../../shared/components/ui/form-input/form-input.component";
 import { ErrorMessageComponent } from "../../../../shared/components/ui/error-message/error-message.component";
@@ -17,7 +17,7 @@ import { Occasion } from '../../../occassions/interfaces/occassion-response';
 
 @Component({
   selector: 'app-add-product',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, NgClass, ButtonComponent, AuthStatusComponent, DropdownModule],
+  imports: [ReactiveFormsModule, FormInputComponent, ErrorMessageComponent, NgClass, ButtonComponent, AuthStatusComponent, DropdownModule],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss',
 })
@@ -51,7 +51,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
       price: [null, [Validators.required, Validators.min(1)]],
       discount: [null, [Validators.required, Validators.min(0)]],
       priceAfterDiscount: [null, [Validators.required]],
-      quantity: [null, [Validators.required]],
+      quantity: [null, [Validators.required, Validators.min(1)]],
       category: [null, [Validators.required]],
       occasion: [null, [Validators.required]],
       imgCover: [null, [Validators.required]],
@@ -76,10 +76,21 @@ export class AddProductComponent implements OnInit, OnDestroy {
     const input = event.target as HTMLInputElement;
     if(!input.files) return;
 
-    const files: File[] = Array.from(input.files);
+    const newfiles: File[] = Array.from(input.files);
+    const currentFiles: File[] = this.productForm.get('images')?.value || [];
+
+    const allFiles = [...currentFiles, ...newfiles];
+
+    const Files = allFiles.filter( (file, index, self) =>
+      index === self.findIndex(f => 
+        f.name === file.name &&
+        f.size === file.size &&
+        f.lastModified === file.lastModified
+      )
+    );
 
     this.productForm.patchValue({
-      images: files
+      images: Files
     })
 
     this.productForm.get('images')?.updateValueAndValidity();
@@ -157,7 +168,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this._occassionService.getOccassions()
     .pipe(takeUntil(this.destroy$), finalize(()=> this.occasionsLoading.set(false))).subscribe({
       next:(res) => {
-        console.log(res);
+        // console.log(res);
         this.occasions.set(res.occasions)
       }
     })
@@ -192,7 +203,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     formValue.images.forEach((file: File) => {
       formData.append('images', file);
     });
-
+    
     this._productService.addProduct(formData)
     .pipe(takeUntil(this.destroy$), finalize(()=> this.isLoading.set(false))).subscribe({
       next:(res)=> {

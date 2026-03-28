@@ -65,7 +65,7 @@
                 <div class="priceAfterDiscount flex-1 py-[12px] lg:py-0">
                     @let priceAfterDiscountControl = productForm.get('priceAfterDiscount');
                     <label for="priceAfterDiscount" class="text-sm font-medium font-inter text-zinc-800">Price after discount <span class="text-sm font-medium font-inter text-red-600">*</span></label>
-                    <app-form-input formControlName="priceAfterDiscount" [id]="'priceAfterDiscount'" [type]="'number'" [readonly]="true"  [nameControl]="priceAfterDiscountControl"></app-form-input>
+                    <app-form-input formControlName="priceAfterDiscount" [id]="'priceAfterDiscount'" [disabledFlag]="true" [type]="'number'" [readonly]="true"  [nameControl]="priceAfterDiscountControl"></app-form-input>
                     <app-error-message [nameControl]="priceAfterDiscountControl"></app-error-message>
                 </div>
             </div>
