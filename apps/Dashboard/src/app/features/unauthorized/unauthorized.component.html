@@ -1,0 +1,44 @@
+<div class="h-full bg-[#F8F9FA] flex flex-col p-4 animate-fade-in">
+    <!-- Breadcrumb-style Header -->
+    <header class="mb-4">
+        <div class="flex items-center gap-2 text-[13px] font-bold">
+            <span class="text-zinc-400">Dashboard</span>
+            <span class="text-zinc-300">
+                <i class="pi pi-angle-right text-[10px] mt-0.5"></i>
+            </span>
+            <span class="text-rose-500">Unauthorized</span>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="flex-1 flex flex-col items-center justify-center">
+        <div class="relative group select-none">
+            <!-- Decorative Glow -->
+            <div class="absolute inset-0 bg-zinc-200/20 blur-[100px] rounded-full group-hover:bg-zinc-300/30 transition-all duration-700"></div>
+            
+            <img src="/Images/lock-shield.png" 
+                 alt="Unauthorized Access" 
+                 class="relative w-full max-w-[400px] h-auto object-contain drop-shadow-xl animate-pulse-slow"
+            />
+        </div>
+
+        <div class="text-center mt-12 space-y-4 max-w-2xl animate-slide-up">
+            <h1 class="text-3xl md:text-[40px] font-black text-zinc-900 tracking-tighter leading-tight">
+                You are not authorized to access this page.
+            </h1>
+            
+            <p class="text-zinc-400 font-bold text-sm md:text-base px-6 leading-relaxed opacity-80">
+                If you think this is wrong, please contact the support.
+            </p>
+
+            <div class="pt-10 flex flex-col items-center">
+                <div class="w-full max-w-[300px] h-[1px] bg-zinc-100 mb-8"></div>
+                
+                <a routerLink="/" 
+                   class="inline-flex items-center gap-2 px-8 py-3 bg-white hover:bg-zinc-50 text-zinc-700 font-bold rounded-xl border border-zinc-200 shadow-sm hover:shadow-md active:scale-95 transition-all duration-300">
+                    Go to Homepage
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

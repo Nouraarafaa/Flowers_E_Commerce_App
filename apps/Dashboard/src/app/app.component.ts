@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { UiErrorService } from './core/services/ui-error/ui-error.service';
+import { filter } from 'rxjs';
 
 @Component({
   imports: [RouterModule],
@@ -8,5 +10,14 @@ import { RouterModule } from '@angular/router';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'Dashboard';
+  private readonly _router = inject(Router);
+  private readonly _uiErrorService = inject(UiErrorService);
+
+  constructor() {
+    this._router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this._uiErrorService.clearError();
+      });
+  }
 }

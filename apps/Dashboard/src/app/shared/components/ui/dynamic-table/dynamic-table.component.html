@@ -38,7 +38,7 @@
 
         <!-- Body -->
         <ng-template #body let-row>
-            <tr>
+            <tr class="hover:bg-rose-50 transition-colors">
                 @for (col of columns(); track col.field) {
                     <td class="w-[15%] lg:table-cell"
                     [class.hidden]="col.field === 'sales' || col.field === 'rating'"
@@ -53,7 +53,7 @@
 
                             @case ('price') {
                                 <div class="flex items-center gap-1 text-zinc-800 text-sm font-inter font-normal align-middle">
-                                    <span>{{ row[col.field] }}</span>
+                                    <span>{{ row[col.field] | number }}</span>
                                     <span>EGP</span>
                                 </div>
                             }
@@ -72,8 +72,8 @@
 
                             @case ('rating') {
                                 <div class="flex items-center gap-1">
-                                    <span class="font-bold text-gray-800">{{ row[col.field] }}</span>
-                                    <span class="text-gray-400 text-xs">( {{ row.rateCount }} )</span>
+                                    <span class="font-bold text-gray-800">{{ row[col.field] }}/5</span>
+                                    <span class="text-gray-400 text-xs">({{ row.rateCount }})</span>
                                 </div>
                             }
 

@@ -1,14 +1,15 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
 import { CategoriesService } from '../../services/categories/categories.service';
 import { Subject, takeUntil } from 'rxjs';
 import { DynamicTableComponent } from '../../../../shared/components/ui/dynamic-table/dynamic-table.component';
 import { TableColumn } from '../../../../shared/interfaces/tableColumn/table-column';
+import { PageHeaderComponent } from "apps/Dashboard/src/app/shared/components/ui/page-header/page-header.component";
 
 @Component({
   selector: 'app-categories',
-  imports: [RouterLink, DynamicTableComponent],
+  imports: [RouterLink, DynamicTableComponent, PageHeaderComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
@@ -19,6 +20,8 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   
     destroy$ = new Subject<void>();
     categories: any[] = [];
+    title = signal<string>("All Categories");
+  featureName = signal<string>("Add a new category");
   
     columns: TableColumn[] = [
       { field: 'name', header: 'Name', type: 'text' },
@@ -36,13 +39,17 @@ export class CategoriesComponent implements OnInit, OnDestroy {
           this.categories = res.categories.map(cat => ({
             ...cat,
             id: cat._id,
-            productsCount: `${cat.productsCount || 0} products`
+            productsCount: `${cat.productsCount} products`
           }));
         },
         error: () => {
           this._toastrService.error('Failed to load categories');
         }
       });
+    }
+
+    addNewCategory(): void {
+      this._router.navigate(["addCategory"]);
     }
 
     onEdit(id: string): void {

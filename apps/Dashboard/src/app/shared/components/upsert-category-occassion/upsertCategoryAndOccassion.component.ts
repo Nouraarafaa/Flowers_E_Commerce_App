@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UpsertConfiguration } from '../../interfaces/upsertConfiguration/upsert-configuration';
 import { CategoryResponse } from '../../../features/categories/interfaces/categories-response';
-import { OccassionResponse } from '../../../features/occassions/interfaces/occassion-response';
+import { OccasionResponse } from '../../../features/occassions/interfaces/occassion-response';
 
 @Component({
   selector: 'app-upsert-category-and-occassion',
@@ -75,7 +75,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit, OnDestroy {
         .getOccassion(this.categoryOrOccasionId()!)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
-          next: (res: OccassionResponse) => {
+          next: (res :OccasionResponse) => {
             // 2- patch the form with the retrieved data
             this.checklabel = res.occasion.name;
             this.categoryOrOccasion.name = res.occasion.name;
@@ -163,7 +163,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit, OnDestroy {
             )
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-              next: (res: OccassionResponse) => {
+              next: (res: OccasionResponse) => {
                 console.log(res.message);
 
                 this._toastrService.success('Occasion added successfully');
@@ -212,7 +212,7 @@ export class UpsertCategoryAndOccassionComponent implements OnInit, OnDestroy {
           )
           .pipe(takeUntil(this.destroy$))
           .subscribe({
-            next: (res: OccassionResponse) => {
+            next: (res: OccasionResponse) => {
               console.log(res.message);
               this._toastrService.success('Occasion updated successfully');
               this.checklabel = this.categoryOrOccasion.name;

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../core/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { Endpoints } from '../../../core/enums/endpoints';
-import { DeleteOccassionResponse, OccassionResponse } from '../interfaces/occassion-response';
+import { OccasionsResponse,DeleteOccassionResponse, OccasionResponse } from '../interfaces/occassion-response';
 
 @Injectable({
   providedIn: 'root'
@@ -12,28 +12,36 @@ export class OccassionService {
 
   private readonly _httpClient = inject(HttpClient);
 
-  getOccassions(): Observable<OccassionResponse> { 
-    return this._httpClient.get<OccassionResponse>(`${environment.BaseUrl}${Endpoints.occasions}`);
+  getOccassions(): Observable<OccasionsResponse> {
+  return this._httpClient.get<OccasionsResponse>(`${environment.BaseUrl}${Endpoints.occasions}?limit=1`).pipe(
+    switchMap(res => {
+      const allItemsCount = res.metadata.totalItems;
+      return this._httpClient.get<OccasionsResponse>(
+        `${environment.BaseUrl}${Endpoints.occasions}?limit=${allItemsCount}`
+      );
+    })
+  );
+}
+
+
+  getOccassion(occassionId:string): Observable<OccasionResponse> { 
+    return this._httpClient.get<OccasionResponse>(`${environment.BaseUrl}${Endpoints.occasions}/${occassionId}`);
   }
 
-  getOccassion(occassionId:string): Observable<OccassionResponse> { 
-    return this._httpClient.get<OccassionResponse>(`${environment.BaseUrl}${Endpoints.occasions}/${occassionId}`);
-  }
-
-  addOccassion(name: string, imageFile: File): Observable<OccassionResponse> {
+  addOccassion(name: string, imageFile: File): Observable<OccasionResponse> {
     const formData = new FormData();
     formData.append('name', name);
     formData.append('image', imageFile);
-    return this._httpClient.post<OccassionResponse>(`${environment.BaseUrl}${Endpoints.occasions}`, formData);
+    return this._httpClient.post<OccasionResponse>(`${environment.BaseUrl}${Endpoints.occasions}`, formData);
   }
 
-  updateOccassion(occassionId: string, name: string, imageFile?: File): Observable<OccassionResponse> {
+  updateOccassion(occassionId: string, name: string, imageFile?: File): Observable<OccasionResponse> {
     const formData = new FormData();
     formData.append('name', name);
     if (imageFile && typeof imageFile !== 'string') {
       formData.append('image', imageFile);
     }
-    return this._httpClient.put<OccassionResponse>(`${environment.BaseUrl}${Endpoints.occasions}/${occassionId}`, formData);
+    return this._httpClient.put<OccasionResponse>(`${environment.BaseUrl}${Endpoints.occasions}/${occassionId}`, formData);
   }
 
   deleteOccassion(occassionId:string): Observable<DeleteOccassionResponse> { 

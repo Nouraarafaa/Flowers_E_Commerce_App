@@ -1,14 +1,15 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { OccassionService } from '../../services/occassion.service';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { DynamicTableComponent } from '../../../../shared/components/ui/dynamic-table/dynamic-table.component';
 import { TableColumn } from '../../../../shared/interfaces/tableColumn/table-column';
+import { PageHeaderComponent } from "apps/Dashboard/src/app/shared/components/ui/page-header/page-header.component";
 
 @Component({
   selector: 'app-occassions',
-  imports: [RouterLink, DynamicTableComponent],
+  imports: [RouterLink, DynamicTableComponent, PageHeaderComponent],
   templateUrl: './occassions.component.html',
   styleUrl: './occassions.component.scss',
 })
@@ -19,7 +20,9 @@ export class OccassionsComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject<void>();
   occasions: any[] = [];
-  
+  title = signal<string>("All Occasions");
+  featureName = signal<string>("Add a new occasion");
+
   columns: TableColumn[] = [
     { field: 'name', header: 'Name', type: 'text' },
     { field: 'productsCount', header: 'Products', type: 'text' },
@@ -36,15 +39,19 @@ export class OccassionsComponent implements OnInit, OnDestroy {
         this.occasions = res.occasions.map(occ => ({
           ...occ,
           id: occ._id,
-          productsCount: `${occ.productsCount || 0} products`
+          productsCount: `${occ.productsCount} products`
         }));
+        console.log(this.occasions);
+        
       },
       error: () => {
         this._toastrService.error('Failed to load occasions');
       }
     });
   }
-
+  addNewOccasion(): void {
+    this._router.navigate(["addOccasion"]);
+  }
   onEdit(id: string): void {
     this._router.navigate(['/updateOccassion', id]);
   }
