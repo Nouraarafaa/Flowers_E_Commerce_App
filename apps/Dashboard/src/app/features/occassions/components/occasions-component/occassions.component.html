@@ -1,10 +1,10 @@
 <div class="p-4 sm:p-6">
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-    <h1 class="text-xl sm:text-2xl font-bold text-gray-800">All Occasions</h1>
-    <button routerLink="/addOccasion" class="w-full sm:w-auto bg-maroon-700 text-white px-4 py-2 rounded-lg flex items-center justify-center hover:bg-maroon-800 transition-colors">
-      <span class="mr-2">+</span> Add a new occasion
-    </button>
-  </div>
+ <!-- header -->
+  <app-page-header
+    [title]="title()"
+    [featureName]="featureName()"
+    (add)="addNewOccasion()"
+  ></app-page-header>
 
   <app-dynamic-table 
     [data]="occasions" 

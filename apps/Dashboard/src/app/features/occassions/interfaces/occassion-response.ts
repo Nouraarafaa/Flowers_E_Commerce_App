@@ -1,7 +1,11 @@
-export interface OccassionResponse {
+export interface OccasionsResponse {
   message: string
   metadata: Metadata
   occasions: Occasion[]
+}
+export interface OccasionResponse {
+  message: string;
+  occasion: Occasion;
 }
 export interface Metadata {
   currentPage: number

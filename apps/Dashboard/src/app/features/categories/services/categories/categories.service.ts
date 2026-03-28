@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BASE_URL } from '@elevate-workspace/auth';
-import { Observable } from 'rxjs';
-import { CategoriesResponse, CategoryResponse } from '../../interfaces/categories-response';
+import { Observable, switchMap } from 'rxjs';
+import { CategoriesResponse, CategoryResponse , DeleteCategoryResponse } from '../../interfaces/categories-response';
 import { Endpoints } from './../../../../core/enums/endpoints';
-import { DeleteCategoryResponse } from './../../interfaces/categories-response';
 
 
 @Injectable({
@@ -15,7 +14,14 @@ export class CategoriesService {
   private readonly _BASE_URL = inject(BASE_URL);
 
   getCategories(): Observable<CategoriesResponse> {
-    return this._httpClient.get<CategoriesResponse>(`${this._BASE_URL}${Endpoints.categories}`);
+    return this._httpClient.get<CategoriesResponse>(`${this._BASE_URL}${Endpoints.categories}?limit=1`).pipe(
+      switchMap(res => {
+        const allItemsCount = res.metadata.totalItems;
+        return this._httpClient.get<CategoriesResponse>(
+          `${this._BASE_URL}${Endpoints.categories}?limit=${allItemsCount}`
+        );
+      })
+    );
   }
 
   getCategory(categoryId: string): Observable<CategoryResponse> {
