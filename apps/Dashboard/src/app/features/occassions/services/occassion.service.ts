@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../core/environments/environment';
 import { Observable } from 'rxjs';
-import { DeleteOccassionResponse, OccassionResponse } from '../interfaces/occassion-response';
 import { Endpoints } from '../../../core/enums/endpoints';
+import { DeleteOccassionResponse, OccassionResponse } from '../interfaces/occassion-response';
 
 @Injectable({
   providedIn: 'root'
