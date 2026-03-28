@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router} from '@angular/router';
 import { OccassionService } from '../../services/occassion.service';
 import { Subject, takeUntil } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -9,7 +9,7 @@ import { PageHeaderComponent } from "apps/Dashboard/src/app/shared/components/ui
 
 @Component({
   selector: 'app-occassions',
-  imports: [RouterLink, DynamicTableComponent, PageHeaderComponent],
+  imports: [ DynamicTableComponent, PageHeaderComponent],
   templateUrl: './occassions.component.html',
   styleUrl: './occassions.component.scss',
 })
