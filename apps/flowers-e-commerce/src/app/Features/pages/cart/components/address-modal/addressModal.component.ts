@@ -24,6 +24,7 @@ import { UserAddressesComponent } from "../user-address-modal/userAddresses.comp
 export class AddressModalComponent implements OnInit, OnDestroy {
   userAddressesInput$ = input<Observable<Address[]>>(of([]));
   hide = output();
+  delAddressConfirmed = output<boolean>();
   items: MenuItem[] | undefined;
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authService = inject(AuthService);
@@ -165,7 +166,7 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
 
   }
-  
+
   deleteAddress(addressId: string) {
     console.log('delete address id', addressId);
     this._userAddressesService.deleteAddress(addressId).subscribe({
@@ -221,6 +222,9 @@ export class AddressModalComponent implements OnInit, OnDestroy {
 
   }
 
+  confirmDelete($event: boolean) {
+    this.delAddressConfirmed.emit(true);
+  }
 
   ngOnDestroy(): void {
     this.getLoggedUserDataSubs$?.unsubscribe();
