@@ -56,7 +56,7 @@
         }
     </div>
     @if (addressModalvisible) {
-    <app-address-modal [userAddressesInput$]="userAddresses$" (hide)="closeAddressModal()"></app-address-modal>
+    <app-address-modal [userAddressesInput$]="userAddresses$" (hide)="closeAddressModal()" (delAddressConfirmed)="getUserAddresses()"></app-address-modal>
 
     }
 

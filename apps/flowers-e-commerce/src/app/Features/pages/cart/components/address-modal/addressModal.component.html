@@ -7,6 +7,8 @@
         (addAddressClicked)="addNewAddress()"
         (editAddressClicked)="editAddress($event)"
         (deleteAddressClicked)="deleteAddress($event)"
+        (deleteAddressConfirmed)="confirmDelete($event)"
+        (closeModal)="hideDialog()"
         ></app-user-addresses>
     
     }
@@ -14,7 +16,9 @@
     <!-- for show Add a new address modal OR show Update address info modal -->
 
     @if(dialogType == 'Add a new address' || dialogType == 'Update address info') {
-    <header class="font-bold text-3xl text-zinc-800 mt-6 dark:text-white">{{dialogType}}</header>
+    <header class="font-bold text-3xl text-zinc-800 mt-6 dark:text-white flex justify-between items-center w-full"><span>{{dialogType}}</span>
+        <i class="pi pi-times dark:text-white cursor-pointer" (click)="hideDialog()" style="font-size: 1.5rem"></i>
+    </header>
     <p-steps [activeIndex]="active" [model]="items" />
     <!-- active = 0 show the form -->
     @if (active == 0) {
