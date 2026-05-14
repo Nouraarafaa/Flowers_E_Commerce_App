@@ -1,9 +1,10 @@
-export interface AddProductResponse {
+export interface UpdateProductResponse {
   message: string;
   product: Product;
 }
 
 export interface Product {
+  _id: string;
   title: string;
   slug: string;
   description: string;
@@ -14,13 +15,14 @@ export interface Product {
   discount: number;
   rateAvg: number;
   rateCount: number;
+  sold: number;
   quantity: number;
   category: string;
   occasion: string;
   isSuperAdmin: boolean;
-  _id: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
+  reviews: any[];
   id: string;
 }

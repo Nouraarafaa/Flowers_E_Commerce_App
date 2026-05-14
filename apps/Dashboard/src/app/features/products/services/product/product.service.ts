@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { GetProducts } from '../../interfaces/get-products/get-products';
 import { Endpoints } from '../../../../core/enums/endpoints';
 import { AddProductResponse } from '../../interfaces/add-product-response/add-product-response';
+import { GetProduct } from '../../interfaces/get-product/get-product';
+import { ProductData } from '../../interfaces/product-data/product-data';
+import { UpdateProductResponse } from '../../interfaces/update-product-response/update-product-response';
 
 @Injectable({
   providedIn: 'root',
@@ -12,14 +15,24 @@ import { AddProductResponse } from '../../interfaces/add-product-response/add-pr
 export class ProductService {
   private readonly _httpClient = inject(HttpClient);
   private readonly _bASE_URL = inject(BASE_URL);
-  
+
   getProducts(): Observable<GetProducts> {
     return this._httpClient.get<GetProducts>(`${this._bASE_URL}${Endpoints.products}`);
+  }
+
+  getProduct(id: string): Observable<GetProduct> {
+    return this._httpClient.get<GetProduct>(`${this._bASE_URL}${Endpoints.products}/${id}`);
   }
 
   addProduct(data: FormData): Observable<AddProductResponse> {
     return this._httpClient.post<AddProductResponse>(`${this._bASE_URL}${Endpoints.products}`, data);
   }
+
+  updateProduct(id: string, data:ProductData):Observable<UpdateProductResponse> {
+    return this._httpClient.put<UpdateProductResponse>(`${this._bASE_URL}${Endpoints.products}/${id}`, data);
+  }
+  
+  
 
 
 }

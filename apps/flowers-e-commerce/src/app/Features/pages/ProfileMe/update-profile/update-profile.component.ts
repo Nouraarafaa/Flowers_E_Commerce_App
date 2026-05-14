@@ -25,7 +25,7 @@ import { ConfirmDialogService } from '../../../../Shared/services/confirmDialog/
 })
 export class UpdateProfileComponent implements OnInit, OnDestroy {
   
-  registerForm!: FormGroup;
+  profileForm!: FormGroup;
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _authService = inject(AuthService);
   private destroy$ = new Subject<void>();
@@ -47,7 +47,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   }
 
   initForm(): void {
-    this.registerForm = this._formBuilder.group({
+    this.profileForm = this._formBuilder.group({
       firstName: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       lastName: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       email: [null, [Validators.required, Validators.email]],
@@ -81,16 +81,15 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
           gender: user.gender,
         }
         this.originalUserData.set(data); 
-        this.registerForm.patchValue(data);
-        this.registerForm.markAsPristine();
+        this.profileForm.patchValue(data);
+        this.profileForm.markAsPristine();
       },
     });
-    
   }
   
   isFormUnchanged(): boolean {
     if (!this.originalUserData()) return true;  
-    const currentValues = this.registerForm.getRawValue();
+    const currentValues = this.profileForm.getRawValue();
     return JSON.stringify(currentValues) === JSON.stringify(this.originalUserData());
   }
   
@@ -116,8 +115,8 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    if (!this.registerForm.dirty && !this.imageChanged()) return;
-    const formValue = this.registerForm.getRawValue();
+    if (!this.profileForm.dirty && !this.imageChanged()) return;
+    const formValue = this.profileForm.getRawValue();
     const body = {
       firstName: formValue.firstName,
       lastName: formValue.lastName,
@@ -139,7 +138,7 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
           this.success.set(res.message);
           setTimeout( ()=> {
             this.success.set("");
-          },1000)
+          },2000)
         }
       },
       error: (err:HttpErrorResponse) => {
@@ -153,10 +152,10 @@ export class UpdateProfileComponent implements OnInit, OnDestroy {
   }
 
   afterSuccess(): void {
-    this.registerForm.markAsPristine();
+    this.profileForm.markAsPristine();
     this.imageChanged.set(false);
   
-    this.originalUserData.set(this.registerForm.getRawValue());
+    this.originalUserData.set(this.profileForm.getRawValue());
   }
   
   

@@ -1,14 +1,6 @@
-export interface GetProducts {
+export interface GetProduct {
   message: string;
-  metadata: Metadata;
-  products: Product[];
-}
-
-export interface Metadata {
-  currentPage: number;
-  totalPages: number;
-  limit: number;
-  totalItems: number;
+  product: Product;
 }
 
 export interface Product {
@@ -20,17 +12,17 @@ export interface Product {
   images: string[];
   price: number;
   priceAfterDiscount: number;
+  rateAvg: number;
+  rateCount: number;
   quantity: number;
   category: string;
   occasion: string;
+  isSuperAdmin: boolean;
   createdAt: string;
   updatedAt: string;
   __v: number;
-  isSuperAdmin: boolean;
-  sold?: number;
-  rateAvg: number;
-  rateCount: number;
-  favoriteId: any;
+  favoriteId: string | null;
   isInWishlist: boolean;
-  discount?: number;
+  discount: number;
+  sold?: number;
 }

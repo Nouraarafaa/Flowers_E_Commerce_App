@@ -1,4 +1,4 @@
-export interface AddProduct {
+export interface ProductData {
   title: string;
   description: string;
   price: number;
@@ -7,6 +7,4 @@ export interface AddProduct {
   quantity: number;
   category: string;
   occasion: string;
-  imgCover: File;
-  images: File[];
 }
