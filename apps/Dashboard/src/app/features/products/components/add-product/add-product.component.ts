@@ -156,7 +156,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this._categoriesService.getCategories()
     .pipe(takeUntil(this.destroy$), finalize(()=> this.categoriesLoading.set(false))).subscribe({
       next:(res) => {
-        // console.log(res);
         this.categories.set(res.categories);
       }
     })
@@ -166,7 +165,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this._occassionService.getOccassions()
     .pipe(takeUntil(this.destroy$), finalize(()=> this.occasionsLoading.set(false))).subscribe({
       next:(res) => {
-        // console.log(res);
         this.occasions.set(res.occasions)
       }
     })
@@ -204,7 +202,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this._productService.addProduct(formData)
     .pipe(takeUntil(this.destroy$), finalize(()=> this.isLoading.set(false))).subscribe({
       next:(res)=> {
-        console.log(res);
         if(res.message === "success" ) {
           this.success.set("Product added successfully");
           this.productForm.reset();
@@ -213,7 +210,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
           },2000)
         }
       },error:(err: HttpErrorResponse)=> {
-        console.log(err);
         if(err.error.error){
           this.errorMsg.set(err.error.error);
         }else{
@@ -221,7 +217,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
         }
       }
     })
-
   }
 
   ngOnDestroy(): void {

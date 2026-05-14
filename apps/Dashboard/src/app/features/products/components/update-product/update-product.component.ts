@@ -92,7 +92,6 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
   loadProduct(id: string): void {
     this._productService.getProduct(id).pipe(takeUntil(this.destroy$)).subscribe({
       next:(res) => {
-        console.log(res);
         if(res.product){
           const data = {
             title: res.product.title,
@@ -120,7 +119,6 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
         };
       },
       error:(err) => {
-        console.log(err);
         this.errorMsg.set('Failed to load product data');
       }
     });
@@ -189,27 +187,22 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
   // loadCategories & loadOccasions  
   loadCategories() {
     this.categoriesLoading.set(true);
-    
     this._categoriesService.getCategories()
     .pipe(takeUntil(this.destroy$), finalize(()=> this.categoriesLoading.set(false))).subscribe({
       next:(res) => {
-        // console.log(res);
         this.categories.set(res.categories);
       }
     })
   }
   loadOccasions() {
     this.occasionsLoading.set(true);
-    
     this._occassionService.getOccassions()
     .pipe(takeUntil(this.destroy$), finalize(()=> this.occasionsLoading.set(false))).subscribe({
       next:(res) => {
-        // console.log(res);
         this.occasions.set(res.occasions)
       }
     })
   }
-
 
   // open cover & gallery
   open(imageList: string[]) {
@@ -219,12 +212,12 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
   }
   next() {
     if (this.currentIndex() < this.images().length - 1) {
-        this.currentIndex.update(v => v + 1);
+      this.currentIndex.update(v => v + 1);
     }
   }
   prev() {
     if (this.currentIndex() > 0) {
-        this.currentIndex.update(v => v - 1);
+      this.currentIndex.update(v => v - 1);
     }
   }
   // show cover & gallery
@@ -259,7 +252,6 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.destroy$), finalize(() => this.isLoading.set(false)))
     .subscribe({
       next:(res) => {
-        console.log(res);
         if(res.message === "success") {
           this.success.set("Product updated successfully");
           setTimeout(()=> {

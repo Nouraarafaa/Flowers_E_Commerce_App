@@ -10,7 +10,7 @@ export class productAdaptorService implements Adaptor {
     productAdapt(products: Product[]): ProductTableModel[] {
         return products.map((product) => ({
         name: product.title,
-        price: product.price,
+        price: product.priceAfterDiscount,
         id: product._id,
         rating: product.rateAvg,
         rateCount: product.rateCount,

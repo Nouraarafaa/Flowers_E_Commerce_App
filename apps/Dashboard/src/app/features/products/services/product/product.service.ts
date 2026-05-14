@@ -8,6 +8,7 @@ import { AddProductResponse } from '../../interfaces/add-product-response/add-pr
 import { GetProduct } from '../../interfaces/get-product/get-product';
 import { ProductData } from '../../interfaces/product-data/product-data';
 import { UpdateProductResponse } from '../../interfaces/update-product-response/update-product-response';
+import { DeleteProduct } from '../../interfaces/delete-product/delete-product';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,8 @@ export class ProductService {
     return this._httpClient.put<UpdateProductResponse>(`${this._bASE_URL}${Endpoints.products}/${id}`, data);
   }
   
-  
-
+  deleteProduct(id:string): Observable<DeleteProduct> {
+    return this._httpClient.delete<DeleteProduct>( `${this._bASE_URL}${Endpoints.products}/${id}`);
+  }
 
 }
