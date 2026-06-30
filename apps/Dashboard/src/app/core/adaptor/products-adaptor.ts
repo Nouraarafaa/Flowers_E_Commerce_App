@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../../features/products/interfaces/get-products/get-products';
 import { ProductTableModel } from '../../features/products/interfaces/product-table-model/product-table-model';
 import { Adaptor } from '../interfaces/adaptor/adaptor';
+import { Product } from '../../features/products/interfaces/Product/product';
 
 @Injectable({
   providedIn: 'root',

@@ -20,7 +20,8 @@ export class FormInputComponent implements ControlValueAccessor {
   value = signal<string>('');
   id = input<string>('');
   type = input<string>('');
-  disabledFlag = input<boolean>(false);
+  disabled = signal<boolean>(false);
+  // disabledFlag = input<boolean>(false);
   readonly = input<boolean>(false);
   placeholder = input<string>('');
   nameControl = input<AbstractControl | null>();
@@ -42,6 +43,10 @@ export class FormInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
+  }
+  
   updateValue(val: string) {
     this.value.set(val);
     this.onChange(val);

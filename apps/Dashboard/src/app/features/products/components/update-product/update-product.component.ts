@@ -17,10 +17,11 @@ import { ProductData } from '../../interfaces/product-data/product-data';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { ImageGalleryDialogComponent } from "../../../../shared/components/ui/image-gallery-dialog/image-gallery-dialog.component";
 
 @Component({
   selector: 'app-update-product',
-  imports: [ReactiveFormsModule, ErrorMessageComponent, FormInputComponent, NgClass, DropdownModule, AuthStatusComponent, ButtonComponent, ButtonModule, DialogModule],
+  imports: [ReactiveFormsModule, ErrorMessageComponent, FormInputComponent, NgClass, DropdownModule, AuthStatusComponent, ButtonComponent, ButtonModule, DialogModule, ImageGalleryDialogComponent],
   templateUrl: './update-product.component.html',
   styleUrl: './update-product.component.scss',
 })
@@ -44,7 +45,6 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
   productImages = signal<string[]>([]);
   visible = signal<boolean>(false);
   images = signal<string[]>([]); 
-  currentIndex = signal<number>(0);
 
   productId = signal<string>("");
   title = signal<string>("");
@@ -57,10 +57,10 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     this.initForm();
+    this.getId();
     this.listenToPriceChanges();
     this.loadCategories();
     this.loadOccasions();
-    this.getId();
   }
 
   initForm(): void {
@@ -68,14 +68,13 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
         title: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
         description: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
         price: [null, [Validators.required, Validators.min(1)]],
-        discount: [null, [Validators.required, Validators.min(0)]],
-        priceAfterDiscount: [null, [Validators.required]],
+        discount: [{value: null, disabled: true}, [Validators.required, Validators.min(0)]],
+        priceAfterDiscount: [{value: null, disabled: true}, [Validators.required]],
         quantity: [null, [Validators.required, Validators.min(1)]],
         category: [null, [Validators.required]],
-        occasion: [null, [Validators.required]],
+        occasion: [{value: null, disabled: true}, [Validators.required]],
       }, { validators: this.discountLessThanPriceValidator.bind(this) });
   }
-
   // get ID
   getId(): void {
     this._activatedRoute.paramMap.pipe(takeUntil(this.destroy$)).subscribe({
@@ -106,9 +105,9 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
           }
           this.productForm.patchValue(data);
 
-          this.productForm.get('discount')?.disable();
-          this.productForm.get('occasion')?.disable();
-          this.productForm.get('priceAfterDiscount')?.disable();
+          // this.productForm.get('discount')?.disable();
+          // this.productForm.get('priceAfterDiscount')?.disable();
+          // this.productForm.get('occasion')?.disable();
 
           this.originalProductData.set(this.productForm.getRawValue());
           this.productForm.markAsPristine();
@@ -214,18 +213,8 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
   // open cover & gallery
   open(imageList: string[]) {
     this.images.set(imageList);
-    this.currentIndex.set(0);
+    // this.currentIndex.set(0);
     this.visible.set(true);
-  }
-  next() {
-    if (this.currentIndex() < this.images().length - 1) {
-        this.currentIndex.update(v => v + 1);
-    }
-  }
-  prev() {
-    if (this.currentIndex() > 0) {
-        this.currentIndex.update(v => v - 1);
-    }
   }
   // show cover & gallery
   showCover() {
@@ -252,8 +241,8 @@ export class UpdateProductComponent implements OnInit, OnDestroy {
     this.success.set("");
     this.errorMsg.set("");
 
-    // const updateData:ProductData = this.productForm.value;
-    const { discount, occasion, priceAfterDiscount, ...updateData } = this.productForm.value;
+    // const { discount, priceAfterDiscount, occasion, ...updateData } = this.productForm.value;    
+    const updateData = this.productForm.value;
     
     this._productService.updateProduct(this.productId(), updateData)
     .pipe(takeUntil(this.destroy$), finalize(() => this.isLoading.set(false)))
