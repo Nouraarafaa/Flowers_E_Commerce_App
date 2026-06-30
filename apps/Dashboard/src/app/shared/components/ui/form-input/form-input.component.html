@@ -1,8 +1,9 @@
-<input [disabled]="disabledFlag()"
+<input 
   [value]="value()"
   [id]="id()"
   [type]="type()"
   [placeholder]="placeholder()"
+  [disabled]="disabled()"
   [readonly]="readonly()"
   (input)="updateValue($any($event.target).value)"
   (blur)="onTouched()"

@@ -8,7 +8,6 @@ import { PageHeaderComponent } from "../../../shared/components/ui/page-header/p
 import { ProductTableModel } from '../interfaces/product-table-model/product-table-model';
 import { ProductService } from '../services/product/product.service';
 
-
 @Component({
   selector: 'app-products',
   imports: [DynamicTableComponent, PageHeaderComponent],
@@ -40,16 +39,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.getProducts();
   }
 
-  getProducts (): void {
+  getProducts(): void {
     this._productService.getProducts().pipe(
       map((res) => this._productAdaptorService.productAdapt(res.products)),
       takeUntil(this.destroy$)
     ).subscribe({
       next:(res) => {
-        console.log(res);
         this.products.set(res);
-      },error:(err) => {
-        console.log(err);
       }
     })
   }
@@ -58,12 +54,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this._router.navigate(["products/add"]);
   }
   updateProduct(id:string): void {
-    console.log("Update product");
-    console.log(id);
+    this._router.navigate([`products/update/${id}`]);
   }
   deleteProduct(id:string): void {
-    console.log("delet product");
-    console.log(id);
+    this._productService.deleteProduct(id).pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next:(res) => {        
+        this.products.update(prevProducts => 
+          prevProducts.filter(product => product.id !== id)
+        );
+      }
+    })
   }
 
   ngOnDestroy(): void {

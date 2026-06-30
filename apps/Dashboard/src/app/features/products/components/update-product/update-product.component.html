@@ -1,8 +1,8 @@
 <section class="max-w-250 min-h-244.5 flex flex-col gap-6">
-    <h1 class="text-zinc-800 text-2xl font-inter font-semibold">Add a New Product</h1>
-        
+    <h1 class="text-zinc-800 text-2xl font-inter font-semibold">Update Product: {{title()}} </h1>
+
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="bg-white min-h-231 p-6 rounded-2xl flex flex-col gap-10">
-        
+
         <div class="w-full min-h-178.5 flex flex-col gap-4.5 rounded-2xl">
 
             <div class="title">
@@ -43,7 +43,7 @@
                 <div class="priceAfterDiscount flex-1 py-[12px] lg:py-0">
                     @let priceAfterDiscountControl = productForm.get('priceAfterDiscount');
                     <label for="priceAfterDiscount" class="text-sm font-medium font-inter text-zinc-800">Price after discount <span class="text-sm font-medium font-inter text-red-600">*</span></label>
-                    <app-form-input formControlName="priceAfterDiscount" [id]="'priceAfterDiscount'"  [type]="'number'" [readonly]="true"  [nameControl]="priceAfterDiscountControl"></app-form-input>
+                    <app-form-input formControlName="priceAfterDiscount" [id]="'priceAfterDiscount'" [type]="'number'"  [nameControl]="priceAfterDiscountControl"></app-form-input>
                     <app-error-message [nameControl]="priceAfterDiscountControl"></app-error-message>
                 </div>
             </div>
@@ -55,55 +55,6 @@
                 <app-error-message [nameControl]="quantityControl"></app-error-message>
             </div>
             
-            <!-- Product image & Product gallery -->
-            <div class="lg:flex gap-2.5">
-
-                <div class="Product image flex-1 py-[12px] lg:py-0">
-                    @let imgCoverControl = productForm.get('imgCover');
-                    <label for="imgCover" class="text-sm font-medium font-inter text-zinc-800">Product cover image 
-                    <span class="text-sm font-medium font-inter text-red-600">*</span>
-                    </label>
-                    <label
-                        for="imgCover"
-                        class="flex items-center justify-end p-4 gap-2 h-12.5 border border-zinc-300 rounded-lg cursor-pointer hover:bg-zinc-50 transition"
-                    >
-                        <i class="pi pi-upload text-red-500"></i>
-                        <span class="text-sm text-zinc-600">Upload file</span>
-                    </label>
-                    <input
-                        id="imgCover"
-                        type="file"
-                        hidden
-                        (change)="onCoverChange($event)"
-                        accept="image/png, image/jpeg, image/gif"
-                    />
-                    <app-error-message [nameControl]="imgCoverControl"></app-error-message>
-                </div>
-
-                <div class="Product gallery flex-1 py-[12px] lg:py-0">
-                    @let imagesControl = productForm.get('images');
-                    <label for="images" class="text-sm font-medium font-inter text-zinc-800">Product gallery
-                        <span class="text-sm font-medium font-inter text-red-600">*</span>
-                    </label>
-                    <label
-                        for="images"
-                        class="flex items-center justify-end p-4 gap-2 h-12.5 border border-zinc-300 rounded-lg cursor-pointer hover:bg-zinc-50 transition"
-                    >
-                        <i class="pi pi-upload text-red-500"></i>
-                        <span class="text-sm text-zinc-600">Upload files</span>
-                    </label>
-                    <input
-                        id="images"
-                        type="file"
-                        hidden
-                        multiple
-                        (change)="onImagesChange($event)"
-                        accept="image/png, image/jpeg, image/gif"
-                    />
-                    <app-error-message [nameControl]="imagesControl"></app-error-message>
-                </div>
-
-            </div>
 
             <div class="Category">
                 @let categoryControl = productForm.get('category');
@@ -150,6 +101,10 @@
                 <app-error-message [nameControl]="occasionControl"></app-error-message>
             </div>
             
+            <div class="flex flex-col md:flex-row justify-end gap-3">
+                <button (click)="showCover()" type="button" class="text-blue-600 hover:text-blue-700 active:scale-95 transition-all duration-200 flex items-center gap-2 p-2 cursor-pointer rounded-[10px] border solid border-[#00000014]"><i class="pi pi-image"></i> View product cover</button>
+                <button (click)="showGallery()" type="button" class="text-blue-600 hover:text-blue-700 active:scale-95 transition-all duration-200 flex items-center gap-2 p-2 cursor-pointer rounded-[10px] border solid border-[#00000014]"><i class="pi pi-images"></i> View product gallery</button>
+            </div>
         </div>
 
         @if (success()) {
@@ -159,9 +114,15 @@
             <app-auth-status [type]="'error'" [message]="errorMsg()" ></app-auth-status>
         }
         
-        <app-button [label]="'Add Product'" [type]="'submit'" [loading]="isLoading()" [disabled]="productForm.invalid" ></app-button>    
-
+        <app-button [label]="'Update Product'" [type]="'submit'" [loading]="isLoading()" [disabled]="isFormUnchanged() || productForm.invalid" ></app-button>    
 
     </form>
+
+    <app-image-gallery-dialog 
+        [images]="images()"
+        [(visible)]="visible"
+    >
+    </app-image-gallery-dialog>
+
 
 </section>

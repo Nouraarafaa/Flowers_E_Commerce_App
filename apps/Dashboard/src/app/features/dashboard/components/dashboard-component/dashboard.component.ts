@@ -9,9 +9,9 @@ import { CategoriesService} from '../../../categories/services/categories/catego
 import { InventoryService, LowStockProduct } from '../../../../core/services/inventory/inventory.service';
 import { StatisticsService } from '../../../../core/services/statistics/statistics.service';
 import { ChartData, ChartOptions, ScriptableContext, TooltipItem } from 'chart.js';
-import { Product } from '../../../products/interfaces/get-products/get-products';
 import { Category } from '../../../categories/interfaces/categories-response';
 import { ProductService } from '../../../products/services/product/product.service';
+import { Product } from '../../../products/interfaces/Product/product';
 
 interface OrderStatus {
   label: string;

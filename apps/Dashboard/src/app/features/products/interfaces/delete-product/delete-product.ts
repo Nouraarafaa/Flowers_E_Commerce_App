@@ -1,6 +1,7 @@
 import { Product } from "../Product/product";
 
-export interface AddProductResponse {
+export interface DeleteProduct {
   message: string;
-  product: Product;
+  document: Product;
 }
+
