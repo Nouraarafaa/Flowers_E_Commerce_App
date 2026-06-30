@@ -58,12 +58,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this._router.navigate(["products/add"]);
   }
   updateProduct(id:string): void {
-    console.log("Update product");
-    console.log(id);
+    console.log("Update product  " + id);
+    this._router.navigate([`products/update/${id}`]);
   }
   deleteProduct(id:string): void {
-    console.log("delet product");
-    console.log(id);
+    console.log("delet product  " + id);
   }
 
   ngOnDestroy(): void {

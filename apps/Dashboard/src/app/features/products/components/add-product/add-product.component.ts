@@ -46,8 +46,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   initForm(): void {
     this.productForm = this._formBuilder.group({
-      title: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-      description: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(100)]],
+      title: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      description: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(1000)]],
       price: [null, [Validators.required, Validators.min(1)]],
       discount: [null, [Validators.required, Validators.min(0)]],
       priceAfterDiscount: [null, [Validators.required]],
@@ -153,7 +153,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
   // loadCategories & loadOccasions  
   loadCategories() {
     this.categoriesLoading.set(true);
-    
     this._categoriesService.getCategories()
     .pipe(takeUntil(this.destroy$), finalize(()=> this.categoriesLoading.set(false))).subscribe({
       next:(res) => {
@@ -164,7 +163,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
   loadOccasions() {
     this.occasionsLoading.set(true);
-    
     this._occassionService.getOccassions()
     .pipe(takeUntil(this.destroy$), finalize(()=> this.occasionsLoading.set(false))).subscribe({
       next:(res) => {
@@ -176,15 +174,14 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   // Submit product form
   onSubmit(): void {
-
     if(this.productForm .invalid) {
       this.productForm.markAllAsTouched();
       return;
     }
 
     this.isLoading.set(true);
-    this.errorMsg.set("");
     this.success.set("");
+    this.errorMsg.set("");
 
     const formData = new FormData();
     const formValue: AddProduct = this.productForm.value;
@@ -213,7 +210,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
           this.productForm.reset();
           setTimeout( ()=> {
             this.success.set("");
-          },1000)
+          },2000)
         }
       },error:(err: HttpErrorResponse)=> {
         console.log(err);
