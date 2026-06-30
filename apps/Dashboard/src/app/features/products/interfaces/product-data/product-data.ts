@@ -7,4 +7,6 @@ export interface ProductData {
   quantity: number;
   category: string;
   occasion: string;
+  imgCover?: File;
+  images?: File[];
 }

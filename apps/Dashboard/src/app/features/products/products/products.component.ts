@@ -59,7 +59,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   deleteProduct(id:string): void {
     this._productService.deleteProduct(id).pipe(takeUntil(this.destroy$))
     .subscribe({
-      next:(res) => {
+      next:(res) => {        
         this.products.update(prevProducts => 
           prevProducts.filter(product => product.id !== id)
         );

@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-error-message',
@@ -9,4 +9,5 @@ import { AbstractControl } from '@angular/forms';
 })
 export class ErrorMessageComponent {
   nameControl = input<AbstractControl | null>();
+  formErrors = input<ValidationErrors | null>(null);
 }

@@ -36,36 +36,14 @@
                 <div class="discount flex-1 py-[12px] lg:py-0">
                     @let discountControl = productForm.get('discount');
                     <label for="discount" class="text-sm font-medium font-inter text-zinc-800">Discount <span class="text-sm font-medium font-inter text-red-600">*</span></label>
-                    <app-form-input  formControlName="discount" [id]="'discount'" [type]="'number'" [nameControl]="discountControl" [disabledFlag]="true" [placeholder]="'Enter discount'"></app-form-input>
-                    <app-error-message [nameControl]="discountControl"></app-error-message>
-                    @if (productForm.errors?.['discountGreater']) {
-                        <div class="flex items-start gap-2 mt-1 mb-3 p-2 rounded-xl border border-red-200 bg-red-50 text-red-700 shadow-sm transition-all duration-300"role="alert">
-                            <svg
-                                class="w-5 h-5 mt-[2px] flex-shrink-0 text-red-500"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 2a10 10 0 100 20 10 10 0 000-20z"
-                                />
-                            </svg>
-                            <ul class="space-y-1 text-sm font-medium list-disc list-inside">
-                            <p class="text-red-500 text-sm">
-                                Discount must be less than price
-                            </p>
-                            </ul>
-                        </div>
-                    }
+                    <app-form-input  formControlName="discount" [id]="'discount'" [type]="'number'" [nameControl]="discountControl" [placeholder]="'Enter discount'"></app-form-input>
+                    <app-error-message [nameControl]="discountControl" [formErrors]="productForm.errors"></app-error-message>
                 </div>
                 
                 <div class="priceAfterDiscount flex-1 py-[12px] lg:py-0">
                     @let priceAfterDiscountControl = productForm.get('priceAfterDiscount');
                     <label for="priceAfterDiscount" class="text-sm font-medium font-inter text-zinc-800">Price after discount <span class="text-sm font-medium font-inter text-red-600">*</span></label>
-                    <app-form-input formControlName="priceAfterDiscount" [id]="'priceAfterDiscount'" [disabledFlag]="true" [type]="'number'" [readonly]="true"  [nameControl]="priceAfterDiscountControl"></app-form-input>
+                    <app-form-input formControlName="priceAfterDiscount" [id]="'priceAfterDiscount'" [type]="'number'"  [nameControl]="priceAfterDiscountControl"></app-form-input>
                     <app-error-message [nameControl]="priceAfterDiscountControl"></app-error-message>
                 </div>
             </div>
@@ -140,55 +118,11 @@
 
     </form>
 
-    <p-dialog 
-        [(visible)]="visible" 
-        [modal]="true" 
-        [draggable]="false" 
-        [resizable]="false"
-        [closable]="true"
-        [style]="{ width: '50vw' }"
-        [breakpoints]="{
-        '960px': '75vw',
-        '640px': '95vw'}"
-        styleClass="custom-image-dialog"
-        maskStyleClass="custom-mask"
-        >
+    <app-image-gallery-dialog 
+        [images]="images()"
+        [(visible)]="visible"
+    >
+    </app-image-gallery-dialog>
 
-        <!-- image & images -->
-        <div class="bg-white rounded-2xl p-3 md:p-8 flex items-center justify-center min-h-[250px] md:min-h-[400px]">
-            @if (images().length > 0) {
-                <img [src]="images()[currentIndex()]" 
-                    class="max-w-full max-h-[60vh] object-contain rounded-lg shadow-sm" 
-                    alt="Product">
-            }
-        </div>
-
-        <!-- Pagination & Arrows -->
-        <div class="flex justify-between items-center mt-8 px-2">
-            <div class="flex gap-2">
-                @for (img of images(); track $index) {
-                    <div class="w-2.5 h-2.5 rounded-full transition-all duration-300"
-                        [class.bg-[#7A1D1D]]="$index === currentIndex()"
-                        [class.bg-zinc-200]="$index !== currentIndex()">
-                    </div>
-                }
-            </div>
-
-            <div class="flex gap-4">
-                <button type="button" 
-                        (click)="prev()"
-                        [disabled]="currentIndex() === 0"
-                        class="w-11 h-11 rounded-full border border-zinc-200 flex items-center justify-center text-zinc-400 hover:bg-zinc-50 disabled:opacity-30 transition-all cursor-pointer">
-                    <i class="pi pi-chevron-left"></i>
-                </button>
-                <button type="button" 
-                        (click)="next()"
-                        [disabled]="currentIndex() === images().length - 1"
-                        class="w-11 h-11 rounded-full border border-zinc-200 flex items-center justify-center text-[#7A1D1D] hover:bg-zinc-50 disabled:opacity-30 transition-all cursor-pointer">
-                    <i class="pi pi-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </p-dialog>
 
 </section>
